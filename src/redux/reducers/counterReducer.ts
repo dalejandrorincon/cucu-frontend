@@ -16,7 +16,7 @@ const counterReducer = (
     case "DECREASE_COUNTER": {
       return {
         ...state,
-        counter: state.counter - 1,
+        counter: state.counter > 0 ? state.counter - 1 : state.counter,
       };
     }
     default: {
