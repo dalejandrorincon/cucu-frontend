@@ -1,14 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CounterButton } from "../components/CounterButton";
 import { Wrapper } from "../components/Wrapper";
 import { Title } from "../components/Title";
 
+interface Props {
+  counter: number;
+  reduxIncreaseCounter: () => void;
+  reduxDecreaseCounter: () => void;
+}
+
 function HomePage({
   reduxIncreaseCounter,
   reduxDecreaseCounter,
   counter,
-}: any) {
+}: Props) {
   return (
     <Wrapper>
       <Title>Hello CUCU!!!</Title>
@@ -38,6 +45,12 @@ const mapDispatchToProps = (dispatch: any) => {
         value: 1,
       }),
   };
+};
+
+HomePage.propTypes = {
+  counter: PropTypes.number.isRequired,
+  reduxIncreaseCounter: PropTypes.func.isRequired,
+  reduxDecreaseCounter: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
