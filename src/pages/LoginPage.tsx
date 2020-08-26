@@ -1,6 +1,7 @@
-import React from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -16,32 +17,41 @@ const Title = styled.p`
   letter-spacing: 0px;
   color: #3c3c3c;
   opacity: 1;
-  padding-top: 50px;
+  padding-top: 30px;
 `;
 
 const LoginInfo = styled.p`
-  margin-top: 50px;
+  margin-top: 30px;
   text-align: left;
   font: normal normal normal 15px Acumin Pro;
   letter-spacing: 0px;
   color: #2d2d2d;
 `;
 
-const CreateAccountLink = styled.a`
+const CreateAccountLink = styled(Link)`
   text-align: left;
   text-decoration: underline;
   font: normal normal normal 15px Acumin Pro;
   letter-spacing: 0px;
   color: #863df9;
+  margin-left: 5px;
+  &:hover {
+    color: #863df9;
+    text-decoration: underline;
+  }
 `;
 
-const ForgotPasswordLink = styled.a`
+const ForgotPasswordLink = styled(Link)`
   text-align: left;
   text-decoration: underline;
   font: normal normal normal 13px Acumin Pro;
   letter-spacing: 0px;
   color: #2d2d2d;
   opacity: 1;
+  &:hover {
+    color: #2d2d2d;
+    text-decoration: underline;
+  }
 `;
 
 const Label = styled(Form.Label)`
@@ -52,11 +62,34 @@ const Label = styled(Form.Label)`
 `;
 
 const Control = styled(Form.Control)`
-  border: 1px solid var(--light-grey);
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #d5d5d5;
   border-radius: 3px;
   opacity: 1;
+  min-height: 45px;
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #d5d5d5;
+    outline: 0;
+    box-shadow: none;
+  }
+`;
+
+const ControlPassword = styled(Form.Control)`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  border-right: 0px;
+  opacity: 1;
+  min-height: 45px;
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #d5d5d5;
+    outline: 0;
+    box-shadow: none;
+  }
 `;
 
 const Submit = styled(Button)`
@@ -65,7 +98,7 @@ const Submit = styled(Button)`
   border-color: #863df9;
   opacity: 1;
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   text-align: center;
   font: normal normal medium 17px Acumin Pro;
   letter-spacing: 0px;
@@ -104,32 +137,63 @@ const Check = styled(Form.Check)`
     background-color: #863df9;
   }
 `;
+
 const Login = styled.div`
   min-height: 100vh;
+  padding-left: 15%;
+  padding-right: 5%;
 `;
 
-function ExamplePage() {
+const ShowPassword = styled(InputGroup.Text)`
+  font: normal normal normal 13px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+  border-left: 0;
+  background: transparent;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+
+function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <Container className="themed-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
-          <Login className="login">
-            <Logo src="/images/logo.png"></Logo>
+          <Login>
+            <Logo src="/assets/images/logo.png"></Logo>
             <Title>Inicia sesión</Title>
             <LoginInfo>
-              ¿No tienes cuenta CUCÚ?{" "}
-              <CreateAccountLink href="#">Crea una cuenta</CreateAccountLink>
+              ¿No tienes cuenta CUCÚ?
+              <CreateAccountLink to="/signup">
+                Crea una cuenta
+              </CreateAccountLink>
             </LoginInfo>
             <Form>
-              <Form.Group controlId="formBasicEmail">
+              <Form.Group>
                 <Label>Correo electrónico</Label>
                 <Control type="email" />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Label>Contraseña</Label>
-                <Control type="password" />
+                <InputGroup>
+                  <ControlPassword type={showPassword ? "text" : "password"} />
+                  <InputGroup.Prepend>
+                    <ShowPassword
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    >
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </ShowPassword>
+                  </InputGroup.Prepend>
+                </InputGroup>
               </Form.Group>
-              <ForgotPasswordLink href="#">La olvidé</ForgotPasswordLink>
+              <ForgotPasswordLink to="/forgot-password">
+                La olvidé
+              </ForgotPasswordLink>
               <Form.Group controlId="formBasicCheckbox">
                 <Check type="checkbox" label="Recordarme en este dispositivo" />
               </Form.Group>
@@ -143,4 +207,4 @@ function ExamplePage() {
   );
 }
 
-export default ExamplePage;
+export default LoginPage;

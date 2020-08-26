@@ -17,7 +17,7 @@ code {
   font-style: normal;
   font-weight: normal;
   src: local('Acumin Pro'),
-    url('/fonts/Acumin-RPro.woff') format('woff');
+    url('/assets/fonts/Acumin-RPro.woff') format('woff');
 }
 
 
@@ -26,7 +26,7 @@ code {
   font-style: normal;
   font-weight: normal;
   src: local('Acumin Pro Italic'),
-    url('/fonts/Acumin-ItPro.woff') format('woff');
+    url('/assets/fonts/Acumin-ItPro.woff') format('woff');
 }
 
 
@@ -35,7 +35,7 @@ code {
   font-style: normal;
   font-weight: normal;
   src: local('Acumin Pro Bold'),
-    url('/fonts/Acumin-BdPro.woff') format('woff');
+    url('/assets/fonts/Acumin-BdPro.woff') format('woff');
 }
 
 
@@ -44,15 +44,17 @@ code {
   font-style: normal;
   font-weight: normal;
   src: local('Acumin Pro Bold Italic'),
-    url('/fonts/Acumin-BdItPro.woff') format('woff');
-}
-
-.image {
-  min-height: 100vh;
+    url('/assets/fonts/Acumin-BdItPro.woff') format('woff');
 }
 
 .bg-image {
-  background-image: url('/images/login.png');
+  background-image: url('/assets/images/login.png');
   background-size: cover;
   background-position: center center;
+}
+
+.bg-image-signup {
+  background-image: url('/assets/images/signup.png');
+  background-position: top;
+  background-repeat: no-repeat;
 }
