@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -196,6 +196,60 @@ function RecoverPasswordPage() {
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [successfulSend, setSuccessfulSend] = useState(false);
   const history = useHistory();
+  let { token } = useParams();
+
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const submitForm = () => {
+    const body = new URLSearchParams({
+      password,
+      token,
+    });
+
+    try {
+      if (password !== "" && confirmPassword !== "") {
+        if (
+          password.match(/[a-z]/g) &&
+          password.match(/[A-Z]/g) &&
+          password.match(/[0-9]/g) &&
+          password.match(/[^a-zA-Z\d]/g) &&
+          password.length >= 8
+        ) {
+          console.log("valid password");
+        } else {
+          alert("Verifica el formato de tu contraseña");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          alert("Las contraseñas no coinciden");
+          return;
+        }
+
+        fetch("https://cucu-api-dev.n-techlab.xyz/api/auth/change-password", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: body,
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            alert(responseJson.message);
+            setSuccessfulSend(true);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert("Completa todos los campos");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <Container className="themed-container" fluid={true}>
@@ -237,6 +291,7 @@ function RecoverPasswordPage() {
                       <InputGroup>
                         <ControlPassword
                           type={showPassword ? "text" : "password"}
+                          onChange={(e: any) => setPassword(e.target.value)}
                         />
                         <InputGroup.Prepend>
                           <ShowPassword
@@ -250,14 +305,18 @@ function RecoverPasswordPage() {
                       </InputGroup>
                     </Form.Group>
                     <PasswordInfo>
-                      Debe contener como mínimo una letra mayúscula, 1 número y
-                      8 caracteres sin espacio en blanco
+                      Debe contener como mínimo una letra mayúscula, una letra
+                      minúscula, 1 número, 1 carácter especial y 8 caracteres
+                      sin espacio en blanco
                     </PasswordInfo>
                     <Form.Group controlId="formBasicPassword">
                       <Label>Confirma contraseña</Label>
                       <InputGroup>
                         <ControlPassword
                           type={showVerifyPassword ? "text" : "password"}
+                          onChange={(e: any) =>
+                            setConfirmPassword(e.target.value)
+                          }
                         />
                         <InputGroup.Prepend>
                           <ShowPassword
@@ -273,7 +332,7 @@ function RecoverPasswordPage() {
                     <Submit
                       type="button"
                       onClick={() => {
-                        setSuccessfulSend(true);
+                        submitForm();
                       }}
                     >
                       Crear contraseña

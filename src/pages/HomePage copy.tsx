@@ -220,14 +220,14 @@ function HomePage({
         </a>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="translators">
+            <a className="nav-link nav-item-inactive" href="#">
               Traductores
-            </Link>
+            </a>
           </li>
           <li className="nav-item nav-item-active">
-            <Link className="nav-link" to="home">
+            <a className="nav-link" href="#">
               Mis solicitudes
-            </Link>
+            </a>
           </li>
         </ul>
         <ul className="navbar-nav">

@@ -168,6 +168,40 @@ function ForgotPasswordPage() {
   const [successfulSendCode, setSuccessfulSendCode] = useState(false);
   const history = useHistory();
 
+  const [email, setEmail] = useState("");
+
+  const submitForm = () => {
+    const body = new URLSearchParams({
+      email,
+    });
+
+    try {
+      if (email !== "") {
+        fetch("https://cucu-api-dev.n-techlab.xyz/api/auth/password-recovery", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: body,
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            alert(responseJson.message);
+            setSuccessfulSendCode(true);
+            setEmail("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert("Ingresa por favor tu correo electrónico");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   return (
     <Container className="themed-container" fluid={true}>
       <Row className="no-gutter">
@@ -219,14 +253,12 @@ function ForgotPasswordPage() {
               <Form>
                 <Form.Group>
                   <Label>Correo electrónico</Label>
-                  <Control type="email" />
+                  <Control
+                    type="email"
+                    onChange={(e: any) => setEmail(e.target.value)}
+                  />
                 </Form.Group>
-                <Submit
-                  type="button"
-                  onClick={() => {
-                    setSuccessfulSendCode(true);
-                  }}
-                >
+                <Submit type="button" onClick={submitForm}>
                   Enviar correo electrónico
                 </Submit>
               </Form>

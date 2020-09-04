@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import RecoverPasswordPage from "./pages/RecoverPasswordPage";
 import SignupPage from "./pages/SignupPage";
+import HomePage from "./pages/HomePage";
+import TranslatorsPage from "./pages/TranslatorsPage";
 
 export default function App() {
   return (
@@ -14,8 +16,10 @@ export default function App() {
       <Router>
         <Route exact path="/" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/translators" component={TranslatorsPage} />
         <Route path="/forgot-password" component={ForgotPasswordPage} />
-        <Route path="/recover-password" component={RecoverPasswordPage} />
+        <Route path="/change-password/:token" component={RecoverPasswordPage} />
       </Router>
     </Provider>
   );

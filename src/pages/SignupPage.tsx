@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -247,6 +247,79 @@ const FormCheckLabel = styled.div`
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [document, setDocument] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("client");
+  const [terms, setTerms] = useState(false);
+  const history = useHistory();
+
+  const submitForm = () => {
+    const body = new URLSearchParams({
+      firstname,
+      lastname,
+      password,
+      document,
+      phone,
+      email,
+      role,
+    });
+
+    try {
+      if (
+        firstname !== "" &&
+        lastname !== "" &&
+        password !== "" &&
+        document !== "" &&
+        phone !== "" &&
+        email !== "" &&
+        role !== ""
+      ) {
+        if (
+          password.match(/[a-z]/g) &&
+          password.match(/[A-Z]/g) &&
+          password.match(/[0-9]/g) &&
+          password.match(/[^a-zA-Z\d]/g) &&
+          password.length >= 8
+        ) {
+          console.log("valid password");
+        } else {
+          alert("Verifica el formato de tu contraseña");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          alert("Las contraseñas no coinciden");
+          return;
+        }
+
+        fetch("https://cucu-api-dev.n-techlab.xyz/api/users", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: body,
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            alert(responseJson.message);
+            history.push("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert("Completa todos los campos");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <Container className="themed-container" fluid={true}>
@@ -257,10 +330,46 @@ function SignupPage() {
             <Title>Crea una cuenta</Title>
             <Row>
               <Col>
-                <OptionActive type="button">Soy usuario</OptionActive>
+                {role === "client" ? (
+                  <OptionActive
+                    type="button"
+                    onClick={() => {
+                      setRole("client");
+                    }}
+                  >
+                    Soy usuario
+                  </OptionActive>
+                ) : (
+                  <Option
+                    type="button"
+                    onClick={() => {
+                      setRole("client");
+                    }}
+                  >
+                    Soy usuario
+                  </Option>
+                )}
               </Col>
               <Col>
-                <Option type="button">Soy traductor</Option>
+                {role === "translator" ? (
+                  <OptionActive
+                    type="button"
+                    onClick={() => {
+                      setRole("translator");
+                    }}
+                  >
+                    Soy traductor
+                  </OptionActive>
+                ) : (
+                  <Option
+                    type="button"
+                    onClick={() => {
+                      setRole("translator");
+                    }}
+                  >
+                    Soy traductor
+                  </Option>
+                )}
               </Col>
             </Row>
             <SignupInfo>
@@ -270,28 +379,46 @@ function SignupPage() {
             <Form>
               <Form.Group>
                 <Label>Nombre</Label>
-                <Control type="text" />
+                <Control
+                  type="text"
+                  onChange={(e: any) => setFirstname(e.target.value)}
+                />
               </Form.Group>
               <Form.Group>
                 <Label>Apellido</Label>
-                <Control type="text" />
+                <Control
+                  type="text"
+                  onChange={(e: any) => setLastname(e.target.value)}
+                />
               </Form.Group>
               <Form.Group>
-                <Label>Nombre de tu empresa (opcional)</Label>
-                <Control type="text" />
+                <Label>Documento de identidad</Label>
+                <Control
+                  type="text"
+                  onChange={(e: any) => setDocument(e.target.value)}
+                />
               </Form.Group>
               <Form.Group>
                 <Label>Correo electrónico</Label>
-                <Control type="text" />
+                <Control
+                  type="text"
+                  onChange={(e: any) => setEmail(e.target.value)}
+                />
               </Form.Group>
               <Form.Group>
                 <Label>Teléfono</Label>
-                <Control type="text" />
+                <Control
+                  type="text"
+                  onChange={(e: any) => setPhone(e.target.value)}
+                />
               </Form.Group>
               <Form.Group>
                 <Label>Contraseña</Label>
                 <InputGroup>
-                  <ControlPassword type={showPassword ? "text" : "password"} />
+                  <ControlPassword
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e: any) => setPassword(e.target.value)}
+                  />
                   <InputGroup.Prepend>
                     <ShowPassword
                       onClick={() => {
@@ -304,14 +431,16 @@ function SignupPage() {
                 </InputGroup>
               </Form.Group>
               <PasswordInfo>
-                Debe contener como mínimo una letra mayúscula, 1 número y 8
-                caracteres sin espacio en blanco
+                Debe contener como mínimo una letra mayúscula, una letra
+                minúscula, 1 número, 1 carácter especial y 8 caracteres sin
+                espacio en blanco
               </PasswordInfo>
               <Form.Group controlId="formBasicPassword">
                 <Label>Confirma contraseña</Label>
                 <InputGroup>
                   <ControlPassword
                     type={showVerifyPassword ? "text" : "password"}
+                    onChange={(e: any) => setConfirmPassword(e.target.value)}
                   />
                   <InputGroup.Prepend>
                     <ShowPassword
@@ -325,7 +454,11 @@ function SignupPage() {
                 </InputGroup>
               </Form.Group>
               <FormCheck>
-                <input type="checkbox" className="form-check-input" />
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  onChange={(e: any) => setTerms(e.target.value)}
+                />
                 <FormCheckLabel>
                   He leído y acepto los
                   <BackToLoginLink to="/">
@@ -337,7 +470,9 @@ function SignupPage() {
                   </BackToLoginLink>
                 </FormCheckLabel>
               </FormCheck>
-              <Submit type="button">Crear mi cuenta</Submit>
+              <Submit type="button" onClick={submitForm}>
+                Crear mi cuenta
+              </Submit>
             </Form>
           </Signup>
         </Col>

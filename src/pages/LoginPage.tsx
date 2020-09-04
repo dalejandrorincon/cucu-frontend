@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -157,6 +158,44 @@ const ShowPassword = styled(InputGroup.Text)`
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const { register, handleSubmit, watch, errors } = useForm();
+
+  const onSubmit = (data: any) => {
+    const body = new URLSearchParams(data);
+
+    try {
+      fetch("https://cucu-api-dev.n-techlab.xyz/api/auth/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: body,
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.message === "Login Successful") {
+            alert(responseJson.message);
+            setEmail("");
+            setPassword("");
+            history.push("/home");
+          } else {
+            alert(responseJson.message);
+            setEmail("");
+            setPassword("");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <Container className="themed-container" fluid={true}>
@@ -171,15 +210,30 @@ function LoginPage() {
                 Crea una cuenta
               </CreateAccountLink>
             </LoginInfo>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group>
                 <Label>Correo electrónico</Label>
-                <Control type="email" />
+                <Control
+                  type="email"
+                  name="email"
+                  ref={register({ required: true })}
+                  // onChange={(e: any) => setEmail(e.target.value)}
+                  // value={email}
+                />
               </Form.Group>
+              {errors.email && (
+                <div className="alert alert-danger">
+                  El correo electrónico es requerido
+                </div>
+              )}
               <Form.Group controlId="formBasicPassword">
                 <Label>Contraseña</Label>
                 <InputGroup>
-                  <ControlPassword type={showPassword ? "text" : "password"} />
+                  <ControlPassword
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    ref={register({ required: true })}
+                  />
                   <InputGroup.Prepend>
                     <ShowPassword
                       onClick={() => {
@@ -191,13 +245,18 @@ function LoginPage() {
                   </InputGroup.Prepend>
                 </InputGroup>
               </Form.Group>
+              {errors.password && (
+                <div className="alert alert-danger">
+                  La contraseña es requerida
+                </div>
+              )}
               <ForgotPasswordLink to="/forgot-password">
                 La olvidé
               </ForgotPasswordLink>
               <Form.Group controlId="formBasicCheckbox">
                 <Check type="checkbox" label="Recordarme en este dispositivo" />
               </Form.Group>
-              <Submit type="button">Iniciar sesión</Submit>
+              <Submit type="submit">Iniciar sesión</Submit>
             </Form>
           </Login>
         </Col>

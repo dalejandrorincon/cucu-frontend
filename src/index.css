@@ -1,10 +1,9 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: 'Acumin Pro';
 }
 
 code {
@@ -57,4 +56,211 @@ code {
   background-image: url('/assets/images/signup.png');
   background-position: top;
   background-repeat: no-repeat;
+}
+
+
+.userIcon {
+  display: flex;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.active {
+  color: #863DF9
+}
+
+.active-filter {
+  color: #25A847;
+  font-size: 23px;
+}
+
+.name {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+td {
+  padding-top: 30px !important;
+}
+
+th {
+  font-weight: bold !important;
+}
+
+.nav-link {
+  text-align: center;
+  font: normal normal normal 18px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+}
+
+.nav-link:hover {
+  text-align: center;
+  font: normal normal normal 18px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+}
+
+.nav-item-active {
+  border-bottom: 4px solid #863DF9;
+  margin-bottom: -11px;
+}
+
+.nav-item-inactive {
+  color: #A0A0A0 !important;
+  opacity: 1;
+}
+
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+  position: relative !important;
+  width: 100% !important;
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+.navbar-nav {
+  margin-left: 30px;
+}
+
+.layout {
+  margin-right: 50px !important;
+  margin-left: 50px !important;
+}
+
+.layout-content {
+  padding-right: 50px !important;
+  padding-left: 50px !important;
+}
+
+.ico-user {
+  background: #a6a6a6;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}
+
+.slidecontainer {
+  width: 100%;
+  /* Width of the outside container */
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  /* Override default CSS styles */
+  appearance: none;
+  width: 100%;
+  /* Full-width */
+  height: 5px;
+  /* Specified height */
+  background: #25A847;
+  /* Grey background */
+  outline: none;
+  /* Remove outline */
+  opacity: 0.7;
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+  /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  width: 15px;
+  /* Set a specific slider handle width */
+  height: 15px;
+  /* Slider handle height */
+  background: #25A847;
+  /* Green background */
+  cursor: pointer;
+  border-radius: 50%;
+  /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #4CAF50;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
 }
