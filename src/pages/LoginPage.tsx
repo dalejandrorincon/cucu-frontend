@@ -179,7 +179,7 @@ function LoginPage() {
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson.message === "Login Successful") {
-            alert(responseJson.message);
+            //alert(responseJson.message);
             setEmail("");
             setPassword("");
             history.push("/home");

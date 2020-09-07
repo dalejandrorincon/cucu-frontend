@@ -232,7 +232,7 @@ function HomePage({
         </ul>
         <ul className="navbar-nav">
           <div className="ico-user" />
-          <NavDropdown title="Juan Pérez" id="nav-dropdown">
+          <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
             <NavDropdown.Item>Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
         </ul>
@@ -311,6 +311,7 @@ function HomePage({
                         <th scope="col">Cobro</th>
                         <th scope="col">Creación</th>
                         <th scope="col">Estado</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -341,33 +342,8 @@ function HomePage({
                         <td>
                           <span className="badge badge-light">En progreso</span>
                         </td>
-                      </tr>
-                      <tr>
                         <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <ResendLink to="#">Ver</ResendLink>
                         </td>
                       </tr>
                       <tr>
@@ -397,33 +373,8 @@ function HomePage({
                         <td>
                           <span className="badge badge-light">En progreso</span>
                         </td>
-                      </tr>
-                      <tr>
                         <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <ResendLink to="#">Ver</ResendLink>
                         </td>
                       </tr>
                       <tr>
@@ -453,6 +404,9 @@ function HomePage({
                         <td>
                           <span className="badge badge-light">En progreso</span>
                         </td>
+                        <td>
+                          <ResendLink to="#">Ver</ResendLink>
+                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -480,6 +434,71 @@ function HomePage({
                         <td>7 Jul, 2020</td>
                         <td>
                           <span className="badge badge-light">En progreso</span>
+                        </td>
+                        <td>
+                          <ResendLink to="#">Ver</ResendLink>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="userIcon">
+                            <div>
+                              <img src="/assets/images/icon.png" alt="logo" />
+                            </div>
+                            <div>
+                              <p className="name">
+                                Emma
+                                <div>
+                                  <span className="fa fa-star active"></span>
+                                  <span className="fa fa-star active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                  <span className="fa ffa-star-o active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                </div>
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>Programada</td>
+                        <td>$25</td>
+                        <td>7 Jul, 2020</td>
+                        <td>
+                          <span className="badge badge-light">En progreso</span>
+                        </td>
+                        <td>
+                          <ResendLink to="#">Ver</ResendLink>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="userIcon">
+                            <div>
+                              <img src="/assets/images/icon.png" alt="logo" />
+                            </div>
+                            <div>
+                              <p className="name">
+                                Emma
+                                <div>
+                                  <span className="fa fa-star active"></span>
+                                  <span className="fa fa-star active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                  <span className="fa ffa-star-o active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                  <span className="fa fa-star-o active"></span>
+                                </div>
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>Programada</td>
+                        <td>$25</td>
+                        <td>7 Jul, 2020</td>
+                        <td>
+                          <span className="badge badge-light">En progreso</span>
+                        </td>
+                        <td>
+                          <ResendLink to="#">Ver</ResendLink>
                         </td>
                       </tr>
                     </tbody>

@@ -65,6 +65,11 @@ code {
   margin-top: -30px;
 }
 
+.userIconTra {
+  display: flex;
+  align-items: center;
+}
+
 .active {
   color: #863DF9
 }
@@ -263,4 +268,102 @@ th {
   /* Green background */
   cursor: pointer;
   /* Cursor on hover */
+}
+
+.modal-90w.left .modal-90w-dialog,
+.modal-90w.right .modal-90w-dialog {
+  position: fixed;
+  margin: auto;
+  width: 320px;
+  height: 100%;
+  -webkit-transform: translate3d(0%, 0, 0);
+  -ms-transform: translate3d(0%, 0, 0);
+  -o-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
+}
+
+.modal-90w.left .modal-90w-content,
+.modal-90w.right .modal-90w-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal-90w.left .modal-90w-body,
+.modal-90w.right .modal-90w-body {
+  padding: 15px 15px 80px;
+}
+
+/*Left*/
+.modal-90w.left.fade .modal-90w-dialog {
+  left: -320px;
+  -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+  transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal-90w.left.fade.in .modal-90w-dialog {
+  left: 0;
+}
+
+/*Right*/
+.modal-90w.right.fade .modal-90w-dialog {
+  right: -320px;
+  -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+  transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal-90w.right.fade.in .modal-90w-dialog {
+  right: 0;
+}
+
+/* ----- modal-90w STYLE ----- */
+.modal-90w-content {
+  border-radius: 0;
+  border: none;
+}
+
+.modal-90w-header {
+  border-bottom-color: #EEEEEE;
+  background-color: #FAFAFA;
+}
+
+/* ----- v CAN BE DELETED v ----- */
+body {
+  background-color: #78909C;
+}
+
+.demo {
+  padding-top: 60px;
+  padding-bottom: 110px;
+}
+
+.btn-demo {
+  margin: 15px;
+  padding: 10px 15px;
+  border-radius: 0;
+  font-size: 16px;
+  background-color: #FFFFFF;
+}
+
+.btn-demo:focus {
+  outline: 0;
+}
+
+.demo-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background-color: #212121;
+  text-align: center;
+}
+
+.demo-footer>a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
 }

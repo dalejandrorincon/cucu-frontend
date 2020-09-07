@@ -121,6 +121,15 @@ const Label = styled(Form.Label)`
   opacity: 1;
 `;
 
+const LabelFilter = styled(Row)`
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+
+const ColFilter = styled(Col)`
+  text-align: end;
+`;
+
 const Submit = styled(Button)`
   background: #863df9 0% 0% no-repeat padding-box;
   border-radius: 3px;
@@ -196,6 +205,45 @@ const ControlPassword = styled(Form.Control)`
   }
 `;
 
+const StarContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+`;
+const TextFilter = styled.p`
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  color: #a0a0a0;
+  opacity: 1;
+`;
+
+const TextFilterBox = styled.p`
+  background: #fafafa 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+  height: 20px;
+  padding: 3px;
+  width: 60px;
+  margin-top: 10px;
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  opacity: 1;
+`;
+
+const TextFilterBoxEnd = styled.p`
+  background: #fafafa 0% 0% no-repeat padding-box;
+  text-align: end;
+  border-radius: 3px;
+  opacity: 1;
+  height: 20px;
+  width: 60px;
+  padding: 3px;
+  margin-top: 10px;
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  opacity: 1;
+  float: right;
+`;
 const ShowPassword = styled(InputGroup.Text)`
   font: normal normal normal 13px Acumin Pro;
   letter-spacing: 0px;
@@ -212,6 +260,13 @@ function TranslatorsPage({
   reduxDecreaseCounter,
   counter,
 }: Props) {
+  // const [isVisible, setIsVisible] = useState(false);
+
+  // const updateModal = (isVisible) => {
+  //   setIsVisible(isVisible);
+  //   //this.forceUpdate();
+  // };
+
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
@@ -232,7 +287,7 @@ function TranslatorsPage({
         </ul>
         <ul className="navbar-nav">
           <div className="ico-user" />
-          <NavDropdown title="Juan Pérez" id="nav-dropdown">
+          <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
             <NavDropdown.Item>Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
         </ul>
@@ -249,14 +304,13 @@ function TranslatorsPage({
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
                         <div>Calificación</div>
-                        <div>
+                        <StarContainer>
                           <span className="fa fa-star active-filter"></span>
                           <span className="fa fa-star active-filter"></span>
                           <span className="fa fa-star-o active-filter"></span>
-                          <span className="fa ffa-star-o active-filter"></span>
                           <span className="fa fa-star-o active-filter"></span>
                           <span className="fa fa-star-o active-filter"></span>
-                        </div>
+                        </StarContainer>
                       </li>
                       <li className="list-group-item">
                         Experiencia
@@ -269,10 +323,75 @@ function TranslatorsPage({
                             id="myRange"
                           />
                         </div>
+                        <LabelFilter>
+                          <Col>
+                            <TextFilter>1 años</TextFilter>
+                          </Col>
+                          <ColFilter>
+                            <TextFilter>5 años</TextFilter>
+                          </ColFilter>
+                        </LabelFilter>
                       </li>
-                      <li className="list-group-item">Disponible</li>
-                      <li className="list-group-item">Precio por hora</li>
-                      <li className="list-group-item">Precio por minuto</li>
+                      <li className="list-group-item">
+                        Disponible
+                        <FormControl
+                          id="inlineFormInputGroup"
+                          placeholder="Hoy (16 Jul, 2020)"
+                        />
+                        <LabelFilter>
+                          <Col>
+                            <TextFilterBox>9:00AM</TextFilterBox>
+                          </Col>
+                          <ColFilter>
+                            <TextFilterBoxEnd>9:00AM</TextFilterBoxEnd>
+                          </ColFilter>
+                        </LabelFilter>
+                      </li>
+                      <li className="list-group-item">
+                        Precio por hora
+                        <TextFilter>Hasta $25</TextFilter>
+                        <TextFilter>$25 - $50</TextFilter>
+                        <TextFilter>$50 - $100</TextFilter>
+                        <div className="slidecontainer">
+                          <input
+                            type="range"
+                            min="1"
+                            max="100"
+                            className="slider"
+                            id="myRange"
+                          />
+                        </div>
+                        <LabelFilter>
+                          <Col>
+                            <TextFilter>$40</TextFilter>
+                          </Col>
+                          <ColFilter>
+                            <TextFilter>$120</TextFilter>
+                          </ColFilter>
+                        </LabelFilter>
+                      </li>
+                      <li className="list-group-item">
+                        Precio por minuto <TextFilter>Hasta $25</TextFilter>
+                        <TextFilter>$25 - $50</TextFilter>
+                        <TextFilter>$50 - $100</TextFilter>
+                        <div className="slidecontainer">
+                          <input
+                            type="range"
+                            min="1"
+                            max="100"
+                            className="slider"
+                            id="myRange"
+                          />
+                        </div>
+                        <LabelFilter>
+                          <Col>
+                            <TextFilter>$40</TextFilter>
+                          </Col>
+                          <ColFilter>
+                            <TextFilter>$120</TextFilter>
+                          </ColFilter>
+                        </LabelFilter>
+                      </li>
                     </ul>
                   </div>
                 </Col>
@@ -304,17 +423,10 @@ function TranslatorsPage({
                     </Container>
                     <div className="table-responsive">
                       <table className="table ">
-                        <thead className="thead-light">
-                          <tr>
-                            <th scope="col">Traductor</th>
-                            <th scope="col">Especialista en</th>
-                            <th scope="col">Idioma</th>
-                          </tr>
-                        </thead>
                         <tbody>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -337,6 +449,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -345,12 +458,16 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -373,6 +490,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -381,12 +499,16 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
                             </td>
-                          </tr>{" "}
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -409,6 +531,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -417,12 +540,16 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
                             </td>
-                          </tr>{" "}
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -445,6 +572,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -453,12 +581,16 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
                             </td>
-                          </tr>{" "}
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -481,6 +613,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -489,12 +622,16 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
                             </td>
-                          </tr>{" "}
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
                           <tr>
                             <td>
-                              <div className="userIcon">
+                              <div className="userIconTra">
                                 <div>
                                   <img
                                     src="/assets/images/icon.png"
@@ -517,6 +654,7 @@ function TranslatorsPage({
                               </div>
                             </td>
                             <td>
+                              <p>Especialista en</p>
                               <span className="badge badge-light">
                                 Comercio
                               </span>
@@ -525,7 +663,134 @@ function TranslatorsPage({
                               </span>
                             </td>
                             <td>
+                              <p>Idioma</p>
                               <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="userIconTra">
+                                <div>
+                                  <img
+                                    src="/assets/images/icon.png"
+                                    alt="logo"
+                                  />
+                                </div>
+                                <div>
+                                  <p className="name">
+                                    Emma
+                                    <div>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa ffa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                    </div>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <p>Especialista en</p>
+                              <span className="badge badge-light">
+                                Comercio
+                              </span>
+                              <span className="badge badge-light">
+                                Estilo de vida
+                              </span>
+                            </td>
+                            <td>
+                              <p>Idioma</p>
+                              <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="userIconTra">
+                                <div>
+                                  <img
+                                    src="/assets/images/icon.png"
+                                    alt="logo"
+                                  />
+                                </div>
+                                <div>
+                                  <p className="name">
+                                    Emma
+                                    <div>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa ffa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                    </div>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <p>Especialista en</p>
+                              <span className="badge badge-light">
+                                Comercio
+                              </span>
+                              <span className="badge badge-light">
+                                Estilo de vida
+                              </span>
+                            </td>
+                            <td>
+                              <p>Idioma</p>
+                              <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="userIconTra">
+                                <div>
+                                  <img
+                                    src="/assets/images/icon.png"
+                                    alt="logo"
+                                  />
+                                </div>
+                                <div>
+                                  <p className="name">
+                                    Emma
+                                    <div>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa ffa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                    </div>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <p>Especialista en</p>
+                              <span className="badge badge-light">
+                                Comercio
+                              </span>
+                              <span className="badge badge-light">
+                                Estilo de vida
+                              </span>
+                            </td>
+                            <td>
+                              <p>Idioma</p>
+                              <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                         </tbody>
