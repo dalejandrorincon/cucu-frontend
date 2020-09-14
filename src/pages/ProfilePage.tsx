@@ -322,9 +322,11 @@ function ProfilePage({
           <div className="ico-user" />
           <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
             <NavDropdown.Item>
-              <Link to="profile">Perfil</Link>
+              <Link to="/profile">Perfil</Link>
             </NavDropdown.Item>{" "}
-            <NavDropdown.Item>Cerrar sesión</NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to="/">Cerrar sesión</Link>
+            </NavDropdown.Item>
           </NavDropdown>
         </ul>
       </nav>
