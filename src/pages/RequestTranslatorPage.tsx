@@ -451,17 +451,17 @@ function RequestTranslatorPage() {
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/home">
           <img src="/assets/images/logo.png" alt="logo" />
-        </a>
+        </Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item nav-item-active">
-            <Link className="nav-link " to="translators">
+            <Link className="nav-link " to="/translators">
               Traductores
             </Link>
           </li>
           <li className="nav-item ">
-            <Link className="nav-link nav-item-inactive" to="home">
+            <Link className="nav-link nav-item-inactive" to="/home">
               Mis solicitudes
             </Link>
           </li>
@@ -497,7 +497,7 @@ function RequestTranslatorPage() {
                   </Title>
                 </div>
                 <Row>
-                  <Col>
+                  {/* <Col>
                     {role === "client" ? (
                       <OptionActive
                         type="button"
@@ -517,7 +517,7 @@ function RequestTranslatorPage() {
                         Instantáneo
                       </Option>
                     )}
-                  </Col>
+                  </Col> */}
                   <Col>
                     {role === "translator" ? (
                       <OptionActive
@@ -547,13 +547,13 @@ function RequestTranslatorPage() {
                       Indica dónde vas a realizar la sesión. que será traducida.
                     </PasswordInfo>
                     <div key={`inline-radio`} className="mb-3">
-                      <Form.Check
+                      {/* <Form.Check
                         inline
                         name="datospla"
                         label="Plataforma CUCÚ"
                         type="radio"
                         id={`inline-radio-1`}
-                      />
+                      /> */}
                       <Form.Check
                         inline
                         name="datospla"
@@ -568,7 +568,6 @@ function RequestTranslatorPage() {
                     <PasswordInfo>
                       Especifica el enlace de la sesión.
                     </PasswordInfo>
-
                     <Control
                       type="text"
                       onChange={(e: any) => setLastname(e.target.value)}

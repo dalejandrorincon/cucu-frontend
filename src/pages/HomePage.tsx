@@ -334,17 +334,17 @@ function HomePage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/home">
           <img src="/assets/images/logo.png" alt="logo" />
-        </a>
+        </Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="translators">
+            <Link className="nav-link nav-item-inactive" to="/translators">
               Traductores
             </Link>
           </li>
           <li className="nav-item nav-item-active">
-            <Link className="nav-link" to="home">
+            <Link className="nav-link" to="/home">
               Mis solicitudes
             </Link>
           </li>

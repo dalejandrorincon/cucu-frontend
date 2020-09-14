@@ -926,3 +926,19 @@ body {
 .margin-file {
   margin-right: 5px;
 }
+
+.ver-todas {
+  text-decoration: underline;
+  font: normal normal bold 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.opinion-modal {
+  font: normal normal bold 20px/28px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  text-align: center;
+}

@@ -14,6 +14,7 @@ import {
   Nav,
   NavDropdown,
   FormControl,
+  Modal,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
@@ -143,6 +144,7 @@ const Submit = styled(Button)`
   opacity: 1;
   width: 100%;
   min-height: 50px;
+  margin-bottom: 20px;
   text-align: center;
   font: normal normal medium 17px Acumin Pro;
   letter-spacing: 0px;
@@ -268,6 +270,7 @@ function ProfileTranslatorPage({
 }: Props) {
   const history = useHistory();
   let { id } = useParams();
+  const [isVisible, setisVisible] = useState(false);
 
   const [translators, setTranslators] = useState<any>({});
 
@@ -304,17 +307,17 @@ function ProfileTranslatorPage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/home">
           <img src="/assets/images/logo.png" alt="logo" />
-        </a>
+        </Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="translators">
+            <Link className="nav-link nav-item-inactive" to="/translators">
               Traductores
             </Link>
           </li>
           <li className="nav-item ">
-            <Link className="nav-link nav-item-inactive" to="home">
+            <Link className="nav-link nav-item-inactive" to="/home">
               Mis solicitudes
             </Link>
           </li>
@@ -451,7 +454,14 @@ function ProfileTranslatorPage({
                         <div className="opinion-container">
                           <div className="opinion-title">
                             <p>Opiniones</p>
-                            <a>Ver todas</a>
+                            <a
+                              className="ver-todas"
+                              onClick={() => {
+                                setisVisible(true);
+                              }}
+                            >
+                              Ver todas
+                            </a>
                           </div>
                           <p>4.44 (23 opiniones)</p>
                         </div>
@@ -542,413 +552,124 @@ function ProfileTranslatorPage({
                         </div>
                       </Col>
                     </Row>
-
-                    {/* <Container className="themed-container" fluid={true}>
-                      <Row>
-                        <Col>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Control as="select">
-                              <option>Todas las especialidades</option>
-                            </Form.Control>
-                          </Form.Group>
-                        </Col>
-                        <Col>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Control as="select">
-                              <option>Todos los idiomas</option>
-                            </Form.Control>
-                          </Form.Group>
-                        </Col>
-                        <Col>
-                          <FormControl
-                            id="inlineFormInputGroup"
-                            placeholder="Buscar por nombre"
-                          />
-                        </Col>
-                      </Row>
-                    </Container>
-                    <div className="table-responsive">
-                      <table className="table ">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="#">Ver perfil</ResendLink>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-              */}
                   </WellContainer>
                 </Col>
               </Row>
             </PasswordRecover>
           </Col>
         </RowRecover>
+        <Modal
+          className="right"
+          show={isVisible}
+          onHide={() => {
+            setisVisible(false);
+          }}
+          autoFocus
+          keyboard
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Opiniones</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="opinion-container">
+              <p className="opinion-modal">
+                {" "}
+                <span className="fa fa-star active-green"></span> 4.44 (23
+                opiniones)
+              </p>
+              <Submit
+                type="button"
+                onClick={() => {
+                  setisVisible(false);
+                  history.push(`/request-translator/${id}`);
+                }}
+              >
+                Solicitar servicio
+              </Submit>
+            </div>
+            <div>
+              <p className="name">
+                <div className="opinion-name">
+                  <p>
+                    Emilia <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                  </p>
+                  <span className="opinion-date">12/09/19</span>
+                </div>
+                <span className="text-profile-item">
+                  {" "}
+                  Loved Chef Kreuther and his techniques with this wonderful
+                  recipe.
+                </span>
+                <div></div>
+              </p>
+            </div>{" "}
+            <div>
+              <p className="name">
+                <div className="opinion-name">
+                  <p>
+                    Emilia <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                  </p>
+                  <span className="opinion-date">12/09/19</span>
+                </div>
+                <span className="text-profile-item">
+                  {" "}
+                  Loved Chef Kreuther and his techniques with this wonderful
+                  recipe.
+                </span>
+                <div></div>
+              </p>
+            </div>{" "}
+            <div>
+              <p className="name">
+                <div className="opinion-name">
+                  <p>
+                    Emilia <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                  </p>
+                  <span className="opinion-date">12/09/19</span>
+                </div>
+                <span className="text-profile-item">
+                  {" "}
+                  Loved Chef Kreuther and his techniques with this wonderful
+                  recipe.
+                </span>
+                <div></div>
+              </p>
+            </div>
+            <div>
+              <p className="name">
+                <div className="opinion-name">
+                  <p>
+                    Emilia <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa ffa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                    <span className="fa fa-star-o active-green"></span>
+                  </p>
+                  <span className="opinion-date">12/09/19</span>
+                </div>
+                <span className="text-profile-item">
+                  {" "}
+                  Loved Chef Kreuther and his techniques with this wonderful
+                  recipe.
+                </span>
+                <div></div>
+              </p>
+            </div>
+          </Modal.Body>
+        </Modal>
       </Container>
     </>
   );

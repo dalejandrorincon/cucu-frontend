@@ -298,17 +298,17 @@ function ProfilePage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/home">
           <img src="/assets/images/logo.png" alt="logo" />
-        </a>
+        </Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item nav-item-active">
-            <Link className="nav-link nav-item-inactive" to="translators">
+            <Link className="nav-link nav-item-inactive" to="/translators">
               Traductores
             </Link>
           </li>
           <li className="nav-item ">
-            <Link className="nav-link nav-item-inactive" to="home">
+            <Link className="nav-link nav-item-inactive" to="/home">
               Mis solicitudes
             </Link>
           </li>
@@ -443,7 +443,14 @@ function ProfilePage({
                               </InputGroup.Prepend>
                             </InputGroup>
                           </Form.Group>
-                          <Submit type="button">Guardar cambios</Submit>
+                          <Submit
+                            type="button"
+                            onClick={() => {
+                              alert("Perfil actualizado");
+                            }}
+                          >
+                            Guardar cambios
+                          </Submit>
                         </Form>
                         <Link className="disabled-account" to="#">
                           Desactivar cuenta
