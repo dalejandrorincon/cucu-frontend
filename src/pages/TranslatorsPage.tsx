@@ -429,6 +429,8 @@ function TranslatorsPage({
                           <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Control as="select">
                               <option>Todos los idiomas</option>
+                              <option>Español</option>
+                              <option>Ingles</option>
                             </Form.Control>
                           </Form.Group>
                         </Col>

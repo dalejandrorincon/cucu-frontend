@@ -942,3 +942,7 @@ body {
   opacity: 1;
   text-align: center;
 }
+
+.badge {
+  text-transform: capitalize;
+}

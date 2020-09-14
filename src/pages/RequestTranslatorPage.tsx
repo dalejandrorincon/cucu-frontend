@@ -427,7 +427,7 @@ function RequestTranslatorPage() {
     urlencoded.append("date", "10/10/2020");
     urlencoded.append("record", "true");
     urlencoded.append("client_id", "3");
-    urlencoded.append("translator_id", "19");
+    urlencoded.append("translator_id", id);
 
     try {
       fetch("https://cucu-api-dev.n-techlab.xyz/api/translation_services", {

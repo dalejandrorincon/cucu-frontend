@@ -285,10 +285,13 @@ function HomePage({
     );
 
     try {
-      fetch("https://cucu-api-dev.n-techlab.xyz/api/translation_services/", {
-        method: "GET",
-        headers: headers,
-      })
+      fetch(
+        "https://cucu-api-dev.n-techlab.xyz/api/translation_services/?page=2",
+        {
+          method: "GET",
+          headers: headers,
+        }
+      )
         .then((response) => response.json())
         .then((responseJson) => {
           setTranslators(responseJson.results);
@@ -322,6 +325,7 @@ function HomePage({
         .then((responseJson) => {
           setisVisible(false);
           alert("Servicio cancelado");
+          getTranslators();
         })
         .catch((error) => {
           console.log(error);
@@ -472,7 +476,7 @@ function HomePage({
                           <td>{ele.date}</td>
                           <td>
                             <span className="badge badge-light">
-                              Solicitado
+                              {ele.status != null ? ele.status : "Solicitado"}
                             </span>
                           </td>
                           <td>
@@ -525,7 +529,10 @@ function HomePage({
                   <p className="tradu-ins">Traducción instantánea</p>
                 </div>
               </div>
-              <span className="badge badge-light status-trans">Solicitado</span>
+              <span className="badge badge-light status-trans">
+                {" "}
+                {translator.status}
+              </span>
             </div>
             <WellContainerModal>
               <p className="price-modal">
