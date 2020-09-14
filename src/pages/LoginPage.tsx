@@ -182,6 +182,7 @@ function LoginPage() {
             //alert(responseJson.message);
             setEmail("");
             setPassword("");
+            localStorage.setItem("token", responseJson.token);
             history.push("/home");
           } else {
             alert(responseJson.message);

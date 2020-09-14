@@ -3,61 +3,56 @@ body {
 }
 
 * {
-  font-family: 'Acumin Pro';
+  font-family: "Acumin Pro";
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 @font-face {
-  font-family: 'Acumin Pro';
+  font-family: "Acumin Pro";
   font-style: normal;
   font-weight: normal;
-  src: local('Acumin Pro'),
-    url('/assets/fonts/Acumin-RPro.woff') format('woff');
+  src: local("Acumin Pro"), url("/assets/fonts/Acumin-RPro.woff") format("woff");
 }
 
-
 @font-face {
-  font-family: 'Acumin Pro Italic';
+  font-family: "Acumin Pro Italic";
   font-style: normal;
   font-weight: normal;
-  src: local('Acumin Pro Italic'),
-    url('/assets/fonts/Acumin-ItPro.woff') format('woff');
+  src: local("Acumin Pro Italic"),
+    url("/assets/fonts/Acumin-ItPro.woff") format("woff");
 }
 
-
 @font-face {
-  font-family: 'Acumin Pro Bold';
+  font-family: "Acumin Pro Bold";
   font-style: normal;
   font-weight: normal;
-  src: local('Acumin Pro Bold'),
-    url('/assets/fonts/Acumin-BdPro.woff') format('woff');
+  src: local("Acumin Pro Bold"),
+    url("/assets/fonts/Acumin-BdPro.woff") format("woff");
 }
 
-
 @font-face {
-  font-family: 'Acumin Pro Bold Italic';
+  font-family: "Acumin Pro Bold Italic";
   font-style: normal;
   font-weight: normal;
-  src: local('Acumin Pro Bold Italic'),
-    url('/assets/fonts/Acumin-BdItPro.woff') format('woff');
+  src: local("Acumin Pro Bold Italic"),
+    url("/assets/fonts/Acumin-BdItPro.woff") format("woff");
 }
 
 .bg-image {
-  background-image: url('/assets/images/login.png');
+  background-image: url("/assets/images/login.png");
   background-size: cover;
   background-position: center center;
 }
 
 .bg-image-signup {
-  background-image: url('/assets/images/signup.png');
+  background-image: url("/assets/images/signup.png");
   background-position: top;
   background-repeat: no-repeat;
 }
-
 
 .userIcon {
   display: flex;
@@ -68,14 +63,15 @@ code {
 .userIconTra {
   display: flex;
   align-items: center;
+  margin-top: -20px;
 }
 
 .active {
-  color: #863DF9
+  color: #863df9;
 }
 
 .active-filter {
-  color: #25A847;
+  color: #25a847;
   font-size: 23px;
 }
 
@@ -96,23 +92,23 @@ th {
   text-align: center;
   font: normal normal normal 18px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 }
 
 .nav-link:hover {
   text-align: center;
   font: normal normal normal 18px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 }
 
 .nav-item-active {
-  border-bottom: 4px solid #863DF9;
+  border-bottom: 4px solid #863df9;
   margin-bottom: -11px;
 }
 
 .nav-item-inactive {
-  color: #A0A0A0 !important;
+  color: #a0a0a0 !important;
   opacity: 1;
 }
 
@@ -209,15 +205,15 @@ th {
 .ico-user {
   background: #a6a6a6;
   border-radius: 50%;
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
+  margin-top: 4px;
 }
 
 .slidecontainer {
   width: 100%;
   /* Width of the outside container */
 }
-
 
 .slider {
   -webkit-appearance: none;
@@ -227,15 +223,15 @@ th {
   /* Full-width */
   height: 5px;
   /* Specified height */
-  background: #25A847;
+  background: #25a847;
   /* Grey background */
   outline: none;
   /* Remove outline */
   opacity: 0.7;
   /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s;
+  -webkit-transition: 0.2s;
   /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
 
 .slider:hover {
@@ -252,7 +248,7 @@ th {
   /* Set a specific slider handle width */
   height: 15px;
   /* Slider handle height */
-  background: #25A847;
+  background: #25a847;
   /* Green background */
   cursor: pointer;
   border-radius: 50%;
@@ -264,7 +260,7 @@ th {
   /* Set a specific slider handle width */
   height: 25px;
   /* Slider handle height */
-  background: #4CAF50;
+  background: #4caf50;
   /* Green background */
   cursor: pointer;
   /* Cursor on hover */
@@ -326,13 +322,13 @@ th {
 }
 
 .modal-90w-header {
-  border-bottom-color: #EEEEEE;
-  background-color: #FAFAFA;
+  border-bottom-color: #eeeeee;
+  background-color: #fafafa;
 }
 
 /* ----- v CAN BE DELETED v ----- */
 body {
-  background-color: #78909C;
+  background-color: #78909c;
 }
 
 .demo {
@@ -345,7 +341,7 @@ body {
   padding: 10px 15px;
   border-radius: 0;
   font-size: 16px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .btn-demo:focus {
@@ -366,4 +362,340 @@ body {
   font-weight: bold;
   font-size: 16px;
   color: #fff;
+}
+
+.rc-slider-rail {
+  position: absolute !important;
+  width: 100% !important;
+  background-color: #4da848 !important;
+  height: 4px !important;
+  border-radius: 6px !important;
+}
+
+.rc-slider-track {
+  position: absolute !important;
+  left: 0 !important;
+  height: 4px !important;
+  border-radius: 6px !important;
+  background-color: #4da848 !important;
+}
+
+.rc-slider-handle:active {
+  border-color: #4da848 !important;
+  box-shadow: 0 0 5px #4da848 !important;
+  cursor: grabbing !important;
+}
+
+.rc-slider-handle {
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  cursor: pointer !important;
+  cursor: -webkit-grab !important;
+  margin-top: -5px !important;
+  cursor: grab !important;
+  border-radius: 50% !important;
+  border: solid 2px #4da848 !important;
+  background-color: #4da848 !important;
+  touch-action: pan-x !important;
+}
+
+.rc-slider-handle {
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  cursor: pointer !important;
+  cursor: -webkit-grab !important;
+  margin-top: -5px !important;
+  cursor: grab !important;
+  border-radius: 50% !important;
+  border: solid 2px #4da848 !important;
+  background-color: #4da848 !important;
+  touch-action: pan-x !important;
+}
+
+.col-padding {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.col-margin {
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-bottom: 20px;
+}
+
+.price-hour {
+  text-align: right;
+  font: normal normal bold 18px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+  margin-top: 19px;
+}
+
+.text-profile {
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 20px;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+}
+
+.row-border {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.opinions {
+  border-left: 1px solid #d5d5d5;
+}
+
+.opinion-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.opinion-title {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.opinion-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.opinion-date {
+  font: normal normal normal 13px Acumin Pro;
+  letter-spacing: 0px;
+  color: #a0a0a0;
+  opacity: 1;
+}
+
+.active-green {
+  color: #25a847;
+}
+
+.border-cont {
+  margin-left: -15px;
+  border-bottom: 1px solid #d5d5d5;
+  margin-right: 50px !important;
+  padding-bottom: 20px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 90% !important;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: 1px solid #d5d5d5;
+}
+
+.text-profile-item {
+  font: normal normal normal 13px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+}
+
+.form-request {
+  margin-top: 20px;
+}
+
+.form-check-label {
+  font: normal normal bold 15px Acumin Pro !important;
+  -webkit-letter-spacing: 0px !important;
+  -moz-letter-spacing: 0px !important;
+  -ms-letter-spacing: 0px !important;
+  letter-spacing: 0px !important;
+  color: #3c3c3c !important;
+  opacity: 1 !important;
+  margin-top: 5px;
+}
+
+.header-request {
+  background: #863df9 0% 0% no-repeat padding-box;
+  border-radius: 3px 3px 0px 0px;
+  opacity: 1;
+  margin-top: -30px;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding-bottom: 10px;
+}
+
+.icon-request {
+  position: relative;
+  margin-top: -10%;
+  left: calc(50% - 67.5px);
+}
+
+
+.image-profile {
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.services {
+  text-align: end;
+  font: normal normal bold 28px/40px Acumin Pro;
+  letter-spacing: 0px;
+  color: #863DF9;
+  opacity: 1;
+}
+
+.menu-profile {
+  border-right: 1px solid #d5d5d5;
+}
+
+
+.name-profile {
+  font: normal normal bold 28px Acumin Pro Bold;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  padding-left: 10px;
+}
+
+.container-profile {
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.email-text {
+  padding-left: 10px;
+  margin-top: -15px;
+  font: normal normal normal 15px/21px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.cucucreditos {
+  text-align: end;
+  margin-top: -15px;
+  font: normal normal normal 15px/21px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.item-menu-active {
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 5px solid #25A847;
+  margin-left: -5px;
+  background: white;
+  margin-right: -5px;
+}
+
+.item-menu {
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.image-profile {
+  height: 92px;
+  margin-bottom: 10px;
+}
+
+.menu-profile {
+  background: #f4f4f4;
+  margin-left: -15px;
+}
+
+.item-active-profile {
+  margin-right: 100px;
+  margin-left: 100px;
+  margin-bottom: 30px;
+}
+
+.text-item-menu-active {
+  font: normal normal bold 15px Acumin Pro Bold;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.text-item-menu {
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.disabled-account {
+  text-decoration: underline;
+  font: normal normal medium 17px Acumin Pro;
+  letter-spacing: 0px;
+  color: #A0A0A0;
+  opacity: 1;
+}
+
+.dropdown-toggle {
+  font: normal normal normal Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.dropdown-toggle:hover {
+  font: normal normal normal Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.dropdown-item {
+  font: normal normal normal Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.margin-5 {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+
+.enterprise {
+  font: normal normal normal 28px Acumin Pro;
+  letter-spacing: 0px;
+  color: #A0A0A0;
+  opacity: 1;
+}
+
+.name-container {
+  display: flex;
+}
+
+nav a {
+  color: #212529 !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+nav a:hover {
+  color: #212529 !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
 }

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -14,6 +16,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
+import RangeSlider from "react-bootstrap-range-slider";
 import { Range } from "rc-slider";
 
 const Logo = styled.img`
@@ -69,6 +72,8 @@ const WellContainer = styled.div`
   border: #d1d1d1 solid 1px;
   padding-top: 30px;
   margin-bottom: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
 `;
 
 const PasswordRecover = styled.div`
@@ -256,17 +261,15 @@ const ShowPassword = styled(InputGroup.Text)`
   cursor: pointer;
 `;
 
-function TranslatorsPage({
+function ProfileTranslatorPage({
   reduxIncreaseCounter,
   reduxDecreaseCounter,
   counter,
 }: Props) {
-  const [valueRange, setValueRange] = useState([20, 40]);
-  const [translators, setTranslators] = useState([]);
+  const history = useHistory();
+  let { id } = useParams();
 
-  useEffect(() => {
-    getTranslators();
-  }, []);
+  const [translators, setTranslators] = useState<any>({});
 
   const getTranslators = () => {
     const headers = new Headers();
@@ -278,13 +281,13 @@ function TranslatorsPage({
     );
 
     try {
-      fetch("https://cucu-api-dev.n-techlab.xyz/api/users/translators", {
+      fetch(`https://cucu-api-dev.n-techlab.xyz/api/users/${id}`, {
         method: "GET",
         headers: headers,
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          setTranslators(responseJson.results);
+          setTranslators(responseJson.user);
         })
         .catch((error) => {
           console.log(error);
@@ -294,6 +297,10 @@ function TranslatorsPage({
     }
   };
 
+  useEffect(() => {
+    getTranslators();
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
@@ -301,8 +308,8 @@ function TranslatorsPage({
           <img src="/assets/images/logo.png" alt="logo" />
         </a>
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item nav-item-active">
-            <Link className="nav-link " to="translators">
+          <li className="nav-item">
+            <Link className="nav-link nav-item-inactive" to="translators">
               Traductores
             </Link>
           </li>
@@ -327,94 +334,216 @@ function TranslatorsPage({
           </NavDropdown>
         </ul>
       </nav>
+
       <Container className="themed-container" fluid={true}>
         <RowRecover className="layout-content">
           <Col className="col-md-12">
-            <Title>Traductores</Title>
+            <Title>Perfil de traductor</Title>
             <PasswordRecover>
-              <Row className="margin-5">
-                <Col className="col-md-3">
-                  <div className="card">
-                    <div className="card-header">Filtrar por</div>
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item">
-                        <div>Calificación</div>
-                        <StarContainer>
-                          <span className="fa fa-star active-filter"></span>
-                          <span className="fa fa-star active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                        </StarContainer>
-                      </li>
-                      <li className="list-group-item">
-                        Experiencia
-                        <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
-                        </div>
-                        <LabelFilter>
-                          <Col>
-                            <TextFilter>1 años</TextFilter>
-                          </Col>
-                          <ColFilter>
-                            <TextFilter>5 años</TextFilter>
-                          </ColFilter>
-                        </LabelFilter>
-                      </li>
-                      <li className="list-group-item">
-                        Disponible
-                        <FormControl
-                          id="inlineFormInputGroup"
-                          placeholder="Hoy (16 Jul, 2020)"
-                        />
-                        <LabelFilter>
-                          <Col>
-                            <TextFilterBox>9:00AM</TextFilterBox>
-                          </Col>
-                          <ColFilter>
-                            <TextFilterBoxEnd>9:00AM</TextFilterBoxEnd>
-                          </ColFilter>
-                        </LabelFilter>
-                      </li>
-                      <li className="list-group-item">
-                        Precio por hora
-                        <TextFilter>Hasta $25</TextFilter>
-                        <TextFilter>$25 - $50</TextFilter>
-                        <TextFilter>$50 - $100</TextFilter>
-                        <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
-                        </div>
-                        <LabelFilter>
-                          <Col>
-                            <TextFilter>$40</TextFilter>
-                          </Col>
-                          <ColFilter>
-                            <TextFilter>$120</TextFilter>
-                          </ColFilter>
-                        </LabelFilter>
-                      </li>
-                      <li className="list-group-item">
-                        Precio por minuto <TextFilter>Hasta $25</TextFilter>
-                        <TextFilter>$25 - $50</TextFilter>
-                        <TextFilter>$50 - $100</TextFilter>
-                        <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
-                        </div>
-                        <LabelFilter>
-                          <Col>
-                            <TextFilter>$40</TextFilter>
-                          </Col>
-                          <ColFilter>
-                            <TextFilter>$120</TextFilter>
-                          </ColFilter>
-                        </LabelFilter>
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-                <Col className="col-md-9">
+              <Row>
+                <Col className="col-md-12">
                   <WellContainer>
-                    <Container className="themed-container" fluid={true}>
+                    <div className="row-border col-padding">
+                      <Col>
+                        <div className="userIconTra">
+                          <div>
+                            <img src="/assets/images/icon.png" alt="logo" />
+                          </div>
+                          <div>
+                            <p className="name">
+                              {translators?.firstname} {translators?.lastname}
+                              <br></br> 2 años de experiencia
+                              <div>
+                                <span className="fa fa-star active"></span>
+                                <span className="fa fa-star active"></span>
+                                <span className="fa fa-star-o active"></span>
+                                <span className="fa ffa-star-o active"></span>
+                                <span className="fa fa-star-o active"></span>
+                                <span className="fa fa-star-o active"></span>
+                              </div>
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col>
+                        <Row>
+                          <Col>
+                            <p className="price-hour">$40/hr</p>
+                          </Col>
+                          <Col>
+                            <Submit
+                              type="button"
+                              onClick={() => {
+                                history.push(`/request-translator/${id}`);
+                              }}
+                            >
+                              Solicitar servicio
+                            </Submit>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </div>
+                    <Row className="col-padding">
+                      <Col>
+                        <Row>
+                          <Col className="col-md-12">
+                            <p className="text-profile">
+                              Hi there, I’m a full-time UI/UX designer and
+                              freelance visual designer based out of Center
+                              City, Philadelphia. My skills and interests
+                              include UI/UX, motion design, and graphic design.
+                              Tools I work with everyday include Sketch,
+                              InVision, Zeplin, and Adobe CC (Photoshop,
+                              Illustrator, InDesign, After Effects, and XD).
+                            </p>
+                          </Col>
+                          <Col className="col-md-12 col-margin">
+                            <Row className="border-cont">
+                              <Col>
+                                <p>Especialista en</p>
+                                <span className="badge badge-light">
+                                  Comercio
+                                </span>
+                                <span className="badge badge-light">
+                                  Estilo de vida
+                                </span>
+                              </Col>
+                              <Col>
+                                <p>Idioma</p>
+                                <span className="badge badge-light">
+                                  Ingles
+                                </span>
+                              </Col>
+                            </Row>
+                          </Col>
+                          <Col className="col-md-12 col-margin">
+                            <Row className="border-cont">
+                              <Col>
+                                <p>Ublicacion</p>
+                                <span className="text-profile-item">
+                                  Cartagena, Colombia
+                                </span>
+                              </Col>
+                              <Col>
+                                <p>Nacionalidad</p>
+                                <span className="text-profile-item">
+                                  Colombiana
+                                </span>
+                              </Col>
+                            </Row>
+                          </Col>
+                          <Col className="col-md-12 col-margin">
+                            <Row className="border-cont">
+                              <Col>
+                                <p>Tarifa por hora</p>
+                                <span className="text-profile-item">$40</span>
+                              </Col>
+                              <Col>
+                                <p>Tarifa por minuto</p>
+                                <span className="text-profile-item">$1</span>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Col>
+
+                      <Col className="col-md-3 opinions">
+                        <div className="opinion-container">
+                          <div className="opinion-title">
+                            <p>Opiniones</p>
+                            <a>Ver todas</a>
+                          </div>
+                          <p>4.44 (23 opiniones)</p>
+                        </div>
+                        <div>
+                          <p className="name">
+                            <div className="opinion-name">
+                              <p>
+                                Emilia{" "}
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                              </p>
+                              <span className="opinion-date">12/09/19</span>
+                            </div>
+                            <span className="text-profile-item">
+                              {" "}
+                              Loved Chef Kreuther and his techniques with this
+                              wonderful recipe.
+                            </span>
+                            <div></div>
+                          </p>
+                        </div>{" "}
+                        <div>
+                          <p className="name">
+                            <div className="opinion-name">
+                              <p>
+                                Emilia{" "}
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                              </p>
+                              <span className="opinion-date">12/09/19</span>
+                            </div>
+                            <span className="text-profile-item">
+                              {" "}
+                              Loved Chef Kreuther and his techniques with this
+                              wonderful recipe.
+                            </span>
+                            <div></div>
+                          </p>
+                        </div>{" "}
+                        <div>
+                          <p className="name">
+                            <div className="opinion-name">
+                              <p>
+                                Emilia{" "}
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                              </p>
+                              <span className="opinion-date">12/09/19</span>
+                            </div>
+                            <span className="text-profile-item">
+                              {" "}
+                              Loved Chef Kreuther and his techniques with this
+                              wonderful recipe.
+                            </span>
+                            <div></div>
+                          </p>
+                        </div>
+                        <div>
+                          <p className="name">
+                            <div className="opinion-name">
+                              <p>
+                                Emilia{" "}
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa ffa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                                <span className="fa fa-star-o active-green"></span>
+                              </p>
+                              <span className="opinion-date">12/09/19</span>
+                            </div>
+                            <span className="text-profile-item">
+                              {" "}
+                              Loved Chef Kreuther and his techniques with this
+                              wonderful recipe.
+                            </span>
+                            <div></div>
+                          </p>
+                        </div>
+                      </Col>
+                    </Row>
+
+                    {/* <Container className="themed-container" fluid={true}>
                       <Row>
                         <Col>
                           <Form.Group controlId="exampleForm.ControlSelect1">
@@ -441,55 +570,7 @@ function TranslatorsPage({
                     <div className="table-responsive">
                       <table className="table ">
                         <tbody>
-                          {translators.map((ele: any) => (
-                            <tr>
-                              <td>
-                                <div className="userIconTra">
-                                  <div>
-                                    <img
-                                      src="/assets/images/icon.png"
-                                      alt="logo"
-                                    />
-                                  </div>
-                                  <div>
-                                    <p className="name">
-                                      {ele.firstname} {ele.lastname}
-                                      <div>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa ffa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                      </div>
-                                    </p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p>Especialista en</p>
-                                <span className="badge badge-light">
-                                  Comercio
-                                </span>
-                                <span className="badge badge-light">
-                                  Estilo de vida
-                                </span>
-                              </td>
-                              <td>
-                                <p>Idioma</p>
-                                <span className="badge badge-light">
-                                  Ingles
-                                </span>
-                              </td>
-                              <td>
-                                <ResendLink to={`profile-translator/${ele.id}`}>
-                                  Ver perfil
-                                </ResendLink>
-                              </td>
-                            </tr>
-                          ))}
-
-                          {/*     <tr>
+                          <tr>
                             <td>
                               <div className="userIconTra">
                                 <div>
@@ -527,9 +608,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -570,9 +649,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -613,9 +690,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -656,9 +731,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -699,9 +772,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -742,9 +813,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -785,9 +854,7 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
                           </tr>
                           <tr>
@@ -828,14 +895,54 @@ function TranslatorsPage({
                               <span className="badge badge-light">Ingles</span>
                             </td>
                             <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
+                              <ResendLink to="#">Ver perfil</ResendLink>
                             </td>
-                          </tr> */}
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="userIconTra">
+                                <div>
+                                  <img
+                                    src="/assets/images/icon.png"
+                                    alt="logo"
+                                  />
+                                </div>
+                                <div>
+                                  <p className="name">
+                                    Emma
+                                    <div>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa ffa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                      <span className="fa fa-star-o active"></span>
+                                    </div>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <p>Especialista en</p>
+                              <span className="badge badge-light">
+                                Comercio
+                              </span>
+                              <span className="badge badge-light">
+                                Estilo de vida
+                              </span>
+                            </td>
+                            <td>
+                              <p>Idioma</p>
+                              <span className="badge badge-light">Ingles</span>
+                            </td>
+                            <td>
+                              <ResendLink to="#">Ver perfil</ResendLink>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
+              */}
                   </WellContainer>
                 </Col>
               </Row>
@@ -868,10 +975,13 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-TranslatorsPage.propTypes = {
+ProfileTranslatorPage.propTypes = {
   counter: PropTypes.number.isRequired,
   reduxIncreaseCounter: PropTypes.func.isRequired,
   reduxDecreaseCounter: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TranslatorsPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileTranslatorPage);

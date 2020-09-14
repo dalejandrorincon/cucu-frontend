@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -212,6 +212,38 @@ function HomePage({
   reduxDecreaseCounter,
   counter,
 }: Props) {
+  const [translators, setTranslators] = useState([]);
+
+  useEffect(() => {
+    getTranslators();
+  }, []);
+
+  const getTranslators = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    headers.append(
+      "Authorization",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImlhdCI6MTU5OTg1MDcwOSwiZXhwIjoxNTk5ODU3OTA5fQ.DVu3pRVUymoWawvcenx0-Nf6V32eXnW_haEU-8kY-0w"
+    );
+
+    try {
+      fetch("https://cucu-api-dev.n-techlab.xyz/api/translation_services/", {
+        method: "GET",
+        headers: headers,
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setTranslators(responseJson.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
@@ -231,8 +263,16 @@ function HomePage({
           </li>
         </ul>
         <ul className="navbar-nav">
+          <li className="nav-item ">
+            <img src="/assets/images/bell@2x.png"></img>
+          </li>
+        </ul>
+        <ul className="navbar-nav">
           <div className="ico-user" />
           <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
+            <NavDropdown.Item>
+              <Link to="profile">Perfil</Link>
+            </NavDropdown.Item>{" "}
             <NavDropdown.Item>Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
         </ul>
@@ -315,7 +355,43 @@ function HomePage({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      {translators.map((ele: any) => (
+                        <tr>
+                          <td>
+                            <div className="userIcon">
+                              <div>
+                                <img src="/assets/images/icon.png" alt="logo" />
+                              </div>
+                              <div>
+                                <p className="name">
+                                  {ele.translator.firstname}{" "}
+                                  {ele.translator.lastname}
+                                  <div>
+                                    <span className="fa fa-star-o  active"></span>
+                                    <span className="fa fa-star-o  active"></span>
+                                    <span className="fa fa-star-o active"></span>
+                                    <span className="fa ffa-star-o active"></span>
+                                    <span className="fa fa-star-o active"></span>
+                                    <span className="fa fa-star-o active"></span>
+                                  </div>
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Programada</td>
+                          <td>${ele.amount}</td>
+                          <td>{ele.date}</td>
+                          <td>
+                            <span className="badge badge-light">
+                              Solicitado
+                            </span>
+                          </td>
+                          <td>
+                            <ResendLink to="#">Ver</ResendLink>
+                          </td>
+                        </tr>
+                      ))}
+                      {/* <tr>
                         <td>
                           <div className="userIcon">
                             <div>
@@ -340,7 +416,7 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
@@ -371,7 +447,7 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
@@ -402,7 +478,7 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
@@ -433,7 +509,7 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
@@ -464,7 +540,7 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
@@ -495,12 +571,12 @@ function HomePage({
                         <td>$25</td>
                         <td>7 Jul, 2020</td>
                         <td>
-                          <span className="badge badge-light">En progreso</span>
+                          <span className="badge badge-light">Solicitado</span>
                         </td>
                         <td>
                           <ResendLink to="#">Ver</ResendLink>
                         </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>
