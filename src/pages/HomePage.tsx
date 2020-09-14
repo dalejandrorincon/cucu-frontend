@@ -12,6 +12,7 @@ import {
   Nav,
   NavDropdown,
   FormControl,
+  Modal,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 
@@ -62,12 +63,59 @@ const PasswordInfo = styled.p`
   opacity: 1;
 `;
 
+const SubmitCancel = styled(Button)`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  opacity: 1;
+  color: #d03b3b;
+  opacity: 1;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 20px;
+  text-align: center;
+  font: normal normal medium 17px Acumin Pro;
+  letter-spacing: 0px;
+  opacity: 1;
+  &:hover {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    opacity: 1;
+    color: #d03b3b;
+  }
+  :not(:disabled):not(.disabled).active,
+  :not(:disabled):not(.disabled):active,
+  .show > .dropdown-toggle {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    opacity: 1;
+    color: #d03b3b;
+  }
+  &:focus {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    opacity: 1;
+    color: #d03b3b;
+    box-shadow: none;
+  }
+`;
+
 const WellContainer = styled.div`
   background-color: #fff !important;
   border-radius: 0 !important;
   border: #d1d1d1 solid 1px;
   padding-top: 30px;
   margin-bottom: 30px;
+`;
+
+const WellContainerModal = styled.div`
+  background - color: #fff!important;
+  border - radius: 0!important;
+  border: #d1d1d1 solid 1px;
+  padding: 20px;
 `;
 
 const PasswordRecover = styled.div`
@@ -122,33 +170,39 @@ const Label = styled(Form.Label)`
 `;
 
 const Submit = styled(Button)`
-  background: #863df9 0% 0% no-repeat padding-box;
+  background: #f9f5ff 0% 0% no-repeat padding-box;
   border-radius: 3px;
-  border-color: #863df9;
   opacity: 1;
-  width: 100%;
-  min-height: 50px;
+  border: 0;
+  color: #863df9;
+  opacity: 1;
+  min-height: 40px;
   text-align: center;
-  font: normal normal medium 17px Acumin Pro;
+  font: normal normal bold 15px Acumin Pro Bold;
   letter-spacing: 0px;
-  color: #ffffff;
   opacity: 1;
   &:hover {
-    color: #fff;
-    background-color: #863df9;
-    border-color: #863df9;
+    background: #f9f5ff 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+    opacity: 1;
+    border: 0;
+    color: #863df9;
   }
   :not(:disabled):not(.disabled).active,
   :not(:disabled):not(.disabled):active,
   .show > .dropdown-toggle {
-    color: #fff;
-    background-color: #863df9;
-    border-color: #863df9;
+    background: #f9f5ff 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+    opacity: 1;
+    border: 0;
+    color: #863df9;
   }
   &:focus {
-    color: #fff;
-    background-color: #863df9;
-    border-color: #863df9;
+    background: #f9f5ff 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+    opacity: 1;
+    border: 0;
+    color: #863df9;
     box-shadow: none;
   }
 `;
@@ -213,6 +267,9 @@ function HomePage({
   counter,
 }: Props) {
   const [translators, setTranslators] = useState([]);
+  const [translator, setTranslator] = useState<any>({});
+
+  const [isVisible, setisVisible] = useState(false);
 
   useEffect(() => {
     getTranslators();
@@ -235,6 +292,36 @@ function HomePage({
         .then((response) => response.json())
         .then((responseJson) => {
           setTranslators(responseJson.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const cancelTranslate = (id) => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    headers.append(
+      "Authorization",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImlhdCI6MTU5OTg1MDcwOSwiZXhwIjoxNTk5ODU3OTA5fQ.DVu3pRVUymoWawvcenx0-Nf6V32eXnW_haEU-8kY-0w"
+    );
+
+    try {
+      fetch(
+        `https://cucu-api-dev.n-techlab.xyz/api/translation_services/cancel/${id}`,
+        {
+          method: "PUT",
+          headers: headers,
+        }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setisVisible(false);
+          alert("Servicio cancelado");
         })
         .catch((error) => {
           console.log(error);
@@ -387,196 +474,22 @@ function HomePage({
                             </span>
                           </td>
                           <td>
-                            <ResendLink to="#">Ver</ResendLink>
+                            <Link
+                              className="view-mas"
+                              to="#"
+                              onClick={() => {
+                                setTranslator(ele);
+                                setisVisible(true);
+                              }}
+                            >
+                              <img
+                                src="/assets/images/dots@2x.png"
+                                alt="logo"
+                              />
+                            </Link>
                           </td>
                         </tr>
                       ))}
-                      {/* <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className="userIcon">
-                            <div>
-                              <img src="/assets/images/icon.png" alt="logo" />
-                            </div>
-                            <div>
-                              <p className="name">
-                                Emma
-                                <div>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa ffa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                  <span className="fa fa-star-o active"></span>
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>Programada</td>
-                        <td>$25</td>
-                        <td>7 Jul, 2020</td>
-                        <td>
-                          <span className="badge badge-light">Solicitado</span>
-                        </td>
-                        <td>
-                          <ResendLink to="#">Ver</ResendLink>
-                        </td>
-                      </tr> */}
                     </tbody>
                   </table>
                 </div>
@@ -584,6 +497,86 @@ function HomePage({
             </PasswordRecover>
           </Col>
         </RowRecover>
+        <Modal
+          className="right"
+          show={isVisible}
+          onHide={() => {
+            setisVisible(false);
+          }}
+          autoFocus
+          keyboard
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Detalles de servicio</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="contentUserIcon">
+              <div className="userIconModal">
+                <div>
+                  <img src="/assets/images/icon.png" alt="logo" />
+                </div>
+                <div>
+                  <p className="name-modal">
+                    {translator.translator?.firstname}{" "}
+                    {translator.translator?.lastname}
+                  </p>
+                  <p className="tradu-ins">Traducción instantánea</p>
+                </div>
+              </div>
+              <span className="badge badge-light status-trans">Solicitado</span>
+            </div>
+            <WellContainerModal>
+              <p className="price-modal">
+                $ {translator.amount}{" "}
+                <span className="price-detail">($2x100) + $5</span>
+              </p>
+              <p className="detail-modal-text-bold">
+                Cucutiempo: <span>tiempo abierto</span>
+              </p>
+              <p className="detail-modal-text-bold">
+                Cobro por: <span>Hora</span>{" "}
+              </p>
+              <p className="detail-modal-text-bold">
+                Duración: <span>100</span>{" "}
+              </p>
+              <p className="detail-modal-text-bold">
+                Fecha inicio: <span>{translator.date}</span>
+              </p>
+              <Submit
+                type="button"
+                onClick={() => {
+                  window.open(translator.url);
+                }}
+              >
+                <img src="/assets/images/video-purple.png"></img>Visitar URL de
+                la sesión
+              </Submit>
+              <hr></hr>
+              <p className="detail-modal-text-bold">Adjuntos</p>
+              <div className="container-files">
+                <span className="file">
+                  <i className="fa fa-file margin-file"></i>Name.jpg
+                </span>{" "}
+                <span className="file">
+                  <i className="fa fa-file margin-file"></i>Name.jpg
+                </span>{" "}
+                <span className="file">
+                  <i className="fa fa-file margin-file"></i>Name.jpg
+                </span>
+              </div>
+              <p className="detail-modal-text-bold">Información adicional</p>
+              <p className="detail-modal-text">{translator.description}</p>
+            </WellContainerModal>
+            <SubmitCancel
+              type="button"
+              onClick={() => {
+                cancelTranslate(translator.id);
+              }}
+            >
+              Cancelar servicio
+            </SubmitCancel>
+          </Modal.Body>
+        </Modal>
       </Container>
     </>
   );

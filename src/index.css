@@ -60,6 +60,30 @@ code {
   margin-top: -30px;
 }
 
+.userIconModal {
+  display: flex;
+  align-items: center;
+}
+
+.name-modal {
+  text-align: left;
+  font: normal normal bold 18px Acumin Pro Bold;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.tradu-ins {
+  font: normal normal normal 15px/21px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  margin-top: -10px;
+  padding-left: 10px;
+}
+
 .userIconTra {
   display: flex;
   align-items: center;
@@ -698,4 +722,207 @@ nav a:hover {
   color: #212529 !important;
   text-decoration: none !important;
   background-color: transparent !important;
+}
+
+
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+  position: fixed;
+  margin: auto;
+  width: 320px;
+  height: 100%;
+  -webkit-transform: translate3d(0%, 0, 0);
+  -ms-transform: translate3d(0%, 0, 0);
+  -o-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
+}
+
+.modal.left .modal-content,
+.modal.right .modal-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+  padding: 15px 15px 80px;
+}
+
+/*Left*/
+.modal.left.fade .modal-dialog {
+  left: -320px;
+  -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+  transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left.fade.in .modal-dialog {
+  left: 0;
+}
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+  right: 0;
+  width: 491px;
+  -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+  transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.in .modal-dialog {
+  right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+  border-radius: 0;
+  border: none;
+}
+
+.modal-header {
+  border-bottom-color: #EEEEEE;
+  background-color: #FAFAFA;
+}
+
+/* ----- v CAN BE DELETED v ----- */
+body {
+  background-color: #78909C;
+}
+
+.demo {
+  padding-top: 60px;
+  padding-bottom: 110px;
+}
+
+.btn-demo {
+  margin: 15px;
+  padding: 10px 15px;
+  border-radius: 0;
+  font-size: 16px;
+  background-color: #FFFFFF;
+}
+
+.btn-demo:focus {
+  outline: 0;
+}
+
+.demo-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background-color: #212121;
+  text-align: center;
+}
+
+.demo-footer>a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+}
+
+.modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem 1rem !important;
+  border-bottom: 1px solid #dee2e6 !important;
+  border-top-left-radius: calc(.3rem - 1px) !important;
+  border-top-right-radius: calc(.3rem - 1px) !important;
+}
+
+
+.modal-title {
+  margin-bottom: 0 !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+  font: normal normal bold 20px Acumin Pro !important;
+  letter-spacing: 0px !important;
+  color: #3C3C3C !important;
+  opacity: 1 !important;
+}
+
+
+.close {
+  position: absolute !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: #000 !important;
+  text-shadow: 0 1px 0 #fff !important;
+  opacity: .5 !important;
+  left: 0 !important;
+}
+
+.price-modal {
+  text-align: left;
+  font: normal normal bold 28px/40px Acumin Pro;
+  letter-spacing: 0px;
+  color: #863DF9;
+  opacity: 1;
+}
+
+.price-detail {
+  text-align: left;
+  font: normal normal normal 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+}
+
+.detail-modal-text-bold {
+  text-align: left;
+  font: normal normal bold 15px/21px Acumin Pro Bold;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+}
+
+.contentUserIcon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-trans {
+  height: 20px;
+  margin-top: 20px;
+}
+
+.detail-modal-text {
+  text-align: left;
+  font: normal normal bold 15px/21px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+}
+
+.view-mas {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #D5D5D5;
+  border-radius: 3px;
+  opacity: 1;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.container-files {
+  padding-bottom: 20px;
+}
+
+.file {
+  background: #FAFAFA 0% 0% no-repeat padding-box;
+  border: 1px solid #D5D5D5;
+  border-radius: 3px;
+  opacity: 1;
+  font: normal normal normal 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  padding: 10px;
+}
+
+.margin-file {
+  margin-right: 5px;
 }
