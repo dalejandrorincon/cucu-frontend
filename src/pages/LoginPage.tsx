@@ -180,14 +180,15 @@ function LoginPage() {
           if (responseJson.message === "Login Successful") {
             localStorage.setItem("token", responseJson.token);
             localStorage.setItem("userId", responseJson.user.id);
+            localStorage.setItem("role", responseJson.user.role);
             localStorage.setItem(
               "userName",
               responseJson.user.firstname + " " + responseJson.user.lastname
             );
-            if (responseJson.user.rol === 3 || responseJson.user.rol === 4) {
+            if (responseJson.user.role === 3 || responseJson.user.role === 4) {
               history.push("/translators");
             } else {
-              history.push("/profile-translator");
+              history.push("/profile");
             }
           } else {
             alert(responseJson.message);

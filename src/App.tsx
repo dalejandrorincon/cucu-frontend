@@ -39,10 +39,14 @@ export default function App() {
           path="/request-translator/:id"
           component={RequestTranslatorPage}
         />
-        <PrivateRoute path="/profile" component={ProfilePage} />
         <PrivateRoute
-          path="/profile-translator"
-          component={ProfileTraductorPage}
+          path="/profile"
+          component={
+            localStorage.getItem("role") === "3" ||
+            localStorage.getItem("role") === "4"
+              ? ProfilePage
+              : ProfileTraductorPage
+          }
         />
       </Router>
     </Provider>

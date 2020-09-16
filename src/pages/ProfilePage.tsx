@@ -331,7 +331,7 @@ function ProfilePage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/translators">
           <img src="/assets/images/logo.png" alt="logo" />
         </Link>
         <ul className="navbar-nav mr-auto">

@@ -330,11 +330,11 @@ function ProfileTraductorPage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="#">
           <img src="/assets/images/logo.png" alt="logo" />
         </Link>
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item nav-item-active">
+          {/* <li className="nav-item nav-item-active">
             <Link className="nav-link nav-item-inactive" to="/translators">
               Traductores
             </Link>
@@ -343,7 +343,7 @@ function ProfileTraductorPage({
             <Link className="nav-link nav-item-inactive" to="/home">
               Mis solicitudes
             </Link>
-          </li>
+          </li> */}
         </ul>
         <ul className="navbar-nav">
           <li className="nav-item ">

@@ -306,7 +306,7 @@ function ProfileTranslatorPage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/translators">
           <img src="/assets/images/logo.png" alt="logo" />
         </Link>
         <ul className="navbar-nav mr-auto">
@@ -349,7 +349,6 @@ function ProfileTranslatorPage({
           </NavDropdown>
         </ul>
       </nav>
-
       <Container className="themed-container" fluid={true}>
         <RowRecover className="layout-content">
           <Col className="col-md-12">
@@ -360,7 +359,7 @@ function ProfileTranslatorPage({
                   <WellContainer>
                     <div className="row-border col-padding">
                       <Col>
-                        <div className="userIconTra">
+                        <div className="userIconTra iconuserprofile">
                           <div>
                             <img src="/assets/images/icon.png" alt="logo" />
                           </div>
