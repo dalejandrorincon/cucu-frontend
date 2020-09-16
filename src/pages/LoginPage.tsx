@@ -160,11 +160,8 @@ const ShowPassword = styled(InputGroup.Text)`
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const history = useHistory();
-
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data: any) => {
     const body = new URLSearchParams(data);
@@ -181,8 +178,6 @@ function LoginPage() {
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson.message === "Login Successful") {
-            setEmail("");
-            setPassword("");
             localStorage.setItem("token", responseJson.token);
             localStorage.setItem("userId", responseJson.user.id);
             localStorage.setItem(
@@ -196,8 +191,6 @@ function LoginPage() {
             }
           } else {
             alert(responseJson.message);
-            setEmail("");
-            setPassword("");
           }
         })
         .catch((error) => {
@@ -228,8 +221,6 @@ function LoginPage() {
                   type="email"
                   name="email"
                   ref={register({ required: true })}
-                  // onChange={(e: any) => setEmail(e.target.value)}
-                  // value={email}
                 />
               </Form.Group>
               {errors.email && (
