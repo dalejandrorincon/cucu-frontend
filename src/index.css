@@ -66,10 +66,12 @@ code {
 }
 
 .name-modal {
+  text-transform: capitalize;
+
   text-align: left;
   font: normal normal bold 18px Acumin Pro Bold;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   padding-top: 10px;
   padding-left: 10px;
@@ -78,7 +80,7 @@ code {
 .tradu-ins {
   font: normal normal normal 15px/21px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   margin-top: -10px;
   padding-left: 10px;
@@ -87,11 +89,11 @@ code {
 .userIconTra {
   display: flex;
   align-items: center;
-  margin-top: -20px;
 }
 
 .active {
   color: #863df9;
+  margin-right: 10px;
 }
 
 .active-filter {
@@ -100,6 +102,7 @@ code {
 }
 
 .name {
+  text-transform: capitalize;
   padding-top: 10px;
   padding-left: 10px;
 }
@@ -239,57 +242,6 @@ th {
   /* Width of the outside container */
 }
 
-.slider {
-  -webkit-appearance: none;
-  /* Override default CSS styles */
-  appearance: none;
-  width: 100%;
-  /* Full-width */
-  height: 5px;
-  /* Specified height */
-  background: #25a847;
-  /* Grey background */
-  outline: none;
-  /* Remove outline */
-  opacity: 0.7;
-  /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: 0.2s;
-  /* 0.2 seconds transition on hover */
-  transition: opacity 0.2s;
-}
-
-.slider:hover {
-  opacity: 1;
-  /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  /* Override default look */
-  appearance: none;
-  width: 15px;
-  /* Set a specific slider handle width */
-  height: 15px;
-  /* Slider handle height */
-  background: #25a847;
-  /* Green background */
-  cursor: pointer;
-  border-radius: 50%;
-  /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  /* Set a specific slider handle width */
-  height: 25px;
-  /* Slider handle height */
-  background: #4caf50;
-  /* Green background */
-  cursor: pointer;
-  /* Cursor on hover */
-}
-
 .modal-90w.left .modal-90w-dialog,
 .modal-90w.right .modal-90w-dialog {
   position: fixed;
@@ -388,54 +340,18 @@ body {
   color: #fff;
 }
 
-.rc-slider-rail {
-  position: absolute !important;
-  width: 100% !important;
-  background-color: #4da848 !important;
-  height: 4px !important;
-  border-radius: 6px !important;
-}
-
-.rc-slider-track {
-  position: absolute !important;
-  left: 0 !important;
-  height: 4px !important;
-  border-radius: 6px !important;
-  background-color: #4da848 !important;
-}
-
 .rc-slider-handle:active {
   border-color: #4da848 !important;
   box-shadow: 0 0 5px #4da848 !important;
-  cursor: grabbing !important;
+}
+
+.rc-slider-track {
+  background-color: #4da848 !important;
 }
 
 .rc-slider-handle {
-  position: absolute !important;
-  width: 14px !important;
-  height: 14px !important;
-  cursor: pointer !important;
-  cursor: -webkit-grab !important;
-  margin-top: -5px !important;
-  cursor: grab !important;
-  border-radius: 50% !important;
   border: solid 2px #4da848 !important;
   background-color: #4da848 !important;
-  touch-action: pan-x !important;
-}
-
-.rc-slider-handle {
-  position: absolute !important;
-  width: 14px !important;
-  height: 14px !important;
-  cursor: pointer !important;
-  cursor: -webkit-grab !important;
-  margin-top: -5px !important;
-  cursor: grab !important;
-  border-radius: 50% !important;
-  border: solid 2px #4da848 !important;
-  background-color: #4da848 !important;
-  touch-action: pan-x !important;
 }
 
 .col-padding {
@@ -490,6 +406,8 @@ body {
 }
 
 .opinion-name {
+  text-transform: capitalize;
+
   display: flex;
   justify-content: space-between;
 }
@@ -528,10 +446,10 @@ body {
 }
 
 .text-profile-item {
-  font: normal normal normal 13px Acumin Pro;
   letter-spacing: 0px;
   color: #2d2d2d;
   opacity: 1;
+  text-transform: capitalize;
 }
 
 .form-request {
@@ -565,7 +483,6 @@ body {
   left: calc(50% - 67.5px);
 }
 
-
 .image-profile {
   height: 100px;
   margin-bottom: 10px;
@@ -575,7 +492,7 @@ body {
   text-align: end;
   font: normal normal bold 28px/40px Acumin Pro;
   letter-spacing: 0px;
-  color: #863DF9;
+  color: #863df9;
   opacity: 1;
 }
 
@@ -583,11 +500,12 @@ body {
   border-right: 1px solid #d5d5d5;
 }
 
-
 .name-profile {
+  text-transform: capitalize;
+
   font: normal normal bold 28px Acumin Pro Bold;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   padding-left: 10px;
 }
@@ -602,7 +520,7 @@ body {
   margin-top: -15px;
   font: normal normal normal 15px/21px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
@@ -611,7 +529,7 @@ body {
   margin-top: -15px;
   font: normal normal normal 15px/21px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
@@ -620,7 +538,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 5px solid #25A847;
+  border-left: 5px solid #25a847;
   margin-left: -5px;
   background: white;
   margin-right: -5px;
@@ -654,7 +572,7 @@ body {
 .text-item-menu-active {
   font: normal normal bold 15px Acumin Pro Bold;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   margin-top: 20px;
 }
@@ -662,7 +580,7 @@ body {
 .text-item-menu {
   font: normal normal normal 15px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   margin-top: 20px;
 }
@@ -671,28 +589,28 @@ body {
   text-decoration: underline;
   font: normal normal medium 17px Acumin Pro;
   letter-spacing: 0px;
-  color: #A0A0A0;
+  color: #a0a0a0;
   opacity: 1;
 }
 
 .dropdown-toggle {
   font: normal normal normal Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
 .dropdown-toggle:hover {
   font: normal normal normal Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
 .dropdown-item {
   font: normal normal normal Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
@@ -704,7 +622,7 @@ body {
 .enterprise {
   font: normal normal normal 28px Acumin Pro;
   letter-spacing: 0px;
-  color: #A0A0A0;
+  color: #a0a0a0;
   opacity: 1;
 }
 
@@ -723,7 +641,6 @@ nav a:hover {
   text-decoration: none !important;
   background-color: transparent !important;
 }
-
 
 .modal.left .modal-dialog,
 .modal.right .modal-dialog {
@@ -782,13 +699,13 @@ nav a:hover {
 }
 
 .modal-header {
-  border-bottom-color: #EEEEEE;
-  background-color: #FAFAFA;
+  border-bottom-color: #eeeeee;
+  background-color: #fafafa;
 }
 
 /* ----- v CAN BE DELETED v ----- */
 body {
-  background-color: #78909C;
+  background-color: #78909c;
 }
 
 .demo {
@@ -801,7 +718,7 @@ body {
   padding: 10px 15px;
   border-radius: 0;
   font-size: 16px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .btn-demo:focus {
@@ -830,10 +747,9 @@ body {
   justify-content: center !important;
   padding: 1rem 1rem !important;
   border-bottom: 1px solid #dee2e6 !important;
-  border-top-left-radius: calc(.3rem - 1px) !important;
-  border-top-right-radius: calc(.3rem - 1px) !important;
+  border-top-left-radius: calc(0.3rem - 1px) !important;
+  border-top-right-radius: calc(0.3rem - 1px) !important;
 }
-
 
 .modal-title {
   margin-bottom: 0 !important;
@@ -841,10 +757,9 @@ body {
   text-align: center !important;
   font: normal normal bold 20px Acumin Pro !important;
   letter-spacing: 0px !important;
-  color: #3C3C3C !important;
+  color: #3c3c3c !important;
   opacity: 1 !important;
 }
-
 
 .close {
   position: absolute !important;
@@ -853,7 +768,7 @@ body {
   line-height: 1 !important;
   color: #000 !important;
   text-shadow: 0 1px 0 #fff !important;
-  opacity: .5 !important;
+  opacity: 0.5 !important;
   left: 0 !important;
 }
 
@@ -861,7 +776,7 @@ body {
   text-align: left;
   font: normal normal bold 28px/40px Acumin Pro;
   letter-spacing: 0px;
-  color: #863DF9;
+  color: #863df9;
   opacity: 1;
 }
 
@@ -869,7 +784,7 @@ body {
   text-align: left;
   font: normal normal normal 13px/19px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
@@ -877,7 +792,7 @@ body {
   text-align: left;
   font: normal normal bold 15px/21px Acumin Pro Bold;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 }
 
 .contentUserIcon {
@@ -894,12 +809,12 @@ body {
   text-align: left;
   font: normal normal bold 15px/21px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 }
 
 .view-mas {
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #D5D5D5;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d5d5d5;
   border-radius: 3px;
   opacity: 1;
   text-decoration: none;
@@ -912,13 +827,13 @@ body {
 }
 
 .file {
-  background: #FAFAFA 0% 0% no-repeat padding-box;
-  border: 1px solid #D5D5D5;
+  background: #fafafa 0% 0% no-repeat padding-box;
+  border: 1px solid #d5d5d5;
   border-radius: 3px;
   opacity: 1;
   font: normal normal normal 13px/19px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   padding: 10px;
 }
@@ -931,18 +846,132 @@ body {
   text-decoration: underline;
   font: normal normal bold 13px/19px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
 }
 
 .opinion-modal {
   font: normal normal bold 20px/28px Acumin Pro;
   letter-spacing: 0px;
-  color: #2D2D2D;
+  color: #2d2d2d;
   opacity: 1;
   text-align: center;
 }
 
 .badge {
   text-transform: capitalize;
+}
+
+.active-filter {
+  color: #25a847;
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}
+
+.fa-start {
+  font-size: 2em !important;
+  margin-right: 15px !important;
+  color: #25a847 !important;
+}
+
+.startcontainer {
+  margin-top: 10px;
+}
+
+.paginador {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-top: 1px solid #d5d5d5;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.siguiente {
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  opacity: 1;
+  font: normal normal normal 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+  background: #f4f4f4 0% 0% no-repeat padding-box;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.atras {
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  opacity: 1;
+  font: normal normal normal 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2d2d2d;
+  opacity: 1;
+  background: #f4f4f4 0% 0% no-repeat padding-box;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.form-select {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  opacity: 1;
+  min-height: 45px;
+}
+
+.filter-languaje {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #D5D5D5;
+  border-radius: 3px;
+  opacity: 1;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.img-filer {
+  height: 15px;
+}
+
+.selec {
+  background: #F3F3F3 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+  letter-spacing: 0px;
+  color: #8D8D8D;
+  opacity: 1;
+  height: 27px;
+}
+
+.rpw {
+  text-align: center;
+  font: normal normal normal 13px/19px Acumin Pro;
+  letter-spacing: 0px;
+  color: #A0A0A0;
+  opacity: 1;
+  padding-top: 5px;
+}
+
+.label-filter {
+  font: normal normal bold 15px/21px Acumin Pro Bold;
+}
+
+.titleFilter {
+  font: normal normal bold 20px/28px Acumin Pro Bold;
+  letter-spacing: 0px;
+  color: #3C3C3C;
+  opacity: 1;
+}
+
+.badge-light {
+  margin-right: 5px !important;
 }

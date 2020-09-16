@@ -254,8 +254,10 @@ function SignupPage() {
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("client");
+  const [role, setRole] = useState("1");
   const [terms, setTerms] = useState(false);
+  const [type, setType] = useState("client");
+
   const history = useHistory();
 
   const submitForm = () => {
@@ -274,7 +276,6 @@ function SignupPage() {
         firstname !== "" &&
         lastname !== "" &&
         password !== "" &&
-        document !== "" &&
         phone !== "" &&
         email !== "" &&
         role !== ""
@@ -330,11 +331,11 @@ function SignupPage() {
             <Title>Crea una cuenta</Title>
             <Row>
               <Col>
-                {role === "client" ? (
+                {role === "1" ? (
                   <OptionActive
                     type="button"
                     onClick={() => {
-                      setRole("client");
+                      setRole("1");
                     }}
                   >
                     Soy usuario
@@ -343,7 +344,7 @@ function SignupPage() {
                   <Option
                     type="button"
                     onClick={() => {
-                      setRole("client");
+                      setRole("1");
                     }}
                   >
                     Soy usuario
@@ -351,11 +352,11 @@ function SignupPage() {
                 )}
               </Col>
               <Col>
-                {role === "translator" ? (
+                {role === "2" ? (
                   <OptionActive
                     type="button"
                     onClick={() => {
-                      setRole("translator");
+                      setRole("2");
                     }}
                   >
                     Soy traductor
@@ -364,7 +365,7 @@ function SignupPage() {
                   <Option
                     type="button"
                     onClick={() => {
-                      setRole("translator");
+                      setRole("2");
                     }}
                   >
                     Soy traductor
@@ -391,13 +392,37 @@ function SignupPage() {
                   onChange={(e: any) => setLastname(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group>
+              {role === "1" && (
+                <>
+                  <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Label>Tipo de cliente</Label>
+                    <Form.Control
+                      className="form-select"
+                      as="select"
+                      onChange={(e) => {
+                        setType(e.target.value);
+                      }}
+                    >
+                      <option value="client">Persona natural</option>
+                      <option value="enterprise">Persona juridica</option>
+                    </Form.Control>
+                  </Form.Group>
+                  {type === "enterprise" && (
+                    <Form.Group>
+                      <Label>Nombre de tu empresa</Label>
+                      <Control type="text" />
+                    </Form.Group>
+                  )}
+                </>
+              )}
+
+              {/* <Form.Group>
                 <Label>Documento de identidad</Label>
                 <Control
                   type="text"
                   onChange={(e: any) => setDocument(e.target.value)}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group>
                 <Label>Correo electrónico</Label>
                 <Control

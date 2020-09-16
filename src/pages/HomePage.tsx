@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -268,12 +269,9 @@ function HomePage({
 }: Props) {
   const [translators, setTranslators] = useState([]);
   const [translator, setTranslator] = useState<any>({});
-
   const [isVisible, setisVisible] = useState(false);
-
-  useEffect(() => {
-    getTranslators();
-  }, []);
+  const [data, setData] = useState<any>({});
+  const [page, setPage] = useState(1);
 
   const getTranslators = () => {
     const headers = new Headers();
@@ -286,7 +284,7 @@ function HomePage({
 
     try {
       fetch(
-        "https://cucu-api-dev.n-techlab.xyz/api/translation_services/?page=2",
+        `https://cucu-api-dev.n-techlab.xyz/api/translation_services/?page=${page}`,
         {
           method: "GET",
           headers: headers,
@@ -295,6 +293,7 @@ function HomePage({
         .then((response) => response.json())
         .then((responseJson) => {
           setTranslators(responseJson.results);
+          setData(responseJson);
         })
         .catch((error) => {
           console.log(error);
@@ -303,6 +302,14 @@ function HomePage({
       console.log("Error", error);
     }
   };
+
+  useEffect(() => {
+    getTranslators();
+  }, [page]);
+
+  useEffect(() => {
+    getTranslators();
+  }, []);
 
   const cancelTranslate = (id) => {
     const headers = new Headers();
@@ -463,7 +470,6 @@ function HomePage({
                                     <span className="fa fa-star-o  active"></span>
                                     <span className="fa fa-star-o  active"></span>
                                     <span className="fa fa-star-o active"></span>
-                                    <span className="fa ffa-star-o active"></span>
                                     <span className="fa fa-star-o active"></span>
                                     <span className="fa fa-star-o active"></span>
                                   </div>
@@ -499,6 +505,27 @@ function HomePage({
                     </tbody>
                   </table>
                 </div>
+                <p className="paginador">
+                  {page > 1 && (
+                    <button
+                      className="atras"
+                      onClick={() => {
+                        setPage(data.page - 1);
+                      }}
+                    >
+                      Atrás
+                    </button>
+                  )}
+                  Pagina {data.page} de {data.pages}
+                  <button
+                    className="siguiente"
+                    onClick={() => {
+                      setPage(data.page + 1);
+                    }}
+                  >
+                    Siguiente
+                  </button>
+                </p>
               </WellContainer>
             </PasswordRecover>
           </Col>

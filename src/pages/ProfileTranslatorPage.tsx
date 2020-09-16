@@ -357,12 +357,12 @@ function ProfileTranslatorPage({
                           <div>
                             <p className="name">
                               {translators?.firstname} {translators?.lastname}
-                              <br></br> 2 años de experiencia
+                              <br></br> {translators?.total_experience_years}{" "}
+                              años de experiencia
                               <div>
                                 <span className="fa fa-star active"></span>
                                 <span className="fa fa-star active"></span>
                                 <span className="fa fa-star-o active"></span>
-                                <span className="fa ffa-star-o active"></span>
                                 <span className="fa fa-star-o active"></span>
                                 <span className="fa fa-star-o active"></span>
                               </div>
@@ -373,7 +373,10 @@ function ProfileTranslatorPage({
                       <Col>
                         <Row>
                           <Col>
-                            <p className="price-hour">$40/hr</p>
+                            <p className="price-hour">
+                              ${translators?.rate_hour} / $
+                              {translators?.rate_minute}
+                            </p>
                           </Col>
                           <Col>
                             <Submit
@@ -393,46 +396,46 @@ function ProfileTranslatorPage({
                         <Row>
                           <Col className="col-md-12">
                             <p className="text-profile">
-                              Hi there, I’m a full-time UI/UX designer and
-                              freelance visual designer based out of Center
-                              City, Philadelphia. My skills and interests
-                              include UI/UX, motion design, and graphic design.
-                              Tools I work with everyday include Sketch,
-                              InVision, Zeplin, and Adobe CC (Photoshop,
-                              Illustrator, InDesign, After Effects, and XD).
+                              {translators?.description}
                             </p>
                           </Col>
                           <Col className="col-md-12 col-margin">
                             <Row className="border-cont">
                               <Col>
                                 <p>Especialista en</p>
-                                <span className="badge badge-light">
-                                  Comercio
-                                </span>
-                                <span className="badge badge-light">
-                                  Estilo de vida
-                                </span>
+                                {translators?.specialities?.map((sp: any) => (
+                                  <span className="badge badge-light">
+                                    {sp.name}
+                                  </span>
+                                ))}
                               </Col>
                               <Col>
                                 <p>Idioma</p>
-                                <span className="badge badge-light">
-                                  Ingles
-                                </span>
+                                {translators?.languages?.map((lng: any) => (
+                                  <>
+                                    <span className="badge badge-light">
+                                      {lng.to.name}
+                                    </span>
+                                    <span className="badge badge-light">
+                                      {lng.from.name}
+                                    </span>
+                                  </>
+                                ))}
                               </Col>
                             </Row>
                           </Col>
                           <Col className="col-md-12 col-margin">
                             <Row className="border-cont">
                               <Col>
-                                <p>Ublicacion</p>
+                                <p>Ubicacion</p>
                                 <span className="text-profile-item">
-                                  Cartagena, Colombia
+                                  {translators?.address_1}
                                 </span>
                               </Col>
                               <Col>
                                 <p>Nacionalidad</p>
                                 <span className="text-profile-item">
-                                  Colombiana
+                                  {translators?.nationality}
                                 </span>
                               </Col>
                             </Row>
@@ -441,11 +444,15 @@ function ProfileTranslatorPage({
                             <Row className="border-cont">
                               <Col>
                                 <p>Tarifa por hora</p>
-                                <span className="text-profile-item">$40</span>
+                                <span className="text-profile-item">
+                                  ${translators?.rate_hour}
+                                </span>
                               </Col>
                               <Col>
                                 <p>Tarifa por minuto</p>
-                                <span className="text-profile-item">$1</span>
+                                <span className="text-profile-item">
+                                  ${translators?.rate_minute}
+                                </span>
                               </Col>
                             </Row>
                           </Col>

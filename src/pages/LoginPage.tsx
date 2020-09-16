@@ -183,7 +183,7 @@ function LoginPage() {
             setEmail("");
             setPassword("");
             localStorage.setItem("token", responseJson.token);
-            history.push("/home");
+            history.push("/translators");
           } else {
             alert(responseJson.message);
             setEmail("");

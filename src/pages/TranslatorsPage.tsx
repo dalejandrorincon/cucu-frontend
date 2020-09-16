@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -15,6 +17,10 @@ import {
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Range } from "rc-slider";
+import { FormGroup } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Rating from "react-rating";
 
 const Logo = styled.img`
   position: relative;
@@ -73,6 +79,7 @@ const WellContainer = styled.div`
 
 const PasswordRecover = styled.div`
   min-height: 100vh;
+  padding-bottom: 30px;
 `;
 
 const RowRecover = styled(Row)`
@@ -207,9 +214,7 @@ const ControlPassword = styled(Form.Control)`
 `;
 
 const StarContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 60%;
+  margin-top: 10px;
 `;
 const TextFilter = styled.p`
   font: normal normal normal 15px Acumin Pro;
@@ -219,30 +224,37 @@ const TextFilter = styled.p`
 `;
 
 const TextFilterBox = styled.p`
-  background: #fafafa 0% 0% no-repeat padding-box;
+  background: #e9e9e9 0% 0% no-repeat padding-box;
   border-radius: 3px;
   opacity: 1;
-  height: 20px;
-  padding: 3px;
-  width: 60px;
-  margin-top: 10px;
+  height: 25px;
+  padding: 5px;
+  width: 70px;
+  margin-top: 0px;
   font: normal normal normal 15px Acumin Pro;
+  -webkit-letter-spacing: 0px;
+  -moz-letter-spacing: 0px;
+  -ms-letter-spacing: 0px;
   letter-spacing: 0px;
   opacity: 1;
+  text-align: end;
 `;
 
 const TextFilterBoxEnd = styled.p`
-  background: #fafafa 0% 0% no-repeat padding-box;
-  text-align: end;
+  background: #e9e9e9 0% 0% no-repeat padding-box;
   border-radius: 3px;
   opacity: 1;
-  height: 20px;
-  width: 60px;
-  padding: 3px;
-  margin-top: 10px;
+  height: 25px;
+  padding: 5px;
+  width: 70px;
+  margin-top: 0px;
   font: normal normal normal 15px Acumin Pro;
+  -webkit-letter-spacing: 0px;
+  -moz-letter-spacing: 0px;
+  -ms-letter-spacing: 0px;
   letter-spacing: 0px;
   opacity: 1;
+  text-align: end;
   float: right;
 `;
 const ShowPassword = styled(InputGroup.Text)`
@@ -263,28 +275,62 @@ function TranslatorsPage({
 }: Props) {
   const [valueRange, setValueRange] = useState([20, 40]);
   const [translators, setTranslators] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
 
-  useEffect(() => {
-    getTranslators();
-  }, []);
+  const [startDate, setStartDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [data, setData] = useState<any>({});
+  const [page, setPage] = useState(1);
 
-  const getTranslators = () => {
+  const ExampleCustomInput = (props) => <Form.Control {...props} />;
+  const ExampleCustomInputTime = (props) => (
+    <TextFilterBox onClick={props.onClick}>{props.value}</TextFilterBox>
+  );
+
+  const ExampleCustomInputTimeTwo = (props) => (
+    <TextFilterBoxEnd onClick={props.onClick}>{props.value}</TextFilterBoxEnd>
+  );
+
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(40);
+  const [value, setValue] = useState([10, 30]);
+
+  const [minHour, setMinHour] = useState(1);
+  const [maxHour, setMaxHour] = useState(200);
+  const [valueHour, setValueHour] = useState([40, 120]);
+
+  const [minMinute, setMinMinute] = useState(1);
+  const [maxMinute, setMaxMinute] = useState(200);
+  const [valueMinute, setValueMinute] = useState([40, 120]);
+  const [rate, setRate] = useState(0);
+
+  const onSliderChange = (value) => {
+    setValue(value);
+  };
+
+  const onSliderChangeMinute = (value) => {
+    setValueMinute(value);
+  };
+
+  const onSliderChangeHour = (value) => {
+    setValueHour(value);
+  };
+
+  const getSpecialities = () => {
     const headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    headers.append(
-      "Authorization",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImlhdCI6MTU5OTg1MDcwOSwiZXhwIjoxNTk5ODU3OTA5fQ.DVu3pRVUymoWawvcenx0-Nf6V32eXnW_haEU-8kY-0w"
-    );
 
     try {
-      fetch("https://cucu-api-dev.n-techlab.xyz/api/users/translators", {
+      fetch(`https://cucu-api-dev.n-techlab.xyz/api/specialities`, {
         method: "GET",
         headers: headers,
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          setTranslators(responseJson.results);
+          setSpecialities(responseJson);
         })
         .catch((error) => {
           console.log(error);
@@ -293,6 +339,94 @@ function TranslatorsPage({
       console.log("Error", error);
     }
   };
+
+  const getLanguages = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    try {
+      fetch(`https://cucu-api-dev.n-techlab.xyz/api/languages`, {
+        method: "GET",
+        headers: headers,
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setLanguages(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const getTranslators = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    try {
+      fetch(
+        `https://cucu-api-dev.n-techlab.xyz/api/users/translators?page=${page}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setTranslators(responseJson.users);
+          setData(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const getTranslatorsPage = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    try {
+      fetch(
+        `https://cucu-api-dev.n-techlab.xyz/api/users/translators?grade=${rate}&min_price_minute=${valueMinute[0]}&max_price_minute=${valueMinute[1]}&min_experience=${value[0]}&max_experience=${value[1]}&min_price_hour=${valueHour[0]}&max_price_hour${valueHour[1]}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setTranslators(responseJson.users);
+          setData(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getTranslatorsPage();
+  }, [value, valueHour, valueMinute, rate]);
+
+  useEffect(() => {
+    getTranslators();
+  }, [page]);
+
+  useEffect(() => {
+    getTranslators();
+    getLanguages();
+    getSpecialities();
+  }, []);
 
   return (
     <>
@@ -337,77 +471,163 @@ function TranslatorsPage({
               <Row className="margin-5">
                 <Col className="col-md-3">
                   <div className="card">
-                    <div className="card-header">Filtrar por</div>
+                    <div className="card-header titleFilter">Filtrar por</div>
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <div>Calificación</div>
-                        <StarContainer>
-                          <span className="fa fa-star active-filter"></span>
-                          <span className="fa fa-star active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                          <span className="fa fa-star-o active-filter"></span>
-                        </StarContainer>
-                      </li>
-                      <li className="list-group-item">
-                        Experiencia
-                        <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
-                        </div>
-                        <LabelFilter>
-                          <Col>
-                            <TextFilter>1 años</TextFilter>
-                          </Col>
-                          <ColFilter>
-                            <TextFilter>5 años</TextFilter>
-                          </ColFilter>
-                        </LabelFilter>
-                      </li>
-                      <li className="list-group-item">
-                        Disponible
-                        <FormControl
-                          id="inlineFormInputGroup"
-                          placeholder="Hoy (16 Jul, 2020)"
+                        <div className="label-filter">Calificación</div>
+                        <Rating
+                          emptySymbol="fa fa-star-o fa-2x fa-start"
+                          fullSymbol="fa fa-star fa-2x fa-start"
+                          className="startcontainer"
+                          onChange={(rate: any) => setRate(rate)}
+                          initialRating={rate}
                         />
+                      </li>
+                      <li className="list-group-item">
+                        <div className="label-filter">Experiencia</div>
+                        <div className="slidecontainer">
+                          <Range
+                            defaultValue={value}
+                            min={min}
+                            max={max}
+                            onChange={onSliderChange}
+                          />
+                        </div>
                         <LabelFilter>
                           <Col>
-                            <TextFilterBox>9:00AM</TextFilterBox>
+                            <TextFilter>{value[0]} años</TextFilter>
                           </Col>
                           <ColFilter>
-                            <TextFilterBoxEnd>9:00AM</TextFilterBoxEnd>
+                            <TextFilter>{value[1]} años</TextFilter>
                           </ColFilter>
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
-                        Precio por hora
-                        <TextFilter>Hasta $25</TextFilter>
-                        <TextFilter>$25 - $50</TextFilter>
-                        <TextFilter>$50 - $100</TextFilter>
-                        <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
-                        </div>
+                        <Form.Group controlId="dob">
+                          <Form.Label className="label-filter">
+                            Disponible
+                          </Form.Label>
+                          <DatePicker
+                            selected={startDate}
+                            onChange={(date: any) => setStartDate(date)}
+                            customInput={
+                              <ExampleCustomInput></ExampleCustomInput>
+                            }
+                          />
+                        </Form.Group>
                         <LabelFilter>
                           <Col>
-                            <TextFilter>$40</TextFilter>
+                            <DatePicker
+                              selected={startTime}
+                              onChange={(date: any) => setStartTime(date)}
+                              showTimeSelect
+                              showTimeSelectOnly
+                              timeIntervals={30}
+                              timeCaption="Time"
+                              dateFormat="h:mm aa"
+                              customInput={
+                                <ExampleCustomInputTime></ExampleCustomInputTime>
+                              }
+                            />
+                          </Col>
+                          <Col className="rpw">
+                            <span>Hasta</span>
                           </Col>
                           <ColFilter>
-                            <TextFilter>$120</TextFilter>
+                            <DatePicker
+                              selected={endTime}
+                              onChange={(date: any) => setEndTime(date)}
+                              showTimeSelect
+                              showTimeSelectOnly
+                              timeIntervals={30}
+                              timeCaption="Time"
+                              dateFormat="h:mm aa"
+                              customInput={
+                                <ExampleCustomInputTimeTwo></ExampleCustomInputTimeTwo>
+                              }
+                            />
                           </ColFilter>
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
-                        Precio por minuto <TextFilter>Hasta $25</TextFilter>
-                        <TextFilter>$25 - $50</TextFilter>
-                        <TextFilter>$50 - $100</TextFilter>
+                        <div className="label-filter">Precio por hora</div>
+                        <br></br>
+                        <TextFilter
+                          onClick={() => {
+                            setValueHour([1, 25]);
+                          }}
+                        >
+                          Hasta $25
+                        </TextFilter>
+                        <TextFilter
+                          onClick={() => {
+                            setValueHour([25, 50]);
+                          }}
+                        >
+                          $25 - $50
+                        </TextFilter>
+                        <TextFilter
+                          onClick={() => {
+                            setValueHour([50, 100]);
+                          }}
+                        >
+                          $50 - $100
+                        </TextFilter>
                         <div className="slidecontainer">
-                          <Range defaultValue={[5, 15]} min={1} max={20} />
+                          <Range
+                            value={valueHour}
+                            min={minHour}
+                            max={maxHour}
+                            onChange={onSliderChangeHour}
+                          />
                         </div>
                         <LabelFilter>
                           <Col>
-                            <TextFilter>$40</TextFilter>
+                            <TextFilter>${valueHour[0]}</TextFilter>
                           </Col>
                           <ColFilter>
-                            <TextFilter>$120</TextFilter>
+                            <TextFilter>${valueHour[1]}</TextFilter>
+                          </ColFilter>
+                        </LabelFilter>
+                      </li>
+                      <li className="list-group-item">
+                        <div className="label-filter">Precio por minuto</div>
+                        <br></br>
+                        <TextFilter
+                          onClick={() => {
+                            setValueMinute([1, 25]);
+                          }}
+                        >
+                          Hasta $25
+                        </TextFilter>
+                        <TextFilter
+                          onClick={() => {
+                            setValueMinute([25, 50]);
+                          }}
+                        >
+                          $25 - $50
+                        </TextFilter>
+                        <TextFilter
+                          onClick={() => {
+                            setValueMinute([50, 100]);
+                          }}
+                        >
+                          $50 - $100
+                        </TextFilter>
+                        <div className="slidecontainer">
+                          <Range
+                            value={valueMinute}
+                            min={minMinute}
+                            max={maxMinute}
+                            onChange={onSliderChangeMinute}
+                          />
+                        </div>
+                        <LabelFilter>
+                          <Col>
+                            <TextFilter>${valueMinute[0]}</TextFilter>
+                          </Col>
+                          <ColFilter>
+                            <TextFilter>${valueMinute[1]}</TextFilter>
                           </ColFilter>
                         </LabelFilter>
                       </li>
@@ -422,17 +642,30 @@ function TranslatorsPage({
                           <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Control as="select">
                               <option>Todas las especialidades</option>
+                              {specialities.map((elm: any) => (
+                                <option>{elm.name}</option>
+                              ))}
                             </Form.Control>
                           </Form.Group>
                         </Col>
                         <Col>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Control as="select">
-                              <option>Todos los idiomas</option>
-                              <option>Español</option>
-                              <option>Ingles</option>
-                            </Form.Control>
-                          </Form.Group>
+                          <div className="filter-languaje">
+                            <span>Idiomas</span>
+                            <select className="selec">
+                              {languages.map((elm: any) => (
+                                <option>{elm.name}</option>
+                              ))}
+                            </select>
+                            <img
+                              className="img-filer"
+                              src="/assets/images/load.png"
+                            ></img>
+                            <select className="selec">
+                              {languages.map((elm: any) => (
+                                <option>{elm.name}</option>
+                              ))}
+                            </select>
+                          </div>
                         </Col>
                         <Col>
                           <FormControl
@@ -462,7 +695,6 @@ function TranslatorsPage({
                                         <span className="fa fa-star-o active"></span>
                                         <span className="fa fa-star-o active"></span>
                                         <span className="fa fa-star-o active"></span>
-                                        <span className="fa ffa-star-o active"></span>
                                         <span className="fa fa-star-o active"></span>
                                         <span className="fa fa-star-o active"></span>
                                       </div>
@@ -472,18 +704,24 @@ function TranslatorsPage({
                               </td>
                               <td>
                                 <p>Especialista en</p>
-                                <span className="badge badge-light">
-                                  Comercio
-                                </span>
-                                <span className="badge badge-light">
-                                  Estilo de vida
-                                </span>
+                                {ele.specialities.map((sp: any) => (
+                                  <span className="badge badge-light">
+                                    {sp.name}
+                                  </span>
+                                ))}
                               </td>
                               <td>
                                 <p>Idioma</p>
-                                <span className="badge badge-light">
-                                  Ingles
-                                </span>
+                                {ele.languages.map((lng: any) => (
+                                  <>
+                                    <span className="badge badge-light">
+                                      {lng.to.name}
+                                    </span>
+                                    <span className="badge badge-light">
+                                      {lng.from.name}
+                                    </span>
+                                  </>
+                                ))}
                               </td>
                               <td>
                                 <ResendLink to={`profile-translator/${ele.id}`}>
@@ -492,354 +730,30 @@ function TranslatorsPage({
                               </td>
                             </tr>
                           ))}
-
-                          {/*     <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="userIconTra">
-                                <div>
-                                  <img
-                                    src="/assets/images/icon.png"
-                                    alt="logo"
-                                  />
-                                </div>
-                                <div>
-                                  <p className="name">
-                                    Emma
-                                    <div>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa ffa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                      <span className="fa fa-star-o active"></span>
-                                    </div>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>Especialista en</p>
-                              <span className="badge badge-light">
-                                Comercio
-                              </span>
-                              <span className="badge badge-light">
-                                Estilo de vida
-                              </span>
-                            </td>
-                            <td>
-                              <p>Idioma</p>
-                              <span className="badge badge-light">Ingles</span>
-                            </td>
-                            <td>
-                              <ResendLink to="profile-translator">
-                                Ver perfil
-                              </ResendLink>
-                            </td>
-                          </tr> */}
                         </tbody>
                       </table>
                     </div>
+                    <p className="paginador">
+                      {page > 1 && (
+                        <button
+                          className="atras"
+                          onClick={() => {
+                            setPage(data.page - 1);
+                          }}
+                        >
+                          Atrás
+                        </button>
+                      )}
+                      Pagina {data.page} de {data.pages}
+                      <button
+                        className="siguiente"
+                        onClick={() => {
+                          setPage(data.page + 1);
+                        }}
+                      >
+                        Siguiente
+                      </button>
+                    </p>
                   </WellContainer>
                 </Col>
               </Row>
