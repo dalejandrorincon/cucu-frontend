@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { logout } from "../utils/session";
 import {
   Container,
   Row,
@@ -427,6 +428,7 @@ function TranslatorsPage({
     getLanguages();
     getSpecialities();
   }, []);
+  const history = useHistory();
 
   return (
     <>
@@ -453,12 +455,23 @@ function TranslatorsPage({
         </ul>
         <ul className="navbar-nav">
           <div className="ico-user" />
-          <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
+          <NavDropdown
+            title={localStorage.getItem("userName")}
+            id="nav-dropdown"
+          >
             <NavDropdown.Item>
               <Link to="/profile">Perfil</Link>
             </NavDropdown.Item>{" "}
             <NavDropdown.Item>
-              <Link to="/">Cerrar sesión</Link>
+              <Link
+                to="#"
+                onClick={() => {
+                  logout();
+                  history.push("/");
+                }}
+              >
+                Cerrar sesión
+              </Link>
             </NavDropdown.Item>
           </NavDropdown>
         </ul>

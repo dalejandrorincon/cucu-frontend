@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
+import { logout } from "../utils/session";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -183,6 +184,11 @@ function LoginPage() {
             setEmail("");
             setPassword("");
             localStorage.setItem("token", responseJson.token);
+            localStorage.setItem("userId", responseJson.user.id);
+            localStorage.setItem(
+              "userName",
+              responseJson.user.firstname + " " + responseJson.user.lastname
+            );
             history.push("/translators");
           } else {
             alert(responseJson.message);

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { logout } from "../utils/session";
 import {
   Container,
   Row,
@@ -278,10 +279,7 @@ function ProfileTranslatorPage({
     const headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    headers.append(
-      "Authorization",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImlhdCI6MTU5OTg1MDcwOSwiZXhwIjoxNTk5ODU3OTA5fQ.DVu3pRVUymoWawvcenx0-Nf6V32eXnW_haEU-8kY-0w"
-    );
+    headers.append("Authorization", localStorage.getItem("token")!);
 
     try {
       fetch(`https://cucu-api-dev.n-techlab.xyz/api/users/${id}`, {
@@ -329,12 +327,23 @@ function ProfileTranslatorPage({
         </ul>
         <ul className="navbar-nav">
           <div className="ico-user" />
-          <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
+          <NavDropdown
+            title={localStorage.getItem("userName")}
+            id="nav-dropdown"
+          >
             <NavDropdown.Item>
               <Link to="/profile">Perfil</Link>
             </NavDropdown.Item>{" "}
             <NavDropdown.Item>
-              <Link to="/">Cerrar sesión</Link>
+              <Link
+                to="#"
+                onClick={() => {
+                  logout();
+                  history.push("/");
+                }}
+              >
+                Cerrar sesión
+              </Link>
             </NavDropdown.Item>
           </NavDropdown>
         </ul>

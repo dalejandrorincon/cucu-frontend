@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { logout } from "../utils/session";
 
 export const CounterButton = styled.button`
   display: inline-block;

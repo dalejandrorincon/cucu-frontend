@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { logout } from "../utils/session";
 import {
   Container,
   Row,
@@ -290,10 +291,35 @@ function ProfilePage({
   const [role, setRole] = useState("client");
   const [terms, setTerms] = useState(false);
   const history = useHistory();
-  // const updateModal = (isVisible) => {
-  //   setIsVisible(isVisible);
-  //   //this.forceUpdate();
-  // };
+  const [profile, setProfile] = useState<any>({});
+
+  const getProfile = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", localStorage.getItem("token")!);
+
+    try {
+      fetch(
+        `https://cucu-api-dev.n-techlab.xyz/api/users/${localStorage.getItem(
+          "userId"
+        )}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setProfile(responseJson.user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <>
@@ -320,12 +346,23 @@ function ProfilePage({
         </ul>
         <ul className="navbar-nav">
           <div className="ico-user" />
-          <NavDropdown title="Alvaro Pérez" id="nav-dropdown">
+          <NavDropdown
+            title={localStorage.getItem("userName")}
+            id="nav-dropdown"
+          >
             <NavDropdown.Item>
               <Link to="/profile">Perfil</Link>
             </NavDropdown.Item>{" "}
             <NavDropdown.Item>
-              <Link to="/">Cerrar sesión</Link>
+              <Link
+                to="#"
+                onClick={() => {
+                  logout();
+                  history.push("/");
+                }}
+              >
+                Cerrar sesión
+              </Link>
             </NavDropdown.Item>
           </NavDropdown>
         </ul>

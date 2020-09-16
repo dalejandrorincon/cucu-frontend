@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { logout } from "../utils/session";
 import { Link, useHistory } from "react-router-dom";
 
 const Logo = styled.img`
