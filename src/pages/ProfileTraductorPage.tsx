@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -18,6 +19,7 @@ import {
 import { Link, useHistory, useParams } from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
 import { Range } from "rc-slider";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   position: relative;
@@ -279,11 +281,9 @@ function ProfileTraductorPage({
   reduxDecreaseCounter,
   counter,
 }: Props) {
-  // const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [profile, setProfile] = useState<any>({});
-
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
@@ -302,15 +302,10 @@ function ProfileTraductorPage({
     headers.append("Authorization", localStorage.getItem("token")!);
 
     try {
-      fetch(
-        `https://cucu-api-dev.n-techlab.xyz/api/users/${localStorage.getItem(
-          "userId"
-        )}`,
-        {
-          method: "GET",
-          headers: headers,
-        }
-      )
+      fetch(`${baseUri}/users/${localStorage.getItem("userId")}`, {
+        method: "GET",
+        headers: headers,
+      })
         .then((response) => response.json())
         .then((responseJson) => {
           setProfile(responseJson.user);
@@ -378,7 +373,6 @@ function ProfileTraductorPage({
           </NavDropdown>
         </ul>
       </nav>
-
       <Container className="themed-container" fluid={true}>
         <RowRecover className="layout-content">
           <Col className="col-md-12">
@@ -402,8 +396,6 @@ function ProfileTraductorPage({
                               <p className="name-profile">
                                 {profile?.firstname} {profile?.lastname}
                               </p>
-
-                              {/* <p className="enterprise">. NativApps S.A.S</p> */}
                             </div>
                             <p className="email-text">{profile?.email}</p>
                           </div>

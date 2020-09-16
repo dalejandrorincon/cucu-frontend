@@ -22,6 +22,7 @@ import { FormGroup } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Rating from "react-rating";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   position: relative;
@@ -325,7 +326,7 @@ function TranslatorsPage({
     headers.append("Content-Type", "application/json");
 
     try {
-      fetch(`https://cucu-api-dev.n-techlab.xyz/api/specialities`, {
+      fetch(`${baseUri}/specialities`, {
         method: "GET",
         headers: headers,
       })
@@ -347,7 +348,7 @@ function TranslatorsPage({
     headers.append("Content-Type", "application/json");
 
     try {
-      fetch(`https://cucu-api-dev.n-techlab.xyz/api/languages`, {
+      fetch(`${baseUri}/languages`, {
         method: "GET",
         headers: headers,
       })
@@ -369,13 +370,10 @@ function TranslatorsPage({
     headers.append("Content-Type", "application/json");
 
     try {
-      fetch(
-        `https://cucu-api-dev.n-techlab.xyz/api/users/translators?page=${page}`,
-        {
-          method: "GET",
-          headers: headers,
-        }
-      )
+      fetch(`${baseUri}/users/translators?page=${page}`, {
+        method: "GET",
+        headers: headers,
+      })
         .then((response) => response.json())
         .then((responseJson) => {
           setTranslators(responseJson.users);
@@ -396,7 +394,7 @@ function TranslatorsPage({
 
     try {
       fetch(
-        `https://cucu-api-dev.n-techlab.xyz/api/users/translators?grade=${rate}&min_price_minute=${valueMinute[0]}&max_price_minute=${valueMinute[1]}&min_experience=${value[0]}&max_experience=${value[1]}&min_price_hour=${valueHour[0]}&max_price_hour${valueHour[1]}`,
+        `${baseUri}/users/translators?grade=${rate}&min_price_minute=${valueMinute[0]}&max_price_minute=${valueMinute[1]}&min_experience=${value[0]}&max_experience=${value[1]}&min_price_hour=${valueHour[0]}&max_price_hour${valueHour[1]}`,
         {
           method: "GET",
           headers: headers,

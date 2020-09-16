@@ -19,6 +19,8 @@ import {
 import { Link, useHistory, useParams } from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
 import { Range } from "rc-slider";
+const baseUri = process.env.REACT_APP_API_URL;
+
 const Logo = styled.img`
   left: calc(50% - 41px);
   position: relative;
@@ -383,7 +385,7 @@ function RequestTranslatorPage() {
     headers.append("Authorization", localStorage.getItem("token")!);
 
     try {
-      fetch(`https://cucu-api-dev.n-techlab.xyz/api/users/${id}`, {
+      fetch(`${baseUri}/users/${id}`, {
         method: "GET",
         headers: headers,
       })

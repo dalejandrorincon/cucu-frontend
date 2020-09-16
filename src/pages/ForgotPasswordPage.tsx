@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
-import { logout } from "../utils/session";
 import { Link, useHistory } from "react-router-dom";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -178,7 +178,7 @@ function ForgotPasswordPage() {
 
     try {
       if (email !== "") {
-        fetch("https://cucu-api-dev.n-techlab.xyz/api/auth/password-recovery", {
+        fetch(`${baseUri}/auth/password-recovery`, {
           method: "POST",
           headers: {
             Accept: "application/json",

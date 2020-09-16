@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { logout } from "../utils/session";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -169,7 +170,7 @@ function LoginPage() {
     const body = new URLSearchParams(data);
 
     try {
-      fetch("https://cucu-api-dev.n-techlab.xyz/api/auth/login", {
+      fetch(`${baseUri}/auth/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -180,7 +181,6 @@ function LoginPage() {
         .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson.message === "Login Successful") {
-            //alert(responseJson.message);
             setEmail("");
             setPassword("");
             localStorage.setItem("token", responseJson.token);
@@ -189,7 +189,11 @@ function LoginPage() {
               "userName",
               responseJson.user.firstname + " " + responseJson.user.lastname
             );
-            history.push("/translators");
+            if (responseJson.user.rol === 3 || responseJson.user.rol === 4) {
+              history.push("/translators");
+            } else {
+              history.push("/profile-translator");
+            }
           } else {
             alert(responseJson.message);
             setEmail("");

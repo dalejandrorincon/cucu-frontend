@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage";
 import TranslatorsPage from "./pages/TranslatorsPage";
 import "rc-slider/assets/index.css";
 import ProfileTranslatorPage from "./pages/ProfileTranslatorPage";
+import ProfileTraductorPage from "./pages/ProfileTraductorPage";
 import RequestTranslatorPage from "./pages/RequestTranslatorPage";
 import ProfilePage from "./pages/ProfilePage";
 import { PublicRoute } from "./components/PublicRoute";
@@ -39,6 +40,10 @@ export default function App() {
           component={RequestTranslatorPage}
         />
         <PrivateRoute path="/profile" component={ProfilePage} />
+        <PrivateRoute
+          path="/profile-translator"
+          component={ProfileTraductorPage}
+        />
       </Router>
     </Provider>
   );

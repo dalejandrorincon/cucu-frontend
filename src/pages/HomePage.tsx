@@ -17,6 +17,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   position: relative;
@@ -114,8 +115,8 @@ const WellContainer = styled.div`
 `;
 
 const WellContainerModal = styled.div`
-  background - color: #fff!important;
-  border - radius: 0!important;
+  background-color: #fff !important;
+  border-radius: 0 !important;
   border: #d1d1d1 solid 1px;
   padding: 20px;
 `;
@@ -274,6 +275,8 @@ function HomePage({
   const [data, setData] = useState<any>({});
   const [page, setPage] = useState(1);
   const history = useHistory();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const getTranslators = () => {
     const headers = new Headers();
@@ -282,13 +285,10 @@ function HomePage({
     headers.append("Authorization", localStorage.getItem("token")!);
 
     try {
-      fetch(
-        `https://cucu-api-dev.n-techlab.xyz/api/translation_services/?page=${page}`,
-        {
-          method: "GET",
-          headers: headers,
-        }
-      )
+      fetch(`${baseUri}/translation_services/?page=${page}`, {
+        method: "GET",
+        headers: headers,
+      })
         .then((response) => response.json())
         .then((responseJson) => {
           setTranslators(responseJson.results);
@@ -317,13 +317,10 @@ function HomePage({
     headers.append("Authorization", localStorage.getItem("token")!);
 
     try {
-      fetch(
-        `https://cucu-api-dev.n-techlab.xyz/api/translation_services/cancel/${id}`,
-        {
-          method: "PUT",
-          headers: headers,
-        }
-      )
+      fetch(`${baseUri}/translation_services/cancel/${id}`, {
+        method: "PUT",
+        headers: headers,
+      })
         .then((response) => response.json())
         .then((responseJson) => {
           setisVisible(false);

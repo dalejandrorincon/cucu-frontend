@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { logout } from "../utils/session";
 import { Link, useHistory } from "react-router-dom";
+const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
   left: calc(50% - 41px);
@@ -299,7 +300,7 @@ function SignupPage() {
           return;
         }
 
-        fetch("https://cucu-api-dev.n-techlab.xyz/api/users", {
+        fetch(`${baseUri}/users`, {
           method: "POST",
           headers: {
             Accept: "application/json",
