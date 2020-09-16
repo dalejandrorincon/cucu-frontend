@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -281,20 +282,55 @@ function ProfileTraductorPage({
   // const [isVisible, setIsVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
-  const [firstname, setFirstname] = useState("Alvaro");
-  const [lastname, setLastname] = useState("Perez");
+  const [profile, setProfile] = useState<any>({});
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [document, setDocument] = useState("");
-  const [phone, setPhone] = useState("3197874887");
-  const [email, setEmail] = useState("alvaro.perez@nativapps.com");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState("client");
   const [terms, setTerms] = useState(false);
   const history = useHistory();
-  // const updateModal = (isVisible) => {
-  //   setIsVisible(isVisible);
-  //   //this.forceUpdate();
-  // };
+
+  const getProfile = () => {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", localStorage.getItem("token")!);
+
+    try {
+      fetch(
+        `https://cucu-api-dev.n-techlab.xyz/api/users/${localStorage.getItem(
+          "userId"
+        )}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setProfile(responseJson.user);
+          setFirstname(responseJson.user.firstname);
+          setLastname(responseJson.user.lastname);
+          setDocument(responseJson.user.document);
+          setPhone(responseJson.user.phone);
+          setEmail(responseJson.user.email);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <>
@@ -363,13 +399,13 @@ function ProfileTraductorPage({
                           </div>
                           <div>
                             <div className="name-container">
-                              <p className="name-profile">Alvaro Perez</p>
+                              <p className="name-profile">
+                                {profile?.firstname} {profile?.lastname}
+                              </p>
 
-                              <p className="enterprise">. NativApps S.A.S</p>
+                              {/* <p className="enterprise">. NativApps S.A.S</p> */}
                             </div>
-                            <p className="email-text">
-                              alvaro.perez@nativapps.com
-                            </p>
+                            <p className="email-text">{profile?.email}</p>
                           </div>
                         </div>
                       </Col>
@@ -452,7 +488,7 @@ function ProfileTraductorPage({
                                     setShowPassword(!showPassword);
                                   }}
                                 >
-                                  {showPassword ? "Ocultar" : "Mostrar"}
+                                  Cambiar
                                 </ShowPassword>
                               </InputGroup.Prepend>
                             </InputGroup>
