@@ -229,9 +229,9 @@ const TextFilterBox = styled.p`
   background: #e9e9e9 0% 0% no-repeat padding-box;
   border-radius: 3px;
   opacity: 1;
-  height: 25px;
-  padding: 5px;
-  width: 70px;
+  height: 30px;
+  padding: 10px;
+  width: 100px;
   margin-top: 0px;
   font: normal normal normal 15px Acumin Pro;
   -webkit-letter-spacing: 0px;
@@ -239,16 +239,16 @@ const TextFilterBox = styled.p`
   -ms-letter-spacing: 0px;
   letter-spacing: 0px;
   opacity: 1;
-  text-align: end;
+  text-align: center;
 `;
 
 const TextFilterBoxEnd = styled.p`
   background: #e9e9e9 0% 0% no-repeat padding-box;
   border-radius: 3px;
   opacity: 1;
-  height: 25px;
-  padding: 5px;
-  width: 70px;
+  height: 30px;
+  padding: 10px;
+  width: 100px;
   margin-top: 0px;
   font: normal normal normal 15px Acumin Pro;
   -webkit-letter-spacing: 0px;
@@ -256,7 +256,7 @@ const TextFilterBoxEnd = styled.p`
   -ms-letter-spacing: 0px;
   letter-spacing: 0px;
   opacity: 1;
-  text-align: end;
+  text-align: center;
   float: right;
 `;
 const ShowPassword = styled(InputGroup.Text)`
@@ -452,7 +452,10 @@ function TranslatorsPage({
           </li>
         </ul>
         <ul className="navbar-nav">
-          <div className="ico-user" />
+          <img
+            src="/assets/images/no_avatar_default.png"
+            className="ico-user"
+          />
           <NavDropdown
             title={localStorage.getItem("userName")}
             id="nav-dropdown"
@@ -695,8 +698,8 @@ function TranslatorsPage({
                                 <div className="userIconTra">
                                   <div>
                                     <img
-                                      src="/assets/images/icon.png"
-                                      alt="logo"
+                                      src="/assets/images/no_avatar_default.png"
+                                      className="image-icon"
                                     />
                                   </div>
                                   <div>

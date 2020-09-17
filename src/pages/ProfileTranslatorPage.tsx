@@ -327,7 +327,10 @@ function ProfileTranslatorPage({
           </li>
         </ul>
         <ul className="navbar-nav">
-          <div className="ico-user" />
+          <img
+            src="/assets/images/no_avatar_default.png"
+            className="ico-user"
+          />
           <NavDropdown
             title={localStorage.getItem("userName")}
             id="nav-dropdown"
@@ -361,7 +364,10 @@ function ProfileTranslatorPage({
                       <Col>
                         <div className="userIconTra iconuserprofile">
                           <div>
-                            <img src="/assets/images/icon.png" alt="logo" />
+                            <img
+                              src="/assets/images/no_avatar_default.png"
+                              className="image-profile"
+                            />
                           </div>
                           <div>
                             <p className="name">

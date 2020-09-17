@@ -19,6 +19,8 @@ import {
 import { Link, useHistory, useParams } from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
 import { Range } from "rc-slider";
+import DatePicker from "react-datepicker";
+import { useForm } from "react-hook-form";
 const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
@@ -361,18 +363,64 @@ const FormCheckLabel = styled.div`
   color: #2d2d2d;
 `;
 
+const TextFilterBox = styled.p`
+  background: #e9e9e9 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+  height: 25px;
+  padding: 5px;
+  width: 70px;
+  margin-top: 0px;
+  font: normal normal normal 15px Acumin Pro;
+  -webkit-letter-spacing: 0px;
+  -moz-letter-spacing: 0px;
+  -ms-letter-spacing: 0px;
+  letter-spacing: 0px;
+  opacity: 1;
+  text-align: end;
+`;
+
+const TextFilterBoxEnd = styled.p`
+  background: #e9e9e9 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+  height: 25px;
+  padding: 5px;
+  width: 70px;
+  margin-top: 0px;
+  font: normal normal normal 15px Acumin Pro;
+  -webkit-letter-spacing: 0px;
+  -moz-letter-spacing: 0px;
+  -ms-letter-spacing: 0px;
+  letter-spacing: 0px;
+  opacity: 1;
+  text-align: end;
+  float: right;
+`;
+
 function RequestTranslatorPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showVerifyPassword, setShowVerifyPassword] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [document, setDocument] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("translator");
   const history = useHistory();
+  const [startDate, setStartDate] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const { register, handleSubmit, errors } = useForm();
+
+  const ExampleCustomInput = (props) => (
+    <Control
+      {...props}
+      className="input-request"
+      name="date"
+      ref={register({ required: true })}
+    />
+  );
+
+  const ExampleCustomInputTime = (props) => (
+    <Control
+      {...props}
+      className="input-request"
+      name="hour"
+      ref={register({ required: true })}
+    />
+  );
 
   let { id } = useParams();
 
@@ -405,7 +453,7 @@ function RequestTranslatorPage() {
     getTranslators();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = (data: any) => {
     const headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append(
@@ -469,7 +517,10 @@ function RequestTranslatorPage() {
           </li>
         </ul>
         <ul className="navbar-nav">
-          <div className="ico-user" />
+          <img
+            src="/assets/images/no_avatar_default.png"
+            className="ico-user"
+          />
           <NavDropdown
             title={localStorage.getItem("userName")}
             id="nav-dropdown"
@@ -499,7 +550,7 @@ function RequestTranslatorPage() {
                 <div className="header-request">
                   <img
                     className="icon-request"
-                    src="/assets/images/95554056e4c5a2e2d45f1240cb0cb6ab.png"
+                    src="/assets/images/no_avatar_default.png"
                     alt="logo"
                   />
                   <Title>
@@ -507,120 +558,141 @@ function RequestTranslatorPage() {
                   </Title>
                 </div>
                 <Row>
-                  {/* <Col>
-                    {role === "client" ? (
-                      <OptionActive
-                        type="button"
-                        onClick={() => {
-                          setRole("client");
-                        }}
-                      >
-                        Instantáneo
-                      </OptionActive>
-                    ) : (
-                      <Option
-                        type="button"
-                        onClick={() => {
-                          setRole("client");
-                        }}
-                      >
-                        Instantáneo
-                      </Option>
-                    )}
-                  </Col> */}
                   <Col>
-                    {role === "translator" ? (
-                      <OptionActive
-                        type="button"
-                        onClick={() => {
-                          setRole("translator");
-                        }}
-                      >
-                        Programado
-                      </OptionActive>
-                    ) : (
-                      <Option
-                        type="button"
-                        onClick={() => {
-                          setRole("translator");
-                        }}
-                      >
-                        Programado
-                      </Option>
-                    )}
+                    <OptionActive type="button">Programado</OptionActive>
                   </Col>
                 </Row>
-                <Form className="form-request">
+                <Form
+                  className="form-request"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
                   <Form.Group>
-                    <Label>Lugar de la sesión</Label>
+                    <Label className="label-filter">Lugar de la sesión</Label>
                     <PasswordInfo>
                       Indica dónde vas a realizar la sesión. que será traducida.
                     </PasswordInfo>
                     <div key={`inline-radio`} className="mb-3">
-                      {/* <Form.Check
-                        inline
-                        name="datospla"
-                        label="Plataforma CUCÚ"
-                        type="radio"
-                        id={`inline-radio-1`}
-                      /> */}
                       <Form.Check
                         inline
-                        name="datospla"
                         label="Plataforma externa"
                         type="radio"
                         id={`inline-radio-2`}
+                        checked
                       />
                     </div>
                   </Form.Group>
                   <Form.Group>
-                    <Label>URL</Label>
+                    <Label className="label-filter">URL</Label>
                     <PasswordInfo>
                       Especifica el enlace de la sesión.
                     </PasswordInfo>
                     <Control
                       type="text"
-                      onChange={(e: any) => setLastname(e.target.value)}
+                      className="input-request"
+                      name="url"
+                      ref={register({ required: true })}
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Label>Plataforma</Label>
+                    <Label className="label-filter">Plataforma</Label>
                     <PasswordInfo>
                       Selecciona la plataforma en la que vas a tener la sesión.
                     </PasswordInfo>
-                    <Form.Control as="select">
-                      <option>Zoom</option>
-                      <option>Meet Google</option>
+                    <Form.Control
+                      as="select"
+                      className="form-select input-request"
+                      name="platform_id"
+                      ref={register({ required: true })}
+                    >
+                      <option></option>
+                      <option value="zoom">Zoom</option>
+                      <option value="meet">Meet Google</option>
                     </Form.Control>
                     <br></br>
                     <div key={`inline-radio`} className="mb-3">
                       <Form.Check
                         inline
-                        name="datossesion"
-                        label="Tengo los datos de la sesión"
-                        type="radio"
-                        id={`inline-radio-1`}
-                      />
-                      <Form.Check
-                        inline
-                        name="datossesion"
                         label="No tengo los datos de la sesión"
                         type="radio"
-                        id={`inline-radio-2`}
+                        checked
                       />
                     </div>
                   </Form.Group>
                   <Form.Group>
-                    <Label>Comentarios adicionales</Label>
+                    <Label className="label-filter">Duración</Label>
+                    <Row className="margin-row-form">
+                      <Col className="col-md-4">
+                        <div
+                          key={`inline-radio`}
+                          className="mb-3 margin-top-10"
+                        >
+                          <Form.Check
+                            inline
+                            label="Horas"
+                            type="radio"
+                            name="time"
+                            checked
+                          />
+                          <Form.Check
+                            inline
+                            label="Minutos"
+                            type="radio"
+                            name="time"
+                          />
+                        </div>
+                      </Col>
+                      <Col className="col-md-4">
+                        <Control
+                          inline
+                          type="text"
+                          className="input-request"
+                          name="duration_amount"
+                          ref={register({ required: true })}
+                        />
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                  <Form.Group>
+                    <Label className="label-filter">Fecha</Label>
+                    <Row className="margin-row-form">
+                      <Col className="col-md-4">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date: any) => setStartDate(date)}
+                          customInput={
+                            <ExampleCustomInput></ExampleCustomInput>
+                          }
+                        />
+                      </Col>
+                      <Col className="col-md-3">
+                        <DatePicker
+                          selected={startTime}
+                          onChange={(date: any) => setStartTime(date)}
+                          showTimeSelect
+                          showTimeSelectOnly
+                          timeIntervals={30}
+                          timeCaption="Time"
+                          dateFormat="h:mm aa"
+                          customInput={
+                            <ExampleCustomInputTime></ExampleCustomInputTime>
+                          }
+                        />
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                  <Form.Group>
+                    <Label className="label-filter">
+                      Comentarios adicionales
+                    </Label>
                     <Control
                       type="text"
                       placeholder="Si tienes un enlace de contenido a traducir, agrégalo aquí."
-                      onChange={(e: any) => setDocument(e.target.value)}
+                      className="input-request"
+                      name="description"
+                      ref={register({ required: true })}
                     />
                   </Form.Group>
-                  <Submit type="button" onClick={onSubmit}>
-                    Solicitar servicio
-                  </Submit>
+                  <Submit type="submit">Solicitar servicio</Submit>
                 </Form>
               </WellContainer>
             </PasswordRecover>

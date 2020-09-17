@@ -351,7 +351,10 @@ function ProfileTraductorPage({
           </li>
         </ul>
         <ul className="navbar-nav">
-          <div className="ico-user" />
+          <img
+            src="/assets/images/no_avatar_default.png"
+            className="ico-user"
+          />
           <NavDropdown
             title={localStorage.getItem("userName")}
             id="nav-dropdown"
@@ -387,7 +390,7 @@ function ProfileTraductorPage({
                           <div>
                             <img
                               className="image-profile"
-                              src="/assets/images/95554056e4c5a2e2d45f1240cb0cb6ab.png"
+                              src="/assets/images/no_avatar_default.png"
                               alt="logo"
                             />
                           </div>

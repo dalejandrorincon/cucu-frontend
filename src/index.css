@@ -475,7 +475,9 @@ th {
 .icon-request {
   position: relative;
   margin-top: -10%;
-  left: calc(50% - 67.5px);
+  left: calc(50% - 60px);
+  height: 120px;
+  width: 120px;
 }
 
 .image-profile {
@@ -953,7 +955,7 @@ nav a:hover {
 }
 
 .label-filter {
-  font: normal normal bold 15px/21px Acumin Pro Bold;
+  font: normal normal bold 15px/21px Acumin Pro Bold !important;
 }
 
 .titleFilter {
@@ -970,4 +972,33 @@ nav a:hover {
 
 .iconuserprofile {
   margin-top: -20px;
+}
+
+.margin-row-form {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+
+.input-request {
+  background: #FAFAFA 0% 0% no-repeat padding-box !important;
+  border-radius: 3px !important;
+  opacity: 1 !important;
+}
+
+.image-icon {
+  height: 60px;
+  width: 60px;
+}
+
+.info-change-password {
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  color: #2D2D2D;
+  opacity: 1;
+  margin-bottom: 20px;
 }
