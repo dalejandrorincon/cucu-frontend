@@ -18,6 +18,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
+import * as moment from "moment";
 const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
@@ -311,6 +312,23 @@ function HomePage({
     getTranslators();
   }, []);
 
+  const validateStatus = (status) => {
+    switch (status) {
+      case "0":
+        return "Solicitado";
+      case "1":
+        return "En progreso";
+      case "2":
+        return "Finalizado";
+      case "3":
+        return "Reprogramado";
+      case "4":
+        return "Cancelado";
+      default:
+        return "Solicitado";
+    }
+  };
+
   const cancelTranslate = (id) => {
     const headers = new Headers();
     headers.append("Accept", "application/json");
@@ -391,7 +409,7 @@ function HomePage({
             <Title>Mis solicitudes</Title>
             <PasswordRecover>
               <WellContainer>
-                <Container className="themed-container" fluid={true}>
+                {/* <Container className="themed-container" fluid={true}>
                   <Row>
                     <Col>
                       <Form.Group controlId="exampleForm.ControlSelect1">
@@ -450,6 +468,7 @@ function HomePage({
                     </Col>
                   </Row>
                 </Container>
+               */}
                 <div className="table-responsive">
                   <table className="table ">
                     <thead className="thead-light">
@@ -490,10 +509,10 @@ function HomePage({
                           </td>
                           <td>Programada</td>
                           <td>${ele.amount}</td>
-                          <td>{ele.date}</td>
+                          <td>{moment(ele.date).format("D MMM  YYYY")}</td>
                           <td>
                             <span className="badge badge-light">
-                              {ele.status != null ? ele.status : "Solicitado"}
+                              {validateStatus(ele.status)}
                             </span>
                           </td>
                           <td>
@@ -557,37 +576,44 @@ function HomePage({
             <div className="contentUserIcon">
               <div className="userIconModal">
                 <div>
-                  <img src="/assets/images/no_avatar_default.png" alt="logo" />
+                  <img
+                    src="/assets/images/no_avatar_default.png"
+                    alt="logo"
+                    className="image-profile"
+                  />
                 </div>
                 <div>
                   <p className="name-modal">
                     {translator.translator?.firstname}{" "}
                     {translator.translator?.lastname}
                   </p>
-                  <p className="tradu-ins">Traducción instantánea</p>
+                  <p className="tradu-ins">Traducción programada</p>
                 </div>
               </div>
               <span className="badge badge-light status-trans">
-                {" "}
-                {translator.status}
+                {validateStatus(translator.status)}
               </span>
             </div>
             <WellContainerModal>
               <p className="price-modal">
                 $ {translator.amount}{" "}
-                <span className="price-detail">($2x100) + $5</span>
+                {/* <span className="price-detail">($2x100) + $5</span> */}
               </p>
-              <p className="detail-modal-text-bold">
+              {/* <p className="detail-modal-text-bold">
                 Cucutiempo: <span>tiempo abierto</span>
+              </p> */}
+              <p className="detail-modal-text-bold">
+                Cobro por:{" "}
+                <span>
+                  {translator.duration_type === 0 ? "Hora" : "Minutos"}
+                </span>{" "}
               </p>
               <p className="detail-modal-text-bold">
-                Cobro por: <span>Hora</span>{" "}
+                Duración: <span>{translator.duration_amount}</span>{" "}
               </p>
               <p className="detail-modal-text-bold">
-                Duración: <span>100</span>{" "}
-              </p>
-              <p className="detail-modal-text-bold">
-                Fecha inicio: <span>{translator.date}</span>
+                Fecha inicio:{" "}
+                <span> {moment(translator.date).format("D MMM  YYYY")}</span>
               </p>
               <Submit
                 type="button"
@@ -599,7 +625,7 @@ function HomePage({
                 la sesión
               </Submit>
               <hr></hr>
-              <p className="detail-modal-text-bold">Adjuntos</p>
+              {/* <p className="detail-modal-text-bold">Adjuntos</p>
               <div className="container-files">
                 <span className="file">
                   <i className="fa fa-file margin-file"></i>Name.jpg
@@ -610,7 +636,7 @@ function HomePage({
                 <span className="file">
                   <i className="fa fa-file margin-file"></i>Name.jpg
                 </span>
-              </div>
+              </div> */}
               <p className="detail-modal-text-bold">Información adicional</p>
               <p className="detail-modal-text">{translator.description}</p>
             </WellContainerModal>

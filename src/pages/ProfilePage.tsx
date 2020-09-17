@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -15,6 +17,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 const baseUri = process.env.REACT_APP_API_URL;
 
 interface Props {
@@ -300,7 +303,6 @@ function ProfilePage({
   const [profile, setProfile] = useState<any>({});
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [document, setDocument] = useState("");
   const [phone, setPhone] = useState("");
@@ -309,10 +311,18 @@ function ProfilePage({
   const [terms, setTerms] = useState(false);
   const history = useHistory();
 
+  const { register, handleSubmit, watch, errors } = useForm();
+  const password = useRef({});
+  password.current = watch("password", "");
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
 
   const getProfile = () => {
     const headers = new Headers();
@@ -365,7 +375,7 @@ function ProfilePage({
           </li>
         </ul>
         <ul className="navbar-nav">
-          <li className="nav-item ">
+          <li className="nav-item">
             <img src="/assets/images/bell@2x.png"></img>
           </li>
         </ul>
@@ -498,10 +508,8 @@ function ProfilePage({
                             <Label className="label-filter">Contraseña</Label>
                             <InputGroup>
                               <ControlPassword
-                                type={showPassword ? "text" : "password"}
-                                onChange={(e: any) =>
-                                  setPassword(e.target.value)
-                                }
+                                type="password"
+                                value="password"
                               />
                               <InputGroup.Prepend>
                                 <ShowPassword onClick={handleShow}>
@@ -542,66 +550,96 @@ function ProfilePage({
             <p className="info-change-password">
               Escribe tu contraseña actual para poder cambiar tu contraseña.
             </p>
-            <Form.Group>
-              <InputGroup>
-                <ControlPassword
-                  type={showOldPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Contraseña actual"
-                />
-                <InputGroup.Prepend>
-                  <ShowPassword
-                    onClick={() => {
-                      setShowOldPassword(!showOldPassword);
-                    }}
-                  >
-                    {showOldPassword ? "Ocultar" : "Mostrar"}
-                  </ShowPassword>
-                </InputGroup.Prepend>
-              </InputGroup>
-            </Form.Group>
-            <Form.Group>
-              <InputGroup>
-                <ControlPassword
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Nueva contraseña"
-                />
-                <InputGroup.Prepend>
-                  <ShowPassword
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  >
-                    {showPassword ? "Ocultar" : "Mostrar"}
-                  </ShowPassword>
-                </InputGroup.Prepend>
-              </InputGroup>
-            </Form.Group>
-            <PasswordInfo>
-              Debe contener como mínimo una letra mayúscula, una letra
-              minúscula, 1 número, 1 carácter especial y 8 caracteres sin
-              espacio en blanco
-            </PasswordInfo>
-            <Form.Group controlId="formBasicPassword">
-              <InputGroup>
-                <ControlPassword
-                  type={showVerifyPassword ? "text" : "password"}
-                  name="password_repeat"
-                  placeholder="Confirma nueva contraseña"
-                />
-                <InputGroup.Prepend>
-                  <ShowPassword
-                    onClick={() => {
-                      setShowVerifyPassword(!showVerifyPassword);
-                    }}
-                  >
-                    {showVerifyPassword ? "Ocultar" : "Mostrar"}
-                  </ShowPassword>
-                </InputGroup.Prepend>
-              </InputGroup>
-            </Form.Group>
-            <SubmitButton type="submit">Cambiar contraseña</SubmitButton>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Form.Group>
+                <InputGroup>
+                  <ControlPassword
+                    type={showOldPassword ? "text" : "password"}
+                    name="old_password"
+                    placeholder="Contraseña actual"
+                    ref={register({ required: true })}
+                  />
+                  <InputGroup.Prepend>
+                    <ShowPassword
+                      onClick={() => {
+                        setShowOldPassword(!showOldPassword);
+                      }}
+                    >
+                      {showOldPassword ? "Ocultar" : "Mostrar"}
+                    </ShowPassword>
+                  </InputGroup.Prepend>
+                </InputGroup>
+              </Form.Group>
+              {errors.old_password && (
+                <div className="alert alert-danger">
+                  La contraseña actual es requerida
+                </div>
+              )}
+              <Form.Group>
+                <InputGroup>
+                  <ControlPassword
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Nueva contraseña"
+                    ref={register({
+                      required: "La contraseña es requerida",
+                      pattern: {
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,}$/i,
+                        message: `La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco`,
+                      },
+                    })}
+                  />
+                  <InputGroup.Prepend>
+                    <ShowPassword
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    >
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </ShowPassword>
+                  </InputGroup.Prepend>
+                </InputGroup>
+              </Form.Group>
+              {errors.password && (
+                <div className="alert alert-danger">
+                  {errors.password.message}
+                </div>
+              )}
+              <PasswordInfo>
+                Debe contener como mínimo una letra mayúscula, una letra
+                minúscula, 1 número, 1 carácter especial y 8 caracteres sin
+                espacio en blanco
+              </PasswordInfo>
+              <Form.Group controlId="formBasicPassword">
+                <InputGroup>
+                  <ControlPassword
+                    type={showVerifyPassword ? "text" : "password"}
+                    name="password_repeat"
+                    placeholder="Confirma nueva contraseña"
+                    ref={register({
+                      validate: (value) =>
+                        value === password.current ||
+                        "Las contraseñas no coinciden",
+                    })}
+                  />
+                  <InputGroup.Prepend>
+                    <ShowPassword
+                      onClick={() => {
+                        setShowVerifyPassword(!showVerifyPassword);
+                      }}
+                    >
+                      {showVerifyPassword ? "Ocultar" : "Mostrar"}
+                    </ShowPassword>
+                  </InputGroup.Prepend>
+                </InputGroup>
+              </Form.Group>
+              {errors.password_repeat && (
+                <div className="alert alert-danger">
+                  {errors.password_repeat.message}
+                </div>
+              )}
+              <SubmitButton type="submit">Cambiar contraseña</SubmitButton>
+            </Form>
           </Modal.Body>
         </Modal>
       </Container>
