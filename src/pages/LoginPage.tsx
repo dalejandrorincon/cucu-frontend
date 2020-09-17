@@ -185,7 +185,7 @@ function LoginPage() {
               "userName",
               responseJson.user.firstname + " " + responseJson.user.lastname
             );
-            if (responseJson.user.role === 3 || responseJson.user.role === 4) {
+            if (responseJson.user.role == 3 || responseJson.user.role == 4) {
               history.push("/translators");
             } else {
               history.push("/profile");
