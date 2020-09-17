@@ -11,37 +11,17 @@ import {
   Form,
   Button,
   InputGroup,
-  Nav,
   NavDropdown,
-  FormControl,
+  Modal,
 } from "react-bootstrap";
-import { Link, useHistory, useParams } from "react-router-dom";
-import RangeSlider from "react-bootstrap-range-slider";
-import { Range } from "rc-slider";
+import { Link, useHistory } from "react-router-dom";
 const baseUri = process.env.REACT_APP_API_URL;
-
-const Logo = styled.img`
-  position: relative;
-  width: 82px;
-  height: 35px;
-`;
 
 interface Props {
   counter: number;
   reduxIncreaseCounter: () => void;
   reduxDecreaseCounter: () => void;
 }
-
-const Recover = styled.img`
-  left: calc(50% - 50px);
-  width: 100px;
-  position: relative;
-  height: 100px;
-`;
-
-const RecoverContainer = styled.div`
-  margin-top: 30px;
-`;
 
 const Title = styled.p`
   margin-top: 30px;
@@ -135,6 +115,39 @@ const ColFilter = styled(Col)`
   text-align: end;
 `;
 
+const SubmitButton = styled(Button)`
+  background: #863df9 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  border-color: #863df9;
+  opacity: 1;
+  margin-bottom: 30px;
+  min-height: 50px;
+  width: 100%;
+  text-align: center;
+  font: normal normal medium 17px Acumin Pro;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  &:hover {
+    color: #fff;
+    background-color: #863df9;
+    border-color: #863df9;
+  }
+  :not(:disabled):not(.disabled).active,
+  :not(:disabled):not(.disabled):active,
+  .show > .dropdown-toggle {
+    color: #fff;
+    background-color: #863df9;
+    border-color: #863df9;
+  }
+  &:focus {
+    color: #fff;
+    background-color: #863df9;
+    border-color: #863df9;
+    box-shadow: none;
+  }
+`;
+
 const Submit = styled(Button)`
   background: #863df9 0% 0% no-repeat padding-box;
   border-radius: 3px;
@@ -166,6 +179,7 @@ const Submit = styled(Button)`
     box-shadow: none;
   }
 `;
+
 const ButtonToLogin = styled.div`
   padding-left: 20%;
   padding-right: 20%;
@@ -280,11 +294,10 @@ function ProfilePage({
   reduxDecreaseCounter,
   counter,
 }: Props) {
-  // const [isVisible, setIsVisible] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [profile, setProfile] = useState<any>({});
-
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
@@ -295,6 +308,11 @@ function ProfilePage({
   const [role, setRole] = useState("client");
   const [terms, setTerms] = useState(false);
   const history = useHistory();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const getProfile = () => {
     const headers = new Headers();
@@ -435,7 +453,7 @@ function ProfilePage({
                         <Title>Mi cuenta</Title>
                         <Form>
                           <Form.Group>
-                            <Label>Nombre</Label>
+                            <Label className="label-filter">Nombre</Label>
                             <Control
                               type="text"
                               value={firstname}
@@ -445,7 +463,7 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label>Apellido</Label>
+                            <Label className="label-filter">Apellido</Label>
                             <Control
                               type="text"
                               value={lastname}
@@ -453,11 +471,15 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label>Documento de identidad</Label>
+                            <Label className="label-filter">
+                              Documento de identidad
+                            </Label>
                             <Control type="text" value="1047450855" />
                           </Form.Group>
                           <Form.Group>
-                            <Label>Correo electrónico</Label>
+                            <Label className="label-filter">
+                              Correo electrónico
+                            </Label>
                             <Control
                               type="text"
                               value={email}
@@ -465,7 +487,7 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label>Teléfono</Label>
+                            <Label className="label-filter">Teléfono</Label>
                             <Control
                               type="text"
                               value={phone}
@@ -473,7 +495,7 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label>Contraseña</Label>
+                            <Label className="label-filter">Contraseña</Label>
                             <InputGroup>
                               <ControlPassword
                                 type={showPassword ? "text" : "password"}
@@ -482,15 +504,15 @@ function ProfilePage({
                                 }
                               />
                               <InputGroup.Prepend>
-                                <ShowPassword
-                                  onClick={() => {
-                                    setShowPassword(!showPassword);
-                                  }}
-                                >
+                                <ShowPassword onClick={handleShow}>
                                   Cambiar
                                 </ShowPassword>
                               </InputGroup.Prepend>
                             </InputGroup>
+                          </Form.Group>
+                          <Form.Group>
+                            <Label className="label-filter">Sobre mí</Label>
+                            <Control type="text" />
                           </Form.Group>
                           <Submit
                             type="button"
@@ -512,6 +534,76 @@ function ProfilePage({
             </PasswordRecover>
           </Col>
         </RowRecover>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Cambiar contraseña</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p className="info-change-password">
+              Escribe tu contraseña actual para poder cambiar tu contraseña.
+            </p>
+            <Form.Group>
+              <Label className="label-filter">Contraseña actual</Label>
+              <InputGroup>
+                <ControlPassword
+                  type={showOldPassword ? "text" : "password"}
+                  name="password"
+                />
+                <InputGroup.Prepend>
+                  <ShowPassword
+                    onClick={() => {
+                      setShowOldPassword(!showOldPassword);
+                    }}
+                  >
+                    {showOldPassword ? "Ocultar" : "Mostrar"}
+                  </ShowPassword>
+                </InputGroup.Prepend>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group>
+              <Label className="label-filter">Contraseña</Label>
+              <InputGroup>
+                <ControlPassword
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                />
+                <InputGroup.Prepend>
+                  <ShowPassword
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  >
+                    {showPassword ? "Ocultar" : "Mostrar"}
+                  </ShowPassword>
+                </InputGroup.Prepend>
+              </InputGroup>
+            </Form.Group>
+            <PasswordInfo>
+              Debe contener como mínimo una letra mayúscula, una letra
+              minúscula, 1 número, 1 carácter especial y 8 caracteres sin
+              espacio en blanco
+            </PasswordInfo>
+            <Form.Group controlId="formBasicPassword">
+              <Label className="label-filter">Confirma contraseña</Label>
+              <InputGroup>
+                <ControlPassword
+                  type={showVerifyPassword ? "text" : "password"}
+                  name="password_repeat"
+                />
+                <InputGroup.Prepend>
+                  <ShowPassword
+                    onClick={() => {
+                      setShowVerifyPassword(!showVerifyPassword);
+                    }}
+                  >
+                    {showVerifyPassword ? "Ocultar" : "Mostrar"}
+                  </ShowPassword>
+                </InputGroup.Prepend>
+              </InputGroup>
+            </Form.Group>
+            <SubmitButton type="submit">Cambiar contraseña</SubmitButton>
+          </Modal.Body>
+        </Modal>
       </Container>
     </>
   );
