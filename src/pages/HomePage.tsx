@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -359,7 +360,10 @@ function HomePage({
           </li>
         </ul>
         <ul className="navbar-nav">
-          <div className="ico-user" />
+          <img
+            src="/assets/images/no_avatar_default.png"
+            className="ico-user"
+          />
           <NavDropdown
             title={localStorage.getItem("userName")}
             id="nav-dropdown"
@@ -464,7 +468,10 @@ function HomePage({
                           <td>
                             <div className="userIcon">
                               <div>
-                                <img src="/assets/images/icon.png" alt="logo" />
+                                <img
+                                  src="/assets/images/no_avatar_default.png"
+                                  className="image-icon"
+                                />
                               </div>
                               <div>
                                 <p className="name">
@@ -550,7 +557,7 @@ function HomePage({
             <div className="contentUserIcon">
               <div className="userIconModal">
                 <div>
-                  <img src="/assets/images/icon.png" alt="logo" />
+                  <img src="/assets/images/no_avatar_default.png" alt="logo" />
                 </div>
                 <div>
                   <p className="name-modal">
