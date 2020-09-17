@@ -353,12 +353,12 @@ function ProfilePage({
           <img src="/assets/images/logo.png" alt="logo" />
         </Link>
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item nav-item-active">
+          <li className="nav-item">
             <Link className="nav-link nav-item-inactive" to="/translators">
               Traductores
             </Link>
           </li>
-          <li className="nav-item ">
+          <li className="nav-item">
             <Link className="nav-link nav-item-inactive" to="/home">
               Mis solicitudes
             </Link>
@@ -543,11 +543,11 @@ function ProfilePage({
               Escribe tu contraseña actual para poder cambiar tu contraseña.
             </p>
             <Form.Group>
-              <Label className="label-filter">Contraseña actual</Label>
               <InputGroup>
                 <ControlPassword
                   type={showOldPassword ? "text" : "password"}
                   name="password"
+                  placeholder="Contraseña actual"
                 />
                 <InputGroup.Prepend>
                   <ShowPassword
@@ -561,11 +561,11 @@ function ProfilePage({
               </InputGroup>
             </Form.Group>
             <Form.Group>
-              <Label className="label-filter">Contraseña</Label>
               <InputGroup>
                 <ControlPassword
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  placeholder="Nueva contraseña"
                 />
                 <InputGroup.Prepend>
                   <ShowPassword
@@ -584,11 +584,11 @@ function ProfilePage({
               espacio en blanco
             </PasswordInfo>
             <Form.Group controlId="formBasicPassword">
-              <Label className="label-filter">Confirma contraseña</Label>
               <InputGroup>
                 <ControlPassword
                   type={showVerifyPassword ? "text" : "password"}
                   name="password_repeat"
+                  placeholder="Confirma nueva contraseña"
                 />
                 <InputGroup.Prepend>
                   <ShowPassword
