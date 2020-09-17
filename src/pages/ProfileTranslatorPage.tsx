@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect } from "react";
@@ -254,6 +256,7 @@ const TextFilterBoxEnd = styled.p`
   opacity: 1;
   float: right;
 `;
+
 const ShowPassword = styled(InputGroup.Text)`
   font: normal normal normal 13px Acumin Pro;
   letter-spacing: 0px;
@@ -271,7 +274,7 @@ function ProfileTranslatorPage({
   counter,
 }: Props) {
   const history = useHistory();
-  let { id } = useParams();
+  const { id } = useParams();
   const [isVisible, setisVisible] = useState(false);
 
   const [translators, setTranslators] = useState<any>({});

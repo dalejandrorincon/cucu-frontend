@@ -417,11 +417,10 @@ function SignupPage() {
                     name="password"
                     ref={register({
                       required: "La contraseña es requerida",
-                      minLength: {
-                        value: 8,
+                      pattern: {
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,}$/i,
                         message: `La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco`,
                       },
-                      pattern: /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]".*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/i,
                     })}
                   />
                   <InputGroup.Prepend>
