@@ -18,7 +18,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
-import * as moment from "moment";
+import moment from "moment";
 const baseUri = process.env.REACT_APP_API_URL;
 
 const Logo = styled.img`
