@@ -530,7 +530,7 @@ th {
   opacity: 1;
 }
 
-.item-menu-active {
+.item-menu.active {
   height: 75px;
   display: flex;
   justify-content: center;
@@ -566,7 +566,7 @@ th {
   margin-bottom: 30px;
 }
 
-.text-item-menu-active {
+.active>.text-item-menu {
   font: normal normal bold 15px Acumin Pro Bold;
   letter-spacing: 0px;
   color: #2d2d2d;
