@@ -19,6 +19,12 @@ code {
 }
 
 @font-face {
+  font-family: Acumin Pro;
+  src: url(/assets/fonts/Acumin-BdPro.woff);
+  font-weight: bold;
+}
+
+@font-face {
   font-family: "Acumin Pro Italic";
   font-style: normal;
   font-weight: normal;

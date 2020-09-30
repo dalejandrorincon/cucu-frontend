@@ -1,0 +1,67 @@
+.translator-experience-form{
+    h6{
+        font-size: 18px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .react-tags{
+        display: flex;
+        flex-direction: column;
+        border: 0px;
+        padding: 0px;
+        &__selected{
+            order: 1;
+            &-tag{
+                padding: 10px 20px;
+                border: 0px;
+                border-radius: 20px;
+                font-size: 13px !important;
+            }
+        }
+        &__search{
+            width: 100%;
+            border: 1px solid #D1D1D1;
+            input{
+                width: 100% !important;
+                height: 30px;
+                padding: 0px 10px;
+            }
+        }
+    }
+    
+    .experience-component{
+        .experience-container{
+            .top{
+                display: flex;
+                justify-content: space-between;
+                .head{
+                    .time{
+                        color: #AAA;
+                        font-size: 13px;
+                    }
+                }
+                
+            }
+            .bottom{
+                border-top: 1px solid #D1D1D1;
+                padding-top: 10px;
+                font-size: 14px;
+                .description{
+                    margin-bottom: 0px;
+                }
+            }
+            padding: 15px 20px;
+            border: 1px solid #D1D1D1;
+            margin-bottom: 10px;
+            
+        }
+        .new-exp{
+            padding: 10px 10px;
+            text-align: center;
+            border: 1px solid #D1D1D1;
+        }
+    }
+
+
+}
