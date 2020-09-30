@@ -433,7 +433,7 @@ function TranslatorsPage({
                           </Form.Group>
                         </Col>
                         <Col>
-                          <div className="filter-languaje">
+                          <div className="filter-language">
                             <span>Idiomas</span>
                             <select className="selec">
                               {languages?.map((elm: any) => (

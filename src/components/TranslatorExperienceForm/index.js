@@ -15,12 +15,11 @@ import ExperienceModal from '../ExperienceModal';
 import CertificationModal from '../CertificationModal';
 
 
-import {
-    Title
-} from "./styles"
+import { Title, Submit } from "./styles"
 
 export default function TranslatorExperienceForm() {
 
+    const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
 
     const [platforms, setPlatforms] = useState([]);
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
@@ -65,7 +64,7 @@ export default function TranslatorExperienceForm() {
     });
 
     const validationSchema = Yup.object().shape({
-        platforms: Yup.string()
+        /* platforms: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
         languages: Yup.string()
@@ -79,7 +78,7 @@ export default function TranslatorExperienceForm() {
             .required("*Este campo es obligatorio"),
         certifications: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio")
+            .required("*Este campo es obligatorio") */
     });
 
     const formik = useFormik({
@@ -87,7 +86,7 @@ export default function TranslatorExperienceForm() {
             ...entity
         },
         onSubmit: values => {
-            //saveChanges({ ...values })
+            console.log(values)
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
@@ -155,7 +154,7 @@ export default function TranslatorExperienceForm() {
     }
 
     const newExperience = (data, type) => {
-        switch(type){
+        switch (type) {
             case "experiences":
                 setSelectedExperience({
                     company: "",
@@ -165,7 +164,7 @@ export default function TranslatorExperienceForm() {
                 })
                 setModalExperiences(true)
 
-            break;
+                break;
 
             case "certifications":
                 setSelectedCertification({
@@ -180,46 +179,46 @@ export default function TranslatorExperienceForm() {
 
     const saveExperience = (data, type) => {
         let current;
-        switch(type){
+        switch (type) {
             case "experiences":
                 current = formik.values.experiences
-                if(data.index==undefined){
+                if (data.index == undefined) {
                     current.push(data)
                     formik.setFieldValue("experiences", current)
-                }else{
+                } else {
                     current[data.index] = data
                     delete current[data.index].index
                     formik.setFieldValue("experiences", current)
                 }
                 setModalExperiences(false)
-            break;
+                break;
 
             case "certifications":
                 current = formik.values.certifications
-                if(data.index==undefined){
+                if (data.index == undefined) {
                     current.push(data)
                     formik.setFieldValue("certifications", current)
-                }else{
+                } else {
                     current[data.index] = data
                     delete current[data.index].index
                     formik.setFieldValue("certifications", current)
                 }
                 setModalCertifications(false)
-        }        
+        }
     }
 
     const editExperience = (index, type) => {
         let current;
-        switch(type){
+        switch (type) {
             case "experiences":
                 current = formik.values.experiences
-                setSelectedExperience({...current[index], ...{index: index} })
+                setSelectedExperience({ ...current[index], ...{ index: index } })
                 setModalExperiences(true)
-            break;
+                break;
 
             case "certifications":
                 current = formik.values.certifications
-                setSelectedCertification({...current[index], ...{index: index} })
+                setSelectedCertification({ ...current[index], ...{ index: index } })
                 setModalCertifications(true)
         }
     }
@@ -227,18 +226,53 @@ export default function TranslatorExperienceForm() {
     const removeExperience = (index, type) => {
         console.log(index)
         let current;
-        switch(type){
+        switch (type) {
             case "experiences":
                 current = formik.values.experiences
                 current.splice(index, 1)
                 formik.setFieldValue("experiences", current)
-            break;
+                break;
 
             case "certifications":
                 current = formik.values.certifications
                 current.splice(index, 1)
                 formik.setFieldValue("certifications", current)
         }
+    }
+
+    const addLanguage = () => {
+
+        let fromLabel
+        let toLabel
+
+        languages.forEach(element => {
+            if (element.id == formik.values.from) {
+                fromLabel = element.name
+            }
+            if (element.id == formik.values.to) {
+                toLabel = element.name
+            }
+        });
+
+
+        if (formik.values.from && formik.values.to) {
+            setSelectedLanguages([...selectedLanguages, {
+                from: {
+                    id: formik.values.from,
+                    name: fromLabel
+                },
+                to: {
+                    id: formik.values.to,
+                    name: toLabel
+                }
+            }])
+        }
+    }
+
+    const removeLanguage = (index) => {
+        let sel = selectedLanguages
+        sel.splice(index,1)
+        setSelectedLanguages([...sel])
     }
 
 
@@ -260,22 +294,54 @@ export default function TranslatorExperienceForm() {
                 <h6><b>Idiomas</b></h6>
                 <p><b>Agrega idiomas que dominas perfectamente y puedes traducir desde y hacia otro idioma.</b></p>
 
-                <div className="filter-languaje">
-                    <span>Idiomas</span>
-                    <select className="selec">
-                        {languages?.map((elm) => (
-                            <option key={elm.id}>{elm.name}</option>
-                        ))}
-                    </select>
-                    <img
-                        className="img-filer"
-                        src="/assets/images/load.png"
-                    ></img>
-                    <select className="selec">
-                        {languages?.map((elm) => (
-                            <option key={elm.id}>{elm.name}</option>
-                        ))}
-                    </select>
+                <div className="Language-panel">
+                    {selectedLanguages?.map((elm, index) => (
+                        <div key={index} className="item">
+                            <div><p>De {elm.from.name} a {elm.to.name}</p></div>
+                            <Button className="remove" onClick={() => removeLanguage(index)} >✕</Button>
+                        </div>
+                    ))}
+                </div>
+
+
+                <div className="filter-language">
+                    <div>
+                        <Form.Control
+                            as="select"
+                            id="from"
+                            name="from"
+                            className="form-control input-lg"
+                            onChange={e => {
+                                formik.handleChange(e);
+                            }}
+                            value={formik.values.from} >
+                            <option value="0">Seleccionar...</option>
+                            {languages?.map((elm) => (
+                                <option key={elm.id} value={elm.id} >{elm.name}</option>
+                            ))}
+                        </Form.Control>
+                        <Button className="switch">
+                            <img
+                                className="img-filer"
+                                src="/assets/images/load.png"
+                            ></img>
+                        </Button>
+                        <Form.Control
+                            as="select"
+                            id="to"
+                            name="to"
+                            className="form-control input-lg"
+                            onChange={e => {
+                                formik.handleChange(e);
+                            }}
+                            value={formik.values.to} >
+                            <option value="0">Seleccionar...</option>
+                            {languages?.map((elm) => (
+                                <option key={elm.id} value={elm.id}>{elm.name}</option>
+                            ))}
+                        </Form.Control>
+                    </div>
+                    <Button className="add" onClick={() => addLanguage()} >Agregar</Button>
                 </div>
 
                 <h6><b>Especialidades</b></h6>
@@ -292,8 +358,6 @@ export default function TranslatorExperienceForm() {
                 <h6><b>Experiencia laboral</b></h6>
                 <p>Agrega los lugares donde has fortalecido tu experiencia en la traducción oral</p>
 
-                {JSON.stringify(formik.values.experiences)}
-
                 <div className="experience-component">
                     {formik.values.experiences?.map((experience, index) => (
                         <div className="experience-container" key={index}>
@@ -309,10 +373,10 @@ export default function TranslatorExperienceForm() {
                                         </Dropdown.Toggle>
 
                                         <Dropdown.Menu>
-                                            <Dropdown.Item onClick={()=>editExperience(index, "experiences")}>
+                                            <Dropdown.Item onClick={() => editExperience(index, "experiences")}>
                                                 Editar
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={()=>removeExperience(index, "experiences")}>
+                                            <Dropdown.Item onClick={() => removeExperience(index, "experiences")}>
                                                 Eliminar
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
@@ -334,12 +398,10 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
-                    
+
 
                 <h6><b>Certifiaciones</b></h6>
                 <p>Agrega todas las certificaciones de tu práctica profesional.</p>
-
-                {JSON.stringify(formik.values.certifications)}
 
                 <div className="experience-component">
                     {formik.values.certifications?.map((certification, index) => (
@@ -356,10 +418,10 @@ export default function TranslatorExperienceForm() {
                                         </Dropdown.Toggle>
 
                                         <Dropdown.Menu>
-                                            <Dropdown.Item onClick={()=>editExperience(index, "certifications")}>
+                                            <Dropdown.Item onClick={() => editExperience(index, "certifications")}>
                                                 Editar
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={()=>removeExperience(index, "certifications")}>
+                                            <Dropdown.Item onClick={() => removeExperience(index, "certifications")}>
                                                 Eliminar
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
@@ -376,6 +438,14 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
+
+                <Submit
+                    disabled={buttonState.disabled}
+                    type="button"
+                    type="submit"
+                >
+                    {buttonState.label}
+                </Submit>
 
 
             </Form>
