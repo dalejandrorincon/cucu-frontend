@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReactTags from 'react-tag-autocomplete'
 import './styles.scss';
 
-import { Form, Dropdown, Button } from "react-bootstrap";
+import { Form, Dropdown, Button, Alert } from "react-bootstrap";
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import * as PlatformsAPI from '../../api/platforms';
 import * as LanguagesAPI from '../../api/languages';
 import * as SpecialitiesAPI from '../../api/specialities';
+import * as UsersAPI from '../../api/users';
 
 import ExperienceModal from '../ExperienceModal';
 import CertificationModal from '../CertificationModal';
@@ -20,6 +21,9 @@ import { Title, Submit } from "./styles"
 export default function TranslatorExperienceForm() {
 
     const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
+    const [submitAttempt, setSubmitAttempt] = useState(false)
+
+    const [response, setResponse] = useState(null)
 
     const [platforms, setPlatforms] = useState([]);
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
@@ -51,16 +55,8 @@ export default function TranslatorExperienceForm() {
         platforms: "",
         languages: "",
         specialities: "",
-        experiences: [
-            { "company": "asd", "description": "asd", "labor_months": "asd", "url": "" },
-            { "company": "zzz", "description": "zzz", "labor_months": "zzz", "url": "" },
-            { "company": "eee", "description": "eee", "labor_months": "eee", "url": "" }
-        ],
-        certifications: [
-            { "name": "xxx", "school": "xxx", "date": "xxx", "url": "" },
-            { "name": "yyy", "school": "yyy", "date": "yyy", "url": "" },
-            { "name": "zzz", "school": "zzz", "date": "zzz", "url": "" }
-        ],
+        experiences: [],
+        certifications: [],
     });
 
     const validationSchema = Yup.object().shape({
@@ -86,7 +82,8 @@ export default function TranslatorExperienceForm() {
             ...entity
         },
         onSubmit: values => {
-            console.log(values)
+            setSubmitAttempt(true)
+            saveChanges(values)
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
@@ -96,11 +93,63 @@ export default function TranslatorExperienceForm() {
 
     const reactTags = React.createRef()
 
+    const saveChanges = (values) => {
+        
+        let remote_tools = selectedPlatforms.map((item)=> item.id )
+
+        let specialities = selectedSpecialities.map((item)=> item.id )
+
+        let payload = {
+            remote_tools: JSON.stringify(remote_tools),
+            specialities: JSON.stringify(specialities),
+            languages: JSON.stringify(selectedLanguages),
+            work_experience: JSON.stringify(values.work_experience),
+            certifications: JSON.stringify(values.certifications)
+        }
+
+        console.log(payload)
+
+        UsersAPI.updateUser(payload, localStorage.getItem("token") ).then((res) => {
+            let message = 'Cambios guardados exitosamente.'
+            setButtonState({ label: "Enviar", disabled: false })
+            setResponse(
+                <Alert variant={'success'} >
+                    {message}
+                </Alert>
+            )
+            formik.resetForm()
+        }).catch((err) => {
+            console.log(err)
+            let message;
+            message = 'Ha ocurrido un error al guardar los cambios.'
+
+            setResponse(
+                <Alert variant={'danger'} >
+                    {message}
+                </Alert>
+            )
+        })
+
+    }
+    
+
+
     useEffect(() => {
         getPlatforms();
         getLanguages();
         getSpecialities();
+        getProfile();
     }, []);
+
+    const getProfile = () => {
+        UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
+            console.log(res.user)
+            setEntity(res.user)
+            setSelectedPlatforms(res.user.remote_tools)
+            setSelectedSpecialities(res.user.specialities)
+            setSelectedLanguages(res.user.languages)
+        })
+    };
 
     const getPlatforms = () => {
         PlatformsAPI.getPlatforms().then((res) => {
@@ -181,7 +230,7 @@ export default function TranslatorExperienceForm() {
         let current;
         switch (type) {
             case "experiences":
-                current = formik.values.experiences
+                current = formik.values.work_experience
                 if (data.index == undefined) {
                     current.push(data)
                     formik.setFieldValue("experiences", current)
@@ -211,7 +260,7 @@ export default function TranslatorExperienceForm() {
         let current;
         switch (type) {
             case "experiences":
-                current = formik.values.experiences
+                current = formik.values.work_experience
                 setSelectedExperience({ ...current[index], ...{ index: index } })
                 setModalExperiences(true)
                 break;
@@ -228,7 +277,7 @@ export default function TranslatorExperienceForm() {
         let current;
         switch (type) {
             case "experiences":
-                current = formik.values.experiences
+                current = formik.values.work_experience
                 current.splice(index, 1)
                 formik.setFieldValue("experiences", current)
                 break;
@@ -271,7 +320,7 @@ export default function TranslatorExperienceForm() {
 
     const removeLanguage = (index) => {
         let sel = selectedLanguages
-        sel.splice(index,1)
+        sel.splice(index, 1)
         setSelectedLanguages([...sel])
     }
 
@@ -291,6 +340,10 @@ export default function TranslatorExperienceForm() {
                     onAddition={(data) => onAddition(data, "platforms")}
                 />
 
+                {selectedPlatforms.length==0 && submitAttempt ? (
+                    <div className="alert alert-danger">Debe ingresar al menos una plataforma.</div>
+                ) : null}
+
                 <h6><b>Idiomas</b></h6>
                 <p><b>Agrega idiomas que dominas perfectamente y puedes traducir desde y hacia otro idioma.</b></p>
 
@@ -302,8 +355,7 @@ export default function TranslatorExperienceForm() {
                         </div>
                     ))}
                 </div>
-
-
+                
                 <div className="filter-language">
                     <div>
                         <Form.Control
@@ -344,6 +396,10 @@ export default function TranslatorExperienceForm() {
                     <Button className="add" onClick={() => addLanguage()} >Agregar</Button>
                 </div>
 
+                {selectedLanguages.length==0 && submitAttempt ? (
+                    <div className="alert alert-danger">Debe ingresar al menos un par de lenguajes.</div>
+                ) : null}
+
                 <h6><b>Especialidades</b></h6>
                 <p>Escribe los temas en los que tienes amplia experiencia o conocimiento para traducir.</p>
 
@@ -355,11 +411,15 @@ export default function TranslatorExperienceForm() {
                     onAddition={(data) => onAddition(data, "specialities")}
                 />
 
+                {selectedSpecialities.length==0 && submitAttempt ? (
+                    <div className="alert alert-danger">Debe ingresar al menos una especialidad.</div>
+                ) : null}
+
                 <h6><b>Experiencia laboral</b></h6>
                 <p>Agrega los lugares donde has fortalecido tu experiencia en la traducción oral</p>
 
                 <div className="experience-component">
-                    {formik.values.experiences?.map((experience, index) => (
+                    {formik.values.work_experience?.map((experience, index) => (
                         <div className="experience-container" key={index}>
                             <div className="top">
                                 <div className="head">
@@ -398,6 +458,10 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
+
+                {formik.values.work_experience==[] && submitAttempt ? (
+                    <div className="alert alert-danger">Debe ingresar al menos una experiencia de trabajo.</div>
+                ) : null}
 
 
                 <h6><b>Certifiaciones</b></h6>
@@ -438,6 +502,9 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
+                {formik.values.work_experience==[] && submitAttempt ? (
+                    <div className="alert alert-danger">Debe ingresar al menos una certificación.</div>
+                ) : null}
 
                 <Submit
                     disabled={buttonState.disabled}
@@ -447,6 +514,7 @@ export default function TranslatorExperienceForm() {
                     {buttonState.label}
                 </Submit>
 
+                {response}
 
             </Form>
 
