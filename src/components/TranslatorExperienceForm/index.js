@@ -104,7 +104,8 @@ export default function TranslatorExperienceForm() {
             specialities: JSON.stringify(specialities),
             languages: JSON.stringify(selectedLanguages),
             work_experience: JSON.stringify(values.work_experience),
-            certifications: JSON.stringify(values.certifications)
+            certifications: JSON.stringify(values.certifications),
+            approved_translator: 1
         }
 
         console.log(payload)
