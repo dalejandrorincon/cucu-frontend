@@ -54,6 +54,22 @@
             padding: 15px 20px;
             border: 1px solid #D1D1D1;
             margin-bottom: 10px;
+
+            .dropdown{
+                button{
+                    color: #863df9;
+                    border-color: #863df9;
+                    background-color: transparent;
+                    &:after{
+                        display: none;
+                    }
+                    &:hover, &:active, &:focus{
+                        background-color: #863df9 !important;
+                        color: white;
+                        box-shadow: none;
+                    }
+                }
+            }
             
         }
         .new-exp{
@@ -146,8 +162,6 @@
         margin-top: 20px;
     }
 
-    
-
 
 }
 
@@ -169,4 +183,15 @@
         }
     }
 
+}
+
+.modal-content{
+
+    textarea{
+        padding: 10px;
+    }
+    .react-datepicker-wrapper input{
+        border: 1px solid #d5d5d5;
+        padding: 10px;
+    }
 }

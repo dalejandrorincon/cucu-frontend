@@ -177,6 +177,8 @@ export default function CertificationModal(props) {
                         <div className="alert alert-danger">{formik.errors.date}</div>
                     ) : null}
 
+                    <Label>Certificación</Label>
+
                     <div className="dropzone-container">
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />

@@ -429,7 +429,7 @@ export default function TranslatorExperienceForm() {
                             <div className="top">
                                 <div className="head">
                                     <b className="title">{experience.company}</b>
-                                    <p className="time">{experience.labor_months}</p>
+                                    <p className="time">{experience.labor_months} Meses</p>
                                 </div>
                                 <div className="options">
                                     <Dropdown>
@@ -469,7 +469,7 @@ export default function TranslatorExperienceForm() {
                 ) : null}
 
 
-                <h6><b>Certifiaciones</b></h6>
+                <h6><b>Certificaciones</b></h6>
                 <p>Agrega todas las certificaciones de tu práctica profesional.</p>
 
                 <div className="experience-component">
