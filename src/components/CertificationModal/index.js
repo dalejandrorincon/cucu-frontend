@@ -13,6 +13,10 @@ import { useDropzone } from 'react-dropzone'
 
 import * as UsersAPI from '../../api/users';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
 export default function CertificationModal(props) {
 
     const [myFiles, setMyFiles] = useState([])
@@ -146,7 +150,20 @@ export default function CertificationModal(props) {
                     ) : null}
                     <Form.Group>
                         <Label>Fecha</Label>
-                        <Control
+                        <DatePicker
+                            id="date"
+                            type="text"            
+                            selected={(formik.values.date && new Date(formik.values.date)) || null}
+                            onChange={ (e)=>{
+                                formik.setFieldTouched('date');
+                                formik.setFieldValue('date', e)
+                                console.log(e)
+                            }}
+                           /*  customInput={
+                              <ExampleCustomInput></ExampleCustomInput>
+                            } */
+                        />
+                        {/* <Control
                             id="date"
                             type="text"
                             value={formik.values.date}
@@ -154,7 +171,7 @@ export default function CertificationModal(props) {
                                 formik.setFieldTouched('date');
                                 formik.handleChange(e)
                             }}
-                        />
+                        /> */}
                     </Form.Group>
                     {formik.touched.date && formik.errors.date ? (
                         <div className="alert alert-danger">{formik.errors.date}</div>
@@ -166,7 +183,6 @@ export default function CertificationModal(props) {
                             <p>Drag 'n' drop some files here, or click to select files</p>
                         </div>
                         <aside>
-                            <h4>Archivos</h4>
                             
                             { formik?.values?.url ? JSON.parse(formik.values.url).map((file, index) => (
                                 <div key={file.name} className="item">

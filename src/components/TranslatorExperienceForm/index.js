@@ -6,6 +6,9 @@ import { Form, Dropdown, Button, Alert } from "react-bootstrap";
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import moment from 'moment';
+import 'moment/locale/es'  // without this line it didn't work
+
 
 import * as PlatformsAPI from '../../api/platforms';
 import * as LanguagesAPI from '../../api/languages';
@@ -15,10 +18,11 @@ import * as UsersAPI from '../../api/users';
 import ExperienceModal from '../ExperienceModal';
 import CertificationModal from '../CertificationModal';
 
-
 import { Title, Submit } from "./styles"
 
 export default function TranslatorExperienceForm() {
+
+    moment.locale('es')
 
     const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
     const [submitAttempt, setSubmitAttempt] = useState(false)
@@ -474,7 +478,7 @@ export default function TranslatorExperienceForm() {
                             <div className="top">
                                 <div className="head">
                                     <b className="title">{certification.name}</b>
-                                    <p className="time">{certification.date}</p>
+                                    <p className="time">{moment(certification.date).format("YYYY")}</p>
                                 </div>
                                 <div className="options">
                                     <Dropdown>
