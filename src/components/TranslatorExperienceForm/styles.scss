@@ -146,5 +146,27 @@
         margin-top: 20px;
     }
 
+    
+
+
+}
+
+.translator-experience-form .Language-panel, .dropzone-container{
+    .item{
+        border: 1px solid #D1D1D1;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        p{
+            margin-bottom: 0px;
+            padding: 10px
+        }
+        button{
+            background-color: #F3F3F3;
+            color: black;
+            border: 0px;
+            padding: 5px 10px
+        }
+    }
 
 }

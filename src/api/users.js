@@ -53,3 +53,24 @@ export const disableUser = (token) => {
       throw error;
     });
 };
+
+export const saveFile = (file) => {
+  const URL = `/users/file`;
+  console.log(file)
+
+  var formdata = new FormData();
+  formdata.append("files", file);
+
+  return api(URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    data: formdata
+    
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};

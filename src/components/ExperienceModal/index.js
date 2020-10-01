@@ -29,7 +29,7 @@ export default function ExperienceModal(props) {
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
         labor_months: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .min(1, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
         /* url: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
@@ -119,7 +119,7 @@ export default function ExperienceModal(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Submit onClick={() => formik.submitForm()}>
-                    Solicitar servicio
+                    Agregar experiencia
                 </Submit>
                 <Cancel onClick={props.onHide}>
                     Cancelar

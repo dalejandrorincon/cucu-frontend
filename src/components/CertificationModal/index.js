@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import { Form, Modal, Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
@@ -9,11 +9,19 @@ import { Submit, Label, Control, Cancel } from "./styles"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { useDropzone } from 'react-dropzone'
 
-const baseUri = process.env.REACT_APP_API_URL;
+import * as UsersAPI from '../../api/users';
 
 export default function CertificationModal(props) {
 
+    const [myFiles, setMyFiles] = useState([])
+
+    const onDrop = useCallback(acceptedFiles => {
+        setMyFiles([...myFiles, ...acceptedFiles])
+    }, [myFiles])
+
+    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
 
     //console.log({...props.values})
 
@@ -38,14 +46,56 @@ export default function CertificationModal(props) {
             ...props.values
         },
         onSubmit: values => {
-            props.newCertification(values)
-            //saveChanges({ ...values })
+            saveChanges(values)
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
         enableReinitialize: true
 
     });
+
+    const saveChanges = async (values) => {
+        let url = formik.values.url ? JSON.parse(formik.values.url) : []
+
+        for (let i = 0; i < myFiles.length; i++) {
+            const file = myFiles[i];
+            const res = await UsersAPI.saveFile(file)                
+            url.push({
+                name: file.name,
+                url: res.image.Location
+            })                
+        }
+        setMyFiles([])
+        props.newCertification({ ...values, url: JSON.stringify(url) })
+    }
+
+    const newFiles = myFiles.map((file, index) => (
+        <div key={file.name} className="item">
+            <p key={file.path}>
+            {file.path} - {file.size} bytes
+            </p>
+            <Button className="remove" onClick={() => removeFile(file.path, "new", index)} >✕</Button>
+        </div>
+    ));
+
+    const removeFile = (file, cond, index) => {
+        switch(cond){
+            case "old":
+                let currentUrl = JSON.parse(formik.values.url)
+                currentUrl = currentUrl.filter(e=>e.name!=file)
+                console.log(currentUrl)
+                formik.setFieldValue("url",JSON.stringify(currentUrl))
+                break;
+            case "new":
+                let newFiles = [...myFiles]
+                newFiles.splice(index, 1)
+                console.log(newFiles)
+                setMyFiles(newFiles)
+
+        }
+    }
+
+    
 
 
     return (
@@ -57,7 +107,7 @@ export default function CertificationModal(props) {
             keyboard
         >
             <Modal.Header closeButton>
-                <Modal.Title>Experiencia laboral</Modal.Title>
+                <Modal.Title>Certificación</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
@@ -109,13 +159,37 @@ export default function CertificationModal(props) {
                     {formik.touched.date && formik.errors.date ? (
                         <div className="alert alert-danger">{formik.errors.date}</div>
                     ) : null}
+
+                    <div className="dropzone-container">
+                        <div {...getRootProps({ className: 'dropzone' })}>
+                            <input {...getInputProps()} />
+                            <p>Drag 'n' drop some files here, or click to select files</p>
+                        </div>
+                        <aside>
+                            <h4>Archivos</h4>
+                            
+                            { formik?.values?.url ? JSON.parse(formik.values.url).map((file, index) => (
+                                <div key={file.name} className="item">
+                                    <p>
+                                        {file.name}
+                                    </p>
+                                    <Button className="remove" onClick={() => removeFile(file.name, "old")} >✕</Button>
+                                </div>
+                                )) : null
+                            }
+
+                            {newFiles}
+
+                        </aside>
+                    </div>
+
                 </Form>
 
 
             </Modal.Body>
             <Modal.Footer>
                 <Submit onClick={() => formik.submitForm()}>
-                    Solicitar servicio
+                    Agregar certificación
                 </Submit>
                 <Cancel onClick={props.onHide}>
                     Cancelar
