@@ -99,7 +99,14 @@ export default function CertificationModal(props) {
         }
     }
 
-    
+    const isParseable = string => {
+        try {
+            JSON.parse(string);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 
 
     return (
@@ -186,7 +193,7 @@ export default function CertificationModal(props) {
                         </div>
                         <aside>
                             
-                            { formik?.values?.url ? JSON.parse(formik.values.url).map((file, index) => (
+                            { (formik?.values?.url) && isParseable(formik?.values?.url) ? JSON.parse(formik.values.url).map((file, index) => (
                                 <div key={file.name} className="item">
                                     <p>
                                         {file.name}

@@ -13,6 +13,7 @@ import {
 
 import * as CountriesAPI from '../../api/countries';
 
+import NumberFormat from 'react-number-format';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -34,12 +35,15 @@ export default function TranslatorProfileForm() {
         number: "",
         password: "",
         description: "",
-        country: "",
-        city: "",
+        country_id: "",
+        city_id: "",
         nationality: "",
         address_1: "",
         address_2: "",
-        address_additional: ""
+        address_additional: "",
+        labor_months: "",
+        rate_hour: "",
+        rate_minute: ""
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +52,7 @@ export default function TranslatorProfileForm() {
     const [cities, setCities] = useState(null)
     const [response, setResponse] = useState(null)
 
-    const [modalShow, setModalShow] = useState(false);    
+    const [modalShow, setModalShow] = useState(false);
 
     useEffect(() => {
         getProfile();
@@ -78,31 +82,24 @@ export default function TranslatorProfileForm() {
 
     const getCities = (country) => {
         console.log(country)
-        CitiesAPI.getCities({country_id: country}).then((res) => {
+        CitiesAPI.getCities({ country_id: country }).then((res) => {
             console.log(res)
             if (res) {
                 const items = res.results.map((item) =>
                     <option key={item.id} value={item.id}>{item.name}</option>
                 );
                 setCities(items)
+                console.log(entity.city_id)
+                formik.setFieldValue("city_id", entity.city_id)
             }
         })
     }
 
-    const handleCountryChange = (e) => {
-        let current;
-        countries.forEach(element => {
-            if (element.props.value == e.target.value) {
-                current = element
-                getCities(current.key)
-            }
-        });
-    }
 
     const saveChanges = (values) => {
         console.log(values)
         setButtonState({ ...buttonState, ...{ label: "Guardando", disabled: false } })
-        UsersAPI.updateUser(values, localStorage.getItem("token") ).then((res) => {
+        UsersAPI.updateUser(values, localStorage.getItem("token")).then((res) => {
             let message = 'Cambios guardados exitosamente.'
             setButtonState({ label: "Enviar", disabled: false })
             setResponse(
@@ -110,7 +107,6 @@ export default function TranslatorProfileForm() {
                     {message}
                 </Alert>
             )
-            formik.resetForm()
         }).catch((err) => {
             console.log(err)
             let message;
@@ -125,7 +121,7 @@ export default function TranslatorProfileForm() {
     }
 
     const disableAccount = () => {
-        UsersAPI.disableUser(localStorage.getItem("token") ).then((res) => {
+        UsersAPI.disableUser(localStorage.getItem("token")).then((res) => {
             let message = 'Cambios cuenta deshabilitada exitosamente.'
             setResponse(
                 <Alert variant={'success'} >
@@ -166,14 +162,14 @@ export default function TranslatorProfileForm() {
             .required("*Este campo es obligatorio"),
         password: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
-            //.required("*Este campo es obligatorio"),
+        //.required("*Este campo es obligatorio"),
         description: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
-        country: Yup.string()
+        country_id: Yup.string()
             .min(1, "*Debes elegir un campo")
             .required("*Este campo es obligatorio"),
-        city: Yup.string()
+        city_id: Yup.string()
             .min(1, "*Debes elegir un campo")
             .required("*Este campo es obligatorio"),
         nationality: Yup.string()
@@ -184,10 +180,20 @@ export default function TranslatorProfileForm() {
             .required("*Este campo es obligatorio"),
         address_2: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
-            //.required("*Este campo es obligatorio"),
+        //.required("*Este campo es obligatorio"),
         address_additional: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
-            //.required("*Este campo es obligatorio"),
+        labor_months: Yup.string()
+            .required("*Este campo es obligatorio")
+            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+        rate_hour: Yup.string()
+            .required("*Este campo es obligatorio")
+            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+        rate_minute: Yup.string()
+            .required("*Este campo es obligatorio")
+            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+
+        //.required("*Este campo es obligatorio"),
 
     });
 
@@ -197,15 +203,19 @@ export default function TranslatorProfileForm() {
             lastname: entity.lastname ? entity.lastname : "",
             document: entity.document ? entity.document : "",
             email: entity.email ? entity.email : "",
-            phone   : entity.phone  ? entity.phone   : "",
+            phone: entity.phone ? entity.phone : "",
             password: entity.password ? entity.password : "",
             description: entity.description ? entity.description : "",
-            country: entity.country ? entity.country : "",
-            city: entity.city ? entity.city : "",
+            country_id: entity.country_id ? entity.country_id : "",
+            city_id: entity.city_id ? entity.city_id : "",
             nationality: entity.nationality ? entity.nationality : "",
             address_1: entity.address_1 ? entity.address_1 : "",
             address_2: entity.address_2 ? entity.address_2 : "",
-            address_additional: entity.address_additional ? entity.address_additional : ""
+            address_additional: entity.address_additional ? entity.address_additional : "",
+            labor_months: entity.labor_months ? entity.labor_months : "",
+            rate_hour: entity.rate_hour ? entity.rate_hour : "",
+            rate_minute: entity.rate_minute ? entity.rate_minute : ""
+
         },
         onSubmit: values => {
             saveChanges({ ...values })
@@ -214,6 +224,11 @@ export default function TranslatorProfileForm() {
         validateOnBlur: true,
         enableReinitialize: true
     });
+
+
+    useEffect(() => {
+        getCities(formik.values.country_id)
+    }, [formik.values.country_id]);
 
 
 
@@ -230,7 +245,7 @@ export default function TranslatorProfileForm() {
                         id="firstname"
                         type="text"
                         value={formik.values.firstname}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('firstname');
                             formik.handleChange(e)
                         }}
@@ -246,7 +261,7 @@ export default function TranslatorProfileForm() {
                         id="lastname"
                         type="text"
                         value={formik.values.lastname}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('lastname');
                             formik.handleChange(e)
                         }}
@@ -335,46 +350,45 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Pais</Form.Label>
+                    <Form.Label>Pais de residencia</Form.Label>
                     <Form.Control
                         as="select"
-                        id="country"
-                        name="country"
+                        id="country_id"
+                        name="country_id"
                         className="form-control input-lg"
                         onChange={e => {
-                            formik.setFieldTouched('country');
+                            formik.setFieldTouched('country_id');
                             formik.handleChange(e);
-                            handleCountryChange(e)
                         }}
-                        value={formik.values.country} >
+                        value={formik.values.country_id} >
                         <option value="">Seleccionar...</option>
                         {countries}
                     </Form.Control>
                 </Form.Group>
 
-                {formik.touched.country && formik.errors.country ? (
-                    <div className="alert alert-danger">{formik.errors.country}</div>
+                {formik.touched.country_id && formik.errors.country_id ? (
+                    <div className="alert alert-danger">{formik.errors.country_id}</div>
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Label>Ciudad de residencia</Form.Label>
                     <Form.Control
                         as="select"
-                        id="city"
-                        name="city"
+                        id="city_id"
+                        name="city_id"
                         className="form-control input-lg"
                         onChange={e => {
-                            formik.setFieldTouched('city');
+                            formik.setFieldTouched('city_id');
                             formik.handleChange(e);
                         }}
-                        value={formik.values.city} >
+                        value={formik.values.city_id} >
                         <option value="">Seleccionar...</option>
                         {cities}
                     </Form.Control>
                 </Form.Group>
 
-                {formik.touched.city && formik.errors.city ? (
-                    <div className="alert alert-danger">{formik.errors.city}</div>
+                {formik.touched.city_id && formik.errors.city_id ? (
+                    <div className="alert alert-danger">{formik.errors.city_id}</div>
                 ) : null}
 
                 <Form.Group>
@@ -383,7 +397,7 @@ export default function TranslatorProfileForm() {
                         id="nationality"
                         type="text"
                         value={formik.values.nationality}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('nationality');
                             formik.handleChange(e)
                         }}
@@ -399,7 +413,7 @@ export default function TranslatorProfileForm() {
                         id="address_1"
                         type="text"
                         value={formik.values.address_1}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('address_1');
                             formik.handleChange(e)
                         }}
@@ -415,7 +429,7 @@ export default function TranslatorProfileForm() {
                         id="address_2"
                         type="text"
                         value={formik.values.address_2}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('address_2');
                             formik.handleChange(e)
                         }}
@@ -431,7 +445,7 @@ export default function TranslatorProfileForm() {
                         id="address_additional"
                         type="text"
                         value={formik.values.address_additional}
-                        onChange={(e) =>{
+                        onChange={(e) => {
                             formik.setFieldTouched('address_additional');
                             formik.handleChange(e)
                         }}
@@ -441,7 +455,57 @@ export default function TranslatorProfileForm() {
                     <div className="alert alert-danger">{formik.errors.address_additional}</div>
                 ) : null}
 
-                   
+                <Form.Group>
+                    <Label>Meses de experiencia</Label>
+                    <Control
+                        id="labor_months"
+                        type="number"
+                        value={formik.values.labor_months}
+                        onChange={(e) => {
+                            formik.setFieldTouched('labor_months');
+                            formik.handleChange(e)
+                        }}
+                    />
+                </Form.Group>
+                {formik.touched.labor_months && formik.errors.labor_months ? (
+                    <div className="alert alert-danger">{formik.errors.labor_months}</div>
+                ) : null}
+
+                <Form.Group>
+                    <Label>Valor hora</Label>
+                    <NumberFormat
+                        id="rate_hour"
+                        className="form-control"
+                        value={formik.values.rate_hour}
+                        onValueChange={e => {
+                            formik.setFieldValue("rate_hour", e.value)
+                        }}
+                        thousandSeparator={true} prefix={'$'}
+                    />
+                </Form.Group>
+                {formik.touched.rate_hour && formik.errors.rate_hour ? (
+                    <div className="alert alert-danger">{formik.errors.rate_hour}</div>
+                ) : null}
+
+                <Form.Group>
+                    <Label>Valor minuto</Label>
+                    <NumberFormat
+                        id="rate_minute"
+                        className="form-control"
+                        value={formik.values.rate_minute}
+                        onValueChange={e => {
+                            formik.setFieldValue("rate_minute", e.value)
+                        }}
+                        thousandSeparator={true} prefix={'$'}
+                    />
+                </Form.Group>
+                {formik.touched.rate_minute && formik.errors.rate_minute ? (
+                    <div className="alert alert-danger">{formik.errors.rate_minute}</div>
+                ) : null}
+
+
+
+
                 <Submit
                     disabled={buttonState.disabled}
                     type="button"
@@ -449,14 +513,14 @@ export default function TranslatorProfileForm() {
                 >
                     {buttonState.label}
                 </Submit>
-            
+
             </Form>
 
-            <Link className="disabled-account" to="#" onClick={()=>setModalShow(true)}>
+            <Link className="disabled-account" to="#" onClick={() => setModalShow(true)}>
                 Desactivar cuenta
             </Link>
 
-            <ConfirmationModal 
+            <ConfirmationModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 setConfirm={() => disableAccount()}
@@ -468,7 +532,7 @@ export default function TranslatorProfileForm() {
 
             {response}
 
-            
+
 
         </div>
     )

@@ -83,7 +83,9 @@ export default function TranslatorExperienceForm() {
 
     const formik = useFormik({
         initialValues: {
-            ...entity
+            ...entity,
+            from: "",
+            to: ""
         },
         onSubmit: values => {
             setSubmitAttempt(true)
@@ -98,10 +100,10 @@ export default function TranslatorExperienceForm() {
     const reactTags = React.createRef()
 
     const saveChanges = (values) => {
-        
-        let remote_tools = selectedPlatforms.map((item)=> item.id )
 
-        let specialities = selectedSpecialities.map((item)=> item.id )
+        let remote_tools = selectedPlatforms.map((item) => item.id)
+
+        let specialities = selectedSpecialities.map((item) => item.id)
 
         let payload = {
             remote_tools: JSON.stringify(remote_tools),
@@ -114,7 +116,7 @@ export default function TranslatorExperienceForm() {
 
         console.log(payload)
 
-        UsersAPI.updateUser(payload, localStorage.getItem("token") ).then((res) => {
+        UsersAPI.updateUser(payload, localStorage.getItem("token")).then((res) => {
             let message = 'Cambios guardados exitosamente.'
             setButtonState({ label: "Enviar", disabled: false })
             setResponse(
@@ -136,7 +138,7 @@ export default function TranslatorExperienceForm() {
         })
 
     }
-    
+
 
 
     useEffect(() => {
@@ -177,6 +179,12 @@ export default function TranslatorExperienceForm() {
         })
     }
 
+    const switchLanguages = () =>{
+        let languages = [formik.values.from, formik.values.to]
+        console.log(languages)
+        formik.setFieldValue("from", languages[1])
+        formik.setFieldValue("to", languages[0])
+    }
 
 
     const onDelete = (i, type) => {
@@ -345,7 +353,7 @@ export default function TranslatorExperienceForm() {
                     onAddition={(data) => onAddition(data, "platforms")}
                 />
 
-                {selectedPlatforms.length==0 && submitAttempt ? (
+                {selectedPlatforms.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una plataforma.</div>
                 ) : null}
 
@@ -360,7 +368,7 @@ export default function TranslatorExperienceForm() {
                         </div>
                     ))}
                 </div>
-                
+
                 <div className="filter-language">
                     <div>
                         <Form.Control
@@ -372,12 +380,12 @@ export default function TranslatorExperienceForm() {
                                 formik.handleChange(e);
                             }}
                             value={formik.values.from} >
-                            <option value="0">Seleccionar...</option>
+                            <option value="">Seleccionar...</option>
                             {languages?.map((elm) => (
                                 <option key={elm.id} value={elm.id} >{elm.name}</option>
                             ))}
                         </Form.Control>
-                        <Button className="switch">
+                        <Button className="switch" onClick={() => switchLanguages()}>
                             <img
                                 className="img-filer"
                                 src="/assets/images/load.png"
@@ -392,7 +400,7 @@ export default function TranslatorExperienceForm() {
                                 formik.handleChange(e);
                             }}
                             value={formik.values.to} >
-                            <option value="0">Seleccionar...</option>
+                            <option value="">Seleccionar...</option>
                             {languages?.map((elm) => (
                                 <option key={elm.id} value={elm.id}>{elm.name}</option>
                             ))}
@@ -401,7 +409,7 @@ export default function TranslatorExperienceForm() {
                     <Button className="add" onClick={() => addLanguage()} >Agregar</Button>
                 </div>
 
-                {selectedLanguages.length==0 && submitAttempt ? (
+                {selectedLanguages.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos un par de lenguajes.</div>
                 ) : null}
 
@@ -416,7 +424,7 @@ export default function TranslatorExperienceForm() {
                     onAddition={(data) => onAddition(data, "specialities")}
                 />
 
-                {selectedSpecialities.length==0 && submitAttempt ? (
+                {selectedSpecialities.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una especialidad.</div>
                 ) : null}
 
@@ -429,7 +437,6 @@ export default function TranslatorExperienceForm() {
                             <div className="top">
                                 <div className="head">
                                     <b className="title">{experience.company}</b>
-                                    <p className="time">{experience.labor_months} Meses</p>
                                 </div>
                                 <div className="options">
                                     <Dropdown>
@@ -448,11 +455,6 @@ export default function TranslatorExperienceForm() {
                                     </Dropdown>
                                 </div>
                             </div>
-                            <div className="bottom" >
-                                <p className="description">
-                                    {experience.description}
-                                </p>
-                            </div>
                         </div>
                     ))}
                     <div className="new-exp">
@@ -464,7 +466,7 @@ export default function TranslatorExperienceForm() {
 
                 </div>
 
-                {formik.values.work_experience==[] && submitAttempt ? (
+                {formik.values.work_experience == [] && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una experiencia de trabajo.</div>
                 ) : null}
 
@@ -507,7 +509,7 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
-                {formik.values.work_experience==[] && submitAttempt ? (
+                {formik.values.work_experience == [] && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una certificación.</div>
                 ) : null}
 

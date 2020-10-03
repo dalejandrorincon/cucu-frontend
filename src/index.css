@@ -221,18 +221,39 @@ th {
   padding-left: 5px !important;
 }
 
+
+.navbar{
+  width: 100%;
+  background-color: white;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+
+}
+
+.navbar .container{
+  padding: 0px 5px;
+}
+
 .navbar-nav {
   margin-left: 30px;
 }
 
-.layout {
-  margin-right: 50px !important;
-  margin-left: 50px !important;
+.no-gutter{
+  background-color: white;
 }
 
+#root{
+  background-color: #f4f4f4;
+}
+
+/* .layout {
+  margin-right: 50px !important;
+  margin-left: 50px !important;
+} */
+
 .layout-content {
-  padding-right: 50px !important;
-  padding-left: 50px !important;
+  /* padding-right: 50px !important;
+  padding-left: 50px !important; */
 }
 
 .ico-user {

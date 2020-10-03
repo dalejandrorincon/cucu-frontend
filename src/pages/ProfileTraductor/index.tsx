@@ -42,7 +42,7 @@ function ProfileTraductorPage({
   counter,
 }: Props) {
   const [profile, setProfile] = useState<any>({});
-  
+
   const history = useHistory();
   const location = useLocation();
   console.log(location.pathname)
@@ -50,42 +50,44 @@ function ProfileTraductorPage({
   return (
     <>
       <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="#">
-          <img src="/assets/images/logo.png" alt="logo" />
-        </Link>
-        
-        <ul className="navbar-nav">
-          <li className="nav-item ">
-            <img src="/assets/images/bell@2x.png"></img>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <img
-            src="/assets/images/no_avatar_default.png"
-            className="ico-user"
-          />
-          <NavDropdown
-            title={localStorage.getItem("userName")}
-            id="nav-dropdown"
-          >
-            <NavDropdown.Item>
-              <Link to="/profile">Perfil</Link>
-            </NavDropdown.Item>{" "}
-            <NavDropdown.Item>
-              <Link
-                to="#"
-                onClick={() => {
-                  logout();
-                  history.push("/");
-                }}
-              >
-                Cerrar sesión
+        <Container className="themed-container">
+          <Link className="navbar-brand" to="#">
+            <img src="/assets/images/logo.png" alt="logo" />
+          </Link>
+
+          <ul className="navbar-nav">
+            <li className="nav-item ">
+              <img src="/assets/images/bell@2x.png"></img>
+            </li>
+          </ul>
+          <ul className="navbar-nav">
+            <img
+              src="/assets/images/no_avatar_default.png"
+              className="ico-user"
+            />
+            <NavDropdown
+              title={localStorage.getItem("userName")}
+              id="nav-dropdown"
+            >
+              <NavDropdown.Item>
+                <Link to="/profile">Perfil</Link>
+              </NavDropdown.Item>{" "}
+              <NavDropdown.Item>
+                <Link
+                  to="#"
+                  onClick={() => {
+                    logout();
+                    history.push("/");
+                  }}
+                >
+                  Cerrar sesión
               </Link>
-            </NavDropdown.Item>
-          </NavDropdown>
-        </ul>
+              </NavDropdown.Item>
+            </NavDropdown>
+          </ul>
+        </Container>
       </nav>
-      <Container className="themed-container" fluid={true}>
+      <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>Perfil</Title>
@@ -140,8 +142,8 @@ function ProfileTraductorPage({
                       </Col>
                       <Col className="col-padding item-active-profile">
 
-                        <Route path={`/profile/experience`} component={TranslatorExperienceForm}/>
-                        <Route exact path={`/profile/`} component={TranslatorProfileForm}/>
+                        <Route path={`/profile/experience`} component={TranslatorExperienceForm} />
+                        <Route exact path={`/profile/`} component={TranslatorProfileForm} />
 
                       </Col>
                     </Row>

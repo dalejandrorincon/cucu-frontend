@@ -74,3 +74,21 @@ export const saveFile = (file) => {
       throw error;
     });
 };
+
+export const getTranslators = (payload, id) => {
+  const URL = `/users/translators`;
+  console.log(payload)
+  return api(URL, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+    },
+    params:{
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};

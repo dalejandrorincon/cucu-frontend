@@ -39,6 +39,7 @@
                     .time{
                         color: #AAA;
                         font-size: 13px;
+                        margin-bottom: 0px;
                     }
                 }
                 
@@ -138,26 +139,7 @@
         }
     }
 
-    .Language-panel{
-        .item{
-            border: 1px solid #D1D1D1;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            p{
-                margin-bottom: 0px;
-                padding: 10px
-            }
-            button{
-                background-color: #F3F3F3;
-                color: black;
-                border: 0px;
-                padding: 5px 10px
-            }
-        }
-
-    }
-
+    
     .alert-danger{
         margin-top: 20px;
     }

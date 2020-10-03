@@ -35,12 +35,6 @@ export default function ExperienceModal(props) {
         company: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
-        description: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
-        labor_months: Yup.string()
-            .min(1, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
         /* url: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio") */
@@ -102,6 +96,15 @@ export default function ExperienceModal(props) {
         }
     }
 
+    const isParseable = string => {
+        try {
+            JSON.parse(string);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
 
     return (
 
@@ -132,38 +135,6 @@ export default function ExperienceModal(props) {
                         <div className="alert alert-danger">{formik.errors.company}</div>
                     ) : null}
 
-                    <Form.Group>
-                        <Label>Descripción de labor</Label>
-                        <Control
-                            id="description"
-                            type="textarea"
-                            as="textarea"
-                            rows="5"
-                            value={formik.values.description}
-                            onChange={(e) => {
-                                formik.setFieldTouched('description');
-                                formik.handleChange(e)
-                            }}
-                        />
-                    </Form.Group>
-                    {formik.touched.description && formik.errors.description ? (
-                        <div className="alert alert-danger">{formik.errors.description}</div>
-                    ) : null}
-                    <Form.Group>
-                        <Label>Meses de labor</Label>
-                        <Control
-                            id="labor_months"
-                            type="text"
-                            value={formik.values.labor_months}
-                            onChange={(e) => {
-                                formik.setFieldTouched('labor_months');
-                                formik.handleChange(e)
-                            }}
-                        />
-                    </Form.Group>
-                    {formik.touched.labor_months && formik.errors.labor_months ? (
-                        <div className="alert alert-danger">{formik.errors.labor_months}</div>
-                    ) : null}
 
                     <Label>Certificado laboral</Label>
 
@@ -174,7 +145,7 @@ export default function ExperienceModal(props) {
                         </div>
                         <aside>
 
-                            {formik?.values?.url ? JSON.parse(formik.values.url).map((file, index) => (
+                            { (formik?.values?.url) && isParseable(formik?.values?.url) ? JSON.parse(formik.values.url).map((file, index) => (
                                 <div key={file.name} className="item">
                                     <p>
                                         {file.name}
