@@ -14,6 +14,10 @@ import "rc-slider/assets/index.css";
 import ProfileTranslatorPage from "./pages/ProfileTranslator";
 import ProfileTraductorPage from "./pages/ProfileTraductor";
 import RequestTranslatorPage from "./pages/RequestTranslator";
+
+//import ClientServices from "./pages/ClientServices";
+import TranslatorServices from "./pages/TranslatorServices";
+
 import ProfilePage from "./pages/ProfilePage";
 import { PublicRoute } from "./components/PublicRoute";
 import { PrivateRoute } from "./components/PrivateRoute";
@@ -43,9 +47,20 @@ export default function App() {
           path="/profile"
           component={
             localStorage.getItem("role") === "3" ||
-            localStorage.getItem("role") === "4"
+              localStorage.getItem("role") === "4"
               ? ProfilePage
               : ProfileTraductorPage
+          }
+        />
+        <PrivateRoute
+          path="/services"
+          component={
+             TranslatorServices
+              /* localStorage.getItem("role") === "3" ||
+              localStorage.getItem("role") === "4"
+              ? //ClientServices
+              TranslatorServices 
+              : TranslatorServices */
           }
         />
       </Router>

@@ -26,6 +26,8 @@ import {
   RowRecover,
 } from "./styles"
 
+import Header from "../../components/Header"
+
 
 interface Props {
   counter: number;
@@ -49,44 +51,7 @@ function ProfileTraductorPage({
 
   return (
     <>
-      <nav className="navbar navbar-expand-md layout">
-        <Container className="themed-container">
-          <Link className="navbar-brand" to="#">
-            <img src="/assets/images/logo.png" alt="logo" />
-          </Link>
-
-          <ul className="navbar-nav">
-            <li className="nav-item ">
-              <img src="/assets/images/bell@2x.png"></img>
-            </li>
-          </ul>
-          <ul className="navbar-nav">
-            <img
-              src="/assets/images/no_avatar_default.png"
-              className="ico-user"
-            />
-            <NavDropdown
-              title={localStorage.getItem("userName")}
-              id="nav-dropdown"
-            >
-              <NavDropdown.Item>
-                <Link to="/profile">Perfil</Link>
-              </NavDropdown.Item>{" "}
-              <NavDropdown.Item>
-                <Link
-                  to="#"
-                  onClick={() => {
-                    logout();
-                    history.push("/");
-                  }}
-                >
-                  Cerrar sesión
-              </Link>
-              </NavDropdown.Item>
-            </NavDropdown>
-          </ul>
-        </Container>
-      </nav>
+      <Header></Header>
       <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
