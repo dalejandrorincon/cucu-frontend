@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { logout } from "../../utils/session";
 import {
   Container,
@@ -12,6 +11,7 @@ import {
   Form,
   NavDropdown,
   FormControl,
+  Button
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Range } from "rc-slider";
@@ -31,8 +31,16 @@ import {
   TextFilterBox,
   TextFilterBoxEnd
 } from "./styles"
+import './styles.scss';
 
-const baseUri = process.env.REACT_APP_API_URL;
+import Header from "../../components/Header"
+
+import * as UsersAPI from '../../api/users';
+import * as SpecialitiesAPI from '../../api/specialities';
+import * as LanguagesAPI from '../../api/languages';
+import moment from 'moment';
+
+import { useFormik } from 'formik';
 
 interface Props {
   counter: number;
@@ -65,18 +73,21 @@ function TranslatorsPage({
     <TextFilterBoxEnd onClick={props.onClick}>{props.value}</TextFilterBoxEnd>
   );
 
-  const [min, setMin] = useState(1);
-  const [max, setMax] = useState(40);
-  const [value, setValue] = useState([10, 30]);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(10);
+  const [value, setValue] = useState([0, 10]);
 
   const [minHour, setMinHour] = useState(1);
-  const [maxHour, setMaxHour] = useState(200);
-  const [valueHour, setValueHour] = useState([40, 120]);
+  const [maxHour, setMaxHour] = useState(100);
+  const [valueHour, setValueHour] = useState([0, 100]);
 
   const [minMinute, setMinMinute] = useState(1);
-  const [maxMinute, setMaxMinute] = useState(200);
-  const [valueMinute, setValueMinute] = useState([40, 120]);
+  const [maxMinute, setMaxMinute] = useState(10);
+  const [valueMinute, setValueMinute] = useState([0, 10]);
   const [rate, setRate] = useState(0);
+
+  /* const [lang, setLang] = useState([]); */
+
 
   const onSliderChange = (value) => {
     setValue(value);
@@ -90,164 +101,143 @@ function TranslatorsPage({
     setValueHour(value);
   };
 
-  const getSpecialities = () => {
-    const headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    try {
-      fetch(`${baseUri}/specialities`, {
-        method: "GET",
-        headers: headers,
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setSpecialities(responseJson);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
-
   const getLanguages = () => {
-    const headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    try {
-      fetch(`${baseUri}/languages`, {
-        method: "GET",
-        headers: headers,
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setLanguages(responseJson);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error", error);
-    }
+    LanguagesAPI.getLanguages().then((res) => {
+      console.log(res)
+      setLanguages(res)
+    })
   };
 
-  const getTranslators = () => {
-    const headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
+  const getSpecialities = () => {
+    SpecialitiesAPI.getSpecialities().then((res) => {
+      console.log(res)
+      setSpecialities(res)
+    })
+  }
 
-    try {
-      fetch(`${baseUri}/users/translators?page=${page}`, {
-        method: "GET",
-        headers: headers,
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setTranslators(responseJson.users);
-          setData(responseJson);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error", error);
+  const combineDateWithTime = (d, t) => {
+    return new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate(),
+      t.getHours(),
+      t.getMinutes(),
+      t.getSeconds(),
+      t.getMilliseconds()
+    );
+  }
+
+
+  const getTranslators = (lang = []) => {
+
+    let settings = {
+      grade: rate,
+      min_price_minute: valueMinute[0],
+      max_price_minute: valueMinute[1],
+      min_experience: value[0],
+      max_experience: value[1],
+      min_price_hour: valueHour[0],
+      max_price_hour: valueHour[1]
     }
-  };
 
-  const getTranslatorsPage = () => {
-    const headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
+    if (startTime && endTime) {
+      let startDateTime = combineDateWithTime(startDate, startTime)
+      let endDateTime = combineDateWithTime(startDate, endTime)
+      settings = { ...settings, ...{ min_available_time: startDateTime, max_available_time: endDateTime } }
+    }
 
-    try {
-      fetch(
-        `${baseUri}/users/translators?grade=${rate}&min_price_minute=${valueMinute[0]}&max_price_minute=${valueMinute[1]}&min_experience=${value[0]}&max_experience=${value[1]}&min_price_hour=${valueHour[0]}&max_price_hour${valueHour[1]}`,
-        {
-          method: "GET",
-          headers: headers,
+    if (formik.values.name) {
+      settings = { ...settings, ...{ name: formik.values.name } }
+    }
+
+    /* if(lang!=[]){
+      settings = { ...settings, ...{languages: JSON.stringify(lang)}}
+    } */
+
+
+    if (formik.values.languageFrom && formik.values.languageTo) {
+
+      settings = {
+        ...settings,
+        ...{
+          languages:
+            JSON.stringify(
+              [{
+                from: formik.values.languageFrom,
+                to: formik.values.languageTo
+              }]
+            )
         }
-      )
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setTranslators(responseJson.users);
-          setData(responseJson);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error", error);
+      }
     }
+
+    if (formik.values.speciality) {
+      settings = {
+        ...settings,
+        ...{ speciality_id: JSON.stringify([parseInt(formik.values.speciality)]) }
+      }
+    }
+
+
+    UsersAPI.getTranslators(settings, localStorage.getItem("token")).then((res) => {
+      setTranslators(res.users);
+      setData(res);
+    }).catch((err) => {
+      console.log(err)
+    })
   };
 
-  useEffect(() => {
-    getTranslatorsPage();
-  }, [value, valueHour, valueMinute, rate]);
 
   useEffect(() => {
-    getTranslators();
-  }, [page]);
-
-  useEffect(() => {
-    getTranslators();
     getLanguages();
     getSpecialities();
   }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      languageFrom: "",
+      languageTo: "",
+      speciality: "",
+      name: ""
+
+    },
+    onSubmit: values => {
+      console.log("values")
+    },
+    //validationSchema: validationSchema,
+    validateOnBlur: true,
+    enableReinitialize: true
+
+  });
+
+
+  useEffect(() => {
+    getTranslators();
+  }, [
+    formik.values.languageFrom,
+    formik.values.languageTo,
+    formik.values.speciality,
+    formik.values.name
+  ]);
+
+  const switchLanguages = () => {
+    let languages = [formik.values.languageFrom, formik.values.languageTo]
+    console.log(languages)
+    formik.setFieldValue("languageFrom", languages[1])
+    formik.setFieldValue("languageTo", languages[0])
+  }
+
+
+  /* useEffect(() => {
+    getTranslators();
+  }, [rate]); */
+
   const history = useHistory();
 
   return (
     <>
-      <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/translators">
-          <img src="/assets/images/logo.png" alt="logo" />
-        </Link>
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item nav-item-active">
-            <Link className="nav-link " to="/translators">
-              Traductores
-            </Link>
-          </li>
-          <li className="nav-item ">
-            <Link className="nav-link nav-item-inactive" to="/home">
-              Mis solicitudes
-            </Link>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <li className="nav-item ">
-            <img src="/assets/images/bell@2x.png"></img>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <img
-            src="/assets/images/no_avatar_default.png"
-            className="ico-user"
-          />
-          <NavDropdown
-            title={localStorage.getItem("userName")}
-            id="nav-dropdown"
-          >
-            <NavDropdown.Item>
-              <Link to="/profile">Perfil</Link>
-            </NavDropdown.Item>{" "}
-            <NavDropdown.Item>
-              <Link
-                to="#"
-                onClick={() => {
-                  logout();
-                  history.push("/");
-                }}
-              >
-                Cerrar sesión
-              </Link>
-            </NavDropdown.Item>
-          </NavDropdown>
-        </ul>
-      </nav>
-      <Container className="themed-container" fluid={true}>
+      <Header></Header>
+      <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>Traductores</Title>
@@ -271,10 +261,11 @@ function TranslatorsPage({
                         <div className="label-filter">Experiencia</div>
                         <div className="slidecontainer">
                           <Range
-                            defaultValue={value}
+                            value={value}
                             min={min}
                             max={max}
                             onChange={onSliderChange}
+                            onAfterChange={() => getTranslators()}
                           />
                         </div>
                         <LabelFilter>
@@ -287,7 +278,7 @@ function TranslatorsPage({
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
-                        <Form.Group controlId="dob">
+                        <Form.Group>
                           <Form.Label className="label-filter">
                             Disponible
                           </Form.Label>
@@ -363,6 +354,7 @@ function TranslatorsPage({
                             min={minHour}
                             max={maxHour}
                             onChange={onSliderChangeHour}
+                            onAfterChange={() => getTranslators()}
                           />
                         </div>
                         <LabelFilter>
@@ -404,6 +396,7 @@ function TranslatorsPage({
                             min={minMinute}
                             max={maxMinute}
                             onChange={onSliderChangeMinute}
+                            onAfterChange={() => getTranslators()}
                           />
                         </div>
                         <LabelFilter>
@@ -423,38 +416,72 @@ function TranslatorsPage({
                     <Container className="themed-container" fluid={true}>
                       <Row>
                         <Col>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Control as="select">
-                              <option>Todas las especialidades</option>
+                          <Form.Group>
+                            <Form.Control
+                              as="select"
+                              id="speciality"
+                              name="speciality"
+                              className="form-control input-lg"
+                              onChange={e => {
+                                formik.handleChange(e);
+                              }}
+                              value={formik.values.speciality}>
+                              <option value="">Todas las especialidades</option>
                               {specialities?.map((elm: any) => (
-                                <option>{elm.name}</option>
+                                <option key={elm.id} value={elm.id} >{elm.name}</option>
                               ))}
                             </Form.Control>
                           </Form.Group>
                         </Col>
                         <Col>
-                          <div className="filter-languaje">
-                            <span>Idiomas</span>
-                            <select className="selec">
-                              {languages?.map((elm: any) => (
-                                <option>{elm.name}</option>
-                              ))}
-                            </select>
-                            <img
-                              className="img-filer"
-                              src="/assets/images/load.png"
-                            ></img>
-                            <select className="selec">
-                              {languages?.map((elm: any) => (
-                                <option>{elm.name}</option>
-                              ))}
-                            </select>
+                          <div className="filter-language">
+                            <div>
+                              <Form.Control
+                                as="select"
+                                id="languageFrom"
+                                name="languageFrom"
+                                className="form-control input-lg"
+                                onChange={e => {
+                                  formik.handleChange(e);
+                                }}
+                                value={formik.values.languageFrom} >
+                                <option value="">Seleccionar...</option>
+                                {languages?.map((elm: any) => (
+                                  <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                ))}
+                              </Form.Control>
+                              <Button className="switch" onClick={() => switchLanguages()}>
+                                <img
+                                  className="img-filer"
+                                  src="/assets/images/load.png"
+                                ></img>
+                              </Button>
+                              <Form.Control
+                                as="select"
+                                id="languageTo"
+                                name="languageTo"
+                                className="form-control input-lg"
+                                onChange={e => {
+                                  formik.handleChange(e);
+                                }}
+                                value={formik.values.languageTo} >
+                                <option value="0">Seleccionar...</option>
+                                {languages?.map((elm: any) => (
+                                  <option key={elm.id} value={elm.id}>{elm.name}</option>
+                                ))}
+                              </Form.Control>
+                            </div>
                           </div>
                         </Col>
                         <Col>
                           <FormControl
-                            id="inlineFormInputGroup"
                             placeholder="Buscar por nombre"
+                            id="name"
+                            type="text"
+                            value={formik.values.name}
+                            onChange={(e) => {
+                              formik.handleChange(e)
+                            }}
                           />
                         </Col>
                       </Row>
@@ -462,7 +489,7 @@ function TranslatorsPage({
                     <div className="table-responsive">
                       <table className="table ">
                         <tbody>
-                          {translators.map((ele: any) => (
+                          {translators?.map((ele: any) => (
                             <tr>
                               <td>
                                 <div className="userIconTra">
@@ -499,10 +526,7 @@ function TranslatorsPage({
                                 {ele.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      {lng.to.name}
-                                    </span>
-                                    <span className="badge badge-light">
-                                      {lng.from.name}
+                                      De {lng.to.name} a {lng.from.name}
                                     </span>
                                   </>
                                 ))}

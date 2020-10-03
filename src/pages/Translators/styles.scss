@@ -1,0 +1,45 @@
+.filter-language{
+    border: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    select{
+        display: inline-block;
+        width: 20%;
+        font-size: 12px;
+        width: calc(50% - 26px);
+        background-color: #F3F3F3;
+        border: #F3F3F3;
+        height: 30px;
+    }
+    >div{
+        border: 1px solid #D1D1D1;
+        width: 100%;
+        margin-right: 5px;
+        padding: 2px;
+    }
+    button{
+        color: black !important;
+        background-color: #F3F3F3;
+        border: 1px solid #F3F3F3;
+        font-size: 12px;
+        &.switch{
+            width: 44px;
+            background-color: white;
+            border: 0px;
+            margin: 0px 4px;
+            position: relative;
+            top: 1px;
+            &:active{
+                background-color: #F3F3F3 !important;
+            }
+        }
+        &:active{
+            background-color: white !important;
+        }
+        &.add{
+            height: 37px;
+        }
+        outline: none;
+        box-shadow: none !important;
+    }
+}
