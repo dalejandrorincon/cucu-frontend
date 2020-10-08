@@ -66,11 +66,11 @@ function TranslatorsPage({
 
   const ExampleCustomInput = (props) => <Form.Control {...props} />;
   const ExampleCustomInputTime = (props) => (
-    <TextFilterBox onClick={props.onClick}>{props.value}</TextFilterBox>
+    <TextFilterBox onClick={props.onClick}>{props.value ? props.value : "Desde"}</TextFilterBox>
   );
 
   const ExampleCustomInputTimeTwo = (props) => (
-    <TextFilterBoxEnd onClick={props.onClick}>{props.value}</TextFilterBoxEnd>
+    <TextFilterBoxEnd onClick={props.onClick} >{props.value ? props.value : "Hasta"}</TextFilterBoxEnd>
   );
 
   const [min, setMin] = useState(0);
@@ -290,8 +290,8 @@ function TranslatorsPage({
                             }
                           />
                         </Form.Group>
-                        <LabelFilter>
-                          <Col>
+                        <LabelFilter className="home-date">
+                          
                             <DatePicker
                               selected={startTime}
                               onChange={(date: any) => setStartTime(date)}
@@ -304,11 +304,10 @@ function TranslatorsPage({
                                 <ExampleCustomInputTime></ExampleCustomInputTime>
                               }
                             />
-                          </Col>
-                          <Col className="rpw">
-                            <span>Hasta</span>
-                          </Col>
-                          <ColFilter>
+                            <div className="separator">
+                              <i className="fa fa-clock-o" aria-hidden="true"></i>
+                            </div>
+
                             <DatePicker
                               selected={endTime}
                               onChange={(date: any) => setEndTime(date)}
@@ -321,7 +320,6 @@ function TranslatorsPage({
                                 <ExampleCustomInputTimeTwo></ExampleCustomInputTimeTwo>
                               }
                             />
-                          </ColFilter>
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">

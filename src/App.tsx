@@ -15,6 +15,8 @@ import ProfileTranslatorPage from "./pages/ProfileTranslator";
 import ProfileTraductorPage from "./pages/ProfileTraductor";
 import RequestTranslatorPage from "./pages/RequestTranslator";
 
+import "./App.scss"
+
 //import ClientServices from "./pages/ClientServices";
 import TranslatorServices from "./pages/TranslatorServices";
 

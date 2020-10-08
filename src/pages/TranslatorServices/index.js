@@ -5,17 +5,10 @@ import Header from "../../components/Header"
 
 
 export default function TranslatorServices() {
-
-
-
     return (
-
-
         <div>
             <Header></Header>
-
-            <ServicesList></ServicesList>
-            
+            <ServicesList></ServicesList>            
         </div>
     );
 }

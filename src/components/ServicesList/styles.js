@@ -24,14 +24,5 @@ export const WellContainer = styled.div`
   background-color: #fff !important;
   border-radius: 0 !important;
   border: #d1d1d1 solid 1px;
-  padding-top: 30px;
   margin-bottom: 30px;
-`;
-
-export const PasswordRecover = styled.div`
-  min-height: 100vh;
-`;
-
-export const RowRecover = styled(Row)`
-  background: #f4f4f4;
 `;

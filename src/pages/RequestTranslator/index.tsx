@@ -102,7 +102,7 @@ function RequestTranslatorPage() {
     var urlencoded = new URLSearchParams();
     urlencoded.append("service_site", "");
     urlencoded.append("amount", "100");
-    urlencoded.append("service_type", "cucu");
+    urlencoded.append("service_type", "0");
     urlencoded.append("url", "http://test.com");
     urlencoded.append("length", "120");
     urlencoded.append("platform", "test");

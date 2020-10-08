@@ -16,6 +16,7 @@ import * as UsersAPI from '../../api/users';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { isParseable } from "../../utils/constants"
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -94,15 +95,6 @@ export default function ExperienceModal(props) {
                 setMyFiles(newFiles)
 
         }
-    }
-
-    const isParseable = string => {
-        try {
-            JSON.parse(string);
-        } catch (e) {
-            return false;
-        }
-        return true;
     }
 
 
