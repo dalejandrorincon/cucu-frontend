@@ -2,6 +2,8 @@
 
     .userIconModal{
         width: 100%;
+        margin-bottom: 15px;
+        margin-top: 15px;
         .user-container{
             width: 100%;
             display: flex;
@@ -39,6 +41,23 @@
 
     .url-button{
         margin-top: 10px
+    }
+
+    .cancel-reason{
+        background-color: #F4F4F4;
+        padding: 20px;
+        .title{
+            font-weight: bold;
+        }
+        .desc{
+            font-size: 13px;
+            margin: 0px
+        }
+        margin-bottom: 15px;
+    }
+
+    .image-profile{
+        height: 75px;
     }
 
 }    

@@ -55,3 +55,34 @@ export const cancelService = (token, id, payload) => {
       throw error;
     });
 };
+
+
+export const startService = (token, id) => {
+  const URL = `/translation_services/start/`+id;
+  return api(URL, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const acceptService = (token, id) => {
+  const URL = `/translation_services/accept/`+id;
+  return api(URL, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};

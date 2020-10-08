@@ -24,3 +24,15 @@
     }
 
 }
+
+
+.table {
+    .thead-light th{
+        background-color: #FAFAFA;
+        border: 0px;
+    }
+    tr:first-child td{
+        border-top: 0px;
+    }
+    
+}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { itemStatusLabel } from "../../utils/constants"
 import { isParseable } from "../../utils/constants"
-import CancelModal from "../CancelModal"
+
 import {
   WellContainerModal,
   URLLabel,
@@ -14,16 +14,37 @@ import {
 
 import "./styles.scss"
 
+import CancelModal from "../CancelModal"
+import * as ServicesAPI from '../../api/services';
+
 import moment from "moment";
 
 export default function ServiceModal(props) {
   const [statusButtons, setStatusButtons] = useState(null);
-  const [service, setService] = useState(props.service);
   const [modalCancel, setModalCancel] = useState(false);
   const [modalType, setModalType] = useState(false);
+	const [confirmDisable, setConfirmDisable] = useState(false)
 
 
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
+
+  const acceptService = () => {
+    setConfirmDisable(true)
+		ServicesAPI.acceptService(localStorage.getItem("token"), props.service?.id).then((res) => {
+			setConfirmDisable(false)
+			props.onHide()
+			props.updateServices()
+		})
+  }
+  
+  const startService = () => {
+    setConfirmDisable(true)
+		ServicesAPI.startService(localStorage.getItem("token"), props.service?.id).then((res) => {
+			setConfirmDisable(false)
+			props.onHide()
+			props.updateServices()
+		})
+	}
 
 
   const getButtons = () => {
@@ -35,7 +56,11 @@ export default function ServiceModal(props) {
         case "0":
           buttons =
             <>
-              <Submit onClick={() => { }}>
+              <Submit 
+                disable={confirmDisable}
+                onClick={() => {
+                  acceptService()
+                }}>
                 Aceptar servicio
               </Submit>
               <Cancel 
@@ -53,7 +78,11 @@ export default function ServiceModal(props) {
         case "1":
           buttons =
             <>
-              <Submit onClick={() => { }}>
+              <Submit 
+                disable={confirmDisable}
+                onClick={() => { 
+                  startService()
+                }}>
                 Iniciar traducción
             </Submit>
               <Cancel 
@@ -119,6 +148,15 @@ export default function ServiceModal(props) {
             </div>
           </div>
           <WellContainerModal>
+
+            {props.service.cancel_reason && props.service.status=="5" || props.service.status=="6" ?
+              <div className="cancel-reason">
+                <p className="title">Motivo de {props.service.status=="5"? <>cancelación</> : <>rechazo</>}</p>
+                <p className="desc">{props.service.cancel_reason}</p>
+              </div>
+              : null  
+            }
+
             <p className="price-modal">
               $ {props.service.amount}{" "}
               <span className="price-detail">
@@ -189,6 +227,7 @@ export default function ServiceModal(props) {
       
       <CancelModal
         onHide={() => setModalCancel(false)}
+        updateServices={()=>{props.updateServices()}}
         show={modalCancel}
         service={props.service}
         type={modalType}

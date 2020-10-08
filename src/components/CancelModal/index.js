@@ -13,7 +13,6 @@ import "./styles.scss"
 
 export default function CancelModal(props) {
 
-	const [response, setResponse] = useState(null)
 	const [confirmDisable, setConfirmDisable] = useState(false)
 
 	const validationSchema = Yup.object().shape({
@@ -47,6 +46,8 @@ export default function CancelModal(props) {
 		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, values).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
+			props.updateServices()
+			formik.resetForm()
 		})
 	}
 
@@ -54,6 +55,8 @@ export default function CancelModal(props) {
 		ServicesAPI.rejectService(localStorage.getItem("token"), props.service?.id, values).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
+			props.updateServices()
+			formik.resetForm()
 		})
 	}
 

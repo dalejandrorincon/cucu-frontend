@@ -16,7 +16,6 @@ export default function TranslatorServices() {
 	const [activeService, setActiveService] = useState({});
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
-	const [page, setPage] = useState(1);
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
 
@@ -43,19 +42,24 @@ export default function TranslatorServices() {
 
 	});
 
-	useEffect(() => {
+	const getUserType = () =>{
+		let role=""
 		switch (localStorage.getItem("role")) {
 			case "1":
-				getServices("");
+				role = "admin"
 				break;
-
 			case "2":
-				getServices("translator")
+				role = "translator"
 				break;
-
 			default:
-				getServices("client")
+				role = "client"
 		}
+		return role
+	}
+
+	useEffect(() => {
+		let userType = getUserType()
+		getServices(userType)
 	}, [
 		options,
 	]);
@@ -319,6 +323,10 @@ export default function TranslatorServices() {
 			</Container>
 
 			<ServiceModal 
+				updateServices={()=>{
+					setIsModalVisible(false)
+					getServices(getUserType())
+				}}
 				service={activeService} 
 				onHide={() => setIsModalVisible(false)}
 				show={isModalVisible}
