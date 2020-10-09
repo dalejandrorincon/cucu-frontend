@@ -1,5 +1,23 @@
-import axios from 'axios';
 import {api} from './api';
+
+export const createService = (token, payload) => {
+  const URL = `/translation_services/`;
+  console.log(payload)
+  return api(URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    },
+    data: {
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
 
 export const getServices = (type, token, payload) => {
   const URL = `/translation_services/`+type;
@@ -80,6 +98,27 @@ export const acceptService = (token, id) => {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
     }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const saveFile = (file) => {
+  const URL = `/translation_services/file`;
+  console.log(file)
+
+  var formdata = new FormData();
+  formdata.append("files", file);
+
+  return api(URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    data: formdata
+    
   })
     .then(response => response.data)
     .catch(error => {

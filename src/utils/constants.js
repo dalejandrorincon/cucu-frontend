@@ -12,7 +12,7 @@ export const itemStatusLabel = (status) => {
         case "1":
             label = "Aceptado";
             tagtype = "accepted"
-            break;    
+            break;
         case "2":
             label = "En progreso";
             tagtype = "in_progress"
@@ -52,4 +52,16 @@ export const isParseable = string => {
         return false;
     }
     return true;
+}
+
+export const combineDateWithTime = (d, t) => {
+    return new Date(
+        d.getFullYear(),
+        d.getMonth(),
+        d.getDate(),
+        t.getHours(),
+        t.getMinutes(),
+        t.getSeconds(),
+        t.getMilliseconds()
+    );
 }

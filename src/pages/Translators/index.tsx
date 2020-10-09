@@ -40,6 +40,8 @@ import * as SpecialitiesAPI from '../../api/specialities';
 import * as LanguagesAPI from '../../api/languages';
 import moment from 'moment';
 
+import { combineDateWithTime } from "../../utils/constants"
+
 import { useFormik } from 'formik';
 
 interface Props {
@@ -114,19 +116,6 @@ function TranslatorsPage({
       setSpecialities(res)
     })
   }
-
-  const combineDateWithTime = (d, t) => {
-    return new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate(),
-      t.getHours(),
-      t.getMinutes(),
-      t.getSeconds(),
-      t.getMilliseconds()
-    );
-  }
-
 
   const getTranslators = (lang = []) => {
 

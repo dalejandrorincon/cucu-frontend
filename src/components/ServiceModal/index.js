@@ -20,6 +20,7 @@ import * as ServicesAPI from '../../api/services';
 import moment from "moment";
 
 export default function ServiceModal(props) {
+  console.log(props.service)
   const [statusButtons, setStatusButtons] = useState(null);
   const [modalCancel, setModalCancel] = useState(false);
   const [modalType, setModalType] = useState(false);
@@ -197,8 +198,8 @@ export default function ServiceModal(props) {
             <hr></hr>
             <p className="detail-modal-text">Adjuntos</p>
             <div className="container-files">
-              {(props.service.url) && isParseable(props.service.url) ? JSON.parse(props.service.url)?.map((file) => (
-                <a key={file.name} href={file.url}>
+              {(props.service.files_urls?.length) ? props.service.files_urls?.map((file, index) => (
+                <a key={index} href={file.url}>
                   <span className="file">
                     <i className="fa fa-file margin-file"></i>{file.name}
                   </span>
