@@ -46,7 +46,7 @@ export default function CancelModal(props) {
 		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, values).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
-			props.updateServices()
+			props.cancelSuccess("cancelado")
 			formik.resetForm()
 		})
 	}
@@ -55,7 +55,7 @@ export default function CancelModal(props) {
 		ServicesAPI.rejectService(localStorage.getItem("token"), props.service?.id, values).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
-			props.updateServices()
+			props.cancelSuccess("rechazado")
 			formik.resetForm()
 		})
 	}

@@ -18,6 +18,8 @@ import CancelModal from "../CancelModal"
 import * as ServicesAPI from '../../api/services';
 
 import moment from "moment";
+import { NotifierGenerator } from "../Alerts"
+
 
 export default function ServiceModal(props) {
   const [statusButtons, setStatusButtons] = useState(null);
@@ -27,7 +29,7 @@ export default function ServiceModal(props) {
   
   const [confirmCancelBtn, setConfirmCancelBtn] = useState(false);
 
-
+	const [alert, setAlert] = useState({type: "", message: ""});
 
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
 
@@ -36,7 +38,8 @@ export default function ServiceModal(props) {
 		ServicesAPI.acceptService(localStorage.getItem("token"), props.service?.id).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
-			props.updateServices()
+      props.updateServices()
+			setAlert({type: "success", message: "Servicio aceptado"})      
 		})
   }
   
@@ -45,23 +48,27 @@ export default function ServiceModal(props) {
 		ServicesAPI.startService(localStorage.getItem("token"), props.service?.id).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
-			props.updateServices()
+      props.updateServices()
+			setAlert({type: "success", message: "Servicio iniciado"})     
 		})
   }
   
   const cancelService = () => {
-    console.log("cancela")
     console.log(typeof confirmDisable)
     setConfirmDisable(true)
 		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
-			props.updateServices()
+      props.updateServices()
+			setAlert({type: "success", message: "Servicio cancelado"})     
 		})
 	}
 
 
   const getButtons = () => {
+
+			setAlert({type: "success", message: "Servicio aceptado"})      
+
 
     let buttons;
 
@@ -315,13 +322,20 @@ export default function ServiceModal(props) {
       
       <CancelModal
         onHide={() => setModalCancel(false)}
-        updateServices={()=>{props.updateServices()}}
+        cancelSuccess={(type)=>{
+          props.updateServices();
+    			setAlert({type: "success", message: "Servicio "+type})     
+        }}
         show={modalCancel}
         service={props.service}
         type={modalType}
       >
       </CancelModal>
 
+      <NotifierGenerator
+				alert={alert}
+			>				
+			</NotifierGenerator>
 
     </>
   );

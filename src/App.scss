@@ -52,3 +52,21 @@
         background-color: #FFFEF4;
     }
 }
+
+.alert-dismissable.alert-success{
+    background-color: #25A847;
+    i{
+        color: white;
+        opacity: 1;
+        font-size: 22px;
+    }
+    button{
+        display: none;
+    }
+    h4{
+        font-size: 16px;
+        color: white;
+        margin-bottom: 0px;
+        font-weight: bold;
+    }
+}
