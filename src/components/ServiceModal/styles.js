@@ -106,9 +106,10 @@ export const Cancel = styled(Button)`
     background-color: #863df9;
     border-color: #863df9;
   }
-  &:focus {
+  &:focus, &:active {
     color: #000;
     border-color: #863df9;
     box-shadow: none;
+    background-color: transparent;
 }
 `;

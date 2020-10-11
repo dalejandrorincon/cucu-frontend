@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { logout } from "../../utils/session";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
@@ -40,8 +40,11 @@ function RequestTranslatorPage() {
     setMyFiles([...myFiles, ...acceptedFiles])
   }, [myFiles])
 
+  const [buttonState, setButtonState] = useState({ label: "Solicitar servicio", disabled: false })
+	const [response, setResponse] = useState<any>(null)
+
+
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
-  const [confirmDisable, setConfirmDisable] = useState(false)
 
   const parameters = useParams<any>()
   const translatorId = parameters.id
@@ -110,7 +113,9 @@ function RequestTranslatorPage() {
   }
 
   const createService = async (values) => {
-    setConfirmDisable(true)
+
+		setButtonState({ ...buttonState, ...{ disabled: true, label: "Enviando" } })
+
     let files_urls = [] as any
     for (let i = 0; i < myFiles.length; i++) {
       const file = myFiles[i];
@@ -126,9 +131,18 @@ function RequestTranslatorPage() {
 
     ServicesAPI.createService(localStorage.getItem("token"), payload).then((res) => {
       console.log(res)
-      setConfirmDisable(false)
+      setButtonState({ label: "Solicitar servicio", disabled: false })
       history.push("/services")
-    })
+    }).catch((err) => {
+			let message;
+			message = 'Ha ocurrido un error al enviar el correo.'
+      setButtonState({ label: "Solicitar servicio", disabled: false })
+			setResponse(
+				<Alert variant={'danger'} >
+					{message}
+				</Alert>
+			)
+		})
 
   }
 
@@ -314,6 +328,7 @@ function RequestTranslatorPage() {
                       className="input-request"
                       id="duration_amount"
                       name="duration_amount"
+                      placeholder="Ingresa un valor..."
                       value={formik.values.duration_amount}
                       onChange={(e) => {
                         formik.handleChange(e)
@@ -341,6 +356,8 @@ function RequestTranslatorPage() {
                           formik.setFieldValue('date_day', e)
                           console.log(e)
                         }}
+                        minDate={new Date()}
+                        dateFormat="dd/MM/yyyy"
 
                       />
                     </Col>
@@ -404,9 +421,10 @@ function RequestTranslatorPage() {
 
                 </Form.Group>
 
+                <Submit disabled={buttonState.disabled} onClick={() => formik.submitForm()}>{buttonState.label}</Submit>
 
+                {response}
 
-                <Submit disabled={confirmDisable} onClick={() => formik.submitForm()}>Solicitar servicio</Submit>
               </Form>
             </WellContainer>
           </Col>

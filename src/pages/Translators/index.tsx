@@ -277,6 +277,7 @@ function TranslatorsPage({
                             customInput={
                               <ExampleCustomInput></ExampleCustomInput>
                             }
+                            dateFormat="dd/MM/yyyy"
                           />
                         </Form.Group>
                         <LabelFilter className="home-date">

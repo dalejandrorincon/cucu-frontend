@@ -64,5 +64,29 @@
         margin-top: 20px;
     }
 
+    .client-cancel{
+        background-color: #D03B3B;
+        border-color: #D03B3B;
+        &.full{
+            width: 100%;
+            min-height: 50px;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        &.btn-outline-danger{            
+            color: #D03B3B;
+            background-color: transparent;            
+            border-color: #d1d1d1;            
+            /* &:hover , &:focus, &:active{
+                
+            } */
+        }
+        &.btn-danger{
+            &:hover , &:focus, &:active{
+                background-color: #D03B3B;
+            }
+        }
+    }
+
 }    
 

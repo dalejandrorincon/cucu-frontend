@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { itemStatusLabel } from "../../utils/constants"
 import { isParseable } from "../../utils/constants"
 
@@ -20,11 +20,13 @@ import * as ServicesAPI from '../../api/services';
 import moment from "moment";
 
 export default function ServiceModal(props) {
-  console.log(props.service)
   const [statusButtons, setStatusButtons] = useState(null);
   const [modalCancel, setModalCancel] = useState(false);
   const [modalType, setModalType] = useState(false);
-	const [confirmDisable, setConfirmDisable] = useState(false)
+  const [confirmDisable, setConfirmDisable] = useState(false)
+  
+  const [confirmCancelBtn, setConfirmCancelBtn] = useState(false);
+
 
 
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
@@ -45,6 +47,17 @@ export default function ServiceModal(props) {
 			props.onHide()
 			props.updateServices()
 		})
+  }
+  
+  const cancelService = () => {
+    console.log("cancela")
+    console.log(typeof confirmDisable)
+    setConfirmDisable(true)
+		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id).then((res) => {
+			setConfirmDisable(false)
+			props.onHide()
+			props.updateServices()
+		})
 	}
 
 
@@ -58,7 +71,7 @@ export default function ServiceModal(props) {
           buttons =
             <>
               <Submit 
-                disable={confirmDisable}
+                disabled={confirmDisable}
                 onClick={() => {
                   acceptService()
                 }}>
@@ -80,7 +93,7 @@ export default function ServiceModal(props) {
           buttons =
             <>
               <Submit 
-                disable={confirmDisable}
+                disabled={confirmDisable}
                 onClick={() => { 
                   startService()
                 }}>
@@ -96,20 +109,94 @@ export default function ServiceModal(props) {
             </>
       }
     }
+    if (localStorage.getItem("role") === "3" || localStorage.getItem("role") === "4") {
+
+      switch (props.service.status) {
+        case "0":
+          buttons =
+            <>
+              {!confirmCancelBtn ? 
+                <Button 
+                  variant="outline-danger"  
+                  className="client-cancel full"
+                  onClick={() => {
+                    setConfirmCancelBtn(true)
+                  }}>
+                  Cancelar servicio
+                </Button>
+                :
+                <Button 
+                  variant="danger"  
+                  className="client-cancel full"
+                  disabled={confirmDisable}
+                  onClick={() => {
+                    cancelService()
+                  }}>
+                  Confirma la cancelación
+                </Button>              
+              }
+            </>
+          break;
+
+        case "1":
+          buttons =
+          <>
+          {!confirmCancelBtn ? 
+            <>
+              <Submit 
+                  disabled={confirmDisable}
+                  onClick={() => { 
+                    //pay()
+                  }}>
+                  Pagar
+              </Submit>
+                <Cancel 
+                  onClick={() => {
+                    setConfirmCancelBtn(true)
+                  }}>
+                  Cancelar servicio
+              </Cancel>
+            </>
+            :
+            <>
+              <Submit 
+                  variant="danger"  
+                  disabled={confirmDisable}
+                  className="client-cancel"
+                  onClick={() => { 
+                    cancelService()
+                  }}>
+                  Confirmar cancelación
+              </Submit>
+                <Cancel 
+                  onClick={() => {
+                    setConfirmCancelBtn(false)
+                  }}>
+                  No cancelar
+              </Cancel>
+            </>            
+          }
+        </>
+      }
+
+    }
 
     setStatusButtons(buttons)
   }
 
   useEffect(() => {
     getButtons()
-  }, [props.service]);
+  }, [props.service, confirmCancelBtn]);
 
   return (
     <>
       <Modal
         className="right service-modal"
         show={props.show}
-        onHide={props.onHide}
+        onHide={()=>{
+          props.onHide(); 
+          setConfirmCancelBtn(false)
+        }}
         autoFocus
         keyboard
       >

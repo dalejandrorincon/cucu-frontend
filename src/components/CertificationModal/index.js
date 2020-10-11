@@ -152,7 +152,8 @@ export default function CertificationModal(props) {
                         <Label>Fecha</Label>
                         <DatePicker
                             id="date"
-                            type="text"            
+                            type="text"           
+                            dateFormat="dd/MM/yyyy" 
                             selected={(formik.values.date && new Date(formik.values.date)) || null}
                             onChange={ (e)=>{
                                 formik.setFieldTouched('date');

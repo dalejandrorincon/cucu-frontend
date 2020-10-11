@@ -201,6 +201,7 @@ export default function TranslatorServices() {
 											formik.setFieldValue("min_date", e)
 											handleDateChange(e, "min_date")
 										}}
+										dateFormat="dd/MM/yyyy"
 										placeholderText="Desde: "
 									/>
 								</Col>
@@ -217,6 +218,7 @@ export default function TranslatorServices() {
 											handleDateChange(e, "max_date")
 											
 										}}
+										dateFormat="dd/MM/yyyy"
 										placeholderText="Hasta: "
 									/>
 								</Col>

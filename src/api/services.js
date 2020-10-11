@@ -20,6 +20,7 @@ export const createService = (token, payload) => {
 };
 
 export const getServices = (type, token, payload) => {
+  console.log(type)
   const URL = `/translation_services/`+type;
   console.log(payload)
   return api(URL, {
