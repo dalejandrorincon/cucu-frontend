@@ -60,6 +60,7 @@ opacity: 1;
 }
 &:focus {
   color: #000;
+  background-color: transparent;
   border-color: #863df9;
   box-shadow: none;
 }

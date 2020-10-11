@@ -16,6 +16,7 @@ import * as UsersAPI from '../../api/users';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { isParseable } from "../../utils/constants"
 
 export default function CertificationModal(props) {
 
@@ -99,14 +100,6 @@ export default function CertificationModal(props) {
         }
     }
 
-    const isParseable = string => {
-        try {
-            JSON.parse(string);
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
 
 
     return (
@@ -159,7 +152,8 @@ export default function CertificationModal(props) {
                         <Label>Fecha</Label>
                         <DatePicker
                             id="date"
-                            type="text"            
+                            type="text"           
+                            dateFormat="dd/MM/yyyy" 
                             selected={(formik.values.date && new Date(formik.values.date)) || null}
                             onChange={ (e)=>{
                                 formik.setFieldTouched('date');

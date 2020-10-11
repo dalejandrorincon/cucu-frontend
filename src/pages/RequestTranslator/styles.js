@@ -27,6 +27,7 @@ margin-top: 90px;
 padding: 30px;
 margin-right: 10px;
 margin-left: 10px;
+margin-bottom: 50px;
 `;
 
 export const PasswordRecover = styled.div`

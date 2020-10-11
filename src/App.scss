@@ -1,0 +1,72 @@
+.pagination-container{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: right;
+    .pagination{
+        margin-right: 30px;
+        text-align: center;
+        display: inline-block;
+        li{
+            display: inline;
+            cursor: pointer;
+            font-size: 15px;
+            a{
+                padding: 5px 7px;
+                &:focus{
+                    outline: 0;
+                }
+            }
+            &.active{
+                a{
+                    background-color: black;
+                    color: white;
+                    font-size: 14px;
+                    border-radius: 3px;
+                }
+            }
+        }
+    }
+  }
+  
+.badge.service-types{
+    border: 0px;
+    font-weight: 100;
+    &.success{
+        color: #58BD72;
+        background-color: #E7F8EC;
+    }
+    &.in_progress{
+        color: #376EAF;
+        background-color: #E7F2F8;
+    }
+    &.accepted{
+        color: #9453F9;
+        background-color: #F9F5FF;
+    }
+    &.danger{
+        color: #D03B3B;
+        background-color: #FFF2F2;
+    }
+    &.cancelled{
+        background-color: #FFFEF4;
+    }
+}
+
+.alert-dismissable.alert-success{
+    background-color: #25A847;
+    i{
+        color: white;
+        opacity: 1;
+        font-size: 22px;
+    }
+    button{
+        display: none;
+    }
+    h4{
+        font-size: 16px;
+        color: white;
+        margin-bottom: 0px;
+        font-weight: bold;
+    }
+}

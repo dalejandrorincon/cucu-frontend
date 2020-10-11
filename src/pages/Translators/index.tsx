@@ -40,6 +40,8 @@ import * as SpecialitiesAPI from '../../api/specialities';
 import * as LanguagesAPI from '../../api/languages';
 import moment from 'moment';
 
+import { combineDateWithTime } from "../../utils/constants"
+
 import { useFormik } from 'formik';
 
 interface Props {
@@ -66,11 +68,11 @@ function TranslatorsPage({
 
   const ExampleCustomInput = (props) => <Form.Control {...props} />;
   const ExampleCustomInputTime = (props) => (
-    <TextFilterBox onClick={props.onClick}>{props.value}</TextFilterBox>
+    <TextFilterBox onClick={props.onClick}>{props.value ? props.value : "Desde"}</TextFilterBox>
   );
 
   const ExampleCustomInputTimeTwo = (props) => (
-    <TextFilterBoxEnd onClick={props.onClick}>{props.value}</TextFilterBoxEnd>
+    <TextFilterBoxEnd onClick={props.onClick} >{props.value ? props.value : "Hasta"}</TextFilterBoxEnd>
   );
 
   const [min, setMin] = useState(0);
@@ -114,19 +116,6 @@ function TranslatorsPage({
       setSpecialities(res)
     })
   }
-
-  const combineDateWithTime = (d, t) => {
-    return new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate(),
-      t.getHours(),
-      t.getMinutes(),
-      t.getSeconds(),
-      t.getMilliseconds()
-    );
-  }
-
 
   const getTranslators = (lang = []) => {
 
@@ -288,10 +277,11 @@ function TranslatorsPage({
                             customInput={
                               <ExampleCustomInput></ExampleCustomInput>
                             }
+                            dateFormat="dd/MM/yyyy"
                           />
                         </Form.Group>
-                        <LabelFilter>
-                          <Col>
+                        <LabelFilter className="home-date">
+                          
                             <DatePicker
                               selected={startTime}
                               onChange={(date: any) => setStartTime(date)}
@@ -304,11 +294,10 @@ function TranslatorsPage({
                                 <ExampleCustomInputTime></ExampleCustomInputTime>
                               }
                             />
-                          </Col>
-                          <Col className="rpw">
-                            <span>Hasta</span>
-                          </Col>
-                          <ColFilter>
+                            <div className="separator">
+                              <i className="fa fa-clock-o" aria-hidden="true"></i>
+                            </div>
+
                             <DatePicker
                               selected={endTime}
                               onChange={(date: any) => setEndTime(date)}
@@ -321,7 +310,6 @@ function TranslatorsPage({
                                 <ExampleCustomInputTimeTwo></ExampleCustomInputTimeTwo>
                               }
                             />
-                          </ColFilter>
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
