@@ -48,8 +48,8 @@ export default function App() {
         <PrivateRoute
           path="/profile"
           component={
-            localStorage.getItem("role") === "3" ||
-              localStorage.getItem("role") === "4"
+            localStorage.getItem("role") == "3" ||
+              localStorage.getItem("role") == "4"
               ? ProfilePage
               : ProfileTraductorPage
           }
