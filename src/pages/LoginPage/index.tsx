@@ -50,7 +50,7 @@ function LoginPage() {
             if (responseJson.user.role == 3 || responseJson.user.role == 4) {
               history.push("/translators");
             } else {
-              history.push("/profile");
+              history.push("/services");
             }
           } else {
             alert(responseJson.message);

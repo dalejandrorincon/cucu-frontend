@@ -243,7 +243,9 @@ export default function TranslatorServices() {
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>
-										<th scope="col">Traductor</th>
+										<th scope="col">
+											{ getUserType()=="translator" ? <>Cliente</> : <>Traductor</>}
+										</th>
 										<th scope="col">Tipo de servicio</th>
 										<th scope="col">Duración</th>
 										<th scope="col">Tarifa</th>
@@ -266,8 +268,14 @@ export default function TranslatorServices() {
 													<div>
 														<p className="name">
 															<b>
-																{ele.client.firstname}{" "}
-																{ele.client.lastname}
+											                { getUserType()=="translator" ? 
+															ele.client?.firstname+ " "+
+															ele.client?.lastname 
+															: 
+															ele.translator?.firstname+" "+
+															ele.translator?.lastname
+															
+															}
 															</b>
 															<div className="price">
 																${ele.amount}
