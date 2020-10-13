@@ -44,7 +44,7 @@ export function NotifierGenerator(props) {
 	]);
 
 	return (
-		<>aaaaaaaaaaaa
+		<>
 			<AlertList
 				position={position}
 				alerts={alerts}

@@ -67,9 +67,6 @@ export default function ServiceModal(props) {
 
   const getButtons = () => {
 
-			setAlert({type: "success", message: "Servicio aceptado"})      
-
-
     let buttons;
 
     if (localStorage.getItem("role") === "2") {
