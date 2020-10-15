@@ -56,22 +56,6 @@
             border: 1px solid #D1D1D1;
             margin-bottom: 10px;
 
-            .dropdown{
-                button{
-                    color: #863df9;
-                    border-color: #863df9;
-                    background-color: transparent;
-                    &:after{
-                        display: none;
-                    }
-                    &:hover, &:active, &:focus{
-                        background-color: #863df9 !important;
-                        color: white;
-                        box-shadow: none;
-                    }
-                }
-            }
-            
         }
         .new-exp{
             padding: 10px 10px;

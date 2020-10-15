@@ -92,3 +92,22 @@ export const getTranslators = (payload, id) => {
       throw error;
     });
 };
+
+export const getUnavailabilities = (token, payload) => {
+  const URL = `/unavailabilities/user`;
+  console.log(payload)
+  return api(URL, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': token
+    },
+    params:{
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};

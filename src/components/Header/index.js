@@ -39,7 +39,7 @@ export default function Header() {
 						</Link>
 						</li>
 						<li className="nav-item ">
-							<Link className="nav-link nav-item-inactive" /* to="/schedule" */>
+							<Link className="nav-link nav-item-inactive" to="/availabilities">
 								Agenda
 						</Link>
 						</li>

@@ -439,7 +439,7 @@ export default function TranslatorExperienceForm() {
                                     <b className="title">{experience.company}</b>
                                 </div>
                                 <div className="options">
-                                    <Dropdown>
+                                    <Dropdown className="cucu-dropdown">
                                         <Dropdown.Toggle variant="outline-success" className="green" id="dropdown-basic">
                                             ...
                                         </Dropdown.Toggle>
@@ -483,7 +483,7 @@ export default function TranslatorExperienceForm() {
                                     <p className="time">{moment(certification.date).format("YYYY")}</p>
                                 </div>
                                 <div className="options">
-                                    <Dropdown>
+                                    <Dropdown className="cucu-dropdown">
                                         <Dropdown.Toggle variant="outline-success" className="green" id="dropdown-basic">
                                             ...
                                         </Dropdown.Toggle>

@@ -1,0 +1,28 @@
+.availabilities-list{
+    .filters{
+        margin-right: -5px;
+        margin-left: -5px;
+
+    }
+
+    tr{
+        th{
+            &:last-child{
+                text-align: center;
+            }
+            .plus-button{
+                i{
+                    padding-right: 10px;
+                }
+            }
+            vertical-align: middle;
+        }
+        td:first-child, th:first-child{
+            padding:  0px 20px;
+        }
+        td:last-child{
+            padding-top: 25px !important;
+            text-align: center;
+        }
+    }
+}

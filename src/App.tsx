@@ -14,6 +14,7 @@ import "rc-slider/assets/index.css";
 import ProfileTranslatorPage from "./pages/ProfileTranslator";
 import ProfileTraductorPage from "./pages/ProfileTraductor";
 import RequestTranslatorPage from "./pages/RequestTranslator";
+import AvailabilitiesPage from "./pages/Availabilities";
 
 import "./App.scss"
 
@@ -64,6 +65,10 @@ export default function App() {
               TranslatorServices 
               : TranslatorServices */
           }
+        />
+        <PrivateRoute
+          path="/availabilities"
+          component={AvailabilitiesPage}
         />
       </Router>
     </Provider>

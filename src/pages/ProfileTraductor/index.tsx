@@ -28,6 +28,8 @@ import {
 
 import Header from "../../components/Header"
 
+import * as UsersAPI from '../../api/users';
+
 
 interface Props {
   counter: number;
@@ -44,10 +46,42 @@ function ProfileTraductorPage({
   counter,
 }: Props) {
   const [profile, setProfile] = useState<any>({});
+  const [image, setImage] = useState<any>(null);
 
   const history = useHistory();
   const location = useLocation();
   console.log(location.pathname)
+
+  const handleFileChange = async (event) => {
+    const res = await UsersAPI.saveFile(event.target.files[0])
+    console.log(res.image.Location)
+    UsersAPI.updateUser({image_url: res.image?.Location}, localStorage.getItem("token")).then((res) => {
+      getProfile()
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getProfile = () => {
+    UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
+        localStorage.setItem("image_url", res.user?.image_url);
+        getImage()
+    })
+  }
+  const getImage = () =>{
+    let url = localStorage.getItem("image_url")
+    if (url){
+      setImage(url)
+    }else{
+      setImage("/assets/images/no_avatar_default.png")
+    }
+  }
+
+  useEffect(() => {
+    getImage();
+  }, []);
+
+
 
   return (
     <>
@@ -66,9 +100,15 @@ function ProfileTraductorPage({
                           <div>
                             <img
                               className="image-profile"
-                              src="/assets/images/no_avatar_default.png"
+                              src={image}
                               alt="logo"
                             />
+                            <div className="upload">
+                              <label htmlFor="file" className="upload-btn-label">
+                                <i className="fa fa-pencil"></i>
+                              </label>
+                              <input type="file" id="file" className="upload-btn" onChange={handleFileChange} />
+                            </div>
                           </div>
                           <div>
                             <div className="name-container">
