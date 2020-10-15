@@ -70,3 +70,48 @@
         font-weight: bold;
     }
 }
+
+.upload{
+    position: absolute;
+    border-radius: 50%;
+    bottom: 5px;
+    left: 60px;
+    &-btn{
+        display: none;
+        &-label{
+            cursor: pointer;
+            background-color: #863DF9;
+            padding: 5px 10px;
+            border-radius: 50%;
+            color: white;
+            
+        }
+    }
+}
+
+.cucu-button{
+    background-color: #863DF9;
+    &:hover, &:active, &:focus{
+        background-color: #6934be !important;
+    }
+    &:disabled{
+        background-color: #9a5efc;
+    }
+
+}
+
+.cucu-dropdown{
+    button{
+        color: #863df9;
+        border-color: #863df9;
+        background-color: transparent;
+        &:after{
+            display: none;
+        }
+        &:hover, &:active, &:focus{
+            background-color: #863df9 !important;
+            color: white;
+            box-shadow: none;
+        }
+    }
+}
