@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 export const url = process.env.REACT_APP_API_URL
 
+export const stripe_publishable = process.env.REACT_APP_STRIPE_PUBLISHABLE
+
 export const itemStatusLabel = (status) => {
     let label = ""
     let tagtype = ""

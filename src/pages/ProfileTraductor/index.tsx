@@ -134,21 +134,21 @@ function ProfileTraductorPage({
                     <Row className="col-padding">
                       <Col className="col-md-3 menu-profile ">
                         <Nav defaultActiveKey={location.pathname} className="flex-column">
-                          <Nav.Link className="item-menu" href="/profile/">
+                          <Nav.Link className="item-menu" href="/profile-translator-edit">
                             <p className="text-item-menu">Mi cuenta</p>
                           </Nav.Link>
-                          <Nav.Link className="item-menu" href="/profile/experience">
+                          <Nav.Link className="item-menu" href="/profile-translator-edit/experience">
                             <p className="text-item-menu">Experiencia laboral</p>
                           </Nav.Link>
-                          <Nav.Link className="item-menu" href="/profile/opiniones" >
+                          <Nav.Link className="item-menu" href="/profile-translator-edit/opiniones" >
                             <p className="text-item-menu">Opiniones</p>
                           </Nav.Link>
                         </Nav>
                       </Col>
                       <Col className="col-padding item-active-profile">
 
-                        <Route path={`/profile/experience`} component={TranslatorExperienceForm} />
-                        <Route exact path={`/profile/`} component={TranslatorProfileForm} />
+                        <Route path={`/profile-translator-edit/experience`} component={TranslatorExperienceForm} />
+                        <Route exact path={`/profile-translator-edit/`} component={TranslatorProfileForm} />
 
                       </Col>
                     </Row>

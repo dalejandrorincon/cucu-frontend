@@ -39,6 +39,22 @@ export const getServices = (type, token, payload) => {
     });
 };
 
+export const getService = (id, token) => {
+  const URL = `/translation_services/`+id;
+  return api(URL, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+
 export const rejectService = (token, id, payload) => {
   const URL = `/translation_services/reject/`+id;
   return api(URL, {

@@ -15,6 +15,7 @@ import ProfileTranslatorPage from "./pages/ProfileTranslator";
 import ProfileTraductorPage from "./pages/ProfileTraductor";
 import RequestTranslatorPage from "./pages/RequestTranslator";
 import AvailabilitiesPage from "./pages/Availabilities";
+import PaymentPage from "./pages/Payment";
 
 import "./App.scss"
 
@@ -47,12 +48,15 @@ export default function App() {
           component={RequestTranslatorPage}
         />
         <PrivateRoute
-          path="/profile"
+          path="/profile-client"
           component={
-            localStorage.getItem("role") == "3" ||
-              localStorage.getItem("role") == "4"
-              ? ProfilePage
-              : ProfileTraductorPage
+            ProfilePage
+          }
+        />
+        <PrivateRoute
+          path="/profile-translator-edit"
+          component={
+            ProfileTraductorPage
           }
         />
         <PrivateRoute
@@ -69,6 +73,11 @@ export default function App() {
         <PrivateRoute
           path="/availabilities"
           component={AvailabilitiesPage}
+        />
+
+        <PrivateRoute
+          path="/payment/:id"
+          component={PaymentPage}
         />
       </Router>
     </Provider>
