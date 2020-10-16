@@ -347,13 +347,13 @@ export default function TranslatorExperienceForm() {
                 <h6><b>Herramientas remotas</b></h6>
                 <ReactTags
                     ref={reactTags}
-                    tags={selectedPlatforms}
-                    suggestions={platforms}
-                    onDelete={(data) => onDelete(data, "platforms")}
+                    tags={selectedPlatforms ? selectedPlatforms : []}
+                    suggestions={platforms ? platforms : []}
+                    onDelete={(data) => onDelete(data, "")}
                     onAddition={(data) => onAddition(data, "platforms")}
                 />
 
-                {selectedPlatforms.length == 0 && submitAttempt ? (
+                {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una plataforma.</div>
                 ) : null}
 
@@ -409,7 +409,7 @@ export default function TranslatorExperienceForm() {
                     <Button className="add" onClick={() => addLanguage()} >Agregar</Button>
                 </div>
 
-                {selectedLanguages.length == 0 && submitAttempt ? (
+                {selectedLanguages && selectedLanguages.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos un par de lenguajes.</div>
                 ) : null}
 
@@ -418,13 +418,13 @@ export default function TranslatorExperienceForm() {
 
                 <ReactTags
                     ref={reactTags}
-                    tags={selectedSpecialities}
+                    tags={selectedSpecialities ? selectedSpecialities : []}
                     suggestions={specialities}
                     onDelete={(data) => onDelete(data, "specialities")}
                     onAddition={(data) => onAddition(data, "specialities")}
                 />
 
-                {selectedSpecialities.length == 0 && submitAttempt ? (
+                {selectedSpecialities && selectedSpecialities.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una especialidad.</div>
                 ) : null}
 

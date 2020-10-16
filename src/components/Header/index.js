@@ -13,13 +13,33 @@ export default function Header() {
 
 	const history = useHistory();
 	const [options, setOptions] = useState(null);
+	const [profileLink, setProfileLink] = useState(null);
+
 
 	const getOptions = () => {
 
 		let role = localStorage.getItem("role")
 		let content
+		let link
 
 		console.log(role)
+
+		switch (role) {
+			case "1":
+				link = null
+				break;
+			case "2":
+				link =
+					<Link to="/profile-translator-edit">Perfil</Link>
+				break;
+			default:
+				link =
+				<Link to="/profile-client">Perfil</Link>
+		}
+
+		setProfileLink(link)
+
+
 
 		switch (role) {
 			case "1":
@@ -90,7 +110,7 @@ export default function Header() {
 						id="nav-dropdown"
 					>
 						<NavDropdown.Item>
-							<Link to="/profile">Perfil</Link>
+							{profileLink}
 						</NavDropdown.Item>{" "}
 						<NavDropdown.Item>
 							<Link

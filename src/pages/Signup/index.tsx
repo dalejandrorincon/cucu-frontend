@@ -27,7 +27,7 @@ const baseUri = process.env.REACT_APP_API_URL;
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
-  const [role, setRole] = useState("1");
+  const [role, setRole] = useState("3");
   const [type, setType] = useState("client");
   const { register, handleSubmit, watch, errors } = useForm();
   const history = useHistory();
@@ -35,7 +35,12 @@ function SignupPage() {
   password.current = watch("password", "");
 
   const onSubmit = (data: any) => {
-    const body = new URLSearchParams({ ...data, role });
+    console.log(role)
+    let userRole = role
+    if(role=="3" && type=="enterprise"){
+      userRole = "4"
+    }
+    const body = new URLSearchParams({ ...data, role: userRole });
 
     try {
       fetch(`${baseUri}/users`, {
@@ -80,8 +85,8 @@ function SignupPage() {
             <Title>Crea una cuenta</Title>
             <Row>
               <Col>
-                {ButtonActiveOrInactive(role === "1", "Soy usuario", () => {
-                  setRole("1");
+                {ButtonActiveOrInactive(role === "3" || role=="4", "Soy usuario", () => {
+                  setRole("3");
                 })}
               </Col>
               <Col>

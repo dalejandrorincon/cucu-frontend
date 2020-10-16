@@ -16,6 +16,7 @@ import "./styles.scss"
 
 import CancelModal from "../CancelModal"
 import * as ServicesAPI from '../../api/services';
+import { Link, useHistory, useParams } from "react-router-dom";
 
 import moment from "moment";
 import { NotifierGenerator } from "../Alerts"
@@ -32,6 +33,8 @@ export default function ServiceModal(props) {
 	const [alert, setAlert] = useState({type: "", message: ""});
 
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
+
+  const history = useHistory();
 
   const acceptService = () => {
     setConfirmDisable(true)
@@ -150,7 +153,7 @@ export default function ServiceModal(props) {
               <Submit 
                   disabled={confirmDisable}
                   onClick={() => { 
-                    //pay()
+                    history.push("/payment"+props.service.id)
                   }}>
                   Pagar
               </Submit>
