@@ -38,8 +38,6 @@ interface Props {
 }
 
 
-
-
 function ProfileTraductorPage({
   reduxIncreaseCounter,
   reduxDecreaseCounter,

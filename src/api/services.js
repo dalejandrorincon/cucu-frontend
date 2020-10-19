@@ -92,8 +92,8 @@ export const cancelService = (token, id, payload) => {
 };
 
 
-export const startService = (token, id) => {
-  const URL = `/translation_services/start/`+id;
+export const payService = (token, id) => {
+  const URL = `/translation_services/pay/`+id;
   return api(URL, {
     method: 'PUT',
     headers: {

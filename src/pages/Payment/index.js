@@ -6,10 +6,11 @@ import { stripe_publishable } from '../../utils/constants';
 
 import PaymentForm from "../../components/PaymentForm"
 
-
 import * as ServicesAPI from '../../api/services';
 import Header from '../../components/Header';
 import { Container } from 'react-bootstrap';
+
+import "./styles.scss"
 
 const promise = loadStripe(stripe_publishable);
 
@@ -31,12 +32,11 @@ export default function PaymentPage() {
 
 
     return (
-        <div>
+        <div className="payment-page">
             <Header></Header>
             <Container>
-                <h4>Pagar servicio</h4>
-                { service ? <h3>Servicio con {service.translator?.firstname} {service.translator?.lastname} por ${service.amount} </h3>
-                : null}
+                <h3>Pagar servicio</h3>
+                
                 <Elements stripe={promise}>
                     <PaymentForm service={service} />
                 </Elements>

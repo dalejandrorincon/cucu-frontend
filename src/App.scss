@@ -36,7 +36,7 @@
         color: #58BD72;
         background-color: #E7F8EC;
     }
-    &.in_progress{
+    &.paid{
         color: #376EAF;
         background-color: #E7F2F8;
     }
@@ -114,4 +114,8 @@
             box-shadow: none;
         }
     }
+}
+
+.ico-user{
+    object-fit: cover;
 }

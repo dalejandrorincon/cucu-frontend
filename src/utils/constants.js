@@ -16,8 +16,8 @@ export const itemStatusLabel = (status) => {
             tagtype = "accepted"
             break;
         case "2":
-            label = "En progreso";
-            tagtype = "in_progress"
+            label = "Pagado";
+            tagtype = "paid"
             break;
         case "3":
             label = "Finalizado";

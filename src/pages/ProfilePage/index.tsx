@@ -34,6 +34,11 @@ from './styles'
 
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Header from "../../components/Header";
+
+import * as UsersAPI from '../../api/users';
+
+
 const baseUri = process.env.REACT_APP_API_URL;
 
 interface Props {
@@ -60,6 +65,9 @@ function ProfilePage({
   const [role, setRole] = useState("client");
   const [terms, setTerms] = useState(false);
   const history = useHistory();
+
+  const [image, setImage] = useState<any>(null);
+
 
   const { register, handleSubmit, watch, errors } = useForm();
   const password = useRef({});
@@ -93,6 +101,8 @@ function ProfilePage({
           setDocument(responseJson.user.document);
           setPhone(responseJson.user.phone);
           setEmail(responseJson.user.email);
+          localStorage.setItem("image_url", responseJson.user?.image_url);
+          getImage()
         })
         .catch((error) => {
           console.log(error);
@@ -102,61 +112,35 @@ function ProfilePage({
     }
   };
 
+  const handleFileChange = async (event) => {
+    const res = await UsersAPI.saveFile(event.target.files[0])
+    console.log(res.image.Location)
+    UsersAPI.updateUser({image_url: res.image?.Location}, localStorage.getItem("token")).then((res) => {
+      getProfile()
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getImage = () =>{
+    let url = localStorage.getItem("image_url")
+    if (url && url!="null"){
+      setImage(url)
+    }else{
+      setImage("/assets/images/no_avatar_default.png")
+    }
+  }
+
+
   useEffect(() => {
     getProfile();
   }, []);
 
   return (
     <>
-      <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/translators">
-          <img src="/assets/images/logo.png" alt="logo" />
-        </Link>
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="/translators">
-              Traductores
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="/home">
-              Mis solicitudes
-            </Link>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <img src="/assets/images/bell@2x.png"></img>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <img
-            src="/assets/images/no_avatar_default.png"
-            className="ico-user"
-          />
-          <NavDropdown
-            title={localStorage.getItem("userName")}
-            id="nav-dropdown"
-          >
-            <NavDropdown.Item>
-              <Link to="/profile">Perfil</Link>
-            </NavDropdown.Item>{" "}
-            <NavDropdown.Item>
-              <Link
-                to="#"
-                onClick={() => {
-                  logout();
-                  history.push("/");
-                }}
-              >
-                Cerrar sesión
-              </Link>
-            </NavDropdown.Item>
-          </NavDropdown>
-        </ul>
-      </nav>
+      <Header></Header>
 
-      <Container className="themed-container" fluid={true}>
+      <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>Perfil</Title>
@@ -169,10 +153,16 @@ function ProfilePage({
                         <div className="userIconTra">
                           <div>
                             <img
-                              className="image-profile"
-                              src="/assets/images/no_avatar_default.png"
+                              className="image-profile"                             
+                              src={image}
                               alt="logo"
                             />
+                            <div className="upload">
+                              <label htmlFor="file" className="upload-btn-label">
+                                <i className="fa fa-pencil"></i>
+                              </label>
+                              <input type="file" id="file" className="upload-btn" onChange={handleFileChange} />
+                            </div>
                           </div>
                           <div>
                             <div className="name-container">
@@ -199,15 +189,15 @@ function ProfilePage({
                     </div>
                     <Row className="col-padding">
                       <Col className="col-md-3 menu-profile ">
-                        <div className="item-menu-active">
-                          <p className="text-item-menu-active">Mi cuenta</p>
-                        </div>
                         <div className="item-menu">
+                          <p className="text-item-menu">Mi cuenta</p>
+                        </div>
+                        {/* <div className="item-menu">
                           <p className="text-item-menu">Métodos de pago</p>
                         </div>
                         <div className="item-menu">
                           <p className="text-item-menu">Cucucréditos</p>
-                        </div>
+                        </div> */}
                       </Col>
                       <Col className="col-padding item-active-profile">
                         <Title>Mi cuenta</Title>
