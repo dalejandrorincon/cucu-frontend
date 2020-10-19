@@ -27,10 +27,10 @@ export default function ServiceModal(props) {
   const [modalCancel, setModalCancel] = useState(false);
   const [modalType, setModalType] = useState(false);
   const [confirmDisable, setConfirmDisable] = useState(false)
-  
+
   const [confirmCancelBtn, setConfirmCancelBtn] = useState(false);
 
-	const [alert, setAlert] = useState({type: "", message: ""});
+  const [alert, setAlert] = useState({ type: "", message: "" });
 
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
 
@@ -38,34 +38,34 @@ export default function ServiceModal(props) {
 
   const acceptService = () => {
     setConfirmDisable(true)
-		ServicesAPI.acceptService(localStorage.getItem("token"), props.service?.id).then((res) => {
-			setConfirmDisable(false)
-			props.onHide()
+    ServicesAPI.acceptService(localStorage.getItem("token"), props.service?.id).then((res) => {
+      setConfirmDisable(false)
+      props.onHide()
       props.updateServices()
-			setAlert({type: "success", message: "Servicio aceptado"})      
-		})
+      setAlert({ type: "success", message: "Servicio aceptado" })
+    })
   }
-  
-  const startService = () => {
+
+  /* const startService = () => {
     setConfirmDisable(true)
-		ServicesAPI.startService(localStorage.getItem("token"), props.service?.id).then((res) => {
-			setConfirmDisable(false)
-			props.onHide()
+    ServicesAPI.startService(localStorage.getItem("token"), props.service?.id).then((res) => {
+      setConfirmDisable(false)
+      props.onHide()
       props.updateServices()
-			setAlert({type: "success", message: "Servicio iniciado"})     
-		})
-  }
-  
+      setAlert({type: "success", message: "Servicio iniciado"})     
+    })
+  } */
+
   const cancelService = () => {
     console.log(typeof confirmDisable)
     setConfirmDisable(true)
-		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id).then((res) => {
-			setConfirmDisable(false)
-			props.onHide()
+    ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id).then((res) => {
+      setConfirmDisable(false)
+      props.onHide()
       props.updateServices()
-			setAlert({type: "success", message: "Servicio cancelado"})     
-		})
-	}
+      setAlert({ type: "success", message: "Servicio cancelado" })
+    })
+  }
 
 
   const getButtons = () => {
@@ -77,14 +77,14 @@ export default function ServiceModal(props) {
         case "0":
           buttons =
             <>
-              <Submit 
+              <Submit
                 disabled={confirmDisable}
                 onClick={() => {
                   acceptService()
                 }}>
                 Aceptar servicio
               </Submit>
-              <Cancel 
+              <Cancel
                 onClick={() => {
                   setModalCancel(true)
                   setModalType("reject")
@@ -99,20 +99,22 @@ export default function ServiceModal(props) {
         case "1":
           buttons =
             <>
-              <Submit 
+              {/* <Submit 
                 disabled={confirmDisable}
                 onClick={() => { 
                   startService()
                 }}>
                 Iniciar traducción
-            </Submit>
-              <Cancel 
+            </Submit> */}
+              <Button
+                variant="danger"
+                className="client-cancel full"
                 onClick={() => {
                   setModalCancel(true)
                   setModalType("cancel")
                 }}>
                 Cancelar servicio
-            </Cancel>
+            </Button>
             </>
       }
     }
@@ -122,9 +124,9 @@ export default function ServiceModal(props) {
         case "0":
           buttons =
             <>
-              {!confirmCancelBtn ? 
-                <Button 
-                  variant="outline-danger"  
+              {!confirmCancelBtn ?
+                <Button
+                  variant="outline-danger"
                   className="client-cancel full"
                   onClick={() => {
                     setConfirmCancelBtn(true)
@@ -132,58 +134,58 @@ export default function ServiceModal(props) {
                   Cancelar servicio
                 </Button>
                 :
-                <Button 
-                  variant="danger"  
+                <Button
+                  variant="danger"
                   className="client-cancel full"
                   disabled={confirmDisable}
                   onClick={() => {
                     cancelService()
                   }}>
                   Confirma la cancelación
-                </Button>              
+                </Button>
               }
             </>
           break;
 
         case "1":
           buttons =
-          <>
-          {!confirmCancelBtn ? 
             <>
-              <Submit 
-                  disabled={confirmDisable}
-                  onClick={() => { 
-                    history.push("/payment"+props.service.id)
-                  }}>
-                  Pagar
+              {!confirmCancelBtn ?
+                <>
+                  <Submit
+                    disabled={confirmDisable}
+                    onClick={() => {
+                      history.push("/payment/" + props.service.id)
+                    }}>
+                    Pagar
               </Submit>
-                <Cancel 
-                  onClick={() => {
-                    setConfirmCancelBtn(true)
-                  }}>
-                  Cancelar servicio
+                  <Cancel
+                    onClick={() => {
+                      setConfirmCancelBtn(true)
+                    }}>
+                    Cancelar servicio
               </Cancel>
+                </>
+                :
+                <>
+                  <Submit
+                    variant="danger"
+                    disabled={confirmDisable}
+                    className="client-cancel"
+                    onClick={() => {
+                      cancelService()
+                    }}>
+                    Confirmar cancelación
+              </Submit>
+                  <Cancel
+                    onClick={() => {
+                      setConfirmCancelBtn(false)
+                    }}>
+                    No cancelar
+              </Cancel>
+                </>
+              }
             </>
-            :
-            <>
-              <Submit 
-                  variant="danger"  
-                  disabled={confirmDisable}
-                  className="client-cancel"
-                  onClick={() => { 
-                    cancelService()
-                  }}>
-                  Confirmar cancelación
-              </Submit>
-                <Cancel 
-                  onClick={() => {
-                    setConfirmCancelBtn(false)
-                  }}>
-                  No cancelar
-              </Cancel>
-            </>            
-          }
-        </>
       }
 
     }
@@ -200,8 +202,8 @@ export default function ServiceModal(props) {
       <Modal
         className="right service-modal"
         show={props.show}
-        onHide={()=>{
-          props.onHide(); 
+        onHide={() => {
+          props.onHide();
           setConfirmCancelBtn(false)
         }}
         autoFocus
@@ -214,11 +216,18 @@ export default function ServiceModal(props) {
           <div className="contentUserIcon">
             <div className="userIconModal">
               <div>
-                <img
-                  src="/assets/images/no_avatar_default.png"
-                  alt="logo"
-                  className="image-profile"
-                />
+                {role == "translator" ?
+                  <img
+                    src={props.service?.client?.image_url ? props.service?.client.image_url : "/assets/images/no_avatar_default.png"}
+                    className="image-profile ico-user"
+                  />
+                  :
+                  <img
+
+                    src={props.service?.translator?.image_url ? props.service?.translator.image_url : "/assets/images/no_avatar_default.png"}
+                    className="image-profile ico-user"
+                  />
+                }
               </div>
               <div className="user-container">
                 <div>
@@ -244,12 +253,12 @@ export default function ServiceModal(props) {
           </div>
           <WellContainerModal>
 
-            {props.service.cancel_reason && props.service.status=="5" || props.service.status=="6" ?
+            {props.service.cancel_reason && props.service.status == "5" || props.service.status == "6" ?
               <div className="cancel-reason">
-                <p className="title">Motivo de {props.service.status=="5"? <>cancelación</> : <>rechazo</>}</p>
+                <p className="title">Motivo de {props.service.status == "5" ? <>cancelación</> : <>rechazo</>}</p>
                 <p className="desc">{props.service.cancel_reason}</p>
               </div>
-              : null  
+              : null
             }
 
             <p className="price-modal">
@@ -319,12 +328,12 @@ export default function ServiceModal(props) {
         </Modal.Footer>
 
       </Modal>
-      
+
       <CancelModal
         onHide={() => setModalCancel(false)}
-        cancelSuccess={(type)=>{
+        cancelSuccess={(type) => {
           props.updateServices();
-    			setAlert({type: "success", message: "Servicio "+type})     
+          setAlert({ type: "success", message: "Servicio " + type })
         }}
         show={modalCancel}
         service={props.service}
@@ -333,9 +342,9 @@ export default function ServiceModal(props) {
       </CancelModal>
 
       <NotifierGenerator
-				alert={alert}
-			>				
-			</NotifierGenerator>
+        alert={alert}
+      >
+      </NotifierGenerator>
 
     </>
   );

@@ -143,7 +143,7 @@ export default function TranslatorServices() {
 											<option value="">Todos los estados</option>
 											<option value="0">Solicitado</option>
 											<option value="1">Aceptado</option>
-											<option value="2">En progreso</option>
+											<option value="2">Pagado</option>
 											<option value="3">Finalizado</option>
 											<option value="4">Reprogramado</option>
 											<option value="5">Cancelado</option>
@@ -260,10 +260,18 @@ export default function TranslatorServices() {
 											<td className="user-container">
 												<div className="userIcon">
 													<div>
-														<img
-															src="/assets/images/no_avatar_default.png"
-															className="image-icon"
+													{ getUserType()=="translator" ? 
+														<img														
+															src={ele.client?.image_url ? ele.client.image_url : "/assets/images/no_avatar_default.png"}
+															className="image-icon ico-user"
 														/>
+														:
+														<img
+														
+															src={ele.translator?.image_url ? ele.translator.image_url : "/assets/images/no_avatar_default.png"}
+															className="image-icon ico-user"
+														/>
+													}
 													</div>
 													<div>
 														<p className="name">

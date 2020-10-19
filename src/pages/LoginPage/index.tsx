@@ -47,6 +47,7 @@ function LoginPage() {
               "userName",
               responseJson.user.firstname + " " + responseJson.user.lastname
             );
+            localStorage.setItem("image_url", responseJson.user.image_url)
             if (responseJson.user.role == 3 || responseJson.user.role == 4) {
               history.push("/translators");
             } else {

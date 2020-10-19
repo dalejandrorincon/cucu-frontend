@@ -23,6 +23,7 @@ import {
   RowRecover,
   Submit
 } from "./styles"
+import Header from "../../components/Header";
 
 
 const baseUri = process.env.REACT_APP_API_URL;
@@ -74,54 +75,8 @@ function ProfileTranslatorPage({
 
   return (
     <>
-      <nav className="navbar navbar-expand-md layout">
-        <Link className="navbar-brand" to="/translators">
-          <img src="/assets/images/logo.png" alt="logo" />
-        </Link>
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link className="nav-link nav-item-inactive" to="/translators">
-              Traductores
-            </Link>
-          </li>
-          <li className="nav-item ">
-            <Link className="nav-link nav-item-inactive" to="/home">
-              Mis solicitudes
-            </Link>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <li className="nav-item ">
-            <img src="/assets/images/bell@2x.png"></img>
-          </li>
-        </ul>
-        <ul className="navbar-nav">
-          <img
-            src="/assets/images/no_avatar_default.png"
-            className="ico-user"
-          />
-          <NavDropdown
-            title={localStorage.getItem("userName")}
-            id="nav-dropdown"
-          >
-            <NavDropdown.Item>
-              <Link to="/profile">Perfil</Link>
-            </NavDropdown.Item>{" "}
-            <NavDropdown.Item>
-              <Link
-                to="#"
-                onClick={() => {
-                  logout();
-                  history.push("/");
-                }}
-              >
-                Cerrar sesión
-              </Link>
-            </NavDropdown.Item>
-          </NavDropdown>
-        </ul>
-      </nav>
-      <Container className="themed-container" fluid={true}>
+      <Header></Header>
+      <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>Perfil de traductor</Title>
@@ -134,8 +89,8 @@ function ProfileTranslatorPage({
                         <div className="userIconTra iconuserprofile">
                           <div>
                             <img
-                              src="/assets/images/no_avatar_default.png"
-                              className="image-profile"
+                              src={translators?.image_url ? translators.image_url : "/assets/images/no_avatar_default.png"}
+                              className="image-profile ico-user"
                             />
                           </div>
                           <div>

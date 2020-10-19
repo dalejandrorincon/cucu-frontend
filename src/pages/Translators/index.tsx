@@ -483,8 +483,8 @@ function TranslatorsPage({
                                 <div className="userIconTra">
                                   <div>
                                     <img
-                                      src="/assets/images/no_avatar_default.png"
-                                      className="image-icon"
+                                      src={ele?.image_url ? ele.image_url : "/assets/images/no_avatar_default.png"}
+                                      className="image-icon ico-user"
                                     />
                                   </div>
                                   <div>

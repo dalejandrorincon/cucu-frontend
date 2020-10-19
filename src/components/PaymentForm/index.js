@@ -5,7 +5,12 @@ import {
 	useElements
 } from "@stripe/react-stripe-js";
 
+import { Button } from "react-bootstrap";
+
+import { Link } from "react-router-dom";
+
 import * as StripeAPI from '../../api/stripe';
+import * as ServicesAPI from '../../api/services';
 
 import "./styles.scss"
 
@@ -17,15 +22,30 @@ export default function CheckoutForm(props) {
 	const [clientSecret, setClientSecret] = useState('');
 	const stripe = useStripe();
 	const elements = useElements();
+	const [available, setAvailable] = useState("0");
+
 
 	useEffect(() => {
 		getIntent()
 	}, [props.service]);
 
+	const payService = () => {
+		ServicesAPI.payService(localStorage.getItem("token"), props.service?.id).then((res) => {
+			setSucceeded(true);
+			setProcessing(false);
+		}).catch((err)=>{
+			setError(true)
+			setProcessing(false);
+		})
+	}
+
 	const getIntent = () => {
 		if(props.service){
 			StripeAPI.getPaymentIntent(localStorage.getItem("token"), {service_id: props.service?.id}).then((res) => {
 				setClientSecret(res.intent?.client_secret)
+				setAvailable("1")
+			}).catch((err)=>{
+				setAvailable("2")
 			})
 		}
 	}
@@ -66,41 +86,50 @@ export default function CheckoutForm(props) {
 			setProcessing(false);
 		} else {
 			setError(null);
-			setProcessing(false);
-			setSucceeded(true);
+			payService()
 		}
 	};
 	return (
-		<form id="payment-form" onSubmit={handleSubmit}>
-			<CardElement id="card-element" options={cardStyle} onChange={handleChange} />
-			<button
-				disabled={processing || disabled || succeeded}
-				id="submit"
-			>
-				<span id="button-text">
-					{processing ? (
-						<div className="spinner" id="spinner"></div>
-					) : (
-							"Pay"
-						)}
-				</span>
-			</button>
-			{/* Show any error that happens when processing the payment */}
-			{error && (
-				<div className="card-error" role="alert">
-					{error}
-				</div>
-			)}
-			{/* Show a success message upon completion */}
-			<p className={succeeded ? "result-message" : "result-message hidden"}>
-				Payment succeeded, see the result in your
-        <a
-					href={`https://dashboard.stripe.com/test/payments`}
+		<>
+			<form className={available=="1" ? '' : 'hidden' } id="payment-form" onSubmit={handleSubmit}>
+				<CardElement id="card-element" options={cardStyle} onChange={handleChange} />
+				<button
+					className="main"
+					disabled={processing || disabled || succeeded}
+					id="submit"
 				>
-					{" "}
-          Stripe dashboard.
-        </a> Refresh the page to pay again.
-      </p>
-		</form>
+					<span id="button-text">
+						{processing ? (
+							<div className="spinner" id="spinner"></div>
+						) : (
+								"Pagar"
+							)}
+					</span>
+				</button>
+				{/* Show any error that happens when processing the payment */}
+				{error && (
+					<div className="alert alert-danger" role="alert">
+						{error}
+					</div>
+				)}
+				{/* Show a success message upon completion */}
+				<p className={succeeded ? "result-message" : "result-message hidden"}>
+					El pago ha sido exitoso, haz click en el siguiente botón para volver a la lista de solicitudes:
+
+					<Link
+						to="/services"
+					>
+						<Button
+							className="cucu-button">
+							Volver
+						</Button>
+					</Link>
+
+				</p>
+			</form>
+			<div className={available=="2" ? 'alert alert-danger' : 'alert alert-danger hidden' } role="alert">
+				No es posible realizar este pago.
+			</div>
+		</>
 	);
 }

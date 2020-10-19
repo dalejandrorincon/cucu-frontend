@@ -102,7 +102,9 @@ export default function Header() {
 				</ul>
 				<ul className="navbar-nav">
 					<img
-						src="/assets/images/no_avatar_default.png"
+						src={ localStorage.getItem("image_url") &&  localStorage.getItem("image_url")!="null"?
+							localStorage.getItem("image_url"):
+							"/assets/images/no_avatar_default.png"}
 						className="ico-user"
 					/>
 					<NavDropdown
