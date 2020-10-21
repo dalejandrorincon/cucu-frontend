@@ -172,7 +172,7 @@ function RequestTranslatorPage() {
             <WellContainer>
               <div className="header-request">
                 <img
-                  className="icon-request"
+                  className="icon-request ico-user"
                   src={translator?.image_url ? translator.image_url : "/assets/images/no_avatar_default.png"}
                   alt="logo"
                 />
@@ -229,7 +229,7 @@ function RequestTranslatorPage() {
                 ) : null}
 
 
-                <Form.Group>
+                {/* <Form.Group>
                   <Label className="label-filter">Cucutiempo</Label>
                   <p>
                     Indica dónde vas a realizar la sesión. que será traducida.
@@ -246,7 +246,7 @@ function RequestTranslatorPage() {
                     />
                   </div>
                 </Form.Group>
-
+ */}
 
                 <Form.Group>
                   <Label className="label-filter">Plataforma</Label>

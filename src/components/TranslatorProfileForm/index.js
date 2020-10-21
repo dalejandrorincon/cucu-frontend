@@ -186,12 +186,14 @@ export default function TranslatorProfileForm() {
         labor_months: Yup.string()
             .required("*Este campo es obligatorio")
             .min(1, "*Este campo debe tener al menos 3 caracteres"),
-        rate_hour: Yup.string()
+        rate_hour: Yup.number()
             .required("*Este campo es obligatorio")
-            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+            .min(25, "*Este campo debe ser al menos 25")
+            .max(100, "Este campo debe ser como máximo 100"),
         rate_minute: Yup.string()
             .required("*Este campo es obligatorio")
-            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+            .min(1, "*Este campo debe ser al menos 1")
+            .max(2.5, "Este campo debe ser como máximo 2.5"),
 
         //.required("*Este campo es obligatorio"),
 
@@ -244,6 +246,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="firstname"
                         type="text"
+                        max="100"
                         value={formik.values.firstname}
                         onChange={(e) => {
                             formik.setFieldTouched('firstname');
@@ -260,6 +263,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="lastname"
                         type="text"
+                        max="100"
                         value={formik.values.lastname}
                         onChange={(e) => {
                             formik.setFieldTouched('lastname');
@@ -277,6 +281,7 @@ export default function TranslatorProfileForm() {
                         id="document"
                         type="number"
                         className="form-control input-lg"
+                        max="15"
                         onChange={e => {
                             formik.setFieldTouched('document');
                             formik.handleChange(e);

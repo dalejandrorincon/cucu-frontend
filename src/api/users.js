@@ -19,6 +19,24 @@ export const getUser = (payload, id) => {
     });
 };
 
+export const createUser = (payload) => {
+  const URL = `/users/`;
+  console.log(payload)
+  return api(URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    data:{
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
 
 export const updateUser = (payload, token) => {
   const URL = `/users/`;

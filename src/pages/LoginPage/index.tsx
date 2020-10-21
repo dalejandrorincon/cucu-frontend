@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, Form, InputGroup, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
@@ -22,6 +22,7 @@ const baseUri = process.env.REACT_APP_API_URL;
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [response, setResponse] = useState<any>(null);
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
 
@@ -54,7 +55,11 @@ function LoginPage() {
               history.push("/services");
             }
           } else {
-            alert(responseJson.message);
+            setResponse(
+              <Alert variant={'danger'} >
+                  {responseJson.message}
+              </Alert>
+            )
           }
         })
         .catch((error) => {
@@ -123,6 +128,7 @@ function LoginPage() {
                 <Check type="checkbox" label="Recordarme en este dispositivo" />
               </Form.Group>
               <Submit type="submit">Iniciar sesión</Submit>
+              {response}
             </Form>
           </Login>
         </Col>
