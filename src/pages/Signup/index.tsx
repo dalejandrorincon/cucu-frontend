@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, Form, Alert, InputGroup } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
@@ -21,8 +21,8 @@ import {
   FormCheckLabel
 } from "./styles"
 
-const baseUri = process.env.REACT_APP_API_URL;
-
+import * as UsersAPI from '../../api/users';
+import * as AuthAPI from '../../api/auth';
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +33,8 @@ function SignupPage() {
   const history = useHistory();
   const password = useRef({});
   password.current = watch("password", "");
+  const [response, setResponse] = useState<any>(null)
+  const [buttonState, setButtonState] = useState({ label: "Crear mi cuenta", disabled: false })
 
   const onSubmit = (data: any) => {
     console.log(role)
@@ -40,29 +42,46 @@ function SignupPage() {
     if(role=="3" && type=="enterprise"){
       userRole = "4"
     }
-    const body = new URLSearchParams({ ...data, role: userRole });
 
-    try {
-      fetch(`${baseUri}/users`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body: body,
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          alert(responseJson.message);
-          history.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error", error);
-    }
+    saveChanges({ ...data, role: userRole })
   };
+
+  const saveChanges = (values) => {
+    console.log(values)
+    setButtonState({ ...buttonState, ...{ label: "Creando...", disabled: false } })
+    UsersAPI.createUser(values).then((res) => {
+        setButtonState({ label: "Enviar", disabled: false })
+        setResponse(null)
+        AuthAPI.login(values).then((res)=>{
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("userId", res.user.id);
+          localStorage.setItem("role", res.user.role);
+          localStorage.setItem(
+            "userName",
+            res.user.firstname + " " + res.user.lastname
+          );
+          localStorage.setItem("image_url", res.user.image_url)
+          if (res.user.role == 3 || res.user.role == 4) {
+            history.push("/translators");
+          } else {
+            history.push("/services");
+          }
+        })
+
+
+    }).catch((err) => {
+        let error = err.response?.data?.errors;
+
+        console.log(err.response)
+        let message = "Ha ocurrido un error al crear el usuario.";
+        setResponse(
+          <Alert variant={'danger'} >
+              {error ? JSON.stringify(error) : message}
+          </Alert>
+        )
+    })
+  }
+
 
   const ButtonActiveOrInactive = (active, text, action) => {
     return active ? (
@@ -105,6 +124,7 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="firstname"
+                  max="100"
                   ref={register({ required: true })}
                 />
               </Form.Group>
@@ -116,6 +136,7 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="lastname"
+                  max="100"
                   ref={register({ required: true })}
                 />
               </Form.Group>
@@ -171,12 +192,19 @@ function SignupPage() {
                 <Control
                   type="email"
                   name="email"
-                  ref={register({ required: true })}
+                  max="60"
+                  ref={register({
+                    required: "El correo es requerido",
+                    pattern: {
+                      value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                      message: `EL correo debe ser válido`,
+                    },
+                  })}
                 />
               </Form.Group>
               {errors.email && (
                 <div className="alert alert-danger">
-                  El correo electrónico es requerido
+                  {errors.email.message}
                 </div>
               )}
               <Form.Group>
@@ -184,12 +212,19 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="phone"
-                  ref={register({ required: true })}
+                  max="14"
+                  ref={register({
+                    required: "El teléfono es requerido",
+                    pattern: {
+                      value: /^[\+\d]?(?:[\d-.\s()]*)$/,
+                      message: `El teléfono debe contener solo números o el signo +`,
+                    },
+                  })}
                 />
               </Form.Group>
               {errors.phone && (
                 <div className="alert alert-danger">
-                  El teléfono es requerido
+                  {errors.phone.message}
                 </div>
               )}
               <Form.Group>
@@ -278,7 +313,15 @@ function SignupPage() {
                   Acepta los términos y condiciones
                 </div>
               )}
-              <Submit type="submit">Crear mi cuenta</Submit>
+              <Submit
+                disabled={buttonState.disabled}
+                type="submit"
+              >
+                {buttonState.label}
+              </Submit>
+
+              {response}
+
             </Form>
           </Signup>
         </Col>

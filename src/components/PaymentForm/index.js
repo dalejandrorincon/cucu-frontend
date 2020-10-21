@@ -91,6 +91,15 @@ export default function CheckoutForm(props) {
 	};
 	return (
 		<>
+			<div className={available=="1" ? '' : 'hidden' }>
+				<p className="service-amount">${props.service?.amount}</p>
+				<p className="service-duration">
+					(${props.service.duration_type == "0" ? props.service.translator?.rate_hour : props.service.translator?.rate_minute}
+					/{props.service.duration_type == "0" ? "hr" : "min"}) x {props.service.duration_amount}
+				</p>
+
+
+			</div>
 			<form className={available=="1" ? '' : 'hidden' } id="payment-form" onSubmit={handleSubmit}>
 				<CardElement id="card-element" options={cardStyle} onChange={handleChange} />
 				<button

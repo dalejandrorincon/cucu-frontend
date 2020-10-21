@@ -79,13 +79,13 @@ function TranslatorsPage({
   const [max, setMax] = useState(10);
   const [value, setValue] = useState([0, 10]);
 
-  const [minHour, setMinHour] = useState(1);
+  const [minHour, setMinHour] = useState(25);
   const [maxHour, setMaxHour] = useState(100);
-  const [valueHour, setValueHour] = useState([0, 100]);
+  const [valueHour, setValueHour] = useState([25, 100]);
 
   const [minMinute, setMinMinute] = useState(1);
-  const [maxMinute, setMaxMinute] = useState(10);
-  const [valueMinute, setValueMinute] = useState([0, 10]);
+  const [maxMinute, setMaxMinute] = useState(2.5);
+  const [valueMinute, setValueMinute] = useState([1, 2.5]);
   const [rate, setRate] = useState(0);
 
   /* const [lang, setLang] = useState([]); */
@@ -226,7 +226,7 @@ function TranslatorsPage({
   return (
     <>
       <Header></Header>
-      <Container className="themed-container">
+      <Container className="themed-container translators-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>Traductores</Title>
@@ -315,7 +315,7 @@ function TranslatorsPage({
                       <li className="list-group-item">
                         <div className="label-filter">Precio por hora</div>
                         <br></br>
-                        <TextFilter
+                        {/* <TextFilter
                           onClick={() => {
                             setValueHour([1, 25]);
                           }}
@@ -335,7 +335,7 @@ function TranslatorsPage({
                           }}
                         >
                           $50 - $100
-                        </TextFilter>
+                        </TextFilter> */}
                         <div className="slidecontainer">
                           <Range
                             value={valueHour}
@@ -357,7 +357,7 @@ function TranslatorsPage({
                       <li className="list-group-item">
                         <div className="label-filter">Precio por minuto</div>
                         <br></br>
-                        <TextFilter
+                        {/* <TextFilter
                           onClick={() => {
                             setValueMinute([1, 25]);
                           }}
@@ -377,12 +377,13 @@ function TranslatorsPage({
                           }}
                         >
                           $50 - $100
-                        </TextFilter>
+                        </TextFilter> */}
                         <div className="slidecontainer">
                           <Range
                             value={valueMinute}
                             min={minMinute}
                             max={maxMinute}
+                            step={0.5}
                             onChange={onSliderChangeMinute}
                             onAfterChange={() => getTranslators()}
                           />
@@ -487,7 +488,7 @@ function TranslatorsPage({
                                       className="image-icon ico-user"
                                     />
                                   </div>
-                                  <div>
+                                  <div className="star-container">
                                     <p className="name">
                                       {ele.firstname} {ele.lastname}
                                       <div>

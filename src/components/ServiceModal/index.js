@@ -56,6 +56,16 @@ export default function ServiceModal(props) {
     })
   } */
 
+  const finishService = () => {
+    setConfirmDisable(true)
+    ServicesAPI.finishService(localStorage.getItem("token"), props.service?.id).then((res) => {
+      setConfirmDisable(false)
+      props.onHide()
+      props.updateServices()
+      setAlert({type: "success", message: "Servicio terminado"})     
+    })
+  }
+
   const cancelService = () => {
     console.log(typeof confirmDisable)
     setConfirmDisable(true)
@@ -116,6 +126,19 @@ export default function ServiceModal(props) {
                 Cancelar servicio
             </Button>
             </>
+          break;
+
+        case "2":
+          buttons =
+            <>
+              <Button
+                className="cucu-button full"
+                onClick={() => {
+                  finishService()
+                }}>
+                Finalizar servicio
+            </Button>
+          </>
       }
     }
     if (localStorage.getItem("role") === "3" || localStorage.getItem("role") === "4") {
@@ -186,6 +209,19 @@ export default function ServiceModal(props) {
                 </>
               }
             </>
+        break;
+
+        case "2":
+          buttons =
+            <>
+              <Button
+                className="cucu-button full"
+                onClick={() => {
+                  finishService()
+                }}>
+                Finalizar servicio
+            </Button>
+          </>
       }
 
     }
@@ -296,7 +332,7 @@ export default function ServiceModal(props) {
               }}
             >
               <img src="/assets/images/video-purple.png"></img>
-            Visitar URL de la sesión
+              Entrar a la sesión
           </URLLabel>
             <hr></hr>
             <p className="detail-modal-text">Adjuntos</p>

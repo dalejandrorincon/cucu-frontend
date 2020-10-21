@@ -50,3 +50,20 @@
         padding: 5px 10px;
     }
 }
+
+.translators-container{
+    .userIconTra{
+        align-items: start;
+
+    }
+    .star-container{
+        width: 140px;
+        margin-left: 15px;
+        .name{
+            padding-top: 0px;
+        }
+    }
+}
+.alert-danger{
+    margin-top: 10px;
+}

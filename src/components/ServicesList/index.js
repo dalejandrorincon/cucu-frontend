@@ -226,7 +226,7 @@ export default function TranslatorServices() {
 								<Col>
 									<Form.Group>
 										<Form.Control
-											placeholder="Buscar por cliente"
+											placeholder={ getUserType()=="translator" ? "Buscar por cliente" : "Buscar por traductor" }
 											id="name"
 											name="name"
 											type="text"
@@ -249,7 +249,7 @@ export default function TranslatorServices() {
 										<th scope="col">Tipo de servicio</th>
 										<th scope="col">Duración</th>
 										<th scope="col">Tarifa</th>
-										<th scope="col">Fecha</th>
+										<th scope="col">Fecha y hora</th>
 										<th scope="col">Estado</th>
 										<th scope="col"></th>
 									</tr>
@@ -295,7 +295,7 @@ export default function TranslatorServices() {
 											<td>{ele.service_type === "0" ? "Instantáneo" : "Programado"}</td>
 											<td>{ele.duration_amount}</td>
 											<td>{ele.duration_type === "0" ? "Hora" : "Minuto"}{ele.duration_amount > 1 ? "s" : null}</td>
-											<td>{moment(ele.date).format("D MMM  YYYY")}</td>
+											<td>{moment(ele.date).format("D MMM  YYYY - hh:mm a")}</td>
 											<td>
 												{itemStatusLabel(ele.status)}
 											</td>

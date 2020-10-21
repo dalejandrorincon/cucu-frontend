@@ -68,12 +68,6 @@
     .client-cancel{
         background-color: #D03B3B;
         border-color: #D03B3B;
-        &.full{
-            width: 100%;
-            min-height: 50px;
-            border-radius: 2px;
-            margin-bottom: 15px;
-        }
         &.btn-outline-danger{            
             color: #D03B3B;
             background-color: transparent;            
@@ -87,6 +81,13 @@
                 background-color: #D03B3B;
             }
         }
+    }
+
+    button.full{
+        width: 100%;
+        min-height: 50px;
+        border-radius: 2px;
+        margin-bottom: 15px;
     }
 
 }    
