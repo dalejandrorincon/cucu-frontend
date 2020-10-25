@@ -68,7 +68,7 @@ function ProfileTraductorPage({
   }
   const getImage = () =>{
     let url = localStorage.getItem("image_url")
-    if (url){
+    if (url && url!="null"){
       setImage(url)
     }else{
       setImage("/assets/images/no_avatar_default.png")
@@ -105,7 +105,7 @@ function ProfileTraductorPage({
                               <label htmlFor="file" className="upload-btn-label">
                                 <i className="fa fa-pencil"></i>
                               </label>
-                              <input type="file" id="file" className="upload-btn" onChange={handleFileChange} />
+                              <input type="file" id="file" accept="image/*" className="upload-btn" onChange={handleFileChange} />
                             </div>
                           </div>
                           <div>
