@@ -23,6 +23,7 @@ import {
 
 import * as UsersAPI from '../../api/users';
 import * as AuthAPI from '../../api/auth';
+import { connectSocket } from "../../utils/constants"
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,6 +62,7 @@ function SignupPage() {
             res.user.firstname + " " + res.user.lastname
           );
           localStorage.setItem("image_url", res.user.image_url)
+          connectSocket()
           if (res.user.role == 3 || res.user.role == 4) {
             history.push("/translators");
           } else {
