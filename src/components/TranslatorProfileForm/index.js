@@ -164,15 +164,16 @@ export default function TranslatorProfileForm() {
         password: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
         //.required("*Este campo es obligatorio"),
-        description: Yup.string()
+        /* description: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .required("*Este campo es obligatorio"), */
         country_id: Yup.string()
             .min(1, "*Debes elegir un campo")
             .required("*Este campo es obligatorio"),
         city_id: Yup.string()
             .min(1, "*Debes elegir un campo")
-            .required("*Este campo es obligatorio"),
+            .required("*Este campo es obligatorio")
+            .nullable(),
         nationality: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio"),
@@ -536,8 +537,6 @@ export default function TranslatorProfileForm() {
             ></ConfirmationModal>
 
             {response}
-
-
 
         </div>
     )
