@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { store } from "./redux/store/store";
@@ -26,7 +26,16 @@ import ProfilePage from "./pages/ProfilePage";
 import { PublicRoute } from "./components/PublicRoute";
 import { PrivateRoute } from "./components/PrivateRoute";
 
+import { connectSocket } from "./utils/constants"
+
 export default function App() {
+
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      connectSocket()
+    }    
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>

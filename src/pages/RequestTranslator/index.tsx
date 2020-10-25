@@ -297,7 +297,7 @@ function RequestTranslatorPage() {
 
                     <label
                       onClick={() => {
-                        formik.setFieldValue("duration_type", 0)
+                        formik.setFieldValue("duration_type", "0")
                       }}
                     >
                       <Form.Check
@@ -310,7 +310,7 @@ function RequestTranslatorPage() {
 
                     <label
                       onClick={() => {
-                        formik.setFieldValue("duration_type", 1)
+                        formik.setFieldValue("duration_type", "1")
                       }}
                     >
                       <Form.Check

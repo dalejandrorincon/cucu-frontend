@@ -17,6 +17,8 @@ import {
   ShowPassword
 } from './styles'
 
+import { connectSocket } from "../../utils/constants"
+
 const baseUri = process.env.REACT_APP_API_URL;
 
 
@@ -49,6 +51,7 @@ function LoginPage() {
               responseJson.user.firstname + " " + responseJson.user.lastname
             );
             localStorage.setItem("image_url", responseJson.user.image_url)
+            connectSocket()
             if (responseJson.user.role == 3 || responseJson.user.role == 4) {
               history.push("/translators");
             } else {

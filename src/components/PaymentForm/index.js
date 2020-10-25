@@ -65,7 +65,9 @@ export default function CheckoutForm(props) {
 				color: "#fa755a",
 				iconColor: "#fa755a"
 			}
-		}
+		},
+		hidePostalCode: true
+
 	};
 	const handleChange = async (event) => {
 		// Listen for changes in the CardElement
@@ -91,11 +93,11 @@ export default function CheckoutForm(props) {
 	};
 	return (
 		<>
-			<div className={available=="1" ? '' : 'hidden' }>
+			<div className={available=="1" ? 'service-info' : 'hidden' }>
 				<p className="service-amount">${props.service?.amount}</p>
 				<p className="service-duration">
-					(${props.service.duration_type == "0" ? props.service.translator?.rate_hour : props.service.translator?.rate_minute}
-					/{props.service.duration_type == "0" ? "hr" : "min"}) x {props.service.duration_amount}
+					${props.service?.duration_type == "0" ? props.service?.translator?.rate_hour : props.service?.translator?.rate_minute}
+					/{props.service?.duration_type == "0" ? "hr" : "min"} x {props.service?.duration_amount}
 				</p>
 
 

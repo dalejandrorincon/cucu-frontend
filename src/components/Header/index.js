@@ -8,6 +8,7 @@ import {
 } from "react-bootstrap";
 import { logout } from "../../utils/session";
 import { Link, useHistory, useParams } from "react-router-dom";
+import Notifications from "../Notifications/";
 
 export default function Header() {
 
@@ -97,7 +98,7 @@ export default function Header() {
 				{options}
 				<ul className="navbar-nav">
 					<li className="nav-item ">
-						<img src="/assets/images/bell@2x.png"></img>
+						<Notifications></Notifications>
 					</li>
 				</ul>
 				<ul className="navbar-nav">
