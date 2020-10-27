@@ -152,9 +152,9 @@ export default function TranslatorExperienceForm() {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
             console.log(res.user)
             setEntity(res.user)
-            setSelectedPlatforms(res.user.remote_tools)
-            setSelectedSpecialities(res.user.specialities)
-            setSelectedLanguages(res.user.languages)
+            if(res.user.remote_tools) setSelectedPlatforms(res.user.remote_tools)
+            if(res.user.specialities) setSelectedSpecialities(res.user.specialities)
+            if(res.user.languages) setSelectedLanguages(res.user.languages)
         })
     };
 
@@ -243,20 +243,28 @@ export default function TranslatorExperienceForm() {
         let current;
         switch (type) {
             case "experiences":
-                current = formik.values.work_experience
+                if(formik.values.work_experience){
+                    current = formik.values.work_experience
+                }else{
+                    current = []
+                }
                 if (data.index == undefined) {
                     current.push(data)
-                    formik.setFieldValue("experiences", current)
+                    formik.setFieldValue("work_experience", current)
                 } else {
                     current[data.index] = data
                     delete current[data.index].index
-                    formik.setFieldValue("experiences", current)
+                    formik.setFieldValue("work_experience", current)
                 }
                 setModalExperiences(false)
                 break;
 
             case "certifications":
-                current = formik.values.certifications
+                if(formik.values.certifications){
+                    current = formik.values.certifications
+                }else{
+                    current = []
+                }
                 if (data.index == undefined) {
                     current.push(data)
                     formik.setFieldValue("certifications", current)
