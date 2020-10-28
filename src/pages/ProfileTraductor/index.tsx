@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import TranslatorProfileForm from '../../components/TranslatorProfileForm'
 import TranslatorExperienceForm from '../../components/TranslatorExperienceForm'
+import TranslatorPaymentsForm from '../../components/TranslatorPaymentsForm'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -138,14 +139,18 @@ function ProfileTraductorPage({
                           <Nav.Link className="item-menu" href="/profile-translator-edit/experience">
                             <p className="text-item-menu">Experiencia laboral</p>
                           </Nav.Link>
-                          <Nav.Link className="item-menu" href="/profile-translator-edit/opiniones" >
-                            <p className="text-item-menu">Opiniones</p>
+                          <Nav.Link className="item-menu" href="/profile-translator-edit/payment">
+                            <p className="text-item-menu">Métodos de pago</p>
                           </Nav.Link>
+                          {/* <Nav.Link className="item-menu" href="/profile-translator-edit/opiniones" >
+                            <p className="text-item-menu">Opiniones</p>
+                          </Nav.Link> */}
                         </Nav>
                       </Col>
                       <Col className="col-padding item-active-profile">
 
                         <Route path={`/profile-translator-edit/experience`} component={TranslatorExperienceForm} />
+                        <Route path={`/profile-translator-edit/payment`} component={TranslatorPaymentsForm} />
                         <Route exact path={`/profile-translator-edit/`} component={TranslatorProfileForm} />
 
                       </Col>
