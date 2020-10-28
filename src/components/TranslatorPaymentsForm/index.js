@@ -148,7 +148,7 @@ export default function TranslatorProfileForm() {
     return (
         <div>
 
-            <Title>Mi cuenta</Title>
+            <Title>Información Personal</Title>
 
             <Alert variant="primary">
                     Si tu cuenta bancaria no se encuentra en <a href="#">esta lista</a>, debes enlazar una cuenta de Payoneer
@@ -198,7 +198,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Número de cuenta</Form.Label>
+                    <Label>Número de cuenta</Label>
                     <Form.Control
                         id="account_number"
                         type="number"
@@ -216,7 +216,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Nombre del titular de la cuenta</Form.Label>
+                    <Label>Nombre del titular de la cuenta</Label>
                     <Form.Control
                         id="owner_name"
                         type="text"
@@ -232,7 +232,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Documento del titular de la cuenta</Form.Label>
+                    <Label>Documento del titular de la cuenta</Label>
 
                     <div className="document-form">
                         <Form.Control
