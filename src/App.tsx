@@ -21,6 +21,7 @@ import "./App.scss"
 
 //import ClientServices from "./pages/ClientServices";
 import TranslatorServices from "./pages/TranslatorServices";
+import Transactions from "./pages/Transactions";
 
 import ProfilePage from "./pages/ProfilePage";
 import { PublicRoute } from "./components/PublicRoute";
@@ -77,6 +78,12 @@ export default function App() {
               ? //ClientServices
               TranslatorServices 
               : TranslatorServices */
+          }
+        />
+        <PrivateRoute
+          path="/transactions"
+          component={
+              Transactions
           }
         />
         <PrivateRoute

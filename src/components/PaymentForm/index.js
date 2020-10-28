@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 import * as StripeAPI from '../../api/stripe';
 import * as ServicesAPI from '../../api/services';
+import * as TransactionsAPI from '../../api/transactions';
 
 import "./styles.scss"
 
@@ -31,8 +32,13 @@ export default function CheckoutForm(props) {
 
 	const payService = () => {
 		ServicesAPI.payService(localStorage.getItem("token"), props.service?.id).then((res) => {
-			setSucceeded(true);
-			setProcessing(false);
+			TransactionsAPI.createTransaction(localStorage.getItem("token"), res.id, props.service?.id).then((res) => {
+				setSucceeded(true);
+				setProcessing(false);
+			}).catch((err)=>{				
+				setError(true)
+				setProcessing(false);
+			})
 		}).catch((err)=>{
 			setError(true)
 			setProcessing(false);
@@ -124,9 +130,10 @@ export default function CheckoutForm(props) {
 					</div>
 				)}
 				{/* Show a success message upon completion */}
-				<p className={succeeded ? "result-message" : "result-message hidden"}>
-					El pago ha sido exitoso, haz click en el siguiente botón para volver a la lista de solicitudes:
-
+				<div className={succeeded ? "result-message" : "result-message hidden"}>
+					<div className="alert alert-success" role="alert">
+						El pago ha sido exitoso, haz click en el siguiente botón para volver a la lista de solicitudes:
+					</div>
 					<Link
 						to="/services"
 					>
@@ -136,7 +143,7 @@ export default function CheckoutForm(props) {
 						</Button>
 					</Link>
 
-				</p>
+				</div>
 			</form>
 			<div className={available=="2" ? 'alert alert-danger' : 'alert alert-danger hidden' } role="alert">
 				No es posible realizar este pago.
