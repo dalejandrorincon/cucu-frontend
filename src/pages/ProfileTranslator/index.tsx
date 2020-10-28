@@ -13,6 +13,8 @@ import {
   NavDropdown,
   Modal,
 } from "react-bootstrap";
+import Rating from "react-rating";
+import "./styles.scss"
 
 import { Link, useHistory, useParams } from "react-router-dom";
 
@@ -93,17 +95,19 @@ function ProfileTranslatorPage({
                               className="image-profile ico-user"
                             />
                           </div>
-                          <div>
+                          <div className="translator-profile-main">
                             <p className="name">
-                              {translators?.firstname} {translators?.lastname}
+                              <span className="user-name">{translators?.firstname} {translators?.lastname}</span>
                               <br></br> {translators?.total_experience_years}{" "}
                               años de experiencia
                               <div>
-                                <span className="fa fa-star active"></span>
-                                <span className="fa fa-star active"></span>
-                                <span className="fa fa-star-o active"></span>
-                                <span className="fa fa-star-o active"></span>
-                                <span className="fa fa-star-o active"></span>
+                                <Rating
+                                  emptySymbol="fa fa-star-o fa-2x fa-start"
+                                  fullSymbol="fa fa-star fa-2x fa-start"
+                                  className="startcontainer"
+                                  readonly={true}
+                                  initialRating={translators?.rating}
+                                />
                               </div>
                             </p>
                           </div>
@@ -202,18 +206,18 @@ function ProfileTranslatorPage({
                         <div className="opinion-container">
                           <div className="opinion-title">
                             <p>Opiniones</p>
-                            <a
+                            {/* <a
                               className="ver-todas"
                               onClick={() => {
                                 setisVisible(true);
                               }}
                             >
                               Ver todas
-                            </a>
+                            </a> */}
                           </div>
-                          <p>4.44 (23 opiniones)</p>
+                          <p>{translators?.rating} ({translators?.total_ratings} {translators?.total_ratings!="1"?<>opiniones</>:<>opinión</>})</p>
                         </div>
-                        <div>
+                        {/* <div>
                           <p className="name">
                             <div className="opinion-name">
                               <p>
@@ -297,7 +301,7 @@ function ProfileTranslatorPage({
                             </span>
                             <div></div>
                           </p>
-                        </div>
+                        </div> */}
                       </Col>
                     </Row>
                   </WellContainer>

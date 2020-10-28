@@ -491,13 +491,14 @@ function TranslatorsPage({
                                   <div className="star-container">
                                     <p className="name">
                                       {ele.firstname} {ele.lastname}
-                                      <div>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                        <span className="fa fa-star-o active"></span>
-                                      </div>
+
+                                      <Rating
+                                          emptySymbol="fa fa-star-o fa-2x fa-start"
+                                          fullSymbol="fa fa-star fa-2x fa-start"
+                                          className="startcontainer"
+                                          readonly={true}
+                                          initialRating={ele.rating}
+                                      />
                                     </p>
                                   </div>
                                 </div>
