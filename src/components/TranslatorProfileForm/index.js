@@ -85,7 +85,7 @@ export default function TranslatorProfileForm() {
         CitiesAPI.getCities({ country_id: country }).then((res) => {
             console.log(res)
             if (res) {
-                const items = res.results.map((item) =>
+                const items = res?.map((item) =>
                     <option key={item.id} value={item.id}>{item.name}</option>
                 );
                 setCities(items)

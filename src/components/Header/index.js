@@ -55,7 +55,7 @@ export default function Header() {
 						</Link>
 						</li>
 						<li className="nav-item ">
-							<Link className="nav-link nav-item-inactive" /* to="/transactions" */>
+							<Link className="nav-link nav-item-inactive" to="/transactions">
 								Transacciones
 						</Link>
 						</li>

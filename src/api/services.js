@@ -137,6 +137,22 @@ export const finishService = (token, id) => {
     });
 };
 
+export const rateService = (token, id) => {
+  const URL = `/translation_services/rate/`+id;
+  return api(URL, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+
 
 export const saveFile = (file) => {
   const URL = `/translation_services/file`;

@@ -15,6 +15,8 @@ import {
 import "./styles.scss"
 
 import CancelModal from "../CancelModal"
+import RateModal from "../RateModal"
+
 import * as ServicesAPI from '../../api/services';
 import { Link, useHistory, useParams } from "react-router-dom";
 
@@ -25,6 +27,7 @@ import { NotifierGenerator } from "../Alerts"
 export default function ServiceModal(props) {
   const [statusButtons, setStatusButtons] = useState(null);
   const [modalCancel, setModalCancel] = useState(false);
+  const [modalRate, setModalRate] = useState(false);
   const [modalType, setModalType] = useState(false);
   const [confirmDisable, setConfirmDisable] = useState(false)
 
@@ -222,6 +225,22 @@ export default function ServiceModal(props) {
                 Finalizar servicio
             </Button>
           </>
+        break;
+
+        
+        case "3":
+        if(props.service?.rated==false){
+          buttons =
+            <>
+              <Button
+                className="cucu-button full"
+                onClick={() => {
+                  setModalRate(true)
+                }}>
+                Calificar servicio
+            </Button>
+          </>
+        }
       }
 
     }
@@ -376,6 +395,18 @@ export default function ServiceModal(props) {
         type={modalType}
       >
       </CancelModal>
+
+      <RateModal
+        onHide={() => setModalRate(false)}
+        rateSuccess={(type) => {
+          props.updateServices();
+          setAlert({ type: "success", message: "Servicio calificado"})
+        }}
+        show={modalRate}
+        service={props.service}
+        type={modalType}
+      >
+      </RateModal>
 
       <NotifierGenerator
         alert={alert}

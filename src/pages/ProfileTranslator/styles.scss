@@ -1,0 +1,19 @@
+
+.translator-profile-main{
+    .user-name{
+        font-size: 26px;
+        line-height: 20px;
+        font-weight: bold;
+    }
+    .startcontainer{
+        width: 180px;
+        .fa-start{
+            color: #863DF9 !important;
+            font-size: 24px !important;
+            margin-right: 10px !important;
+        }
+        .name{
+            padding-top: 0px;
+        }
+    }
+}
