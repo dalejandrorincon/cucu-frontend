@@ -215,7 +215,7 @@ function ProfileTranslatorPage({
                               Ver todas
                             </a> */}
                           </div>
-                          <p>{translators?.rating} ({translators?.total_ratings} {translators?.total_ratings!="1"?<>opiniones</>:<>opinión</>})</p>
+                          <p>{translators?.rating} ({translators?.total_ratings ? translators.total_ratings : 0 } {translators?.total_ratings!="1"?<>opiniones</>:<>opinión</>})</p>
                         </div>
                         {/* <div>
                           <p className="name">

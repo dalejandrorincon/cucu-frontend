@@ -88,8 +88,16 @@ export default function TranslatorExperienceForm() {
             to: ""
         },
         onSubmit: values => {
-            setSubmitAttempt(true)
-            saveChanges(values)
+
+            if(
+                !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
+                !(selectedLanguages && selectedLanguages.length == 0 ) &&
+                !(selectedSpecialities && selectedSpecialities.length == 0 ) &&
+                !(!formik.values.work_experience || formik.values.work_experience.length==0  ) &&
+                !(!formik.values.certifications || formik.values.certifications.length==0 ) 
+            ){
+                saveChanges(values)
+            }
         },
         validationSchema: validationSchema,
         validateOnBlur: true,
@@ -124,7 +132,6 @@ export default function TranslatorExperienceForm() {
                     {message}
                 </Alert>
             )
-            formik.resetForm()
         }).catch((err) => {
             console.log(err)
             let message;
@@ -476,7 +483,7 @@ export default function TranslatorExperienceForm() {
 
                 </div>
 
-                {formik.values.work_experience == [] && submitAttempt ? (
+                { ( !formik.values.work_experience || formik.values.work_experience.length == 0 ) && submitAttempt  ? (
                     <div className="alert alert-danger">Debe ingresar al menos una experiencia de trabajo.</div>
                 ) : null}
 
@@ -519,7 +526,7 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
-                {formik.values.work_experience == [] && submitAttempt ? (
+                { (!formik.values.certifications || formik.values.certifications.length==0) && submitAttempt ? (
                     <div className="alert alert-danger">Debe ingresar al menos una certificación.</div>
                 ) : null}
 
@@ -527,6 +534,7 @@ export default function TranslatorExperienceForm() {
                     disabled={buttonState.disabled}
                     type="button"
                     type="submit"
+                    onClick={()=>{setSubmitAttempt(true)}}
                 >
                     {buttonState.label}
                 </Submit>

@@ -158,7 +158,7 @@ export default function CertificationModal(props) {
                             id="date"
                             type="text"           
                             dateFormat="dd/MM/yyyy" 
-                            minDate={new Date()}
+                            maxDate={new Date()}
                             selected={(formik.values.date && new Date(formik.values.date)) || null}
                             onChange={ (e)=>{
                                 formik.setFieldTouched('date');
