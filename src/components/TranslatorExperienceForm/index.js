@@ -355,6 +355,7 @@ export default function TranslatorExperienceForm() {
                 <h6><b>Herramientas remotas</b></h6>
                 <ReactTags
                     ref={reactTags}
+                    placeholderText="Agrega una herramienta..."
                     tags={selectedPlatforms ? selectedPlatforms : []}
                     suggestions={platforms ? platforms : []}
                     onDelete={(data) => onDelete(data, "")}
@@ -426,6 +427,7 @@ export default function TranslatorExperienceForm() {
 
                 <ReactTags
                     ref={reactTags}
+                    placeholderText="Agrega una especialidad..."
                     tags={selectedSpecialities ? selectedSpecialities : []}
                     suggestions={specialities}
                     onDelete={(data) => onDelete(data, "specialities")}

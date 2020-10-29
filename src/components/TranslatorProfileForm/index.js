@@ -90,7 +90,11 @@ export default function TranslatorProfileForm() {
                 );
                 setCities(items)
                 console.log(entity.city_id)
-                formik.setFieldValue("city_id", entity.city_id)
+                if(country == entity.country_id){
+                    formik.setFieldValue("city_id", entity.city_id)
+                }else{
+                    formik.setFieldValue("city_id", "")
+                }
             }
         })
     }
@@ -160,7 +164,8 @@ export default function TranslatorProfileForm() {
             .required("*Este campo es obligatorio"),
         phone: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .required("*Este campo es obligatorio")
+            .matches(/^[\+\d]?(?:[\d-.\s()]*)$/, "El teléfono debe contener solo números o el signo +"),
         password: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
         //.required("*Este campo es obligatorio"),
@@ -187,15 +192,16 @@ export default function TranslatorProfileForm() {
             .min(3, "*Este campo debe tener al menos 3 caracteres"),
         labor_months: Yup.string()
             .required("*Este campo es obligatorio")
-            .min(1, "*Este campo debe tener al menos 3 caracteres"),
+            .min(1, "*Este campo debe tener al menos 3 caracteres")
+            .max(5, "*Este campo debe tener como máximo 5 caracteres"),
         rate_hour: Yup.number()
             .required("*Este campo es obligatorio")
-            .min(25, "*Este campo debe ser al menos 25")
-            .max(100, "Este campo debe ser como máximo 100"),
+            .min(25, "*El valor mínimo de este campo es $25")
+            .max(100, "El valor máximo de este campo es 100"),
         rate_minute: Yup.number()
             .required("*Este campo es obligatorio")
-            .min(1, "*Este campo debe ser al menos 1")
-            .max(2.5, "Este campo debe ser como máximo 2.5"),
+            .min(1, "*El valor mínimo de este campo es 1")
+            .max(2.5, "El valor máximo de este campo es 2.5"),
 
         //.required("*Este campo es obligatorio"),
 
@@ -248,7 +254,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="firstname"
                         type="text"
-                        max="100"
+                        maxlength="100"
                         value={formik.values.firstname}
                         onChange={(e) => {
                             formik.setFieldTouched('firstname');
@@ -265,7 +271,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="lastname"
                         type="text"
-                        max="100"
+                        maxlength="100"
                         value={formik.values.lastname}
                         onChange={(e) => {
                             formik.setFieldTouched('lastname');
@@ -282,6 +288,7 @@ export default function TranslatorProfileForm() {
                     <Form.Control
                         id="document"
                         type="number"
+                        maxlength="100"
                         className="form-control input-lg"
                         onChange={e => {
                             formik.setFieldTouched('document');
@@ -317,6 +324,7 @@ export default function TranslatorProfileForm() {
                     <Form.Control
                         id="phone"
                         type="phone"
+                        maxlength="17"
                         className="form-control input-lg"
                         onChange={e => {
                             formik.setFieldTouched('phone');
@@ -345,7 +353,7 @@ export default function TranslatorProfileForm() {
                                     setShowPassword(!showPassword)
                                 }}
                             >
-                                Cambiar
+                                Mostrar
                                 </ShowPassword>
                         </InputGroup.Prepend>
                     </InputGroup>
@@ -402,6 +410,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="nationality"
                         type="text"
+                        maxlength="100"
                         value={formik.values.nationality}
                         onChange={(e) => {
                             formik.setFieldTouched('nationality');
@@ -418,6 +427,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="address_1"
                         type="text"
+                        maxlength="80"
                         value={formik.values.address_1}
                         onChange={(e) => {
                             formik.setFieldTouched('address_1');
@@ -434,6 +444,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="address_2"
                         type="text"
+                        maxlength="80"
                         value={formik.values.address_2}
                         onChange={(e) => {
                             formik.setFieldTouched('address_2');
@@ -450,6 +461,7 @@ export default function TranslatorProfileForm() {
                     <Control
                         id="address_additional"
                         type="text"
+                        maxlength="5"
                         value={formik.values.address_additional}
                         onChange={(e) => {
                             formik.setFieldTouched('address_additional');

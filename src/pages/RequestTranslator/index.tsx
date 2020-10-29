@@ -44,7 +44,7 @@ function RequestTranslatorPage() {
 	const [response, setResponse] = useState<any>(null)
 
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
 
   const parameters = useParams<any>()
   const translatorId = parameters.id
@@ -411,7 +411,8 @@ function RequestTranslatorPage() {
                   <div className="dropzone-container">
                     <div {...getRootProps({ className: 'dropzone' })}>
                       <input {...getInputProps()} />
-                      <p>Drag 'n' drop some files here, or click to select files</p>
+                      <p>Arrastra o haz click aquí para adjuntar archivos...</p>
+                      <p>Tamaño máximo 1MB</p>
                     </div>
                     <aside>
                       {newFiles}

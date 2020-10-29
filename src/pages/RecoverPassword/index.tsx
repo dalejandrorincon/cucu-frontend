@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Form, Button, InputGroup, Alert } from "react-bootstrap";
 import styled from "styled-components";
 import { logout } from "../../utils/session";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -21,16 +21,37 @@ import {
   ShowPassword
 } from "./styles"
 
+import * as AuthAPI from '../../api/auth';
+
 const baseUri = process.env.REACT_APP_API_URL;
 
 function RecoverPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [successfulSend, setSuccessfulSend] = useState(false);
+  const [successfulCheck, setSuccessfulCheck] = useState(false);  
   const history = useHistory();
   let { token } = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [response, setResponse] = useState<any>(null)
+
+  useEffect(() => {
+		checkToken()
+  }, []);
+  
+  const checkToken = () => {
+
+    AuthAPI.checkToken({token: token}).then((res)=>{
+      setSuccessfulCheck(true)
+    }).catch((err) => {
+      setResponse(
+        <Alert variant={'danger'} >
+          Url para restablecimiento ha expirado, por favor vuelva a generarlo.
+        </Alert>
+      )
+    })
+  }
 
   const submitForm = () => {
     const body = new URLSearchParams({
@@ -41,24 +62,28 @@ function RecoverPasswordPage() {
     try {
       if (password !== "" && confirmPassword !== "") {
         if (
-          password.match(/[a-z]/g) &&
-          password.match(/[A-Z]/g) &&
-          password.match(/[0-9]/g) &&
-          password.match(/[^a-zA-Z\d]/g) &&
-          password.length >= 8
+          password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,}$/i)
         ) {
           console.log("valid password");
         } else {
-          alert("Verifica el formato de tu contraseña");
+          setResponse(
+            <Alert variant={'danger'} >
+              La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.
+            </Alert>
+          )
           return;
         }
 
         if (password !== confirmPassword) {
-          alert("Las contraseñas no coinciden");
+          setResponse(
+            <Alert variant={'danger'} >
+              Las contraseñas no coinciden.
+            </Alert>
+          )
           return;
         }
 
-        fetch(`${baseUri}/auth/`, {
+        fetch(`${baseUri}/auth/change-password`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -68,14 +93,18 @@ function RecoverPasswordPage() {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            alert(responseJson.message);
+            //alert(responseJson.message);
             setSuccessfulSend(true);
           })
           .catch((error) => {
             console.log(error);
           });
       } else {
-        alert("Completa todos los campos");
+        setResponse(
+          <Alert variant={'danger'} >
+            Completa todos los campos.
+          </Alert>
+        )
       }
     } catch (error) {
       console.log("Error", error);
@@ -89,7 +118,9 @@ function RecoverPasswordPage() {
           <PasswordRecover>
             <Logo src="/assets/images/logo.png"></Logo>
             <WellContainer>
-              {successfulSend ? (
+              {successfulCheck ? (
+
+              <>{successfulSend ? (
                 <>
                   {" "}
                   <SuccessfulContainer>
@@ -170,7 +201,9 @@ function RecoverPasswordPage() {
                     </Submit>
                   </Form>
                 </>
-              )}
+              )}</>
+              ):null}
+              {response}
             </WellContainer>
           </PasswordRecover>
         </Col>

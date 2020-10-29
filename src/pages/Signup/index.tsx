@@ -69,16 +69,17 @@ function SignupPage() {
             history.push("/services");
           }
         })
-
-
     }).catch((err) => {
         let error = err.response?.data?.errors;
-
         console.log(err.response)
         let message = "Ha ocurrido un error al crear el usuario.";
+        if(JSON.stringify(error)=='{"email":"Correo eléctronico ya está siendo usado"}'){
+          message = "Correo eléctronico ya está siendo usado"
+        }
+
         setResponse(
           <Alert variant={'danger'} >
-              {error ? JSON.stringify(error) : message}
+              {message}
           </Alert>
         )
     })
@@ -126,7 +127,7 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="firstname"
-                  max="100"
+                  maxlength="100"
                   ref={register({ required: true })}
                 />
               </Form.Group>
@@ -138,7 +139,7 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="lastname"
-                  max="100"
+                  maxlength="100"
                   ref={register({ required: true })}
                 />
               </Form.Group>
@@ -147,7 +148,7 @@ function SignupPage() {
                   El apellido es requerido
                 </div>
               )}
-              {role === "1" && (
+              {role === "3" || role== "4" ?
                 <>
                   <Form.Group controlId="exampleForm.ControlSelect1">
                     <Label>Tipo de cliente</Label>
@@ -157,12 +158,11 @@ function SignupPage() {
                       name="client_type"
                       ref={register({ required: true })}
                       onChange={(e) => {
-                        setType(e.target.value);
+                        setRole(e.target.value);
                       }}
                     >
-                      <option value=""></option>
-                      <option value="client">Persona natural</option>
-                      <option value="enterprise">Persona juridica</option>
+                      <option value="3">Persona natural</option>
+                      <option value="4">Persona juridica</option>
                     </Form.Control>
                   </Form.Group>
                   {errors.client_type && (
@@ -170,7 +170,7 @@ function SignupPage() {
                       El tipo de cliente es requerido
                     </div>
                   )}
-                  {type === "enterprise" && (
+                  {role === "4" && (
                     <>
                       <Form.Group>
                         <Label>Nombre de tu empresa</Label>
@@ -188,13 +188,14 @@ function SignupPage() {
                     </>
                   )}
                 </>
-              )}
+                : null
+              }
               <Form.Group>
                 <Label>Correo electrónico</Label>
                 <Control
                   type="email"
                   name="email"
-                  max="60"
+                  maxlength="60"
                   ref={register({
                     required: "El correo es requerido",
                     pattern: {
@@ -214,7 +215,7 @@ function SignupPage() {
                 <Control
                   type="text"
                   name="phone"
-                  max="14"
+                  maxlength="14"
                   ref={register({
                     required: "El teléfono es requerido",
                     pattern: {
