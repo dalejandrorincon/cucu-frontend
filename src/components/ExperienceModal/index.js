@@ -28,7 +28,7 @@ export default function ExperienceModal(props) {
         setMyFiles([...myFiles, ...acceptedFiles])
     }, [myFiles])
 
-    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
+    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
 
     //console.log({...props.values})
 
@@ -69,6 +69,7 @@ export default function ExperienceModal(props) {
         }
         setMyFiles([])
         props.newExperience({ ...values, url: JSON.stringify(url) })
+        formik.resetForm()
     }
 
     const newFiles = myFiles.map((file, index) => (
@@ -116,6 +117,7 @@ export default function ExperienceModal(props) {
                         <Control
                             id="company"
                             type="text"
+                            maxlength="100"
                             value={formik.values.company}
                             onChange={(e) => {
                                 formik.setFieldTouched('company');
@@ -133,7 +135,8 @@ export default function ExperienceModal(props) {
                     <div className="dropzone-container">
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
-                            <p>Drag 'n' drop some files here, or click to select files</p>
+                            <p>Arrastra o haz click aquí para adjuntar archivos...</p>
+                            <p>Tamaño máximo 1MB</p>
                         </div>
                         <aside>
 

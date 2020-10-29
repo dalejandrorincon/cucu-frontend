@@ -206,7 +206,10 @@ function TranslatorsPage({
     formik.values.languageFrom,
     formik.values.languageTo,
     formik.values.speciality,
-    formik.values.name
+    formik.values.name,
+    startTime,
+    endTime,
+    rate
   ]);
 
   const switchLanguages = () => {
@@ -242,7 +245,7 @@ function TranslatorsPage({
                           emptySymbol="fa fa-star-o fa-2x fa-start"
                           fullSymbol="fa fa-star fa-2x fa-start"
                           className="startcontainer"
-                          onChange={(rate: any) => setRate(rate)}
+                          onClick={(rating: any) => rate == rating ? setRate(0) : setRate(rating)}
                           initialRating={rate}
                         />
                       </li>
@@ -497,7 +500,7 @@ function TranslatorsPage({
                                           fullSymbol="fa fa-star fa-2x fa-start"
                                           className="startcontainer"
                                           readonly={true}
-                                          initialRating={ele.rating}
+                                          initialRating={Math.floor(ele.rating)}
                                       />
                                     </p>
                                   </div>
@@ -516,7 +519,7 @@ function TranslatorsPage({
                                 {ele.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      De {lng.to.name} a {lng.from.name}
+                                      De {lng.from.name} a {lng.to.name}
                                     </span>
                                   </>
                                 ))}

@@ -157,10 +157,10 @@ function ProfileTranslatorPage({
                                 {translators?.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      {lng.to.name}
+                                      {lng.from.name}
                                     </span>
                                     <span className="badge badge-light">
-                                      {lng.from.name}
+                                      {lng.to.name}
                                     </span>
                                   </>
                                 ))}

@@ -26,7 +26,7 @@ export default function CertificationModal(props) {
         setMyFiles([...myFiles, ...acceptedFiles])
     }, [myFiles])
 
-    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop })
+    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
 
     //console.log({...props.values})
 
@@ -39,7 +39,8 @@ export default function CertificationModal(props) {
             .required("*Este campo es obligatorio"),
         date: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .required("*Este campo es obligatorio")
+            .nullable(),
         /* url: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio") */
@@ -72,6 +73,7 @@ export default function CertificationModal(props) {
         }
         setMyFiles([])
         props.newCertification({ ...values, url: JSON.stringify(url) })
+        formik.resetForm()
     }
 
     const newFiles = myFiles.map((file, index) => (
@@ -119,6 +121,7 @@ export default function CertificationModal(props) {
                         <Label>Nombre</Label>
                         <Control
                             id="name"
+                            maxlength="100"
                             type="text"
                             value={formik.values.name}
                             onChange={(e) => {
@@ -136,6 +139,7 @@ export default function CertificationModal(props) {
                         <Control
                             id="school"
                             type="textarea"
+                            maxlength="100"
                             as="textarea"
                             rows="5"
                             value={formik.values.school}
@@ -154,6 +158,7 @@ export default function CertificationModal(props) {
                             id="date"
                             type="text"           
                             dateFormat="dd/MM/yyyy" 
+                            minDate={new Date()}
                             selected={(formik.values.date && new Date(formik.values.date)) || null}
                             onChange={ (e)=>{
                                 formik.setFieldTouched('date');
@@ -183,7 +188,8 @@ export default function CertificationModal(props) {
                     <div className="dropzone-container">
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
-                            <p>Drag 'n' drop some files here, or click to select files</p>
+                            <p>Arrastra o haz click aquí para adjuntar archivos...</p>
+                            <p>Tamaño máximo 1MB</p>
                         </div>
                         <aside>
                             

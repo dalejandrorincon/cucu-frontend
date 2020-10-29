@@ -31,7 +31,7 @@ function ForgotPasswordPage() {
 
   const submitForm = () => {
     const body = new URLSearchParams({
-      email,
+      email: email.toLowerCase(),
     });
 
     try {
@@ -46,7 +46,7 @@ function ForgotPasswordPage() {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            alert(responseJson.message);
+            //alert(responseJson.message);
             setSuccessfulSendCode(true);
             setEmail("");
           })
@@ -77,7 +77,7 @@ function ForgotPasswordPage() {
                 instrucciones para recuperar tu contraseña.
               </SuccessfulInfo>
               <SuccessfulInfoLabel>
-                Reciba tu bandeja de entrada y SPAM.
+                Revisa tu bandeja de entrada y SPAM.
               </SuccessfulInfoLabel>
               <ButtonToLogin>
                 <Submit
