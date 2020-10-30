@@ -17,6 +17,22 @@ export const login = (payload) => {
     });
 };
 
+export const logout = (token) => {
+  const URL = `/auth/logout/`;
+  return api(URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': token
+    },
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+
 
 export const checkToken = (payload) => {
   const URL = `/auth/check-recovery-token/`;

@@ -35,6 +35,7 @@ function RecoverPasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [response, setResponse] = useState<any>(null)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
 		checkToken()
@@ -71,6 +72,7 @@ function RecoverPasswordPage() {
               La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.
             </Alert>
           )
+          setError(true)
           return;
         }
 
@@ -80,6 +82,7 @@ function RecoverPasswordPage() {
               Las contraseñas no coinciden.
             </Alert>
           )
+          setError(true)
           return;
         }
 
@@ -105,6 +108,7 @@ function RecoverPasswordPage() {
             Completa todos los campos.
           </Alert>
         )
+        setError(true)
       }
     } catch (error) {
       console.log("Error", error);
@@ -154,12 +158,14 @@ function RecoverPasswordPage() {
                         <ControlPassword
                           type={showPassword ? "text" : "password"}
                           onChange={(e: any) => setPassword(e.target.value)}
+                          className={error ? "input-danger" : ""}
                         />
                         <InputGroup.Prepend>
                           <ShowPassword
                             onClick={() => {
                               setShowPassword(!showPassword);
                             }}
+                            className={error ? "input-danger" : ""}
                           >
                             {showPassword ? "Ocultar" : "Mostrar"}
                           </ShowPassword>
@@ -179,12 +185,14 @@ function RecoverPasswordPage() {
                           onChange={(e: any) =>
                             setConfirmPassword(e.target.value)
                           }
+                          className={error ? "input-danger" : ""}
                         />
                         <InputGroup.Prepend>
                           <ShowPassword
                             onClick={() => {
                               setShowVerifyPassword(!showVerifyPassword);
                             }}
+                            className={error ? "input-danger" : ""}
                           >
                             {showVerifyPassword ? "Ocultar" : "Mostrar"}
                           </ShowPassword>

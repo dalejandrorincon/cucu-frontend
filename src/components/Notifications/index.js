@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import * as NotificationsAPI from '../../api/notifications';
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import "./styles.scss"
 
 import { socket } from "../../utils/constants"
+import { logout } from "../../utils/session";
+import { Link } from "react-router-dom";
 
 export default function Notifications() {
 
 	const [isVisible, setIsVisible] = useState(false);
 	const [empty, setEmpty] = useState(null);
 	const [notifications, setNotifications] = useState([]);
-
 	const [pending, setPending] = useState(false);
+	const [sessionText, setSessionText] = useState(null);
+	const [isSessionClose, setIsSessionClose] = useState(false);
 
 
 	useEffect(() => {
@@ -36,7 +39,17 @@ export default function Notifications() {
 				}
 			});
 		}).catch((err) => {
-			console.log(err)
+			console.log(err.response?.data?.message)
+			if(err.response?.data?.message=="TOKEN_EXPIRED"){
+				setSessionText("La sesión ha expirado.")
+				setIsSessionClose(true)
+				removeSession()
+			}
+			if(err.response?.data?.message=="INACTIVE_SESSION"){
+				setSessionText("La sesión ha expirado por inactividad.")
+				setIsSessionClose(true)
+				removeSession()
+			}
 		})
 	}
 
@@ -67,6 +80,10 @@ export default function Notifications() {
 		}).catch((err) => {
 			console.log(err)
 		})
+	}
+	
+	const removeSession = () => {
+		logout()
 	}
 
 	const getItem = (notification) => {
@@ -147,6 +164,30 @@ export default function Notifications() {
 					))
 					}
 
+				</Modal.Body>
+			</Modal>
+
+			<Modal
+				className="logout-modal"
+				show={isSessionClose}
+				autoFocus
+				keyboard
+				centered
+			>
+				<Modal.Header>
+					<Modal.Title>Cierre de sesión</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<p>
+						{sessionText}
+					</p>
+					<Link to="/">
+						<Button
+							className="cucu-button"
+						>
+							Volver
+						</Button>
+					</Link>
 				</Modal.Body>
 			</Modal>
 

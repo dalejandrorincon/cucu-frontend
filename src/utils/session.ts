@@ -1,3 +1,5 @@
+import * as AuthAPI from '../api/auth';
+
 const TOKEN_KEY = "token";
 
 export const login = (token) => {
@@ -13,6 +15,9 @@ export const getToken = () => {
 };
 
 export const logout = () => {
+  AuthAPI.logout(getToken()).then((res)=>{
+    console.log(res)
+  })
   localStorage.clear()
 };
 
