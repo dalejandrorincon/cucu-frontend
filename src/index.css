@@ -1214,3 +1214,11 @@ nav a:hover {
   transition: border .24s ease-in-out;
   margin-bottom: 20px;
 }
+
+input.input-danger{
+  border-color: red;
+}
+
+span.input-danger.input-group-text{
+  border-color: red;
+}
