@@ -41,6 +41,7 @@ import * as LanguagesAPI from '../../api/languages';
 import moment from 'moment';
 
 import { combineDateWithTime } from "../../utils/constants"
+import ReactPaginate from 'react-paginate';
 
 import { useFormik } from 'formik';
 
@@ -65,6 +66,8 @@ function TranslatorsPage({
   const [endTime, setEndTime] = useState(null);
   const [data, setData] = useState<any>({});
   const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+
 
   const ExampleCustomInput = (props) => <Form.Control {...props} />;
   const ExampleCustomInputTime = (props) => (
@@ -126,7 +129,8 @@ function TranslatorsPage({
       min_experience: value[0],
       max_experience: value[1],
       min_price_hour: valueHour[0],
-      max_price_hour: valueHour[1]
+      max_price_hour: valueHour[1],
+      page: page
     }
 
     if (startTime && endTime) {
@@ -171,6 +175,7 @@ function TranslatorsPage({
     UsersAPI.getTranslators(settings, localStorage.getItem("token")).then((res) => {
       setTranslators(res.users);
       setData(res);
+			setPageCount(res.pages)
     }).catch((err) => {
       console.log(err)
     })
@@ -209,7 +214,8 @@ function TranslatorsPage({
     formik.values.name,
     startTime,
     endTime,
-    rate
+    rate,
+    page
   ]);
 
   const switchLanguages = () => {
@@ -218,6 +224,12 @@ function TranslatorsPage({
     formik.setFieldValue("languageFrom", languages[1])
     formik.setFieldValue("languageTo", languages[0])
   }
+
+  const handlePageClick = data => {
+		console.log(data)
+    let selected = data.selected;
+    setPage(selected + 1)
+	};
 
 
   /* useEffect(() => {
@@ -534,27 +546,22 @@ function TranslatorsPage({
                         </tbody>
                       </table>
                     </div>
-                    <p className="paginador">
-                      {page > 1 && (
-                        <button
-                          className="atras"
-                          onClick={() => {
-                            setPage(data.page - 1);
-                          }}
-                        >
-                          Atrás
-                        </button>
-                      )}
-                      Pagina {data.page} de {data.pages}
-                      <button
-                        className="siguiente"
-                        onClick={() => {
-                          setPage(data.page + 1);
-                        }}
-                      >
-                        Siguiente
-                      </button>
-                    </p>
+                    <div className="pagination-container">
+                      <ReactPaginate
+                        previousLabel={'Anterior'}
+                        nextLabel={'Siguiente'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
+                    </div>
+
                   </WellContainer>
                 </Col>
               </Row>
