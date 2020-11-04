@@ -86,7 +86,6 @@ export default function TransactionsList() {
 				<Col className="col-md-12">
 					<Title>Historial de transacciones</Title>
 					<WellContainer>
-						<div className="table-responsive">
 							<Row className="filters">
 								<Col>
 									<Form.Group>
@@ -143,6 +142,7 @@ export default function TransactionsList() {
 											}}
 											value={formik.values.sort_by}>
 											<option value="transactions.created_at">Más recientes</option>
+											<option value="transactions.created_at_asc">Más antiguos</option>
 											{/* <option value="date">Fecha</option> */}
 											<option value="service.duration_amount">Duración</option>
 											<option value="service.duration_type">Tarifa</option>
@@ -219,6 +219,7 @@ export default function TransactionsList() {
 								</Col>
 
 							</Row>
+						<div className="table-responsive">
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>

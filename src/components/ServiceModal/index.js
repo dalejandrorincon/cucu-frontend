@@ -323,12 +323,12 @@ export default function ServiceModal(props) {
                   /{props.service.duration_type == "0" ? "hr" : "min"}) x {props.service.duration_amount}
               </span>
             </p>
-            <p className="detail-modal-text">
+            {/* <p className="detail-modal-text">
               <b>Cucumetro: </b>
               <span>
                 {props.service.time_type === 0 ? "Servicio fijo" : "Minuto consumido"}
               </span>
-            </p>
+            </p> */}
             <p className="detail-modal-text">
               <b>Cobro por: </b>
               <span>
@@ -343,16 +343,19 @@ export default function ServiceModal(props) {
               <b>Fecha inicio: </b>
               <span> {moment(props.service.date).format("D MMM  YYYY")}</span>
             </p>
-            <URLLabel
-              type="button"
-              className="url-button"
-              onClick={() => {
-                window.open(props.service.url);
-              }}
-            >
-              <img src="/assets/images/video-purple.png"></img>
-              Entrar a la sesión
-          </URLLabel>
+            { props.service?.status == "2" ?
+              <URLLabel
+                type="button"
+                className="url-button"
+                onClick={() => {
+                  window.open(props.service?.url.includes("//") ? props.service.url : "//"+props.service.url);
+                }}
+              >
+                <img src="/assets/images/video-purple.png"></img>
+                Entrar a la sesión
+              </URLLabel>
+              : null
+            }
             <hr></hr>
             <p className="detail-modal-text">Adjuntos</p>
             <div className="container-files">

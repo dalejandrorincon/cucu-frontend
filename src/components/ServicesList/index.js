@@ -107,7 +107,6 @@ export default function TranslatorServices() {
 				<Col className="col-md-12">
 					<Title>Mis solicitudes</Title>
 					<WellContainer>
-						<div className="table-responsive">
 							<Row className="filters">
 								<Col>
 									<Form.Group>
@@ -164,6 +163,7 @@ export default function TranslatorServices() {
 											}}
 											value={formik.values.sort_by}>
 											<option value="created_at">Más recientes</option>
+											<option value="created_at_asc">Más antiguos</option>
 											<option value="date">Fecha</option>
 											<option value="duration_amount">Duración</option>
 											<option value="duration_type">Tarifa</option>
@@ -240,6 +240,7 @@ export default function TranslatorServices() {
 								</Col>
 
 							</Row>
+						<div className="table-responsive">
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>

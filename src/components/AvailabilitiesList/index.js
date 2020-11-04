@@ -104,6 +104,7 @@ export default function AvailabilitiesList() {
 											}}
 											value={formik.values.sort_by}>
 											<option value="created_at">Más recientes</option>
+											<option value="created_at_asc">Más antiguos</option>
 											<option value="from">Fecha</option>
 										</Form.Control>
 									</Form.Group>
