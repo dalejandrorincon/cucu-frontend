@@ -89,8 +89,8 @@ export default function AvailabilitiesList() {
 			<Container className="themed-container" className="availabilities-list">
 				<Col className="col-md-12">
 					<Title>No disponibilidades</Title>
-						<Row className="filters">
 
+						<Row className="filters">
 								<Col>
 									<Form.Group>
 										<Form.Control
@@ -103,9 +103,8 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="created_at">Más recientes</option>
-											<option value="created_at_asc">Más antiguos</option>
-											<option value="from">Fecha</option>
+											<option value="created_at">Fecha de creación</option>
+											<option value="from">Fecha y hora</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -167,9 +166,8 @@ export default function AvailabilitiesList() {
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>
-										<th scope="col">Fecha</th>
-										<th scope="col">Hora de inicio</th>
-										<th scope="col">Hora de fin</th>
+										<th scope="col">Fecha y hora de inicio</th>
+										<th scope="col">Fecha y hora de fin</th>
 										<th scope="col">
 											<Button
 												className="cucu-button plus-button"
@@ -189,9 +187,9 @@ export default function AvailabilitiesList() {
 								<tbody>
 									{unavailabilities?.map((ele) => (
 										<tr key={ele.id}>
-											<td>{moment(ele.to).format('LL')}</td>
-											<td>{moment(ele.from).format('h:mm a')}</td>
-											<td>{moment(ele.to).format('h:mm a')}</td>
+											<td>{moment(ele.from).format('D MMM  YYYY - hh:mm a')}</td>
+											<td>{moment(ele.to).format('D MMM  YYYY - hh:mm a	')}</td>
+											{/* <td>{moment(ele.to).format('h:mm a')}</td> */}
 											<td>
 												<Dropdown className="cucu-dropdown">
 													<Dropdown.Toggle variant="outline" id="dropdown-basic">
