@@ -197,11 +197,11 @@ export default function TranslatorProfileForm() {
         rate_hour: Yup.number()
             .required("*Este campo es obligatorio")
             .min(25, "*El valor mínimo de este campo es $25")
-            .max(100, "El valor máximo de este campo es 100"),
+            .max(100, "El valor máximo de este campo es $100"),
         rate_minute: Yup.number()
             .required("*Este campo es obligatorio")
-            .min(1, "*El valor mínimo de este campo es 1")
-            .max(2.5, "El valor máximo de este campo es 2.5"),
+            .min(1, "*El valor mínimo de este campo es $1")
+            .max(2.5, "El valor máximo de este campo es $2.5"),
 
         //.required("*Este campo es obligatorio"),
 
@@ -284,7 +284,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Documento</Form.Label>
+                    <Label>Documento</Label>
                     <Form.Control
                         id="document"
                         type="number"
@@ -303,7 +303,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Correo electrónico</Form.Label>
+                    <Label>Correo electrónico</Label>
                     <Form.Control
                         disabled
                         id="email"
@@ -320,7 +320,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Teléfono</Form.Label>
+                    <Label>Teléfono</Label>
                     <Form.Control
                         id="phone"
                         type="phone"
@@ -364,7 +364,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Pais de residencia</Form.Label>
+                    <Label>Pais de residencia</Label>
                     <Form.Control
                         as="select"
                         id="country_id"
@@ -385,7 +385,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Ciudad de residencia</Form.Label>
+                    <Label>Ciudad de residencia</Label>
                     <Form.Control
                         as="select"
                         id="city_id"

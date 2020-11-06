@@ -196,7 +196,7 @@ export default function CertificationModal(props) {
                             { (formik?.values?.url) && isParseable(formik?.values?.url) ? JSON.parse(formik.values.url).map((file, index) => (
                                 <div key={file.name} className="item">
                                     <p>
-                                        {file.name}
+                                        <a className="filename" target="_blank" href={file.url}>{file.name}</a>
                                     </p>
                                     <Button className="remove" onClick={() => removeFile(file.name, "old")} >✕</Button>
                                 </div>

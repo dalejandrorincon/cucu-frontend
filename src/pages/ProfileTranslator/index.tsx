@@ -106,7 +106,7 @@ function ProfileTranslatorPage({
                                   fullSymbol="fa fa-star fa-2x fa-start"
                                   className="startcontainer"
                                   readonly={true}
-                                  initialRating={translators?.rating}
+                                  initialRating={Math.floor(translators?.rating)}
                                 />
                               </div>
                             </p>
@@ -157,10 +157,7 @@ function ProfileTranslatorPage({
                                 {translators?.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      {lng.from.name}
-                                    </span>
-                                    <span className="badge badge-light">
-                                      {lng.to.name}
+                                      De {lng.from.name} a {lng.to.name}
                                     </span>
                                   </>
                                 ))}

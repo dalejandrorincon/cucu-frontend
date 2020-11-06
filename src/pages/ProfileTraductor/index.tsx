@@ -65,6 +65,7 @@ function ProfileTraductorPage({
     UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
         localStorage.setItem("image_url", res.user?.image_url);
         getImage()
+        setProfile(res.user)
     })
   }
   const getImage = () =>{
@@ -77,6 +78,7 @@ function ProfileTraductorPage({
   }
 
   useEffect(() => {
+    getProfile()
     getImage();
   }, []);
 
@@ -122,9 +124,9 @@ function ProfileTraductorPage({
                       <Col>
                         <Row>
                           <Col>
-                            <p className="services">0 servicios</p>
+                            <p className="services">${profile?.total_transactions}</p>
                             <p className="cucucreditos">
-                              $0 invertidos en Cucu
+                              {profile?.total_services} servicios
                             </p>
                           </Col>
                         </Row>
