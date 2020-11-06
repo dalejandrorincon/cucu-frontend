@@ -142,7 +142,7 @@ function ProfileTraductorPage({
                             <p className="text-item-menu">Experiencia laboral</p>
                           </Nav.Link>
                           <Nav.Link className="item-menu" href="/profile-translator-edit/payment">
-                            <p className="text-item-menu">Métodos de pago</p>
+                            <p className="text-item-menu">Información bancaria</p>
                           </Nav.Link>
                           {/* <Nav.Link className="item-menu" href="/profile-translator-edit/opiniones" >
                             <p className="text-item-menu">Opiniones</p>
