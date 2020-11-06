@@ -80,6 +80,11 @@ export default function TranslatorProfileForm() {
     const saveChanges = (values) => {
         console.log(values)
         setButtonState({ ...buttonState, ...{ label: "Guardando", disabled: false } })
+
+        if(values.bank_id==""){
+            values.bank_id=null
+        }
+
         if (!entity) {
             PaymentDataAPI.createData({ ...values, user_id: localStorage.getItem("userId") }, localStorage.getItem("token")).then((res) => {
                 setSuccess()
@@ -101,32 +106,40 @@ export default function TranslatorProfileForm() {
 
     const validationSchema = Yup.object().shape({
 
-        bank_id: Yup.string()
+        bank: Yup.string()
+            .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .max(100, "*Este campo debe tener como máximo 100 caracteres"),
+        /* bank_id: Yup.string()
             .min(1, "*Debes elegir un campo"),
-            //.required("*Este campo es obligatorio"),
+            //.required("*Este campo es obligatorio"), */
         account_type: Yup.string()
             .min(1, "*Debes elegir un campo"),
             //.required("*Este campo es obligatorio"),
         account_number: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
+            .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .max(20, "*Este campo debe tener como máximo 20 caracteres"),
             //.required("*Este campo es obligatorio"),
         owner_name: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
+            .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .max(100, "*Este campo debe tener como máximo 100 caracteres"),
             //.required("*Este campo es obligatorio"),
         document_type: Yup.string()
             .min(1, "*Debes elegir un campo"),
             //.required("*Este campo es obligatorio"),
         document_number: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
+            .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .max(16, "*Este campo debe tener como máximo 16 caracteres"),
             //.required("*Este campo es obligatorio"),
         payoneer_account: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
+            .max(20, "*Este campo debe tener como máximo 20 caracteres"),
             //.required("*Este campo es obligatorio"),
 
     });
 
     const formik = useFormik({
         initialValues: {
+            bank: entity?.bank ? entity.bank : "",
             bank_id: entity?.bank_id ? entity.bank_id : "",
             account_type: entity?.account_type ? entity.account_type : "",
             account_number: entity?.account_number ? entity.account_number : "",
@@ -151,28 +164,24 @@ export default function TranslatorProfileForm() {
             <Title>Información Personal</Title>
 
             <Alert variant="primary">
-                    Si tu cuenta bancaria no se encuentra en <a href="#">esta lista</a>, debes enlazar una cuenta de Payoneer
+                    Si el país de tu cuenta bancaria no se encuentra en <a href="https://stripe.com/global">esta lista</a>, debes enlazar una cuenta de Payoneer
             </Alert>
 
             <Form onSubmit={formik.handleSubmit}>
-                <Form.Group>
+
+                 <Form.Group>
                     <Label>Banco</Label>
                     <Form.Control
-                        as="select"
-                        id="bank_id"
-                        name="bank_id"
+                        id="bank"
                         className="form-control input-lg"
                         onChange={e => {
-                            formik.setFieldTouched('bank_id');
+                            formik.setFieldTouched('bank');
                             formik.handleChange(e);
                         }}
-                        value={formik.values.bank_id} >
-                        <option value="">Seleccionar...</option>
-                        {banks}
-                    </Form.Control>
+                        value={formik.values.bank} />
                 </Form.Group>
-                {formik.touched.bank_id && formik.errors.bank_id ? (
-                    <div className="alert alert-danger">{formik.errors.bank_id}</div>
+                {formik.touched.bank && formik.errors.bank ? (
+                    <div className="alert alert-danger">{formik.errors.bank}</div>
                 ) : null}
 
                 <Form.Group>

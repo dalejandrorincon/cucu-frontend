@@ -179,9 +179,9 @@ function ProfilePage({
                       <Col>
                         <Row>
                           <Col>
-                            <p className="services">0 servicios</p>
+                            <p className="services">{profile.total_services} servicios</p>
                             <p className="cucucreditos">
-                              $0 invertidos en Cucu
+                              ${profile.total_transactions} invertidos en Cucu
                             </p>
                           </Col>
                         </Row>

@@ -29,6 +29,7 @@ function LoginPage() {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data: any) => {
+    data.email = data.email?.toLowerCase()
     const body = new URLSearchParams(data);
 
     try {
