@@ -17,6 +17,24 @@
         "status-4": "Rescheduled",
         "status-5": "Cancelled",
         "status-6": "Rejected",
+        "most-recent": "Most recent",
+        "least-recent": "Least recent",
+        "date": "Date",
+        "length": "Length",
+        "rate-type": "Rate type",
+        "all-durations": "All durations",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "time-from": "From: ",
+        "time-to": "To: ",
+        "client": "Client",
+        "translator": "Translator",
+        "instant": "Instant",
+        "programmed":"Programmed",
+        "hour": "Hour",
+        "minute": "Minute",
+
+
 
 
 
@@ -120,10 +138,14 @@
             "request-type":"Request type",
             "charges":"Charges",
             "created":"Created",
+            "duration": "Duration",
             "status":"Status",
+            "date-time":"Date and time",
             "any-type":"Any type",
             "instant": "Instant",
-            "programmed": "Programmed"
+            "programmed": "Programmed",
+            "search-by-client": "Search by client",
+            "search-by-translator": "Search by translator"
 
         },
         "request-detail":{

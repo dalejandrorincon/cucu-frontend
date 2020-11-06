@@ -162,11 +162,11 @@ export default function TranslatorServices() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="created_at">Más recientes</option>
-											<option value="created_at_asc">Más antiguos</option>
-											<option value="date">Fecha</option>
-											<option value="duration_amount">Duración</option>
-											<option value="duration_type">Tarifa</option>
+											<option value="created_at">{t('most-recent')}</option>
+											<option value="created_at_asc">{t('least-recent')}</option>
+											<option value="date">{t('date')}</option>
+											<option value="duration_amount">{t('length')}</option>
+											<option value="duration_type">{t('rate')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -183,9 +183,9 @@ export default function TranslatorServices() {
 												handleInputChange(e)
 											}}
 											value={formik.values.duration_type}>
-											<option value="">Todos los cobros</option>
-											<option value="0">Horas</option>
-											<option value="1">Minutos</option>
+											<option value="">{t('all-durations')}</option>
+											<option value="0">{t('hours')}</option>
+											<option value="1">{t('minutes')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -202,7 +202,7 @@ export default function TranslatorServices() {
 											handleDateChange(e, "min_date")
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Desde: "
+										placeholderText={t('time-from')}
 									/>
 								</Col>
 
@@ -219,14 +219,14 @@ export default function TranslatorServices() {
 											
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Hasta: "
+										placeholderText={t('time-to')}
 									/>
 								</Col>
 
 								<Col>
 									<Form.Group>
 										<Form.Control
-											placeholder={ getUserType()=="translator" ? "Buscar por cliente" : "Buscar por traductor" }
+											placeholder={ getUserType()=="translator" ? t('request-list.search-by-client') : t('request-list.search-by-translator') }
 											id="name"
 											name="name"
 											type="text"
@@ -245,13 +245,13 @@ export default function TranslatorServices() {
 								<thead className="thead-light">
 									<tr>
 										<th scope="col">
-											{ getUserType()=="translator" ? <>Cliente</> : <>Traductor</>}
+											{ getUserType()=="translator" ? <>{t('client')}</> : <>{t('translator')}</>}
 										</th>
-										<th scope="col">Tipo de servicio</th>
-										<th scope="col">Duración</th>
-										<th scope="col">Tarifa</th>
-										<th scope="col">Fecha y hora</th>
-										<th scope="col">Estado</th>
+										<th scope="col">{t('request-list.request-type')}</th>
+										<th scope="col">{t('request-list.duration')}</th>
+										<th scope="col">{t('request-list.charges')}</th>
+										<th scope="col">{t('request-list.date-time')}</th>
+										<th scope="col">{t('request-list.status')}</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -293,9 +293,9 @@ export default function TranslatorServices() {
 													</div>
 												</div>
 											</td>
-											<td>{ele.service_type === "0" ? "Instantáneo" : "Programado"}</td>
+											<td>{ele.service_type === "0" ? t('instant') : t('programmed')} </td>
 											<td>{ele.duration_amount}</td>
-											<td>{ele.duration_type === "0" ? "Hora" : "Minuto"}{ele.duration_amount > 1 ? "s" : null}</td>
+											<td>{ele.duration_type === "0" ?  t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</td>
 											<td>{moment(ele.date).format("D MMM  YYYY - hh:mm a")}</td>
 											<td>
 												{itemStatusLabel(ele.status)}
@@ -323,8 +323,8 @@ export default function TranslatorServices() {
 
 						<div className="pagination-container">
 							<ReactPaginate
-								previousLabel={'Anterior'}
-								nextLabel={'Siguiente'}
+								previousLabel={t('paginate-back')}
+								nextLabel={t('paginate-next')}
 								breakLabel={'...'}
 								breakClassName={'break-me'}
 								pageCount={pageCount}
