@@ -9,13 +9,14 @@ import {
 import { logout } from "../../utils/session";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Notifications from "../Notifications/";
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
 
 	const history = useHistory();
 	const [options, setOptions] = useState(null);
 	const [profileLink, setProfileLink] = useState(null);
-
+ 	 const { t, i18n } = useTranslation();
 
 	const getOptions = () => {
 
@@ -31,11 +32,11 @@ export default function Header() {
 				break;
 			case "2":
 				link =
-					<Link to="/profile-translator-edit">Perfil</Link>
+					<Link to="/profile-translator-edit">{t('menu.profile')}</Link>
 				break;
 			default:
 				link =
-				<Link to="/profile-client">Perfil</Link>
+				<Link to="/profile-client">{t('menu.profile')}</Link>
 		}
 
 		setProfileLink(link)
@@ -51,17 +52,17 @@ export default function Header() {
 					<ul className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link className="nav-link nav-item-inactive" to="/services">
-								Solicitudes
+								{t('menu.requests')}
 						</Link>
 						</li>
 						<li className="nav-item ">
 							<Link className="nav-link nav-item-inactive" to="/transactions">
-								Transacciones
+								{t('menu.transactions')}
 						</Link>
 						</li>
 						<li className="nav-item ">
 							<Link className="nav-link nav-item-inactive" to="/availabilities">
-								Agenda
+								{t('menu.schedule')}
 						</Link>
 						</li>
 					</ul>
@@ -71,12 +72,12 @@ export default function Header() {
 					<ul className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link className="nav-link nav-item-inactive" to="/translators">
-								Traductores
+								{t('menu.translators')}
 							</Link>
 						</li>
 						<li className="nav-item ">
 							<Link className="nav-link nav-item-inactive" to="/services">
-								Mis solicitudes
+								{t('menu.my-requests')}
 							</Link>
 						</li>
 					</ul>
@@ -123,7 +124,7 @@ export default function Header() {
 									history.push("/");
 								}}
 							>
-								Cerrar sesión
+								{t('menu.log-out')}
                         </Link>
 						</NavDropdown.Item>
 					</NavDropdown>

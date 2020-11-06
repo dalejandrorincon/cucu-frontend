@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
+import i18n from 'i18next';
 
 export const url = process.env.REACT_APP_API_URL
 export const socket_url = process.env.REACT_APP_SOCKET_URL
@@ -8,40 +9,40 @@ export const stripe_publishable = process.env.REACT_APP_STRIPE_PUBLISHABLE
 
 export const socket = socketIOClient(process.env.REACT_APP_SOCKET_URL);
 
-export const itemStatusLabel = (status) => {
+export const itemStatusLabel = (status) => {    
     let label = ""
     let tagtype = ""
     switch (status) {
         case "0":
-            label = "Solicitado";
+            label = i18n.t('status-0');
             break;
         case "1":
-            label = "Aceptado";
+            label = i18n.t('status-1');
             tagtype = "accepted"
             break;
         case "2":
-            label = "Pagado";
+            label = i18n.t('status-2');
             tagtype = "paid"
             break;
         case "3":
-            label = "Finalizado";
+            label = i18n.t('status-3');
             tagtype = "success"
             break;
         case "4":
-            label = "Reprogramado";
+            label = i18n.t('status-4');
             tagtype = "danger"
             break;
         case "5":
-            label = "Cancelado";
+            label = i18n.t('status-5');
             tagtype = "cancelled"
             break;
         case "6":
-            label = "Rechazado";
+            label = i18n.t('status-6');
             tagtype = "danger"
             break;
 
         default:
-            label = "Solicitado";
+            label = i18n.t('status-0');
     }
 
     return (

@@ -10,7 +10,7 @@ import "./styles.scss"
 import * as ServicesAPI from '../../api/services';
 import ServiceModal from "../../components/ServiceModal"
 import {itemStatusLabel} from "../../utils/constants"
-
+import { useTranslation } from 'react-i18next';
 export default function TranslatorServices() {
 
 	const [activeService, setActiveService] = useState({});
@@ -20,7 +20,7 @@ export default function TranslatorServices() {
 	const [pageCount, setPageCount] = useState(1)
 
 	const [services, setServices] = useState([]);
-
+	const { t, i18n } = useTranslation();
 	
 	const formik = useFormik({
 		initialValues: {
@@ -105,7 +105,7 @@ export default function TranslatorServices() {
 		<>
 			<Container className="themed-container" className="services-list">
 				<Col className="col-md-12">
-					<Title>Mis solicitudes</Title>
+					<Title>{t('request-list.my-requests')}</Title>
 					<WellContainer>
 							<Row className="filters">
 								<Col>
@@ -120,9 +120,9 @@ export default function TranslatorServices() {
 												handleInputChange(e)
 											}}
 											value={formik.values.service_type}>
-											<option value="">Todos los tipos</option>
-											<option value="0">Instantáneo</option>
-											<option value="1">Programado</option>
+											<option value="">{t('request-list.any-type')}</option>
+											<option value="0">{t('request-list.instant')}</option>
+											<option value="1">{t('request-list.programmed')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -139,13 +139,13 @@ export default function TranslatorServices() {
 												handleInputChange(e)
 											}}
 											value={formik.values.status}>
-											<option value="">Todos los estados</option>
-											<option value="0">Solicitado</option>
-											<option value="1">Aceptado</option>
-											<option value="2">Pagado</option>
-											<option value="3">Finalizado</option>
-											<option value="4">Reprogramado</option>
-											<option value="5">Cancelado</option>
+											<option value="">{t('any-status')}</option>
+											<option value="0">{t('status-0')}</option>
+											<option value="1">{t('status-1')}</option>
+											<option value="2">{t('status-2')}</option>
+											<option value="3">{t('status-3')}</option>
+											<option value="4">{t('status-4')}</option>
+											<option value="5">{t('status-5')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
