@@ -302,13 +302,13 @@ function SignupPage() {
                 />
                 <FormCheckLabel>
                   He leído y acepto los
-                  <BackToLoginLink to="/">
-                    términos y condiciones
-                  </BackToLoginLink>{" "}
+                  <a className="main-link" href="https://cucu-nativapps-data.s3.amazonaws.com/TyC_ES.pdf"
+                  >términos y condiciones
+                  </a>{" "}
                   del servicio así como la{""}
-                  <BackToLoginLink to="/">
-                    política de privacidad.
-                  </BackToLoginLink>
+                  <a className="main-link" href="https://cucu-nativapps-data.s3.amazonaws.com/PTD_ES.pdf"
+                  >política de privacidad.
+                  </a>
                 </FormCheckLabel>
               </FormCheck>
               {errors.terms && (

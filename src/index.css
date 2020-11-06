@@ -1222,3 +1222,17 @@ input.input-danger{
 span.input-danger.input-group-text{
   border-color: red;
 }
+
+a.main-link{
+  text-align: left;
+  text-decoration: underline;
+  font: normal normal normal 15px Acumin Pro;
+  letter-spacing: 0px;
+  color: #863df9;
+  margin-left: 5px;
+}
+
+a.main-link:hover {
+  color: #863df9;
+  text-decoration: underline;
+}
