@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import * as StripeAPI from '../../api/stripe';
 import * as ServicesAPI from '../../api/services';
 import * as TransactionsAPI from '../../api/transactions';
-
+import { useTranslation } from 'react-i18next';
 import "./styles.scss"
 
 export default function CheckoutForm(props) {
@@ -24,7 +24,7 @@ export default function CheckoutForm(props) {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [available, setAvailable] = useState("0");
-
+	const { t, i18n } = useTranslation();
 
 	useEffect(() => {
 		getIntent()
@@ -119,7 +119,7 @@ export default function CheckoutForm(props) {
 						{processing ? (
 							<div className="spinner" id="spinner"></div>
 						) : (
-								"Pagar"
+								t('payment.pay')
 							)}
 					</span>
 				</button>
@@ -132,21 +132,21 @@ export default function CheckoutForm(props) {
 				{/* Show a success message upon completion */}
 				<div className={succeeded ? "result-message" : "result-message hidden"}>
 					<div className="alert alert-success" role="alert">
-						El pago ha sido exitoso, haz click en el siguiente botón para volver a la lista de solicitudes:
+						{t('payment.successful')}
 					</div>
 					<Link
 						to="/services"
 					>
 						<Button
 							className="cucu-button">
-							Volver
+							{t('payment.return')}
 						</Button>
 					</Link>
 
 				</div>
 			</form>
 			<div className={available=="2" ? 'alert alert-danger' : 'alert alert-danger hidden' } role="alert">
-				No es posible realizar este pago.
+				{t('payment.unable')}
 			</div>
 		</>
 	);

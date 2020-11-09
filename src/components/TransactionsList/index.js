@@ -7,15 +7,14 @@ import DatePicker from "react-datepicker";
 import { useFormik } from 'formik';
 import "./styles.scss"
 import * as TransactionsAPI from '../../api/transactions';
-
+import { useTranslation } from 'react-i18next';
 export default function TransactionsList() {
 
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
 
 	const [transactions, setTransactions] = useState([]);
-
-	
+	const { t, i18n } = useTranslation();
 	const formik = useFormik({
 		initialValues: {
 			service_type: "",
@@ -84,7 +83,7 @@ export default function TransactionsList() {
 		<>
 			<Container className="themed-container" className="transactions-list">
 				<Col className="col-md-12">
-					<Title>Historial de transacciones</Title>
+					<Title>{t('transactions-list.transactions-history')}</Title>
 					<WellContainer>
 							<Row className="filters">
 								<Col>
@@ -99,9 +98,9 @@ export default function TransactionsList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.service_type}>
-											<option value="">Todos los tipos</option>
-											<option value="0">Instantáneo</option>
-											<option value="1">Programado</option>
+											<option value="">{t('transactions-list.any-type')}</option>
+											<option value="0">{t('transactions-list.instant')}</option>
+											<option value="1">{t('transactions-list.programmed')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -141,11 +140,11 @@ export default function TransactionsList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="transactions.created_at">Más recientes</option>
-											<option value="transactions.created_at_asc">Más antiguos</option>
+											<option value="transactions.created_at">{t('most-recent')}</option>
+											<option value="transactions.created_at_asc">{t('least-recent')}</option>
 											{/* <option value="date">Fecha</option> */}
-											<option value="service.duration_amount">Duración</option>
-											<option value="service.duration_type">Tarifa</option>
+											<option value="service.duration_amount">{t('length')}</option>
+											<option value="service.duration_type">{t('rate-type')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -162,9 +161,9 @@ export default function TransactionsList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.duration_type}>
-											<option value="">Todos los cobros</option>
-											<option value="0">Horas</option>
-											<option value="1">Minutos</option>
+											<option value="">{t('all-durations')}</option>
+											<option value="0">{t('hours')}</option>
+											<option value="1">{t('minutes')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -181,7 +180,7 @@ export default function TransactionsList() {
 											handleDateChange(e, "min_date")
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Desde: "
+										placeholderText={t('time-from')}
 									/>
 								</Col>
 
@@ -198,14 +197,14 @@ export default function TransactionsList() {
 											
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Hasta: "
+										placeholderText={t('time-to')}
 									/>
 								</Col>
 
 								<Col>
 									<Form.Group>
 										<Form.Control
-											placeholder="Buscar por cliente"
+											placeholder={t('transactions-list.search-by-client')}
 											id="name"
 											name="name"
 											type="text"
@@ -226,10 +225,10 @@ export default function TransactionsList() {
 										<th scope="col">
 											Cliente
 										</th>
-										<th scope="col">Tipo de servicio</th>
-										<th scope="col">Duración</th>
-										<th scope="col">Tarifa</th>
-										<th scope="col">Fecha y hora</th>
+										<th scope="col">{t('transactions-list.request-type')}</th>
+										<th scope="col">{t('transactions-list.duration')}</th>
+										<th scope="col">{t('transactions-list.charges')}</th>
+										<th scope="col">{t('transactions-list.date-time')}</th>
 										{/* <th scope="col">Estado</th>
 										<th scope="col"></th> */}
 									</tr>
@@ -260,9 +259,9 @@ export default function TransactionsList() {
 													</div>
 												</div>
 											</td>
-											<td>{ele.service?.service_type === "0" ? "Instantáneo" : "Programado"}</td>
+											<td>{ele.service?.service_type === "0" ? t('instant') : t('programmed') }</td>
 											<td>{ele.service?.duration_amount}</td>
-											<td>{ele.service?.duration_type === "0" ? "Horas" : "Minutos"}{ele.duration_amount > 1 ? "s" : null}</td>
+											<td>{ele.service?.duration_type === "0" ?t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</td>
 											<td>{moment(ele.created_at).format("D MMM  YYYY - hh:mm a")}</td>
 											{/* <td>
 												{itemStatusLabel(ele.service?.status)}
@@ -290,8 +289,8 @@ export default function TransactionsList() {
 
 						<div className="pagination-container">
 							<ReactPaginate
-								previousLabel={'Anterior'}
-								nextLabel={'Siguiente'}
+								previousLabel={t('paginate-back')}
+								nextLabel={t('paginate-back')}
 								breakLabel={'...'}
 								breakClassName={'break-me'}
 								pageCount={pageCount}

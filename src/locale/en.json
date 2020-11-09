@@ -33,6 +33,7 @@
         "programmed":"Programmed",
         "hour": "Hour",
         "minute": "Minute",
+        "password-criteria":"Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and a total of 8 characters without any spaces.",
 
 
 
@@ -131,6 +132,31 @@
             "search-by-name":"Search by name"
 
         },
+
+        "request-modal":{
+            "service-details":"Service details",
+            "instant": "Instant Translation",
+            "programmed": "Programmed Translation",
+            "rate-type": "Rate type",
+            "duration": "Duration",
+            "start-date": "Start date",
+            "enter-session": "Enter session",
+            "attached": "Attached",
+            "no-attachments": "No attachments",
+            "extra-info": "Additional information",
+            "accept-service": "Accept service",
+            "cancel-service": "Cancel service",
+            "finish-service": "Finish service",
+            "rate-service": "Rate service",
+            "reject": "Reject",
+            "pay": "Pay",
+            "reason-for": "Reason for",
+            "cancellation": "cancellation",
+            "rejection": "rejection",
+            "dont-cancel": "Don't cancel",
+            "cancel-confirm": "Confirm cancellation"
+        },  
+
         "request-list":{
             "translators":"Translators",
             "my-requests":"My requests",
@@ -148,19 +174,7 @@
             "search-by-translator": "Search by translator"
 
         },
-        "request-detail":{
-            "service-details":"Service details",
-            "immediate-translatio":"Immediate translatio",
-            "cucutime-open":"Cucutime: Open",
-            "free-hour":"Type of fee: Hour",
-            "duration":"Duration",
-            "start-date":"Start date",
-            "see-url":"See the session’s URL",
-            "attachments":"Attachments",
-            "additional-information":"Additional information",
-            "service-cancellation":"Service cancellation"
-        }
-        ,
+        
         "translator_profile":{
             "translator-profile":"Interpreter profile",
             "available":"Available",
@@ -171,8 +185,9 @@
             "nationality":"Nationality",
             "rate-hour":"Rate per hour",
             "rate-minute":"Rate per minute",
-            "opinios":"Opinions",
-            "see-all":"See all"
+            "opinions":"Opinions",
+            "see-all":"See all",
+            "years-of-experience": "years of experience"
         },
         "service-request":{
             "hire":"Hire",
@@ -206,9 +221,11 @@
             "start-date":"Start date",
             "cucu-fee":"Cucu Fee"
         },
-        "payment-successful":{
-            "payment-successful":"Payment successful",
-            "payment-processed":"We have processed your payment"
+        "payment":{
+            "pay": "Pay",
+            "successful":"Payment successful, click in the next button to return to the requests list:",
+            "unable":"Unable to process this payment.",
+            "return":"Return"
         },
         "service-cancellation":{
             "service-cancellation":"Service cancellation",
@@ -218,15 +235,45 @@
         },
         "my-profile":{
             "my-profile":"My profile",
+            "profile":"Profile",
             "services":"services",
             "invested-cucu":"invested in cucu",
             "my-account":"My account",
             "payment-options":"Payment options",
             "cucu-credits":"cucu credits",
-            "name":"Name",
+            "first-name":"First name",
             "last-name":"Last name",
             "company-name":"Company name (optional)",
-            "email":"Email"
-        } 
+            "email":"Email",
+            "document": "Identity Document",
+            "phone":"Phone number",
+            "password":"Password",
+            "switch":"Change",
+            "about-me":"About me",
+            "save-changes":"Save changes",
+            "disable account":"Disable account",
+            "change-account": "Change account" ,
+            "type-password": "Type your current password to be able to change it" ,
+            "current-password": "Current password" ,
+            "current-password-required": "The current password is required" ,
+            "new-password": "New password",
+            "confirm-password": "Confirm new password" 
+        },
+        "transactions-list":{
+            "transactions-history": "Transactions history",
+            "client":"Client",
+            "request-type":"Request type",
+            "charges":"Charges",
+            "created":"Created",
+            "duration": "Duration",
+            "status":"Status",
+            "date-time":"Date and time",
+            "any-type":"Any type",
+            "instant": "Instant",
+            "programmed": "Programmed",
+            "search-by-client": "Search by client",
+            "search-by-translator": "Search by translator"
+
+        }
     }    
 }
