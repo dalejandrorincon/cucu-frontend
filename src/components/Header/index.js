@@ -1,13 +1,13 @@
 
 
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import {
 	NavDropdown,
 	Modal,
 } from "react-bootstrap";
 import { logout } from "../../utils/session";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import Notifications from "../Notifications/";
 
 export default function Header() {
@@ -15,7 +15,7 @@ export default function Header() {
 	const history = useHistory();
 	const [options, setOptions] = useState(null);
 	const [profileLink, setProfileLink] = useState(null);
-
+	const location = useLocation()
 
 	const getOptions = () => {
 
@@ -48,38 +48,29 @@ export default function Header() {
 				break;
 			case "2":
 				content =
-					<ul className="navbar-nav mr-auto">
-						<li className="nav-item">
-							<Link className="nav-link nav-item-inactive" to="/services">
-								Solicitudes
-						</Link>
-						</li>
-						<li className="nav-item ">
-							<Link className="nav-link nav-item-inactive" to="/transactions">
-								Transacciones
-						</Link>
-						</li>
-						<li className="nav-item ">
-							<Link className="nav-link nav-item-inactive" to="/availabilities">
-								Agenda
-						</Link>
-						</li>
-					</ul>
+
+					<Nav defaultActiveKey={location.pathname} className="navbar-nav mr-auto">
+						<Nav.Link className="item-menu" href="/services">
+						<p className="text-item-menu">Solicitudes</p>
+						</Nav.Link>
+						<Nav.Link className="item-menu" href="/transactions">
+						<p className="text-item-menu">Transacciones</p>
+						</Nav.Link>
+						<Nav.Link className="item-menu" href="/availabilities">
+						<p className="text-item-menu">Agenda</p>
+						</Nav.Link>
+					</Nav>
 				break;
 			default:
 				content =
-					<ul className="navbar-nav mr-auto">
-						<li className="nav-item">
-							<Link className="nav-link nav-item-inactive" to="/translators">
-								Traductores
-							</Link>
-						</li>
-						<li className="nav-item ">
-							<Link className="nav-link nav-item-inactive" to="/services">
-								Mis solicitudes
-							</Link>
-						</li>
-					</ul>
+					<Nav defaultActiveKey={location.pathname} className="navbar-nav mr-auto">
+						<Nav.Link className="item-menu" href="/translators">
+							<p className="text-item-menu">Traductores</p>
+						</Nav.Link>
+						<Nav.Link className="item-menu" href="/services">
+							<p className="text-item-menu">Mis solicitudes</p>
+						</Nav.Link>
+					</Nav>
 		}
 		setOptions(content)
 
