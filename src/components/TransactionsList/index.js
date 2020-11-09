@@ -141,8 +141,8 @@ export default function TransactionsList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="transactions.created_at">Más recientes</option>
-											<option value="transactions.created_at_asc">Más antiguos</option>
+											<option value="transactions.date">Más recientes</option>
+											<option value="transactions.date_asc">Más antiguos</option>
 											{/* <option value="date">Fecha</option> */}
 											<option value="service.duration_amount">Duración</option>
 											<option value="service.duration_type">Tarifa</option>
