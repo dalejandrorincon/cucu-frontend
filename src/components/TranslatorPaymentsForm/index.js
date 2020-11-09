@@ -164,7 +164,7 @@ export default function TranslatorProfileForm() {
             <Title>Información Personal</Title>
 
             <Alert variant="primary">
-                    Si el país de tu cuenta bancaria no se encuentra en <a href="https://stripe.com/global">esta lista</a>, debes enlazar una cuenta de Payoneer
+                    Si el país de tu cuenta bancaria no se encuentra en <a target="_blank" href="https://stripe.com/global">esta lista</a>, debes enlazar una cuenta de Payoneer
             </Alert>
 
             <Form onSubmit={formik.handleSubmit}>

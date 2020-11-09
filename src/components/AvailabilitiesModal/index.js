@@ -146,7 +146,7 @@ export default function AvailabilitiesModal(props) {
                                                 formik.setFieldValue('time_start', e)
                                             }}
                                             minTime={ moment().isSame(moment((formik?.values?.date_start)?.toString()), 'date') ? moment().toDate() : moment().startOf("day").toDate()}
-                                            maxTime={ moment().endOf("day").toDate()}
+                                            maxTime={ moment(formik?.values?.date_end?.toString()).isSame(moment(formik?.values?.date_start?.toString()), 'date') ? moment(formik.values.time_end).subtract(30, 'minutes').toDate() : moment().endOf("day").toDate()}
                                             showTimeSelect
                                             showTimeSelectOnly
                                             timeIntervals={30}
@@ -169,7 +169,7 @@ export default function AvailabilitiesModal(props) {
                                                 formik.setFieldTouched('time_end');
                                                 formik.setFieldValue('time_end', e)
                                             }}
-                                            minTime={ moment(formik?.values?.date_end?.toString()).isSame(moment(formik?.values?.date_start?.toString()), 'date') ? moment(formik.values.time_start).toDate() : moment().startOf("day").toDate()}
+                                            minTime={ moment(formik?.values?.date_end?.toString()).isSame(moment(formik?.values?.date_start?.toString()), 'date') ? moment(formik.values.time_start).add(30, 'minutes').toDate() : moment().startOf("day").toDate()}
                                             maxTime={ moment().endOf("day").toDate()}
                                             showTimeSelect
                                             showTimeSelectOnly

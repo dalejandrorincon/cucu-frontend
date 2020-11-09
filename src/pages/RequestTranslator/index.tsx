@@ -184,7 +184,6 @@ function RequestTranslatorPage() {
     <>
       <Header></Header>
 
-      {JSON.stringify(fileRejections)}
       <Container className="themed-container request-translator">
         <div className="request-back">
           <Link to="/translators" >

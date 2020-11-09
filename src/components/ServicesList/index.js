@@ -162,9 +162,8 @@ export default function TranslatorServices() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="created_at">Más recientes</option>
-											<option value="created_at_asc">Más antiguos</option>
-											<option value="date">Fecha</option>
+											<option value="date">Más recientes</option>
+											<option value="date_asc">Más antiguos</option>
 											<option value="duration_amount">Duración</option>
 											<option value="duration_type">Tarifa</option>
 										</Form.Control>

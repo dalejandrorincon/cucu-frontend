@@ -119,3 +119,28 @@
 .ico-user{
     object-fit: cover;
 }
+
+nav.navbar{
+    padding-bottom: 0px;
+}
+.navbar-nav{
+    .item-menu{
+
+        p{
+            color: #B7B7B7;
+            font-size: 18px;
+        }
+        &.active{
+            p{
+                color: #212529;
+                font-family: "Acumin Pro";
+                font-weight: normal;
+            }
+            border-bottom: 3px solid #863DF9;
+        }
+        @media screen and (min-width: 768px) {
+            padding: 10px 30px !important;
+        }
+    }
+    
+}

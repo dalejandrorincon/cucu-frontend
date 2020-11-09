@@ -562,7 +562,7 @@ th {
   opacity: 1;
 }
 
-.item-menu.active {
+.menu-profile .item-menu.active {
   height: 75px;
   display: flex;
   justify-content: center;

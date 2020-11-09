@@ -78,8 +78,14 @@ export default function AvailabilitiesList() {
 		})
 	}
 
+	const canDelete = (ele) => {
+		let value = moment(ele.to).isAfter(moment())
+		return value
+	}
+
 	useEffect(() => {
 		getUnavailabilities()
+		console.log(moment('2010-10-20').isBefore('2011-01-01', 'year') )
 	}, [
 		options,
 	]);
@@ -103,7 +109,6 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="created_at">Fecha de creación</option>
 											<option value="from">Fecha y hora</option>
 										</Form.Control>
 									</Form.Group>
@@ -190,7 +195,7 @@ export default function AvailabilitiesList() {
 											<td>{moment(ele.from).format('D MMM  YYYY - hh:mm a')}</td>
 											<td>{moment(ele.to).format('D MMM  YYYY - hh:mm a	')}</td>
 											{/* <td>{moment(ele.to).format('h:mm a')}</td> */}
-											<td>
+											<td>												
 												<Dropdown className="cucu-dropdown">
 													<Dropdown.Toggle variant="outline" id="dropdown-basic">
 														...
@@ -206,10 +211,12 @@ export default function AvailabilitiesList() {
 														>
 															Editar
 															</Dropdown.Item>
-														<Dropdown.Item onClick={() => deleteUnavailability(ele.id)}>
-															Eliminar
-															</Dropdown.Item>
-													</Dropdown.Menu>
+															{canDelete(ele) && 
+																<Dropdown.Item onClick={() => deleteUnavailability(ele.id)}>
+																	Eliminar
+																</Dropdown.Item>
+															}
+														</Dropdown.Menu>
 												</Dropdown>
 											</td>
 										</tr>
