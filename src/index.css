@@ -1222,25 +1222,3 @@ input.input-danger{
 span.input-danger.input-group-text{
   border-color: red;
 }
-
-.flag-select__btn{
-  color: black !important;
-  font-size: 18px !important;
-}
-
-.flag-select__option__icon{
-  vertical-align: baseline;
-}
-
-.flag-select__option{
-  margin: 0px 0 !important;
-}
-
-.flag-select__btn:after {
-  border-top: 5px solid #4d4d4d !important;
-  border-left: 6px solid transparent !important;
-  border-right: 6px solid transparent !important;
-  border-bottom: 0;
-  position: relative;
-  top: 0px;
-}

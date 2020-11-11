@@ -20,6 +20,9 @@ import { useTranslation } from 'react-i18next';
 
 import { connectSocket } from "../../utils/constants"
 
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
+
 const baseUri = process.env.REACT_APP_API_URL;
 
 
@@ -29,6 +32,11 @@ function LoginPage() {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
   const { t, i18n } = useTranslation();
+
+  const onSelectFlag = (flag) =>{
+		localStorage.setItem('lang', flag)	
+		i18n.changeLanguage(flag)	
+	}
 
   const onSubmit = (data: any) => {
     const body = new URLSearchParams(data);
@@ -76,18 +84,24 @@ function LoginPage() {
   };
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container login-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
           <Login>
             <Logo src="/assets/images/logo.png"></Logo>
             <Title>{t('login.login')}</Title>
+            <ReactFlagsSelect
+              countries={["US", "ES"]}
+              customLabels={{"US": "English","ES": "Español"}} 
+              onSelect={(flag)=>{onSelectFlag(flag)}}
+              defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
+            />
             <LoginInfo>
               {t('login.dont-account')}
               <CreateAccountLink to="/signup">
                 {t('login.sign-up')}
               </CreateAccountLink>
-            </LoginInfo>
+            </LoginInfo>            
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group>
                 <Label>{t('login.email')}</Label>

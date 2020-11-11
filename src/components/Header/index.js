@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
 
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
-import i18n from '../../i18n';
 
 export default function Header() {
 
@@ -23,7 +22,6 @@ export default function Header() {
 	const { t, i18n } = useTranslation();
 	  
 	const onSelectFlag = (flag) =>{
-		console.log(flag)
 		localStorage.setItem('lang', flag)	
 		i18n.changeLanguage(flag)	
 	}
@@ -107,6 +105,12 @@ export default function Header() {
 					<img src="/assets/images/logo.png" alt="logo" />
 				</Link>
 				{options}
+				<ReactFlagsSelect
+					countries={["US", "ES"]}
+					customLabels={{"US": "English","ES": "Español"}} 
+					onSelect={(flag)=>{onSelectFlag(flag)}}
+					defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
+				/>
 				<ul className="navbar-nav">
 					<li className="nav-item ">
 						<Notifications></Notifications>
@@ -138,12 +142,7 @@ export default function Header() {
                         </Link>
 						</NavDropdown.Item>
 					</NavDropdown>
-					<ReactFlagsSelect
-						countries={["US", "ES"]}
-						customLabels={{"US": "English","ES": "Español"}} 
-						onSelect={(flag)=>{onSelectFlag(flag)}}
-						defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
-					/>
+					
 				</ul>
 			</Container>
 		</nav>
