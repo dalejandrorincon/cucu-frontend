@@ -23,6 +23,7 @@ import * as CitiesAPI from '../../api/cities';
 import ConfirmationModal from '../ConfirmationModal';
 import messages from "../../utils/messages"
 //const messages = require('../../utils/messages')
+import { useTranslation } from 'react-i18next';
 
 
 export default function TranslatorProfileForm() {
@@ -45,15 +46,16 @@ export default function TranslatorProfileForm() {
         rate_hour: "",
         rate_minute: ""
     });
+    const { t, i18n } = useTranslation();
 
     const [showPassword, setShowPassword] = useState(false);
-    const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
+    const [buttonState, setButtonState] = useState({ label: t('translator-profile.save-changes'), disabled: false })
     const [countries, setCountries] = useState(null)
     const [cities, setCities] = useState(null)
     const [response, setResponse] = useState(null)
 
     const [modalShow, setModalShow] = useState(false);
-
+    
     useEffect(() => {
         getProfile();
         getCountries();
@@ -102,10 +104,10 @@ export default function TranslatorProfileForm() {
 
     const saveChanges = (values) => {
         console.log(values)
-        setButtonState({ ...buttonState, ...{ label: "Guardando", disabled: false } })
+        setButtonState({ ...buttonState, ...{ label: t('translator-profile.saving'), disabled: false } })
         UsersAPI.updateUser(values, localStorage.getItem("token")).then((res) => {
-            let message = 'Cambios guardados exitosamente.'
-            setButtonState({ label: "Enviar", disabled: false })
+            let message = t('translator-profile.successful-changes')
+            setButtonState({ label: t('translator-profile.save-changes'), disabled: false })
             setResponse(
                 <Alert variant={'success'} >
                     {message}
@@ -114,7 +116,7 @@ export default function TranslatorProfileForm() {
         }).catch((err) => {
             console.log(err)
             let message;
-            message = 'Ha ocurrido un error al guardar los cambios.'
+            message = t('translator-profile.changes-error')
 
             setResponse(
                 <Alert variant={'danger'} >
@@ -126,7 +128,7 @@ export default function TranslatorProfileForm() {
 
     const disableAccount = () => {
         UsersAPI.disableUser(localStorage.getItem("token")).then((res) => {
-            let message = 'Cambios cuenta deshabilitada exitosamente.'
+            let message = t('translator-profile.successful-disable')
             setResponse(
                 <Alert variant={'success'} >
                     {message}
@@ -136,7 +138,7 @@ export default function TranslatorProfileForm() {
         }).catch((err) => {
             console.log(err)
             let message;
-            message = 'Ha ocurrido un error al guardar los cambios.'
+            message = t('translator-profile.changes-error')
             setResponse(
                 <Alert variant={'danger'} >
                     {message}
@@ -149,61 +151,61 @@ export default function TranslatorProfileForm() {
     const validationSchema = Yup.object().shape({
 
         firstname: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         lastname: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         document: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(15, "*Este campo debe tener como máximo 15 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .max(15, t('max-char', {num: 15}))
+            .required(t('required-field')),
         email: Yup.string()
-            .email("*Debe ser un correo válido")
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .email(t('invalid-email'))
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         phone: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio")
-            .matches(/^[\+\d]?(?:[\d-.\s()]*)$/, "El teléfono debe contener solo números o el signo +"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field'))
+            .matches(/^[\+\d]?(?:[\d-.\s()]*)$/, t('invalid-phone')),
         password: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
-        //.required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3})),
+        //.required(t('required-field')),
         /* description: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"), */
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')), */
         country_id: Yup.string()
-            .min(1, "*Debes elegir un campo")
-            .required("*Este campo es obligatorio"),
+            .min(1, t('required-value'))
+            .required(t('required-field')),
         city_id: Yup.string()
-            .min(1, "*Debes elegir un campo")
-            .required("*Este campo es obligatorio")
+            .min(1, t('required-value'))
+            .required(t('required-field'))
             .nullable(),
         nationality: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         address_1: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         address_2: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
-        //.required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3})),
+        //.required(t('required-field')),
         address_additional: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres"),
+            .min(3, t('min-char', {num: 3})),
         labor_months: Yup.string()
-            .required("*Este campo es obligatorio")
-            .min(1, "*Este campo debe tener al menos 3 caracteres")
-            .max(5, "*Este campo debe tener como máximo 5 caracteres"),
+            .required(t('required-field'))
+            .min(1, t('min-char', {num: 3}))
+            .max(5, t('max-char', {num: 5})),
         rate_hour: Yup.number()
-            .required("*Este campo es obligatorio")
-            .min(25, "*El valor mínimo de este campo es $25")
-            .max(100, "El valor máximo de este campo es 100"),
+            .required(t('required-field'))
+            .min(25, t('min-value', {num: 25}))
+            .max(100,  t('max-value', {num: 100})),
         rate_minute: Yup.number()
-            .required("*Este campo es obligatorio")
-            .min(1, "*El valor mínimo de este campo es 1")
-            .max(2.5, "El valor máximo de este campo es 2.5"),
+            .required(t('required-field'))
+            .min(1, t('min-value', {num: 1}))
+            .max(2.5,  t('max-value', {num: 2.5})),
 
-        //.required("*Este campo es obligatorio"),
+        //.required(t('required-field')),
 
     });
 
@@ -246,11 +248,11 @@ export default function TranslatorProfileForm() {
     return (
         <div>
 
-            <Title>Mi cuenta</Title>
+            <Title>{t('translator-profile.my-account')}</Title>
 
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
-                    <Label>Nombre</Label>
+                    <Label>{t('translator-profile.firstname')}</Label>
                     <Control
                         id="firstname"
                         type="text"
@@ -267,7 +269,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Apellido</Label>
+                    <Label>{t('translator-profile.lastname')}</Label>
                     <Control
                         id="lastname"
                         type="text"
@@ -284,7 +286,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Documento</Form.Label>
+                    <Form.Label>{t('translator-profile.document')}</Form.Label>
                     <Form.Control
                         id="document"
                         type="number"
@@ -303,7 +305,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Correo electrónico</Form.Label>
+                    <Form.Label>{t('translator-profile.email')}</Form.Label>
                     <Form.Control
                         disabled
                         id="email"
@@ -320,7 +322,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Form.Label>Teléfono</Form.Label>
+                    <Form.Label>{t('translator-profile.phone')}</Form.Label>
                     <Form.Control
                         id="phone"
                         type="phone"
@@ -339,7 +341,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Contraseña</Label>
+                    <Label>{t('translator-profile.password')}</Label>
                     <InputGroup>
                         <ControlPassword
                             type={showPassword ? "text" : "password"}
@@ -353,7 +355,7 @@ export default function TranslatorProfileForm() {
                                     setShowPassword(!showPassword)
                                 }}
                             >
-                                Mostrar
+                                {t('show')}
                                 </ShowPassword>
                         </InputGroup.Prepend>
                     </InputGroup>
@@ -364,7 +366,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Pais de residencia</Form.Label>
+                    <Form.Label>{t('translator-profile.country')}</Form.Label>
                     <Form.Control
                         as="select"
                         id="country_id"
@@ -375,7 +377,7 @@ export default function TranslatorProfileForm() {
                             formik.handleChange(e);
                         }}
                         value={formik.values.country_id} >
-                        <option value="">Seleccionar...</option>
+                        <option value="">{t('select')}</option>
                         {countries}
                     </Form.Control>
                 </Form.Group>
@@ -385,7 +387,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Form.Label>Ciudad de residencia</Form.Label>
+                    <Form.Label>{t('translator-profile.city')}</Form.Label>
                     <Form.Control
                         as="select"
                         id="city_id"
@@ -396,7 +398,7 @@ export default function TranslatorProfileForm() {
                             formik.handleChange(e);
                         }}
                         value={formik.values.city_id} >
-                        <option value="">Seleccionar...</option>
+                        <option value="">{t('select')}</option>
                         {cities}
                     </Form.Control>
                 </Form.Group>
@@ -406,7 +408,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Nacionalidad</Label>
+                    <Label>{t('translator-profile.nationality')}</Label>
                     <Control
                         id="nationality"
                         type="text"
@@ -423,7 +425,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Dirección linea 1</Label>
+                    <Label>{t('translator-profile.address_1')}</Label>
                     <Control
                         id="address_1"
                         type="text"
@@ -440,7 +442,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Dirección linea 2 (opcional)</Label>
+                    <Label>{t('translator-profile.address_2')}</Label>
                     <Control
                         id="address_2"
                         type="text"
@@ -457,7 +459,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Apto/Oficina/Local (opcional)</Label>
+                    <Label>{t('translator-profile.address_additional')}</Label>
                     <Control
                         id="address_additional"
                         type="text"
@@ -474,7 +476,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Meses de experiencia</Label>
+                    <Label>{t('translator-profile.experience')}</Label>
                     <Control
                         id="labor_months"
                         type="number"
@@ -490,7 +492,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Valor hora</Label>
+                    <Label>{t('translator-profile.value_hour')}</Label>
                     <NumberFormat
                         id="rate_hour"
                         className="form-control"
@@ -506,7 +508,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Valor minuto</Label>
+                    <Label>{t('translator-profile.value_minute')}</Label>
                     <NumberFormat
                         id="rate_minute"
                         className="form-control"
@@ -535,7 +537,7 @@ export default function TranslatorProfileForm() {
             </Form>
 
             <Link className="disabled-account" to="#" onClick={() => setModalShow(true)}>
-                Desactivar cuenta
+                {t('translator-profile.disable-account')}
             </Link>
 
             <ConfirmationModal

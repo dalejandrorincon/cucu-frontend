@@ -290,7 +290,7 @@ export default function TransactionsList() {
 						<div className="pagination-container">
 							<ReactPaginate
 								previousLabel={t('paginate-back')}
-								nextLabel={t('paginate-back')}
+								nextLabel={t('paginate-next')}
 								breakLabel={'...'}
 								breakClassName={'break-me'}
 								pageCount={pageCount}

@@ -47,7 +47,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({ type: "success", message: "Servicio aceptado" })
+      setAlert({ type: "success", message: t('request-modal.service-accepted')})
     })
   }
 
@@ -67,7 +67,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({type: "success", message: "Servicio terminado"})     
+      setAlert({type: "success", message: t('request-modal.service-finished')  })
     })
   }
 
@@ -78,7 +78,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({ type: "success", message: "Servicio cancelado" })
+      setAlert({ type: "success", message: t('request-modal.service-cancelled')})
     })
   }
 
@@ -334,7 +334,7 @@ export default function ServiceModal(props) {
             <p className="detail-modal-text">
               <b>{t('request-modal.rate-type')}: </b>
               <span>
-                {props.service.duration_type === 0 ? "Hora" : "Minutos"}
+                {props.service.duration_type === 0 ? t('hours') : t('minutes')}
               </span>
             </p>
             <p className="detail-modal-text">
@@ -393,7 +393,7 @@ export default function ServiceModal(props) {
         onHide={() => setModalCancel(false)}
         cancelSuccess={(type) => {
           props.updateServices();
-          setAlert({ type: "success", message: "Servicio " + type })
+          setAlert({ type: "success", message: t('request-modal.service') + type })
         }}
         show={modalCancel}
         service={props.service}
@@ -405,7 +405,7 @@ export default function ServiceModal(props) {
         onHide={() => setModalRate(false)}
         rateSuccess={(type) => {
           props.updateServices();
-          setAlert({ type: "success", message: "Servicio calificado"})
+          setAlert({ type: "success", message: t('request-modal.service-rated')})
         }}
         show={modalRate}
         service={props.service}

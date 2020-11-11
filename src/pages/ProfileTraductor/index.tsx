@@ -28,7 +28,7 @@ import {
 } from "./styles"
 
 import Header from "../../components/Header"
-
+import { useTranslation } from 'react-i18next';
 import * as UsersAPI from '../../api/users';
 
 
@@ -80,7 +80,7 @@ function ProfileTraductorPage({
     getImage();
   }, []);
 
-
+	const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -134,13 +134,13 @@ function ProfileTraductorPage({
                       <Col className="col-md-3 menu-profile ">
                         <Nav defaultActiveKey={location.pathname} className="flex-column">
                           <Nav.Link className="item-menu" href="/profile-translator-edit">
-                            <p className="text-item-menu">Mi cuenta</p>
+                            <p className="text-item-menu">{t('translator-profile.my-account')}</p>
                           </Nav.Link>
                           <Nav.Link className="item-menu" href="/profile-translator-edit/experience">
-                            <p className="text-item-menu">Experiencia laboral</p>
+                            <p className="text-item-menu">{t('translator-profile.work-experience')}</p>
                           </Nav.Link>
                           <Nav.Link className="item-menu" href="/profile-translator-edit/payment">
-                            <p className="text-item-menu">Métodos de pago</p>
+                            <p className="text-item-menu">{t('translator-profile.bank-info')}</p>
                           </Nav.Link>
                           {/* <Nav.Link className="item-menu" href="/profile-translator-edit/opiniones" >
                             <p className="text-item-menu">Opiniones</p>

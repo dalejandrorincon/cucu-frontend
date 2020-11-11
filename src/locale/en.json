@@ -1,6 +1,8 @@
 {
     "translation": {
         "required-field": "This field is required",
+        "required-select": "You must choose an option.",
+        "required-rate": "You must choose a rating.",
         "invalid-email": "The e-mail must be valid",
         "invalid-phone": "The phone number must contain only numbers or the plus sign",
         "show":"Show",
@@ -33,11 +35,22 @@
         "programmed":"Programmed",
         "hour": "Hour",
         "minute": "Minute",
+        "time": "Time",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "rate-price": "Rate",
+        "create": "Create",
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "min-char": "This field must have at least {{num}} characters",
+        "max-char": "This field has a limit of {{num}} characters",
+        "min-value": "This field must have a minimum value of ${{num}}",
+        "max-value": "This field must have a maximum value of ${{num}}",
+        "attachment-label": "Drag or click here to attach files...",
+        "attachment-cap": "Max size: 1MB",
+        "attachment-error": "The file must be a pdf smaller than 1MB",
         "password-criteria":"Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and a total of 8 characters without any spaces.",
-
-
-
-
 
         "menu":{
             "requests": "Requests",
@@ -154,7 +167,13 @@
             "cancellation": "cancellation",
             "rejection": "rejection",
             "dont-cancel": "Don't cancel",
-            "cancel-confirm": "Confirm cancellation"
+            "cancel-confirm": "Confirm cancellation",
+            "service-accepted": "Service accepted",
+            "service-finished": "Service finished",
+            "service-cancelled": "Service cancelled",
+            "service-rated": "Service rated",
+            "service": "Service "
+
         },  
 
         "request-list":{
@@ -176,7 +195,7 @@
         },
         
         "translator_profile":{
-            "translator-profile":"Interpreter profile",
+            "translator_profile":"Interpreter profile",
             "available":"Available",
             "request-service":"Request service",
             "specialized":"Specialized in",
@@ -189,49 +208,11 @@
             "see-all":"See all",
             "years-of-experience": "years of experience"
         },
-        "service-request":{
-            "hire":"Hire",
-            "type-service":"Type of service",
-            "immediate":"Immediate",
-            "scheduled":"Scheduled",
-            "session-location":"Session location",
-            "detal-platform":"State where Will you hold the session that will be translated",
-            "cucu-platform":"CUCU platform",
-            "cucutime":"Cucutime",
-            "pay-option":"Choose the option that You want to use to pay for the service",
-            "fixed-time":"Fixed Time",
-            "open-time":"Open Time",
-            "duration":"Duration",
-            "hours":"Hours",
-            "minutes":"Minutes",
-            "establish-duration":"Establish the duration"
-        },
-        "service-confirmation":{
-            "service-requested":"Service requested",
-            "detail-requested":"Your service has been requested"
-        },
-        "pay-service":{
-            "indicidual-payment":"Individual payment",
-            "shared-payment":"Shared payment",
-            "pay-with":"Pay with",
-            "years-experience":"years of experience",
-            "cucutime":"Cucutime",
-            "rate":"Rate",
-            "hourly":"hourly",
-            "start-date":"Start date",
-            "cucu-fee":"Cucu Fee"
-        },
         "payment":{
             "pay": "Pay",
             "successful":"Payment successful, click in the next button to return to the requests list:",
             "unable":"Unable to process this payment.",
             "return":"Return"
-        },
-        "service-cancellation":{
-            "service-cancellation":"Service cancellation",
-            "cacellation-details":"If you wish to cancel Service that has been accepted your subject to hey condensation payment given.",
-            "cancel-service":"Cancel service",
-            "dont-cancel-service":"Do not cancel"
         },
         "my-profile":{
             "my-profile":"My profile",
@@ -252,7 +233,7 @@
             "about-me":"About me",
             "save-changes":"Save changes",
             "disable account":"Disable account",
-            "change-account": "Change account" ,
+            "change-account": "Change password" ,
             "type-password": "Type your current password to be able to change it" ,
             "current-password": "Current password" ,
             "current-password-required": "The current password is required" ,
@@ -274,6 +255,156 @@
             "search-by-client": "Search by client",
             "search-by-translator": "Search by translator"
 
+        },
+
+        "availabilities-list": {
+            "unavailabilities": "Unavailabilities",
+            "date-time":"Date and time",
+            "created_at": "Created at",
+            "start_date": "Start date and time",
+            "end_date": "End date and time",
+            "create-new": "Create new",
+            "create-unavailability": "Create unavailability",
+            "edit-unavailability": "Edit unavailability",
+            "to":"To",
+            "date": "Date",
+            "time": "Time",
+            "create-unavailabilty-label": "Set the times when you won't be available to get service requests.",
+            "field-required": "You must choose a time and a date."
+        },
+
+        "translator-profile":{
+            "my-account": "My account",
+            "work-experience": "Work experience",
+            "bank-info": "Bank information",
+            "firstname":"First name",
+            "lastname":"Last name",
+            "email":"Email",
+            "document": "Identity Document",
+            "phone":"Phone number",
+            "password":"Password",
+            "country": "Residence country",
+            "city": "Residence city",
+            "nationality": "Nationality",
+            "address_1": "Address line 1",
+            "address_2": "Address line 2 (optional)",
+            "address_additional": "Apartment/Office (optional)",
+            "experience": "Experience (Months)",
+            "value_hour": "Price per hour",
+            "value_minute": "Price per minute",
+            "disable-account":"Disable account",
+            "save-changes": "Save changes",
+            "saving": "Saving...",
+            "changes-error": "An error has ocurred while saving changes.",
+            "successful-disable": "The account has been disabled successfully.",
+            "successful-changes": "The changes have been saved successfully."
+
+        },
+
+        "experience":{
+            "experience": "Work experience",
+            "experience-label": "Add the places where you've strenghtened your experience on oral translations",
+            "company": "Company",
+            "certificate": "Work certificate",
+            "certification-label": "Add all your professional practice certificates.",
+            "add": "Add experience",
+            "cancel": "Cancel",
+            "remote-tools": "Remote tools",
+            "tools-must": "Must select at least one platform.",
+            "languages": "Languages",
+            "languages-label": "Add languages that you can speak and translate from and to other language.",
+            "from": "From",
+            "to": "to",
+            "add-tool": "Add a tool...",
+            "specialities": "Specialities",
+            "specialities-label": "Type the topics you have the most experience or knowledge on.",
+            "add-speciality": "Add a speciality...",
+            "save-changes": "Save changes",
+            "saving": "Saving...",
+            "required-language": "You must select at least one pair of languages.",
+            "required-speciality": "You must select at least an speciality.",
+            "required-experience": "You must add at least one work experience.",
+            "required-certificate": "You must add at least one certificate."
+
+
+        },
+        "certification":{
+            "certification": "Certification",
+            "certifications": "Certifications",
+            "name": "Name",
+            "school": "School",
+            "date": "Date",
+            "add": "Add certification",
+            "cancel": "Cancel"
+        },
+        "bank-info":{
+            "personal-information": "Personal information",
+            "payoneer-label-1": "If your account isn't included in ",
+            "payoneer-link": "this list",
+            "payoneer-label-2":", you must link a Payoneer account.",
+            "bank": "Bank",
+            "account-type": "Account type",
+            "account-number": "Account number",
+            "owner-name": "Account owner name",
+            "owner-document": "Account owner document",
+            "payoneer-account": "Payoneer account"
+        },
+        "request":{
+            "cancel-request": "Cancel request",
+            "hire": "Hire",
+            "programmed": "Programmed",
+            "service-site": "Service site",
+            "external-platform": "External platform",
+            "site-label": "Choose where will the translation session take place.",
+            "url-label": "Input the session URL",
+            "platform": "Platform",
+            "platform-label": "Select the platform where the session will take place",
+            "platform-select": "Select a platform...",
+            "other": "Other...",
+            "which-one": "Which one?",
+            "length": "Duration",
+            "additional-comments": "Additional comments",
+            "comments-label": "If you have any links with content to translate, add it here ",
+            "request-service": "Request service",
+            "sending": "Sending...",
+            "select-platform": "You must choose a platform",
+            "insert-value": "Insert a value...",
+            "service-price": "Service price:",
+            "date-time-error": "You must select a date and a time.",
+            "enter-link": "Enter a link...",
+            "enter-value": "Enter a value..."
+        },
+        "notifications":{
+            "not-available": "No notifications available.",
+            "session-expired": "Your session has expired.",
+            "session-inactive": "Your session has expired due to inactivity.",
+            "request-created": "Request created",
+            "request-created-label": "has created a new request",
+            "request-approved": "Request approved",
+            "request-approved-label": "has approved your request",
+            "request-paid": "Request paid",
+            "request-paid-label": "has paid for his/her request",
+            "request-rejected": "Request rejected",
+            "request-rejected-label": "has rejected your request",
+            "see-request": "See request",
+            "search-translator": "Look for another translator",
+            "notifications": "Notifications",
+            "log-out":"Log out",
+            "go-back": "Go back"
+        },
+        "rate": {
+            "rate-service": "Rate this service",
+            "rate-label": "Write here your reasons...",
+            "rate-this": "Rate service"
+        },
+        "cancel":{
+            "cancel-service": "Cancel service",
+            "reject-service": "Reject service",
+            "cancel-label": "Cancelling services might cause sanctions. Explain us why you're cancelling this service.",
+            "reject-label": "Rejecting services might cause sanctions. Explain us why you're rejecting this service.",
+            "cancelled": "cancelled",
+            "rejected": "rejected",
+            "reasons": "Write here your reasons..."
         }
     }    
 }

@@ -22,7 +22,7 @@ import { useFormik } from 'formik';
 import { any } from "prop-types";
 import Header from "../../components/Header";
 import * as Yup from 'yup';
-
+import { useTranslation } from 'react-i18next';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -40,8 +40,8 @@ function RequestTranslatorPage() {
   const onDrop = useCallback(acceptedFiles => {
     setMyFiles([...myFiles, ...acceptedFiles])
   }, [myFiles])
-
-  const [buttonState, setButtonState] = useState({ label: "Solicitar servicio", disabled: false })
+  const { t, i18n } = useTranslation();
+  const [buttonState, setButtonState] = useState({ label: t('request.request-service'), disabled: false })
 	const [response, setResponse] = useState<any>(null)
 
 
@@ -52,31 +52,30 @@ function RequestTranslatorPage() {
 
   const validationSchema = Yup.object().shape({
     duration_amount: Yup.string()
-      .min(1, "Este campo debe tener al menos 1 caracter")
-      .max(4, "Este campo debe tener como máximo 4 caracteres")
-      .required("Este campo es obligatorio"),
+      .min(1, t('min-char', {num: 1}))
+      .max(4, t('max-char', {num: 4}))
+      .required(t('required-field')),
     url: Yup.string()
-      .min(3, "Este campo debe tener al menos 3 caracteres")
-      .max(500, "Este campo tiene un límite de 500 caracteres")
-      .required("Este campo es obligatorio"),
+      .min(3, t('min-char', {num: 3}))
+      .max(500, t('max-char', {num: 500}))
+      .required(t('required-field')),
     platform_id: Yup.string()
-      .min(1, "Debes elegir una opcion")
-      .required("Este campo es obligatorio"),
+      .min(1, t('required-value'))
+      .required(t('required-field')),
     date_day: Yup.string()
-      .min(1, "Debes elegir una opcion")
-      .required("Este campo es obligatorio"),
+      .min(1, t('required-value'))
+      .required(t('required-field')),
     date_time: Yup.string()
-      .min(1, "Debes elegir una opcion")
-      .required("Este campo es obligatorio"),
+      .min(1, t('required-value'))
+      .required(t('required-field')),
     description: Yup.string()
-      .max(500, "Este campo tiene un límite de 500 caracteres"),
+      .max(500, t('max-char', {num: 500})),
     platform_other: Yup.string()
       .when('platform_id', {
         is: (platform_id) => platform_id=="0",
         then: Yup.string()
-          .required('Debes escribir una plataforma')            
+          .required(t('request.select-platform'))            
       })
-
   });
 
   const formik = useFormik({
@@ -127,7 +126,7 @@ function RequestTranslatorPage() {
 
   const createService = async (values) => {
 
-		setButtonState({ ...buttonState, ...{ disabled: true, label: "Enviando" } })
+		setButtonState({ ...buttonState, ...{ disabled: true, label: t('request.sending') } })
 
     let files_urls = [] as any
     for (let i = 0; i < myFiles.length; i++) {
@@ -148,12 +147,12 @@ function RequestTranslatorPage() {
 
     ServicesAPI.createService(localStorage.getItem("token"), payload).then((res) => {
       console.log(res)
-      setButtonState({ label: "Solicitar servicio", disabled: false })
+      setButtonState({ label: t('request.request-service'), disabled: false })
       history.push("/services")
     }).catch((err) => {
 			let message;
 			message = 'Ha ocurrido un error al enviar el correo.'
-      setButtonState({ label: "Solicitar servicio", disabled: false })
+      setButtonState({ label: t('request.request-service'), disabled: false })
 			setResponse(
 				<Alert variant={'danger'} >
 					{message}
@@ -189,7 +188,7 @@ function RequestTranslatorPage() {
         <div className="request-back">
           <Link to="/translators" >
             <i className="fa fa-arrow-circle-left" aria-hidden="true"></i>
-            Cancelar solicitud
+            {t('request.cancel-request')}
           </Link>
         </div>
         <RowRecover>
@@ -202,12 +201,12 @@ function RequestTranslatorPage() {
                   alt="logo"
                 />
                 <Title>
-                  Contrata a {translator?.firstname} {translator?.lastname}
+                  {t('request.hire')} {translator?.firstname} {translator?.lastname}
                 </Title>
               </div>
               <Row>
                 <Col>
-                  <OptionActive type="button">Programado</OptionActive>
+                  <OptionActive type="button">{t('request.programmed')}</OptionActive>
                 </Col>
               </Row>
               <Form
@@ -215,14 +214,14 @@ function RequestTranslatorPage() {
               //onSubmit={handleSubmit(onSubmit)}
               >
                 <Form.Group>
-                  <Label className="label-filter">Lugar de la sesión</Label>
+                  <Label className="label-filter">{t('request.service-site')}</Label>
                   <PasswordInfo>
-                    Indica dónde vas a realizar la sesión que será traducida.
+                    {t('request.site-label')}
                     </PasswordInfo>
                   <div key={`inline-radio`} className="mb-3">
                     <Form.Check
                       inline
-                      label="Plataforma externa"
+                      label={t('request.external-platform')}
                       name="service_site"
                       type="radio"
                       id={`inline-radio-2`}
@@ -234,14 +233,14 @@ function RequestTranslatorPage() {
                 <Form.Group>
                   <Label className="label-filter">URL</Label>
                   <p>
-                    Especifica el enlace de la sesión.
+                   {t('request.url-label')}
                   </p>
                   <Control
                     type="text"
                     className="input-request"
                     id="url"
                     name="url"
-                    placeholder="Ingresa un enlace..."
+                    placeholder={t('request.enter-link')}
                     value={formik.values.url}
                     onChange={(e) => {
                       formik.handleChange(e)
@@ -274,9 +273,9 @@ function RequestTranslatorPage() {
  */}
 
                 <Form.Group>
-                  <Label className="label-filter">Plataforma</Label>
+                  <Label className="label-filter">{t('request.platform')}</Label>
                   <PasswordInfo>
-                    Selecciona la plataforma en la que vas a tener la sesión.
+                    {t('request.platform-label')}
                     </PasswordInfo>
                   <Form.Control
                     as="select"
@@ -288,24 +287,24 @@ function RequestTranslatorPage() {
                       formik.handleChange(e)
                     }}
                   >
-                    <option value="">Seleccionar una plataforma...</option>
+                    <option value="">{t('request.platform-select')}</option>
                     {platforms?.map((elm: any) => (
                       <option key={elm.id} value={elm.id} >{elm.name}</option>
                     ))}
-                    <option value="0">Otra...</option>
+                    <option value="0">{t('request.other')}</option>
 
                   </Form.Control>
 
                   { formik.values.platform_id=="0" ? 
                     <>
-                      <Label className="label-filter">¿Cuál?</Label>
+                      <Label className="label-filter">{t('request.which-one')}</Label>
                       <Control
                         inline
                         type="text"
                         className="input-request"
                         id="platform_other"
                         name="platform_other"
-                        placeholder="Ingresa un valor..."
+                        placeholder={t('request.enter-value')}
                         value={formik.values.platform_other}
                         onChange={(e) => {
                           formik.handleChange(e)
@@ -335,7 +334,7 @@ function RequestTranslatorPage() {
                   </div> */}
                 </Form.Group>
                 <Form.Group className="time-radio">
-                  <Label className="label-filter">Duración</Label>
+                  <Label className="label-filter">{t('request.length')}</Label>
 
                   <div
                     key={`inline-radio`}
@@ -375,7 +374,7 @@ function RequestTranslatorPage() {
                       className="input-request"
                       id="duration_amount"
                       name="duration_amount"
-                      placeholder="Ingresa un valor..."
+                      placeholder={t('request.enter-value')}
                       value={formik.values.duration_amount}
                       onChange={(e) => {
                         formik.handleChange(e)
@@ -391,12 +390,12 @@ function RequestTranslatorPage() {
                   <div className="alert alert-danger">{formik.errors.duration_amount}</div>
                 ) : null}
                 <Form.Group>
-                  <Label className="label-filter">Fecha</Label>
+                  <Label className="label-filter">{t('date')}</Label>
                   <Row className="margin-row-form">
                     <Col className="col-md-4">
                       <DatePicker
                         className="form-control"
-                        placeholderText="Fecha"
+                        placeholderText={t('date')}
                         selected={(formik.values.date_day && new Date(formik.values.date_day)) || null}
                         onChange={(e) => {
                           formik.setFieldTouched('date_day');
@@ -411,7 +410,7 @@ function RequestTranslatorPage() {
                     <Col className="col-md-3">
                       <DatePicker
                         className="form-control"
-                        placeholderText="Hora"
+                        placeholderText={t('time')}
                         selected={(formik.values.date_time && new Date(formik.values.date_time)) || null}
                         onChange={(e) => {
                           formik.setFieldTouched('date_time');
@@ -433,18 +432,18 @@ function RequestTranslatorPage() {
                 {(formik.touched.date_day && formik.errors.date_day) ||
                   (formik.touched.date_time && formik.errors.date_time) ? (
                     <>
-                      <div className="alert alert-danger">Debes seleccionar un dia y hora</div>
+                      <div className="alert alert-danger">{t('request.date-time-error')}</div>
                     </>
                   ) : null}
 
 
                 <Form.Group>
                   <Label className="label-filter">
-                    Comentarios adicionales
+                    {t('request.additional-comments')}
                     </Label>
                   <Control
                     type="text"
-                    placeholder="Si tienes un enlace de contenido a traducir, agrégalo aquí."
+                    placeholder={t('request.comments-label')}
                     className="input-request"
                     name="description"
                     id="description"
@@ -463,22 +462,22 @@ function RequestTranslatorPage() {
                   <div className="dropzone-container">
                     <div {...getRootProps({ className: 'dropzone' })}>
                       <input {...getInputProps()} />
-                      <p>Arrastra o haz click aquí para adjuntar archivos...</p>
-                      <p>Tamaño máximo 1MB</p>
+                      <p>{t('attachment-label')}</p>
+                      <p>{t('attachment-cap')}</p>
                     </div>
                     <aside>
                       {newFiles}
                     </aside>
                   </div>
                   {fileRejections.length>0 ? 
-                    (<div className="alert alert-danger">El archivo debe ser un PDF de máximo 1MB.</div>)
+                    (<div className="alert alert-danger">{t('attachment-error')}</div>)
                     : null
                   }
                 </Form.Group>
 
                 <div className="service-price">
                   { formik.values.duration_type && formik.values.duration_amount ? 
-                    <>Costo del servicio: ${formik.values.duration_type == "0" ? translator?.rate_hour * parseInt(formik.values.duration_amount) : translator?.rate_minute * parseInt(formik.values.duration_amount)  } ($
+                    <>{t('request.service-price')} ${formik.values.duration_type == "0" ? translator?.rate_hour * parseInt(formik.values.duration_amount) : translator?.rate_minute * parseInt(formik.values.duration_amount)  } ($
                     {formik.values.duration_type == "0" ? translator?.rate_hour : translator?.rate_minute}
                       x {formik.values.duration_amount})
                     </>

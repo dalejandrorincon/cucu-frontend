@@ -25,8 +25,9 @@ i18n
   .init({
 		resources: {
 			en,
-			//es,
+			es,
     },
+    lng: localStorage.getItem("token"),
     fallbackLng: 'en',
     debug: true,
 
