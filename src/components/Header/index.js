@@ -11,12 +11,22 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import Notifications from "../Notifications/";
 import { useTranslation } from 'react-i18next';
 
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
+import i18n from '../../i18n';
+
 export default function Header() {
 
 	const history = useHistory();
 	const [options, setOptions] = useState(null);
 	const [profileLink, setProfileLink] = useState(null);
- 	 const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation();
+	  
+	const onSelectFlag = (flag) =>{
+		console.log(flag)
+		localStorage.setItem('lang', flag)	
+		i18n.changeLanguage(flag)	
+	}
 
 	const getOptions = () => {
 
@@ -128,6 +138,12 @@ export default function Header() {
                         </Link>
 						</NavDropdown.Item>
 					</NavDropdown>
+					<ReactFlagsSelect
+						countries={["US", "ES"]}
+						customLabels={{"US": "English","ES": "Español"}} 
+						onSelect={(flag)=>{onSelectFlag(flag)}}
+						defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
+					/>
 				</ul>
 			</Container>
 		</nav>
