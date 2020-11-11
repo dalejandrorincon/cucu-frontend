@@ -6,6 +6,7 @@ import "./styles.scss"
 import { socket } from "../../utils/constants"
 import { logout } from "../../utils/session";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default function Notifications() {
 
@@ -16,6 +17,7 @@ export default function Notifications() {
 	const [sessionText, setSessionText] = useState(null);
 	const [isSessionClose, setIsSessionClose] = useState(false);
 
+	const { t, i18n } = useTranslation();
 
 	useEffect(() => {
 		getNotifications()
@@ -30,7 +32,7 @@ export default function Notifications() {
 			setNotifications(res);
 			if (res.length == 0) {
 				setEmpty(
-					<div className="item"><h5>No hay notificaciones disponibles</h5></div>
+					<div className="item"><h5>{t('notifications.not-available')}</h5></div>
 				)
 			}
 			res.forEach(item => {
@@ -41,12 +43,12 @@ export default function Notifications() {
 		}).catch((err) => {
 			console.log(err.response?.data?.message)
 			if(err.response?.data?.message=="TOKEN_EXPIRED"){
-				setSessionText("La sesión ha expirado.")
+				setSessionText(t('notifications.session-expired'))
 				setIsSessionClose(true)
 				removeSession()
 			}
 			if(err.response?.data?.message=="INACTIVE_SESSION"){
-				setSessionText("La sesión ha expirado por inactividad.")
+				setSessionText(t('notifications.session-inactive'))
 				setIsSessionClose(true)
 				removeSession()
 			}
@@ -93,26 +95,26 @@ export default function Notifications() {
 			case "0":
 				item =
 					<>
-						<h5><b>Solicitud Creada</b></h5>
-						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> ha creado una solicitud </p>
-						<a href="/services">Ver solicitud</a>
+						<h5><b>{t('notifications.request-created')}</b></h5>
+						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-created-label')} </p>
+						<a href="/services">{t('notifications.see-request')}</a>
 					</>
 				break;
 			case "1":
 				item =
 					<>
-						<h5><b>Solicitud Aprobada</b></h5>
-						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> ha aprobado tu solicitud </p>
-						<a href="/services">Ver solicitud</a>
+						<h5><b>{t('notifications.request-approved')}</b></h5>
+						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-approved-label')} </p>
+						<a href="/services">{t('notifications.see-request')}</a>
 					</>
 				break;
 
 			case "2":
 				item =
 					<>
-						<h5><b>Solicitud Pagada</b></h5>
-						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> ha pagado su solicitud </p>
-						<a href="/services">Ver solicitud</a>
+						<h5><b>{t('notifications.request-paid')}</b></h5>
+						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-paid-label')} </p>
+						<a href="/services">{t('notifications.see-request')}</a>
 					</>
 				break;
 			/* case "5":
@@ -120,15 +122,15 @@ export default function Notifications() {
 				<>
 					<h5><b>Solicitud Cancelada</b></h5>
 					<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> ha cancelado su solicitud </p>
-					<a href="/services">Ver solicitud</a>
+					<a href="/services">{t('notifications.see-request')}</a>
 				</>
 				break; */
 			case "6":
 				item =
 					<>
-						<h5><b>Solicitud Rechazada</b></h5>
-						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> ha rechazado su solicitud </p>
-						<a href="/translators">Buscar otro traductor</a>
+						<h5><b>{t('notifications.request-rejected')}</b></h5>
+						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-rejected-label')} </p>
+						<a href="/translators">{t('notifications.search-translator')}</a>
 					</>
 				break;
 		}
@@ -152,7 +154,7 @@ export default function Notifications() {
 				keyboard
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Notificaciones</Modal.Title>
+					<Modal.Title>{t('notifications.notifications')}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					{empty}
@@ -175,7 +177,7 @@ export default function Notifications() {
 				centered
 			>
 				<Modal.Header>
-					<Modal.Title>Cierre de sesión</Modal.Title>
+					<Modal.Title>{t('notifications.log-out')}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<p>
@@ -185,7 +187,7 @@ export default function Notifications() {
 						<Button
 							className="cucu-button"
 						>
-							Volver
+							{t('notifications.go-back')}
 						</Button>
 					</Link>
 				</Modal.Body>

@@ -14,7 +14,7 @@ import * as UsersAPI from '../../api/users';
 import * as UnavailabilitiesAPI from '../../api/unavailabilities';
 
 import "./styles.scss"
-
+import { useTranslation } from 'react-i18next';
 export default function AvailabilitiesList() {
 
 	const [unavailabilities, setUnvailabilities] = useState([]);
@@ -25,7 +25,7 @@ export default function AvailabilitiesList() {
 	const [activeType, setActiveType] = useState();
 	const [activeUnavailability, setActiveUnavailability] = useState();
 	const [alert, setAlert] = useState({ type: "", message: "" });
-
+	const { t, i18n } = useTranslation();
 	const formik = useFormik({
 		initialValues: {
 			sort_by: "",
@@ -94,7 +94,7 @@ export default function AvailabilitiesList() {
 		<div>
 			<Container className="themed-container" className="availabilities-list">
 				<Col className="col-md-12">
-					<Title>No disponibilidades</Title>
+					<Title>{t('availabilities-list.unavailabilities')}</Title>
 
 						<Row className="filters">
 								<Col>
@@ -109,7 +109,7 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="from">Fecha y hora</option>
+											<option value="from">{t('availabilities-list.date-time')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -126,8 +126,8 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_order}>
-											<option value="desc">Descendente</option>
-											<option value="asc">Ascendente</option>
+											<option value="desc">{t('ascending')}</option>
+											<option value="asc">{t('descending')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -144,7 +144,7 @@ export default function AvailabilitiesList() {
 											handleDateChange(e, "min_date")
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Desde: "
+										placeholderText={t('time-from')}
 									/>
 								</Col>
 
@@ -161,7 +161,7 @@ export default function AvailabilitiesList() {
 											
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Hasta: "
+										placeholderText={t('time-to')}
 									/>
 								</Col>
 
@@ -171,8 +171,8 @@ export default function AvailabilitiesList() {
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>
-										<th scope="col">Fecha y hora de inicio</th>
-										<th scope="col">Fecha y hora de fin</th>
+										<th scope="col">{t('availabilities-list.start_date')}</th>
+										<th scope="col">{t('availabilities-list.end_date')}</th>
 										<th scope="col">
 											<Button
 												className="cucu-button plus-button"
@@ -183,7 +183,7 @@ export default function AvailabilitiesList() {
 												}}
 											>
 												<i className="fa fa-plus"></i>
-												Crear Nuevo
+												{t('availabilities-list.create-new')}
 											</Button>
 
 										</th>
@@ -209,11 +209,11 @@ export default function AvailabilitiesList() {
 																setIsModalVisible(true)
 															}}
 														>
-															Editar
+															{t('edit')}
 															</Dropdown.Item>
 															{canDelete(ele) && 
 																<Dropdown.Item onClick={() => deleteUnavailability(ele.id)}>
-																	Eliminar
+																	{t('delete')}
 																</Dropdown.Item>
 															}
 														</Dropdown.Menu>
@@ -227,8 +227,8 @@ export default function AvailabilitiesList() {
 
 						<div className="pagination-container">
 							<ReactPaginate
-								previousLabel={'Anterior'}
-								nextLabel={'Siguiente'}
+								previousLabel={t('paginate-back')}
+								nextLabel={t('paginate-next')}
 								breakLabel={'...'}
 								breakClassName={'break-me'}
 								pageCount={pageCount}

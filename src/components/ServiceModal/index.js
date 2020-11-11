@@ -22,6 +22,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 import moment from "moment";
 import { NotifierGenerator } from "../Alerts"
+import { useTranslation } from 'react-i18next';
 
 
 export default function ServiceModal(props) {
@@ -38,6 +39,7 @@ export default function ServiceModal(props) {
   const [role] = useState(localStorage.getItem("role") === "2" ? "translator" : "client");
 
   const history = useHistory();
+	const { t, i18n } = useTranslation();
 
   const acceptService = () => {
     setConfirmDisable(true)
@@ -45,7 +47,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({ type: "success", message: "Servicio aceptado" })
+      setAlert({ type: "success", message: t('request-modal.service-accepted')})
     })
   }
 
@@ -65,7 +67,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({type: "success", message: "Servicio terminado"})     
+      setAlert({type: "success", message: t('request-modal.service-finished')  })
     })
   }
 
@@ -76,7 +78,7 @@ export default function ServiceModal(props) {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
-      setAlert({ type: "success", message: "Servicio cancelado" })
+      setAlert({ type: "success", message: t('request-modal.service-cancelled')})
     })
   }
 
@@ -95,7 +97,7 @@ export default function ServiceModal(props) {
                 onClick={() => {
                   acceptService()
                 }}>
-                Aceptar servicio
+                {t('request-modal.accept-service')}
               </Submit>
               <Cancel
                 onClick={() => {
@@ -103,7 +105,7 @@ export default function ServiceModal(props) {
                   setModalType("reject")
                 }}
               >
-                Rechazar
+                {t('request-modal.reject')}
               </Cancel>
             </>
 
@@ -126,7 +128,7 @@ export default function ServiceModal(props) {
                   setModalCancel(true)
                   setModalType("cancel")
                 }}>
-                Cancelar servicio
+                {t('request-modal.cancel-service')}
             </Button>
             </>
           break;
@@ -139,7 +141,7 @@ export default function ServiceModal(props) {
                 onClick={() => {
                   finishService()
                 }}>
-                Finalizar servicio
+                {t('request-modal.finish-service')}
             </Button>
           </>
       }
@@ -157,7 +159,7 @@ export default function ServiceModal(props) {
                   onClick={() => {
                     setConfirmCancelBtn(true)
                   }}>
-                  Cancelar servicio
+                  {t('request-modal.cancel-service')}
                 </Button>
                 :
                 <Button
@@ -167,7 +169,7 @@ export default function ServiceModal(props) {
                   onClick={() => {
                     cancelService()
                   }}>
-                  Confirma la cancelación
+                  {t('request-modal.cancel-confirm')}
                 </Button>
               }
             </>
@@ -183,13 +185,13 @@ export default function ServiceModal(props) {
                     onClick={() => {
                       history.push("/payment/" + props.service.id)
                     }}>
-                    Pagar
+                    {t('request-modal.pay')}
               </Submit>
                   <Cancel
                     onClick={() => {
                       setConfirmCancelBtn(true)
                     }}>
-                    Cancelar servicio
+                    {t('request-modal.cancel-service')}
               </Cancel>
                 </>
                 :
@@ -201,13 +203,13 @@ export default function ServiceModal(props) {
                     onClick={() => {
                       cancelService()
                     }}>
-                    Confirmar cancelación
+                    {t('request-modal.cancel-confirm')}
               </Submit>
                   <Cancel
                     onClick={() => {
                       setConfirmCancelBtn(false)
                     }}>
-                    No cancelar
+                    {t('request-modal.dont-cancel')}
               </Cancel>
                 </>
               }
@@ -222,7 +224,7 @@ export default function ServiceModal(props) {
                 onClick={() => {
                   finishService()
                 }}>
-                Finalizar servicio
+                {t('request-modal.finish-service')}
             </Button>
           </>
         break;
@@ -237,7 +239,7 @@ export default function ServiceModal(props) {
                 onClick={() => {
                   setModalRate(true)
                 }}>
-                Calificar servicio
+                {t('request-modal.rate-service')}
             </Button>
           </>
         }
@@ -265,7 +267,7 @@ export default function ServiceModal(props) {
         keyboard
       >
         <Modal.Header closeButton>
-          <Modal.Title>Detalles de servicio</Modal.Title>
+          <Modal.Title>{t('request-modal.service-details')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="contentUserIcon">
@@ -300,7 +302,7 @@ export default function ServiceModal(props) {
                         </>
                     }
                   </p>
-                  <p className="tradu-ins">Traducción {props.service.service_type == "0" ? "programada" : "instantánea"}</p>
+                  <p className="tradu-ins">{props.service.service_type == "0" ? t('request-modal.programmed') : t('request-modal.instant')}</p>
                 </div>
                 {itemStatusLabel(props.service.status)}
               </div>
@@ -310,7 +312,7 @@ export default function ServiceModal(props) {
 
             {props.service.cancel_reason && props.service.status == "5" || props.service.status == "6" ?
               <div className="cancel-reason">
-                <p className="title">Motivo de {props.service.status == "5" ? <>cancelación</> : <>rechazo</>}</p>
+                <p className="title">{t('request-modal.reason-for')} {props.service.status == "5" ? <>{t('request-modal.cancellation')}</> : <>{t('request-modal.rejection')}</>}</p>
                 <p className="desc">{props.service.cancel_reason}</p>
               </div>
               : null
@@ -330,17 +332,17 @@ export default function ServiceModal(props) {
               </span>
             </p> */}
             <p className="detail-modal-text">
-              <b>Cobro por: </b>
+              <b>{t('request-modal.rate-type')}: </b>
               <span>
-                {props.service.duration_type === 0 ? "Hora" : "Minutos"}
+                {props.service.duration_type === 0 ? t('hours') : t('minutes')}
               </span>
             </p>
             <p className="detail-modal-text">
-              <b>Duración:  </b>
+              <b>{t('request-modal.duration')}:  </b>
               <span>{props.service.duration_amount}</span>
             </p>
             <p className="detail-modal-text">
-              <b>Fecha inicio: </b>
+              <b>{t('request-modal.start-date')}: </b>
               <span> {moment(props.service.date).format("D MMM  YYYY")}</span>
             </p>
             { props.service?.status == "2" ?
@@ -352,12 +354,12 @@ export default function ServiceModal(props) {
                 }}
               >
                 <img src="/assets/images/video-purple.png"></img>
-                Entrar a la sesión
+                {t('request-modal.enter-session')}
               </URLLabel>
               : null
             }
             <hr></hr>
-            <p className="detail-modal-text">Adjuntos</p>
+            <p className="detail-modal-text">{t('request-modal.attached')}</p>
             <div className="container-files">
               {(props.service.files_urls?.length) ? props.service.files_urls?.map((file, index) => (
                 <a key={index} href={file.url}>
@@ -367,14 +369,14 @@ export default function ServiceModal(props) {
                 </a>
               )) :
                 <p className="no-content">
-                  Sin archivos adjuntos
+                  {t('request-modal.no-attachments')}
               </p>
               }
             </div>
 
             {props.service.description ? (
               <div className="modal-description">
-                <p className="detail-modal-text">Información adicional</p>
+                <p className="detail-modal-text">{t('request-modal.extra-info')}</p>
                 <p className="detail-text">{props.service.description}</p>
               </div>
             ) : null}
@@ -391,7 +393,7 @@ export default function ServiceModal(props) {
         onHide={() => setModalCancel(false)}
         cancelSuccess={(type) => {
           props.updateServices();
-          setAlert({ type: "success", message: "Servicio " + type })
+          setAlert({ type: "success", message: t('request-modal.service') + type })
         }}
         show={modalCancel}
         service={props.service}
@@ -403,7 +405,7 @@ export default function ServiceModal(props) {
         onHide={() => setModalRate(false)}
         rateSuccess={(type) => {
           props.updateServices();
-          setAlert({ type: "success", message: "Servicio calificado"})
+          setAlert({ type: "success", message: t('request-modal.service-rated')})
         }}
         show={modalRate}
         service={props.service}
