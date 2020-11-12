@@ -121,7 +121,7 @@ export default function TranslatorServices() {
 											}}
 											value={formik.values.service_type}>
 											<option value="">{t('request-list.any-type')}</option>
-											<option value="0">{t('request-list.instant')}</option>
+											{/* <option value="0">{t('request-list.instant')}</option> */}
 											<option value="1">{t('request-list.programmed')}</option>
 										</Form.Control>
 									</Form.Group>

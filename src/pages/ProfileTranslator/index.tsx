@@ -27,6 +27,7 @@ import {
 } from "./styles"
 import Header from "../../components/Header";
 import { useTranslation } from 'react-i18next';
+import i18next from "i18next";
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -148,7 +149,7 @@ function ProfileTranslatorPage({
                                 <p>{t('translator_profile.specialized')}</p>
                                 {translators?.specialities?.map((sp: any) => (
                                   <span className="badge badge-light">
-                                    {sp.name}
+                                    {i18next.language=="ES" ? sp.name_es : sp.name_en}
                                   </span>
                                 ))}
                               </Col>

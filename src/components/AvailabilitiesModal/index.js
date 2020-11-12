@@ -108,7 +108,7 @@ export default function AvailabilitiesModal(props) {
                                                 formik.setFieldTouched('date_start');
                                                 formik.setFieldValue('date_start', e)
                                             }}
-                                            minDate={new Date()}
+                                            minDate={ new Date()}
                                             maxDate={formik.values.date_end}
                                             dateFormat="dd/MM/yyyy"
 
@@ -127,7 +127,7 @@ export default function AvailabilitiesModal(props) {
                                                 formik.setFieldTouched('date_end');
                                                 formik.setFieldValue('date_end', e)
                                             }}
-                                            minDate={formik.values.date_start}
+                                            minDate={formik.values.date_start ? formik.values.date_start : new Date() }
                                             dateFormat="dd/MM/yyyy"
 
                                         />
@@ -157,7 +157,7 @@ export default function AvailabilitiesModal(props) {
                                     </Col>
                                     
                                     <Col className="col-md-2">
-                                        <span>Hasta</span>
+                                        <span>{t('availabilities-list.to')}</span>
                                     </Col>
 
                                     <Col className="col-md-5">

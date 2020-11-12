@@ -31,7 +31,7 @@ export default function ConfirmationModal(props) {
                     {props.cancel}
                 </Button>
                 <Button 
-                    variant="primary" 
+                    className="cucu-button"
                     disabled={confirmDisable}
                     onClick={()=>{ 
                         setConfirmDisable();    

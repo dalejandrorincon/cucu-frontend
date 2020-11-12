@@ -295,6 +295,9 @@ export default function TranslatorProfileForm() {
                             formik.handleChange(e)
                         }}
                     />
+                    <Alert className="alert-primary payoneer" variant="primary">
+                        <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
+                    </Alert>
                 </Form.Group>
                 {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
                     <div className="alert alert-danger">{formik.errors.payoneer_account}</div>

@@ -115,7 +115,7 @@ function TranslatorsPage({
   };
 
   const getSpecialities = () => {
-    SpecialitiesAPI.getSpecialities().then((res) => {
+    SpecialitiesAPI.getSpecialities(i18n.language).then((res) => {
       console.log(res)
       setSpecialities(res)
     })
@@ -433,7 +433,7 @@ function TranslatorsPage({
                               value={formik.values.speciality}>
                               <option value="">{t('all-specialities')}</option>
                               {specialities?.map((elm: any) => (
-                                <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                <option key={elm.id} value={elm.id} > {i18n.language=="ES" ? elm.name_es : elm.name_en }  {}</option>
                               ))}
                             </Form.Control>
                           </Form.Group>
@@ -523,7 +523,7 @@ function TranslatorsPage({
                                 <p>{t('translators-list.specialist-in')}</p>
                                 {ele.specialities?.map((sp: any) => (
                                   <span className="badge badge-light">
-                                    {sp.name}
+                                    {i18n.language=="ES" ? sp.name_es : sp.name_en }
                                   </span>
                                 ))}
                               </td>

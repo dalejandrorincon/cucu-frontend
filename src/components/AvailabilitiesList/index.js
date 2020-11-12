@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 
 import AvailabilitiesModal from "../../components/AvailabilitiesModal"
 import { NotifierGenerator } from "../Alerts"
+import ConfirmationModal from '../ConfirmationModal';
 
 import * as UsersAPI from '../../api/users';
 import * as UnavailabilitiesAPI from '../../api/unavailabilities';
@@ -16,7 +17,8 @@ import * as UnavailabilitiesAPI from '../../api/unavailabilities';
 import "./styles.scss"
 import { useTranslation } from 'react-i18next';
 export default function AvailabilitiesList() {
-
+	const [modalShow, setModalShow] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);	
 	const [unavailabilities, setUnvailabilities] = useState([]);
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
@@ -51,6 +53,16 @@ export default function AvailabilitiesList() {
 	const handleDateChange = (e, type) =>{
 		let name = type
 		let val = e
+
+		switch(type){
+			case "min_date":
+				val = moment(val).startOf("day").toDate()
+				break;
+			case "max_date":
+				val = moment(val).endOf("day").toDate()
+				break;
+		}
+
 		setOptions({
 			...options,
 			...{ [name]: val }
@@ -85,7 +97,6 @@ export default function AvailabilitiesList() {
 
 	useEffect(() => {
 		getUnavailabilities()
-		console.log(moment('2010-10-20').isBefore('2011-01-01', 'year') )
 	}, [
 		options,
 	]);
@@ -212,7 +223,7 @@ export default function AvailabilitiesList() {
 															{t('edit')}
 															</Dropdown.Item>
 															{canDelete(ele) && 
-																<Dropdown.Item onClick={() => deleteUnavailability(ele.id)}>
+																<Dropdown.Item onClick={() => {setSelectedItem(ele.id); setModalShow(true)}}>
 																	{t('delete')}
 																</Dropdown.Item>
 															}
@@ -255,6 +266,16 @@ export default function AvailabilitiesList() {
 				onHide={() => setIsModalVisible(false)}
 				show={isModalVisible}
 			></AvailabilitiesModal>
+
+			<ConfirmationModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                setConfirm={() =>{deleteUnavailability(selectedItem); setModalShow(false) }}
+                title={t('messages.cancel-title')}
+                body={ t('messages.cancel-body')}
+                confirm={ t('messages.cancel-confirm')}
+                cancel={t('messages.cancel-cancel')}
+            ></ConfirmationModal>
 
 			<NotifierGenerator
 				alert={alert}

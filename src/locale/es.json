@@ -283,7 +283,8 @@
             "email":"Correo electrónico",
             "document": "Documento",
             "phone":"Teléfono",
-            "password":"Contraseña",
+            "password":"Contraseña (optional)",
+            "password-label":"Escribir una nueva contraseña.",
             "country": "Pais de residencia",
             "city": "Ciudad de residencia",
             "nationality": "Nacionalidad",
@@ -346,7 +347,9 @@
             "account-number": "Número de cuenta",
             "owner-name": "Nombre del titular de la cuenta",
             "owner-document": "Documento del titular de la cuenta",
-            "payoneer-account": "Cuenta de payoneer"
+            "payoneer-account": "Cuenta de payoneer",
+            "payoneer-account-label": "Si no tienes una cuenta de Payoneer, puedes crear una nueva en",
+            "payoneer-account-link": " este enlace."
         },
         "request":{
             "cancel-request": "Cancelar solicitud",
@@ -404,6 +407,16 @@
             "cancelled": "cancelado",
             "rejected": "rechazado",
             "reasons": "Escribe aquí tus motivos..."
+        },
+        "messages":{
+           "disable-title": "Desactivar cuenta",
+           "disable-body": "¿Deseas desactivar esta cuenta?",
+           "disable-confirm": "Desactivar",
+           "disable-cancel": "volver",
+           "cancel-title": "Eliminar no disponibilidad",
+           "cancel-body": "¿Deseas eliminar esta no disponibilidad?",
+           "cancel-confirm": "Eliminar",
+           "cancel-cancel": "Volver"
         }
     }    
 }

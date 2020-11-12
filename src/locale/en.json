@@ -282,7 +282,8 @@
             "email":"Email",
             "document": "Identity Document",
             "phone":"Phone number",
-            "password":"Password",
+            "password":"Password (optional)",
+            "password-label":"Type a new password",
             "country": "Residence country",
             "city": "Residence city",
             "nationality": "Nationality",
@@ -347,7 +348,9 @@
             "account-number": "Account number",
             "owner-name": "Account owner name",
             "owner-document": "Account owner document",
-            "payoneer-account": "Payoneer account"
+            "payoneer-account": "Payoneer account",
+            "payoneer-account-label": "If you don't have a Payoneer account, you can create a new one",
+            "payoneer-account-link": " in this link."
         },
         "request":{
             "cancel-request": "Cancel request",
@@ -405,6 +408,16 @@
             "cancelled": "cancelled",
             "rejected": "rejected",
             "reasons": "Write here your reasons..."
+        },
+        "messages":{
+           "disable-title": "Disable account",
+           "disable-body": "Are you sure you want to disable this account?",
+           "disable-confirm": "Disable",
+           "disable-cancel": "Back",
+           "cancel-title": "Remove unavailability",
+           "cancel-body": "Are you sure you want to remove this unavailability?",
+           "cancel-confirm": "Remove",
+           "cancel-cancel": "Back"
         }
     }    
 }

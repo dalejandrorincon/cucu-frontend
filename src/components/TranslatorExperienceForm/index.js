@@ -160,7 +160,16 @@ export default function TranslatorExperienceForm() {
             console.log(res.user)
             setEntity(res.user)
             if(res.user.remote_tools) setSelectedPlatforms(res.user.remote_tools)
-            if(res.user.specialities) setSelectedSpecialities(res.user.specialities)
+            if(res.user.specialities){
+                res.user.specialities.forEach(element => {
+                    if(i18n.language=="ES"){
+                        element.name=element.name_es
+                    }else{
+                        element.name=element.name_en
+                    }
+                });
+            }
+            setSelectedSpecialities(res.user.specialities)
             if(res.user.languages) setSelectedLanguages(res.user.languages)
         })
     };
@@ -180,7 +189,18 @@ export default function TranslatorExperienceForm() {
     };
 
     const getSpecialities = () => {
-        SpecialitiesAPI.getSpecialities().then((res) => {
+        SpecialitiesAPI.getSpecialities(i18n.language).then((res) => {
+
+            res.forEach(element => {
+                if(i18n.language=="ES"){
+                    element.name=element.name_es
+                }else{
+                    element.name=element.name_en
+                }
+            });
+
+            console.log(res)
+
             console.log(res)
             setSpecialities(res)
         })

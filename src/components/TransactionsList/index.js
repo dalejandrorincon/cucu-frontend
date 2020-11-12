@@ -99,7 +99,7 @@ export default function TransactionsList() {
 											}}
 											value={formik.values.service_type}>
 											<option value="">{t('transactions-list.any-type')}</option>
-											<option value="0">{t('transactions-list.instant')}</option>
+											{/* <option value="0">{t('transactions-list.instant')}</option> */}
 											<option value="1">{t('transactions-list.programmed')}</option>
 										</Form.Control>
 									</Form.Group>

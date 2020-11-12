@@ -21,8 +21,6 @@ import * as Yup from 'yup';
 import * as UsersAPI from '../../api/users';
 import * as CitiesAPI from '../../api/cities';
 import ConfirmationModal from '../ConfirmationModal';
-import messages from "../../utils/messages"
-//const messages = require('../../utils/messages')
 import { useTranslation } from 'react-i18next';
 
 
@@ -36,8 +34,8 @@ export default function TranslatorProfileForm() {
         number: "",
         password: "",
         description: "",
-        country_id: "",
-        city_id: "",
+        country: "",
+        city: "",
         nationality: "",
         address_1: "",
         address_2: "",
@@ -67,7 +65,6 @@ export default function TranslatorProfileForm() {
             console.log(res.user)
             setEntity(res.user)
         })
-        console.log(messages)
     };
 
     const getCountries = () => {
@@ -82,7 +79,7 @@ export default function TranslatorProfileForm() {
         })
     }
 
-    const getCities = (country) => {
+    /* const getCities = (country) => {
         console.log(country)
         CitiesAPI.getCities({ country_id: country }).then((res) => {
             console.log(res)
@@ -99,7 +96,7 @@ export default function TranslatorProfileForm() {
                 }
             }
         })
-    }
+    } */
 
 
     const saveChanges = (values) => {
@@ -177,10 +174,16 @@ export default function TranslatorProfileForm() {
         country_id: Yup.string()
             .min(1, t('required-value'))
             .required(t('required-field')),
-        city_id: Yup.string()
+        /* city_id: Yup.string()
             .min(1, t('required-value'))
             .required(t('required-field'))
             .nullable(),
+        country: Yup.string()
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')), */
+        city: Yup.string()
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         nationality: Yup.string()
             .min(3, t('min-char', {num: 3}))
             .required(t('required-field')),
@@ -219,7 +222,9 @@ export default function TranslatorProfileForm() {
             password: entity.password ? entity.password : "",
             description: entity.description ? entity.description : "",
             country_id: entity.country_id ? entity.country_id : "",
-            city_id: entity.city_id ? entity.city_id : "",
+            /* city_id: entity.city_id ? entity.city_id : "",
+            country: entity.country ? entity.country : "", */
+            city: entity.city ? entity.city : "",
             nationality: entity.nationality ? entity.nationality : "",
             address_1: entity.address_1 ? entity.address_1 : "",
             address_2: entity.address_2 ? entity.address_2 : "",
@@ -238,9 +243,9 @@ export default function TranslatorProfileForm() {
     });
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         getCities(formik.values.country_id)
-    }, [formik.values.country_id]);
+    }, [formik.values.country_id]); */
 
 
 
@@ -342,6 +347,9 @@ export default function TranslatorProfileForm() {
 
                 <Form.Group>
                     <Label>{t('translator-profile.password')}</Label>
+                    <p>
+                        <small>{t('translator-profile.password-label')}</small>
+                    </p>
                     <InputGroup>
                         <ControlPassword
                             type={showPassword ? "text" : "password"}
@@ -386,26 +394,23 @@ export default function TranslatorProfileForm() {
                     <div className="alert alert-danger">{formik.errors.country_id}</div>
                 ) : null}
 
-                <Form.Group className="outline">
+                <Form.Group>
                     <Label>{t('translator-profile.city')}</Label>
-                    <Form.Control
-                        as="select"
-                        id="city_id"
-                        name="city_id"
-                        className="form-control input-lg"
-                        onChange={e => {
-                            formik.setFieldTouched('city_id');
-                            formik.handleChange(e);
+                    <Control
+                        id="city"
+                        type="text"
+                        maxlength="100"
+                        value={formik.values.city}
+                        onChange={(e) => {
+                            formik.setFieldTouched('city');
+                            formik.handleChange(e)
                         }}
-                        value={formik.values.city_id} >
-                        <option value="">{t('select')}</option>
-                        {cities}
-                    </Form.Control>
+                    />
                 </Form.Group>
-
-                {formik.touched.city_id && formik.errors.city_id ? (
-                    <div className="alert alert-danger">{formik.errors.city_id}</div>
+                {formik.touched.city && formik.errors.city ? (
+                    <div className="alert alert-danger">{formik.errors.city}</div>
                 ) : null}
+
 
                 <Form.Group>
                     <Label>{t('translator-profile.nationality')}</Label>
@@ -544,10 +549,10 @@ export default function TranslatorProfileForm() {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 setConfirm={() => disableAccount()}
-                title={messages.data.modals.confirmDisable.title}
-                body={messages.data.modals.confirmDisable.body}
-                confirm={messages.data.modals.confirmDisable.confirm}
-                cancel={messages.data.modals.confirmDisable.cancel}
+                title={t('messages.disable-title')}
+                body={ t('messages.disable-body')}
+                confirm={ t('messages.disable-confirm')}
+                cancel={t('messages.disable-cancel')}
             ></ConfirmationModal>
 
             {response}
