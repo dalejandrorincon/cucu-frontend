@@ -109,32 +109,38 @@ export default function TranslatorProfileForm() {
 
         bank: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(100, t('max-char', {num: 100})),
+            .max(100, t('max-char', {num: 100}))
+            .required("*Este campo es obligatorio"),
         /* bank_id: Yup.string()
             .min(1, "*Debes elegir un campo"),
             //.required("*Este campo es obligatorio"), */
         account_type: Yup.string()
-            .min(1, t('required-value')),
-            //.required("*Este campo es obligatorio"),
+            .min(1, t('required-value'))
+            .required("*Este campo es obligatorio"),
         account_number: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(20, t('max-char', {num: 20})),
+            .max(20, t('max-char', {num: 20}))
+            .required("*Este campo es obligatorio"),
             //.required("*Este campo es obligatorio"),
         owner_name: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(100, t('max-char', {num: 100})),
+            .max(100, t('max-char', {num: 100}))
+            .required("*Este campo es obligatorio"),
             //.required("*Este campo es obligatorio"),
         document_type: Yup.string()
-            .min(1, t('required-value')),
+            .min(1, t('required-value'))
+            .required("*Este campo es obligatorio"),
             //.required("*Este campo es obligatorio"),
         document_number: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(16, t('max-char', {num: 16})),
+            .max(16, t('max-char', {num: 16}))
+            .required("*Este campo es obligatorio"),
             //.required("*Este campo es obligatorio"),
-        payoneer_account: Yup.string()
+        /* payoneer_account: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(20, t('max-char', {num: 20})),
-            //.required("*Este campo es obligatorio"),
+            .max(20, t('max-char', {num: 20}))
+            .required("*Este campo es obligatorio"),
+            //.required("*Este campo es obligatorio"), */
 
     });
 
@@ -147,7 +153,7 @@ export default function TranslatorProfileForm() {
             owner_name: entity?.owner_name ? entity.owner_name : "",
             document_type: entity?.document_type ? entity.document_type : "",
             document_number: entity?.document_number ? entity.document_number : "",
-            payoneer_account: entity?.payoneer_account ? entity.payoneer_account : ""
+            //payoneer_account: entity?.payoneer_account ? entity.payoneer_account : ""
         },
         onSubmit: values => {
             saveChanges({ ...values })
@@ -166,9 +172,29 @@ export default function TranslatorProfileForm() {
 
             <Alert variant="primary">
                 {t('bank-info.payoneer-label-1')}<a href="https://stripe.com/global">{t('bank-info.payoneer-link')}</a>{t('bank-info.payoneer-label-2')}
+                <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
             </Alert>
 
             <Form onSubmit={formik.handleSubmit}>
+
+                {/* <Form.Group>
+                    <Label>{t('bank-info.payoneer-account')}</Label>
+                    <Control
+                        id="payoneer_account"
+                        type="text"
+                        value={formik.values.payoneer_account}
+                        onChange={(e) => {
+                            formik.setFieldTouched('payoneer_account');
+                            formik.handleChange(e)
+                        }}
+                    />
+                </Form.Group>
+                {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
+                    <div className="alert alert-danger">{formik.errors.payoneer_account}</div>
+                ) : null} */}
+
+                <hr />
+
                 <Form.Group>
                     <Label>{t('bank-info.bank')}</Label>
                     <Form.Control
@@ -282,27 +308,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
 
-                <hr />
-
-                <Form.Group>
-                    <Label>{t('bank-info.payoneer-account')}</Label>
-                    <Control
-                        id="payoneer_account"
-                        type="text"
-                        value={formik.values.payoneer_account}
-                        onChange={(e) => {
-                            formik.setFieldTouched('payoneer_account');
-                            formik.handleChange(e)
-                        }}
-                    />
-                    <Alert className="alert-primary payoneer" variant="primary">
-                        <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
-                    </Alert>
-                </Form.Group>
-                {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
-                    <div className="alert alert-danger">{formik.errors.payoneer_account}</div>
-                ) : null}
-
+                
 
                 <Submit
                     disabled={buttonState.disabled}
