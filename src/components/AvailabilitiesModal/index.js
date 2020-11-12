@@ -41,14 +41,18 @@ export default function AvailabilitiesModal(props) {
         onSubmit: values => {
             setConfirmDisable(true)
             let userId = localStorage.getItem("userId")
-            let startDateTime = combineDateWithTime(formik.values.date_start, formik.values.time_start)
-            let endDateTime = combineDateWithTime(formik.values.date_end, formik.values.time_end)
+            let startDateTime;
+            let endDateTime;            
 
             switch (props.type) {
                 case "create":
+                    startDateTime = combineDateWithTime(formik.values.date_start, formik.values.time_start)
+                    endDateTime = combineDateWithTime(formik.values.date_end, formik.values.time_end)
                     createUnavailability({ from: startDateTime, to: endDateTime, translator_id: userId })
                     break;
                 case "edit":
+                    startDateTime = combineDateWithTime(moment(formik.values.date_start).toDate(), moment(formik.values.time_start).toDate())
+                    endDateTime = combineDateWithTime(moment(formik.values.date_end).toDate(), moment(formik.values.time_end).toDate())
                     editUnavailability({ from: startDateTime, to: endDateTime, translator_id: userId })
             }
         },
@@ -61,7 +65,7 @@ export default function AvailabilitiesModal(props) {
         UnavailabilitiesAPI.createUnavailability(values, localStorage.getItem("token")).then((res) => {
             setConfirmDisable(false)
             props.onHide()
-            props.success("creada")
+            props.success(t('availabilities-list.created'))
             formik.resetForm()
         })
     }
@@ -70,7 +74,7 @@ export default function AvailabilitiesModal(props) {
         UnavailabilitiesAPI.updateUnavailability(values, localStorage.getItem("token"), props.unavailability?.id).then((res) => {
             setConfirmDisable(false)
             props.onHide()
-            props.success("editada")
+            props.success(t('availabilities-list.edited'))
             formik.resetForm()
         })
     }
@@ -98,7 +102,6 @@ export default function AvailabilitiesModal(props) {
                             <p>{t('availabilities-list.create-unavailabilty-label')}</p>
                             <Form.Group>
                                 <Row className="margin-row-form">
-
                                     <Col className="col-md-5">
                                         <DatePicker
                                             className="form-control"

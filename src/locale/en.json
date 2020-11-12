@@ -261,6 +261,7 @@
         "availabilities-list": {
             "unavailabilities": "Unavailabilities",
             "date-time":"Date and time",
+            "date-time-start":"Start date and time",
             "created_at": "Created at",
             "start_date": "Start date and time",
             "end_date": "End date and time",
@@ -271,7 +272,11 @@
             "date": "Date",
             "time": "Time",
             "create-unavailabilty-label": "Set the times when you won't be available to get service requests.",
-            "field-required": "You must choose a time and a date."
+            "field-required": "You must choose a time and a date.",
+            "created": "created",
+            "edited": "edited",
+            "deleted": "deleted",
+            "unavailability": "Unavailability "
         },
 
         "translator-profile":{

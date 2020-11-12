@@ -85,7 +85,7 @@ export default function AvailabilitiesList() {
 
 	const deleteUnavailability = (id) => {
 		UnavailabilitiesAPI.deleteUnavailability(localStorage.getItem("token"), id).then((res) => {
-			setAlert({ type: "success", message: "No disponiblidad eliminada"})
+			setAlert({ type: "success", message: t('availabilities-list.unavailability') + t('availabilities-list.deleted')})
 			getUnavailabilities()
 		})
 	}
@@ -120,7 +120,7 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="from">{t('availabilities-list.date-time')}</option>
+											<option value="from">{t('availabilities-list.date-time-start')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -259,7 +259,7 @@ export default function AvailabilitiesList() {
 				success={(type) => {
 					setIsModalVisible(false)
 					getUnavailabilities()
-					setAlert({ type: "success", message: "No disponiblidad " + type })
+					setAlert({ type: "success", message: t('availabilities-list.unavailability') + type })
 				}}
 				type={activeType}
 				unavailability={activeUnavailability}

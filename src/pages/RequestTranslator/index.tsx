@@ -347,7 +347,7 @@ function RequestTranslatorPage() {
                     >
                       <Form.Check
                         type="radio"
-                        label="Horas"
+                        label={t('hours')}
                         name="duration_type"
                         checked={formik.values.duration_type == "0" ? true : false}
                       />
@@ -360,7 +360,7 @@ function RequestTranslatorPage() {
                     >
                       <Form.Check
                         type="radio"
-                        label="Minutos"
+                        label={t('minutes')}
                         name="duration_type"
 
                         checked={formik.values.duration_type == "1" ? true : false}
