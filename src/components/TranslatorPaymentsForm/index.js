@@ -166,9 +166,29 @@ export default function TranslatorProfileForm() {
 
             <Alert variant="primary">
                 {t('bank-info.payoneer-label-1')}<a href="https://stripe.com/global">{t('bank-info.payoneer-link')}</a>{t('bank-info.payoneer-label-2')}
+                <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
             </Alert>
 
             <Form onSubmit={formik.handleSubmit}>
+
+                <Form.Group>
+                    <Label>{t('bank-info.payoneer-account')}</Label>
+                    <Control
+                        id="payoneer_account"
+                        type="text"
+                        value={formik.values.payoneer_account}
+                        onChange={(e) => {
+                            formik.setFieldTouched('payoneer_account');
+                            formik.handleChange(e)
+                        }}
+                    />
+                </Form.Group>
+                {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
+                    <div className="alert alert-danger">{formik.errors.payoneer_account}</div>
+                ) : null}
+
+                <hr />
+
                 <Form.Group>
                     <Label>{t('bank-info.bank')}</Label>
                     <Form.Control
@@ -282,27 +302,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
 
-                <hr />
-
-                <Form.Group>
-                    <Label>{t('bank-info.payoneer-account')}</Label>
-                    <Control
-                        id="payoneer_account"
-                        type="text"
-                        value={formik.values.payoneer_account}
-                        onChange={(e) => {
-                            formik.setFieldTouched('payoneer_account');
-                            formik.handleChange(e)
-                        }}
-                    />
-                    <Alert className="alert-primary payoneer" variant="primary">
-                        <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
-                    </Alert>
-                </Form.Group>
-                {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
-                    <div className="alert alert-danger">{formik.errors.payoneer_account}</div>
-                ) : null}
-
+                
 
                 <Submit
                     disabled={buttonState.disabled}
