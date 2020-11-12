@@ -80,8 +80,8 @@ function TranslatorsPage({
   );
 
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(10);
-  const [value, setValue] = useState([0, 10]);
+  const [max, setMax] = useState(120);
+  const [value, setValue] = useState([0, 120]);
 
   const [minHour, setMinHour] = useState(25);
   const [maxHour, setMaxHour] = useState(100);
@@ -215,6 +215,7 @@ function TranslatorsPage({
     formik.values.name,
     startTime,
     endTime,
+    startDate,
     rate,
     page
   ]);
@@ -270,15 +271,16 @@ function TranslatorsPage({
                             min={min}
                             max={max}
                             onChange={onSliderChange}
+                            step={6}
                             onAfterChange={() => getTranslators()}
                           />
                         </div>
                         <LabelFilter>
                           <Col>
-                            <TextFilter>{value[0]} {t('translators-list.years')}</TextFilter>
+                            <TextFilter>{value[0]} {t('translators-list.months')}</TextFilter>
                           </Col>
                           <ColFilter>
-                            <TextFilter>{value[1]} {t('translators-list.years')}</TextFilter>
+                            <TextFilter>{value[1]} {t('translators-list.months')}</TextFilter>
                           </ColFilter>
                         </LabelFilter>
                       </li>
