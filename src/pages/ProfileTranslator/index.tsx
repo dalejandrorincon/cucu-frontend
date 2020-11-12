@@ -158,7 +158,7 @@ function ProfileTranslatorPage({
                                 {translators?.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      De {lng.from.name} a {lng.to.name}
+                                      De {i18next.language=="ES" ? lng.from.name_es : lng.from.name_en} a {i18next.language=="ES" ? lng.to.name_es : lng.to.name_en}
                                     </span>
                                   </>
                                 ))}

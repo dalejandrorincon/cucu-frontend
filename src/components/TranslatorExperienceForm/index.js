@@ -341,13 +341,21 @@ export default function TranslatorExperienceForm() {
 
         let fromLabel
         let toLabel
+        let fromLabelES
+        let fromLabelEN
+        let toLabelES
+        let toLabelEN
 
         languages.forEach(element => {
             if (element.id == formik.values.from) {
                 fromLabel = element.name
+                fromLabelES = element.name_es
+                fromLabelEN = element.name_en
             }
             if (element.id == formik.values.to) {
                 toLabel = element.name
+                toLabelES = element.name_es
+                toLabelEN = element.name_en
             }
         });
 
@@ -356,11 +364,16 @@ export default function TranslatorExperienceForm() {
             setSelectedLanguages([...selectedLanguages, {
                 from: {
                     id: formik.values.from,
-                    name: fromLabel
+                    name: fromLabel,
+                    name_es: fromLabelES,
+                    name_en: fromLabelEN
+                    
                 },
                 to: {
                     id: formik.values.to,
-                    name: toLabel
+                    name: toLabel,
+                    name_es: toLabelES,
+                    name_en: toLabelEN                    
                 }
             }])
         }
@@ -390,7 +403,7 @@ export default function TranslatorExperienceForm() {
                 />
 
                 {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
-                    <div className="alert alert-danger">{t('experience.experience.tools-must')}</div>
+                    <div className="alert alert-danger">{t('experience.tools-must')}</div>
                 ) : null}
 
                 <h6><b>{t('experience.languages')}</b></h6>
@@ -399,7 +412,7 @@ export default function TranslatorExperienceForm() {
                 <div className="Language-panel">
                     {selectedLanguages?.map((elm, index) => (
                         <div key={index} className="item">
-                            <div><p>{t('experience.from')} {elm.from.name} {t('experience.to')} {elm.to.name}</p></div>
+                            <div><p>{t('experience.from')} {i18n.language=="ES" ? elm.from.name_es : elm.from.name_en} {t('experience.to')} { i18n.language=="ES" ? elm.to.name_es : elm.to.name_en }</p></div>
                             <Button className="remove" onClick={() => removeLanguage(index)} >✕</Button>
                         </div>
                     ))}
@@ -418,7 +431,7 @@ export default function TranslatorExperienceForm() {
                             value={formik.values.from} >
                             <option value="">{t('select')}</option>
                             {languages?.map((elm) => (
-                                <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                <option key={elm.id} value={elm.id} >{ i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                             ))}
                         </Form.Control>
                         <Button className="switch" onClick={() => switchLanguages()}>
@@ -438,7 +451,7 @@ export default function TranslatorExperienceForm() {
                             value={formik.values.to} >
                             <option value="">{t('select')}</option>
                             {languages?.map((elm) => (
-                                <option key={elm.id} value={elm.id}>{elm.name}</option>
+                                <option key={elm.id} value={elm.id}>{ i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                             ))}
                         </Form.Control>
                     </div>

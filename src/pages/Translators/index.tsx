@@ -454,7 +454,7 @@ function TranslatorsPage({
                                 value={formik.values.languageFrom} >
                                 <option value="">{t('select')}</option>
                                 {languages?.map((elm: any) => (
-                                  <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                  <option key={elm.id} value={elm.id} >{i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                                 ))}
                               </Form.Control>
                               <Button className="switch" onClick={() => switchLanguages()}>
@@ -474,7 +474,7 @@ function TranslatorsPage({
                                 value={formik.values.languageTo} >
                                 <option value="0">{t('select')}</option>
                                 {languages?.map((elm: any) => (
-                                  <option key={elm.id} value={elm.id}>{elm.name}</option>
+                                  <option key={elm.id} value={elm.id}>{i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                                 ))}
                               </Form.Control>
                             </div>
@@ -534,7 +534,7 @@ function TranslatorsPage({
                                 {ele.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                    {t('translators-list.from')} {lng.from.name} {t('translators-list.to')} {lng.to.name}
+                                    {t('translators-list.from')} {i18n.language=="ES" ? lng.from.name_es : lng.from.name_en} {t('translators-list.to')} {i18n.language=="ES" ? lng.to.name_es : lng.to.name_en}
                                     </span>
                                   </>
                                 ))}
