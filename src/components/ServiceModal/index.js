@@ -302,7 +302,6 @@ export default function ServiceModal(props) {
                         </>
                     }
                   </p>
-                  {props.service.service_type}
                   <p className="tradu-ins">{props.service.service_type == "0" ? t('request-modal.instant') : t('request-modal.programmed')}</p>
                 </div>
                 {itemStatusLabel(props.service.status)}

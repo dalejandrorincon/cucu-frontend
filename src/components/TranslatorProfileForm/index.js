@@ -201,7 +201,7 @@ export default function TranslatorProfileForm() {
             .max(5, t('max-char', {num: 5})),
         rate_hour: Yup.number()
             .required(t('required-field'))
-            .min(25, t('min-value', {num: 25}))
+            .min(40, t('min-value', {num: 40}))
             .max(100,  t('max-value', {num: 100})),
         rate_minute: Yup.number()
             .required(t('required-field'))

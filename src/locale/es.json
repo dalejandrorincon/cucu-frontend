@@ -262,6 +262,7 @@
         "availabilities-list": {
             "unavailabilities": "No disponibilidades",
             "date-time":"Fecha y hora",
+            "date-time-start":"Fecha y hora de inicio",
             "created_at": "Fecha de creación",
             "start_date": "Fecha y hora de inicio",
             "end_date": "Fecha y hora de fin",
@@ -272,7 +273,11 @@
             "date": "Fecha",
             "time": "Hora",
             "create-unavailabilty-label": "Indica el horario en el que no vas a estar disponible para recibir solicitudes de servicios en la plataforma.",
-            "field-required": "Debes seleccionar un dia y hora."
+            "field-required": "Debes seleccionar un dia y hora.",
+            "created": "creada",
+            "edited": "editada",
+            "deleted": "eliminada",
+            "unavailability": "No disponibilidad "
         },
 
         "translator-profile":{
@@ -284,7 +289,7 @@
             "email":"Correo electrónico",
             "document": "Documento",
             "phone":"Teléfono",
-            "password":"Contraseña (optional)",
+            "password":"Contraseña (opcional)",
             "password-label":"Escribir una nueva contraseña.",
             "country": "Pais de residencia",
             "city": "Ciudad de residencia",
