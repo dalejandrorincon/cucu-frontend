@@ -22,6 +22,7 @@ import {
 } from "./styles"
 
 import * as AuthAPI from '../../api/auth';
+import { useTranslation } from 'react-i18next';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -36,6 +37,7 @@ function RecoverPasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [response, setResponse] = useState<any>(null)
   const [error, setError] = useState(false)
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
 		checkToken()
@@ -48,7 +50,7 @@ function RecoverPasswordPage() {
     }).catch((err) => {
       setResponse(
         <Alert variant={'danger'} >
-          Url para restablecimiento ha expirado, por favor vuelva a generarlo.
+          {t('forgot-password.token-expired')} 
         </Alert>
       )
     })
@@ -69,7 +71,7 @@ function RecoverPasswordPage() {
         } else {
           setResponse(
             <Alert variant={'danger'} >
-              La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.
+              {t('forgot-password.password-criteria')} 
             </Alert>
           )
           setError(true)
@@ -79,7 +81,7 @@ function RecoverPasswordPage() {
         if (password !== confirmPassword) {
           setResponse(
             <Alert variant={'danger'} >
-              Las contraseñas no coinciden.
+              {t('forgot-password.passwords-different')} 
             </Alert>
           )
           setError(true)
@@ -105,7 +107,7 @@ function RecoverPasswordPage() {
       } else {
         setResponse(
           <Alert variant={'danger'} >
-            Completa todos los campos.
+            {t('forgot-password.all-fields')} 
           </Alert>
         )
         setError(true)
@@ -130,10 +132,11 @@ function RecoverPasswordPage() {
                   <SuccessfulContainer>
                     <Successful src="/assets/images/check@2x.png"></Successful>
                   </SuccessfulContainer>
-                  <Title>¡Contraseña creada!</Title>
+                  <Title>
+                    {t('forgot-password.password-created')} 
+                  </Title>
                   <SuccessfulInfo>
-                    Ya puedes iniciar sesión con tu correo electrónico y la
-                    nueva contraseña que has creado.
+                    {t('forgot-password.create-success')} 
                   </SuccessfulInfo>
                   <Submit
                     type="button"
@@ -141,19 +144,18 @@ function RecoverPasswordPage() {
                       history.push("/");
                     }}
                   >
-                    Iniciar sesión
+                    {t('forgot-password.log-in')} 
                   </Submit>
                 </>
               ) : (
                 <>
-                  <Title>Crea tu contraseña</Title>
+                  <Title>{t('forgot-password.create-password')}</Title>
                   <RecoverInfo>
-                    Ingresa la contraseña con la que vas a iniciar sesión a tu
-                    cuenta.
+                    {t('forgot-password.create-label')}
                   </RecoverInfo>
                   <Form>
                     <Form.Group controlId="formBasicPassword">
-                      <Label>Contraseña</Label>
+                      <Label>{t('forgot-password.password')}</Label>
                       <InputGroup>
                         <ControlPassword
                           type={showPassword ? "text" : "password"}
@@ -167,18 +169,16 @@ function RecoverPasswordPage() {
                             }}
                             className={error ? "input-danger" : ""}
                           >
-                            {showPassword ? "Ocultar" : "Mostrar"}
+                            {showPassword ? t('hide') : t('show')}
                           </ShowPassword>
                         </InputGroup.Prepend>
                       </InputGroup>
                     </Form.Group>
                     <PasswordInfo>
-                      Debe contener como mínimo una letra mayúscula, una letra
-                      minúscula, 1 número, 1 carácter especial y 8 caracteres
-                      sin espacio en blanco
+                      {t('forgot-password.password-criteria')}
                     </PasswordInfo>
                     <Form.Group controlId="formBasicPassword">
-                      <Label>Confirma contraseña</Label>
+                      <Label>{t('forgot-password.confirm-password')}</Label>
                       <InputGroup>
                         <ControlPassword
                           type={showVerifyPassword ? "text" : "password"}
@@ -194,7 +194,7 @@ function RecoverPasswordPage() {
                             }}
                             className={error ? "input-danger" : ""}
                           >
-                            {showVerifyPassword ? "Ocultar" : "Mostrar"}
+                            {showVerifyPassword ? t('hide') : t('show')}
                           </ShowPassword>
                         </InputGroup.Prepend>
                       </InputGroup>
@@ -205,7 +205,7 @@ function RecoverPasswordPage() {
                         submitForm();
                       }}
                     >
-                      Crear contraseña
+                      {t('forgot-password.create-password')}
                     </Submit>
                   </Form>
                 </>

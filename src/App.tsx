@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { store } from "./redux/store/store";
+import './i18n';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import LoginPage from "./pages/LoginPage";

@@ -18,6 +18,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { isParseable } from "../../utils/constants"
 
+import { useTranslation } from 'react-i18next';
+
 export default function CertificationModal(props) {
 
     const [myFiles, setMyFiles] = useState([])
@@ -29,21 +31,22 @@ export default function CertificationModal(props) {
     const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
 
     //console.log({...props.values})
+    const { t, i18n } = useTranslation();
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         school: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         date: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio")
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field'))
             .nullable(),
         /* url: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio") */
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')) */
     });
 
 
@@ -113,12 +116,12 @@ export default function CertificationModal(props) {
             keyboard
         >
             <Modal.Header closeButton>
-                <Modal.Title>Certificación</Modal.Title>
+                <Modal.Title>{t('certification.certification')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Group>
-                        <Label>Nombre</Label>
+                        <Label>{t('certification.name')}</Label>
                         <Control
                             id="name"
                             maxlength="100"
@@ -135,7 +138,7 @@ export default function CertificationModal(props) {
                     ) : null}
 
                     <Form.Group>
-                        <Label>Instituto</Label>
+                        <Label>{t('certification.school')}</Label>
                         <Control
                             id="school"
                             type="textarea"
@@ -153,7 +156,7 @@ export default function CertificationModal(props) {
                         <div className="alert alert-danger">{formik.errors.school}</div>
                     ) : null}
                     <Form.Group>
-                        <Label>Fecha</Label>
+                        <Label>{t('certification.date')}</Label>
                         <DatePicker
                             id="date"
                             type="text"           
@@ -183,13 +186,13 @@ export default function CertificationModal(props) {
                         <div className="alert alert-danger">{formik.errors.date}</div>
                     ) : null}
 
-                    <Label>Certificación</Label>
+                    <Label>{t('certification.certification')}</Label>
 
                     <div className="dropzone-container">
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
-                            <p>Arrastra o haz click aquí para adjuntar archivos...</p>
-                            <p>Tamaño máximo 1MB</p>
+                            <p>{t('attachment-label')}</p>
+                            <p>{t('attachment-cap')}</p>
                         </div>
                         <aside>
                             
@@ -214,10 +217,10 @@ export default function CertificationModal(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Submit onClick={() => formik.submitForm()}>
-                    Agregar certificación
+                    {t('certification.add')}
                 </Submit>
                 <Cancel onClick={props.onHide}>
-                    Cancelar
+                    {t('certification.cancel')}
                 </Cancel>
             </Modal.Footer>
 

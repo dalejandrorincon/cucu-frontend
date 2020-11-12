@@ -144,3 +144,44 @@ nav.navbar{
     }
     
 }
+
+.flag-select{
+  
+    .flag-select__btn{
+        color: black !important;
+        font-size: 18px !important;
+
+        &:focus{
+            outline: none;
+        }
+        
+      
+        &:after{
+            border-top: 5px solid #4d4d4d !important;
+            border-left: 6px solid transparent !important;
+            border-right: 6px solid transparent !important;
+            border-bottom: 0;
+            position: relative;
+            top: 0px;
+        }
+    }
+
+    &__option{
+        margin: 0px 0 !important;
+        &__icon{
+            vertical-align: baseline;
+        }
+    }
+
+    &__options{
+        right: 0px;
+    }
+      
+}
+
+.login-container .flag-select{
+    float: right;
+    position: relative;
+    top: 7px;
+}
+

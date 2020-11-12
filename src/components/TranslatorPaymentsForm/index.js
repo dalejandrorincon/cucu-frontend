@@ -14,9 +14,10 @@ import * as Yup from 'yup';
 
 import * as BanksAPI from '../../api/banks';
 import * as PaymentDataAPI from '../../api/payment_data';
-
+import { useTranslation } from 'react-i18next';
 
 export default function TranslatorProfileForm() {
+    const { t, i18n } = useTranslation();
 
     const [entity, setEntity] = useState({
         bank_id: "",
@@ -28,7 +29,7 @@ export default function TranslatorProfileForm() {
         payoneer_account: "",
     });
 
-    const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
+    const [buttonState, setButtonState] = useState({ label: t('experience.save-changes'), disabled: false })
     const [banks, setBanks] = useState(null)
     const [response, setResponse] = useState(null)
 
@@ -55,8 +56,8 @@ export default function TranslatorProfileForm() {
     };
 
     const setSuccess = () => {
-        let message = 'Cambios guardados exitosamente.'
-        setButtonState({ label: "Enviar", disabled: false })
+        let message = t('translator-profile.successful-changes')
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
         setResponse(
             <Alert variant={'success'} >
                 {message}
@@ -66,7 +67,7 @@ export default function TranslatorProfileForm() {
 
     const setFail = () => {
         let message;
-        message = 'Ha ocurrido un error al guardar los cambios.'
+        message = t('translator-profile.changes-error')
 
         setResponse(
             <Alert variant={'danger'} >
@@ -79,12 +80,12 @@ export default function TranslatorProfileForm() {
 
     const saveChanges = (values) => {
         console.log(values)
-        setButtonState({ ...buttonState, ...{ label: "Guardando", disabled: false } })
+        setButtonState({ ...buttonState, ...{ label: t('experience.saving'), disabled: false } })
 
         if(values.bank_id==""){
             values.bank_id=null
         }
-
+        
         if (!entity) {
             PaymentDataAPI.createData({ ...values, user_id: localStorage.getItem("userId") }, localStorage.getItem("token")).then((res) => {
                 setSuccess()
@@ -107,32 +108,32 @@ export default function TranslatorProfileForm() {
     const validationSchema = Yup.object().shape({
 
         bank: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(100, "*Este campo debe tener como máximo 100 caracteres"),
+            .min(3, t('min-char', {num: 3}))
+            .max(100, t('max-char', {num: 100})),
         /* bank_id: Yup.string()
             .min(1, "*Debes elegir un campo"),
             //.required("*Este campo es obligatorio"), */
         account_type: Yup.string()
-            .min(1, "*Debes elegir un campo"),
+            .min(1, t('required-value')),
             //.required("*Este campo es obligatorio"),
         account_number: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(20, "*Este campo debe tener como máximo 20 caracteres"),
+            .min(3, t('min-char', {num: 3}))
+            .max(20, t('max-char', {num: 20})),
             //.required("*Este campo es obligatorio"),
         owner_name: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(100, "*Este campo debe tener como máximo 100 caracteres"),
+            .min(3, t('min-char', {num: 3}))
+            .max(100, t('max-char', {num: 100})),
             //.required("*Este campo es obligatorio"),
         document_type: Yup.string()
-            .min(1, "*Debes elegir un campo"),
+            .min(1, t('required-value')),
             //.required("*Este campo es obligatorio"),
         document_number: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(16, "*Este campo debe tener como máximo 16 caracteres"),
+            .min(3, t('min-char', {num: 3}))
+            .max(16, t('max-char', {num: 16})),
             //.required("*Este campo es obligatorio"),
         payoneer_account: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .max(20, "*Este campo debe tener como máximo 20 caracteres"),
+            .min(3, t('min-char', {num: 3}))
+            .max(20, t('max-char', {num: 20})),
             //.required("*Este campo es obligatorio"),
 
     });
@@ -161,16 +162,15 @@ export default function TranslatorProfileForm() {
     return (
         <div>
 
-            <Title>Información Personal</Title>
+            <Title>{t('bank-info.personal-information')}</Title>
 
             <Alert variant="primary">
-                    Si el país de tu cuenta bancaria no se encuentra en <a target="_blank" href="https://stripe.com/global">esta lista</a>, debes enlazar una cuenta de Payoneer
+                {t('bank-info.payoneer-label-1')}<a href="https://stripe.com/global">{t('bank-info.payoneer-link')}</a>{t('bank-info.payoneer-label-2')}
             </Alert>
 
             <Form onSubmit={formik.handleSubmit}>
-
-                 <Form.Group>
-                    <Label>Banco</Label>
+                <Form.Group>
+                    <Label>{t('bank-info.bank')}</Label>
                     <Form.Control
                         id="bank"
                         className="form-control input-lg"
@@ -185,7 +185,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Tipo de cuenta</Label>
+                    <Label>{t('bank-info.account-type')}</Label>
                     <Form.Control
                         as="select"
                         id="account_type"
@@ -196,7 +196,7 @@ export default function TranslatorProfileForm() {
                             formik.handleChange(e);
                         }}
                         value={formik.values.account_type} >
-                        <option value="">Seleccionar...</option>
+                        <option value="">{t('select')}</option>
                         <option value="0">Ahorros</option>
                         <option value="1">Corriente</option>
 
@@ -207,7 +207,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Número de cuenta</Label>
+                    <Label>{t('bank-info.account-number')}</Label>
                     <Form.Control
                         id="account_number"
                         type="number"
@@ -225,7 +225,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Nombre del titular de la cuenta</Label>
+                    <Label>{t('bank-info.owner-name')}</Label>
                     <Form.Control
                         id="owner_name"
                         type="text"
@@ -241,7 +241,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>Documento del titular de la cuenta</Label>
+                    <Label>{t('bank-info.owner-document')}</Label>
 
                     <div className="document-form">
                         <Form.Control
@@ -254,7 +254,7 @@ export default function TranslatorProfileForm() {
                                 formik.handleChange(e);
                             }}
                             value={formik.values.document_type} >
-                            <option value="">Seleccionar...</option>
+                            <option value="">{t('select')}</option>
                             <option value="0">Cédula de ciudadanía</option>
                             <option value="1">Cédula de extranjería</option>
 
@@ -285,7 +285,7 @@ export default function TranslatorProfileForm() {
                 <hr />
 
                 <Form.Group>
-                    <Label>Cuenta de payoneer</Label>
+                    <Label>{t('bank-info.payoneer-account')}</Label>
                     <Control
                         id="payoneer_account"
                         type="text"
@@ -295,6 +295,9 @@ export default function TranslatorProfileForm() {
                             formik.handleChange(e)
                         }}
                     />
+                    <Alert className="alert-primary payoneer" variant="primary">
+                        <p>{t('bank-info.payoneer-account-label')}<a href="https://www.payoneer.com/resources/payoneer-account/">{t('bank-info.payoneer-account-link')}</a></p>
+                    </Alert>
                 </Form.Group>
                 {formik.touched.payoneer_account && formik.errors.payoneer_account ? (
                     <div className="alert alert-danger">{formik.errors.payoneer_account}</div>

@@ -16,8 +16,12 @@ import {
   Login,
   ShowPassword
 } from './styles'
+import { useTranslation } from 'react-i18next';
 
 import { connectSocket } from "../../utils/constants"
+
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -27,6 +31,12 @@ function LoginPage() {
   const [response, setResponse] = useState<any>(null);
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
+  const { t, i18n } = useTranslation();
+
+  const onSelectFlag = (flag) =>{
+		localStorage.setItem('lang', flag)	
+		i18n.changeLanguage(flag)	
+	}
 
   const onSubmit = (data: any) => {
     data.email = data.email?.toLowerCase()
@@ -75,21 +85,27 @@ function LoginPage() {
   };
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container login-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
           <Login>
             <Logo src="/assets/images/logo.png"></Logo>
-            <Title>Inicia sesión</Title>
+            <Title>{t('login.login')}</Title>
+            <ReactFlagsSelect
+              countries={["US", "ES"]}
+              customLabels={{"US": "English","ES": "Español"}} 
+              onSelect={(flag)=>{onSelectFlag(flag)}}
+              defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
+            />
             <LoginInfo>
-              ¿No tienes cuenta CUCÚ?
+              {t('login.dont-account')}
               <CreateAccountLink to="/signup">
-                Crea una cuenta
+                {t('login.sign-up')}
               </CreateAccountLink>
-            </LoginInfo>
+            </LoginInfo>            
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group>
-                <Label>Correo electrónico</Label>
+                <Label>{t('login.email')}</Label>
                 <Control
                   type="email"
                   name="email"
@@ -98,11 +114,11 @@ function LoginPage() {
               </Form.Group>
               {errors.email && (
                 <div className="alert alert-danger">
-                  El correo electrónico es requerido
+                  {t('required-field')}
                 </div>
               )}
               <Form.Group controlId="formBasicPassword">
-                <Label>Contraseña</Label>
+                <Label>{t('login.password')}</Label>
                 <InputGroup>
                   <ControlPassword
                     type={showPassword ? "text" : "password"}
@@ -115,23 +131,23 @@ function LoginPage() {
                         setShowPassword(!showPassword);
                       }}
                     >
-                      {showPassword ? "Ocultar" : "Mostrar"}
+                      {showPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>
               </Form.Group>
               {errors.password && (
                 <div className="alert alert-danger">
-                  La contraseña es requerida
+                  {t('required-field')}
                 </div>
               )}
               <ForgotPasswordLink to="/forgot-password">
-                La olvidé
+                {t('login.forgot-password')}
               </ForgotPasswordLink>
               <Form.Group controlId="formBasicCheckbox">
-                <Check type="checkbox" label="Recordarme en este dispositivo" />
+                <Check type="checkbox" label={t('login.remember-me')} />
               </Form.Group>
-              <Submit type="submit">Iniciar sesión</Submit>
+              <Submit type="submit">{t('login.login')}</Submit>
               {response}
             </Form>
           </Login>

@@ -13,18 +13,20 @@ import { Form } from "react-bootstrap";
 import Rating from "react-rating";
 
 import "./styles.scss"
+import { useTranslation } from 'react-i18next';
 
 export default function RateModal(props) {
 
 	const [confirmDisable, setConfirmDisable] = useState(false)
-
+	const { t, i18n } = useTranslation();
+	
 	const validationSchema = Yup.object().shape({
 		comment: Yup.string()
-			.min(3, "*Este campo debe tener al menos 3 caracteres"),
+			.min(3, t('min-char', {num: 3})),
             //.required("*Este campo es obligatorio")
         rating: Yup.number()
-            .min(1, "*Debes elegir una calificación")
-            .required("*Este campo es obligatorio")
+            .min(1, t('required-rate'))
+            .required(t('required-field'))
 	});
 
 	const formik = useFormik({
@@ -72,7 +74,7 @@ export default function RateModal(props) {
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="contained-modal-title-vcenter">
-					Califica el servicio
+					{t('rate.rate-service')}
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -104,7 +106,7 @@ export default function RateModal(props) {
 							type="textarea"
 							as="textarea"
 							rows="5"
-							placeholder="Escribe aquí tus motivos..."
+							placeholder={t('rate.rate-label')}
 							value={formik.values.comment}
 							onChange={(e) => {
 								formik.setFieldTouched('comment');
@@ -126,7 +128,7 @@ export default function RateModal(props) {
 						onClick={
 							() => formik.submitForm()
 						}>
-						Calificar servicio
+						{t('rate.rate-this')}
 					</Button>
 				</Container>
 			</Modal.Footer>

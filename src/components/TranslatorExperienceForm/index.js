@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import 'moment/locale/es'  // without this line it didn't work
-
+import { useTranslation } from 'react-i18next';
 
 import * as PlatformsAPI from '../../api/platforms';
 import * as LanguagesAPI from '../../api/languages';
@@ -21,10 +21,10 @@ import CertificationModal from '../CertificationModal';
 import { Title, Submit } from "./styles"
 
 export default function TranslatorExperienceForm() {
-
+    const { t, i18n } = useTranslation();
     moment.locale('es')
 
-    const [buttonState, setButtonState] = useState({ label: "Guardar cambios", disabled: false })
+    const [buttonState, setButtonState] = useState({ label: t('experience.save-changes'), disabled: false })
     const [submitAttempt, setSubmitAttempt] = useState(false)
 
     const [response, setResponse] = useState(null)
@@ -125,8 +125,8 @@ export default function TranslatorExperienceForm() {
         console.log(payload)
 
         UsersAPI.updateUser(payload, localStorage.getItem("token")).then((res) => {
-            let message = 'Cambios guardados exitosamente.'
-            setButtonState({ label: "Enviar", disabled: false })
+            let message = t('translator-profile.successful-changes')
+            setButtonState({ label: t('experience.save-changes'), disabled: false })
             setResponse(
                 <Alert variant={'success'} >
                     {message}
@@ -135,7 +135,7 @@ export default function TranslatorExperienceForm() {
         }).catch((err) => {
             console.log(err)
             let message;
-            message = 'Ha ocurrido un error al guardar los cambios.'
+            message = t('translator-profile.changes-error')
 
             setResponse(
                 <Alert variant={'danger'} >
@@ -160,7 +160,16 @@ export default function TranslatorExperienceForm() {
             console.log(res.user)
             setEntity(res.user)
             if(res.user.remote_tools) setSelectedPlatforms(res.user.remote_tools)
-            if(res.user.specialities) setSelectedSpecialities(res.user.specialities)
+            if(res.user.specialities){
+                res.user.specialities.forEach(element => {
+                    if(i18n.language=="ES"){
+                        element.name=element.name_es
+                    }else{
+                        element.name=element.name_en
+                    }
+                });
+            }
+            setSelectedSpecialities(res.user.specialities)
             if(res.user.languages) setSelectedLanguages(res.user.languages)
         })
     };
@@ -180,7 +189,18 @@ export default function TranslatorExperienceForm() {
     };
 
     const getSpecialities = () => {
-        SpecialitiesAPI.getSpecialities().then((res) => {
+        SpecialitiesAPI.getSpecialities(i18n.language).then((res) => {
+
+            res.forEach(element => {
+                if(i18n.language=="ES"){
+                    element.name=element.name_es
+                }else{
+                    element.name=element.name_en
+                }
+            });
+
+            console.log(res)
+
             console.log(res)
             setSpecialities(res)
         })
@@ -356,13 +376,13 @@ export default function TranslatorExperienceForm() {
     return (
         <div className="translator-experience-form">
 
-            <Title>Experiencia laboral</Title>
+            <Title>{t('experience.experience')}</Title>
 
             <Form onSubmit={formik.handleSubmit}>
-                <h6><b>Herramientas remotas</b></h6>
+                <h6><b>{t('experience.remote-tools')}</b></h6>
                 <ReactTags
                     ref={reactTags}
-                    placeholderText="Agrega una herramienta..."
+                    placeholderText={t('experience.add-tool')}
                     tags={selectedPlatforms ? selectedPlatforms : []}
                     suggestions={platforms ? platforms : []}
                     onDelete={(data) => onDelete(data, "")}
@@ -370,16 +390,16 @@ export default function TranslatorExperienceForm() {
                 />
 
                 {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
-                    <div className="alert alert-danger">Debe ingresar al menos una plataforma.</div>
+                    <div className="alert alert-danger">{t('experience.experience.tools-must')}</div>
                 ) : null}
 
-                <h6><b>Idiomas</b></h6>
-                <p><b>Agrega idiomas que dominas perfectamente y puedes traducir desde y hacia otro idioma.</b></p>
+                <h6><b>{t('experience.languages')}</b></h6>
+                <p><b>{t('experience.languages-label')}</b></p>
 
                 <div className="Language-panel">
                     {selectedLanguages?.map((elm, index) => (
                         <div key={index} className="item">
-                            <div><p>De {elm.from.name} a {elm.to.name}</p></div>
+                            <div><p>{t('experience.from')} {elm.from.name} {t('experience.to')} {elm.to.name}</p></div>
                             <Button className="remove" onClick={() => removeLanguage(index)} >✕</Button>
                         </div>
                     ))}
@@ -396,7 +416,7 @@ export default function TranslatorExperienceForm() {
                                 formik.handleChange(e);
                             }}
                             value={formik.values.from} >
-                            <option value="">Seleccionar...</option>
+                            <option value="">{t('select')}</option>
                             {languages?.map((elm) => (
                                 <option key={elm.id} value={elm.id} >{elm.name}</option>
                             ))}
@@ -416,25 +436,25 @@ export default function TranslatorExperienceForm() {
                                 formik.handleChange(e);
                             }}
                             value={formik.values.to} >
-                            <option value="">Seleccionar...</option>
+                            <option value="">{t('select')}</option>
                             {languages?.map((elm) => (
                                 <option key={elm.id} value={elm.id}>{elm.name}</option>
                             ))}
                         </Form.Control>
                     </div>
-                    <Button className="add" onClick={() => addLanguage()} >Agregar</Button>
+                    <Button className="add" onClick={() => addLanguage()} >{t('add')}</Button>
                 </div>
 
                 {selectedLanguages && selectedLanguages.length == 0 && submitAttempt ? (
-                    <div className="alert alert-danger">Debe ingresar al menos un par de lenguajes.</div>
+                    <div className="alert alert-danger">{t('experience.required-language')}</div>
                 ) : null}
 
-                <h6><b>Especialidades</b></h6>
-                <p>Escribe los temas en los que tienes amplia experiencia o conocimiento para traducir.</p>
+                <h6><b>{t('experience.specialities')}</b></h6>
+                <p>{t('experience.specialities-label')}</p>
 
                 <ReactTags
                     ref={reactTags}
-                    placeholderText="Agrega una especialidad..."
+                    placeholderText={t('experience.add-speciality')}
                     tags={selectedSpecialities ? selectedSpecialities : []}
                     suggestions={specialities}
                     onDelete={(data) => onDelete(data, "specialities")}
@@ -442,11 +462,11 @@ export default function TranslatorExperienceForm() {
                 />
 
                 {selectedSpecialities && selectedSpecialities.length == 0 && submitAttempt ? (
-                    <div className="alert alert-danger">Debe ingresar al menos una especialidad.</div>
+                    <div className="alert alert-danger">{t('experience.required-speciality')}</div>
                 ) : null}
 
-                <h6><b>Experiencia laboral</b></h6>
-                <p>Agrega los lugares donde has fortalecido tu experiencia en la traducción oral</p>
+                <h6><b>{t('experience.experience')}</b></h6>
+                <p>{t('experience.experience-label')}</p>
 
                 <div className="experience-component">
                     {formik.values.work_experience?.map((experience, index) => (
@@ -463,10 +483,10 @@ export default function TranslatorExperienceForm() {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => editExperience(index, "experiences")}>
-                                                Editar
+                                                {t('edit')}
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={() => removeExperience(index, "experiences")}>
-                                                Eliminar
+                                                {t('delete')}
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -476,7 +496,7 @@ export default function TranslatorExperienceForm() {
                     ))}
                     <div className="new-exp">
                         <Button onClick={() => newExperience(true, "experiences")}>
-                            Agregar experiencia
+                            {t('experience.add')}
                         </Button>
 
                     </div>
@@ -484,12 +504,12 @@ export default function TranslatorExperienceForm() {
                 </div>
 
                 { ( !formik.values.work_experience || formik.values.work_experience.length == 0 ) && submitAttempt  ? (
-                    <div className="alert alert-danger">Debe ingresar al menos una experiencia de trabajo.</div>
+                    <div className="alert alert-danger">{t('experience.required-experience')}</div>
                 ) : null}
 
 
-                <h6><b>Certificaciones</b></h6>
-                <p>Agrega todas las certificaciones de tu práctica profesional.</p>
+                <h6><b>{t('certification.certifications')}</b></h6>
+                <p>{t('experience.certification-label')}</p>
 
                 <div className="experience-component">
                     {formik.values.certifications?.map((certification, index) => (
@@ -507,10 +527,10 @@ export default function TranslatorExperienceForm() {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => editExperience(index, "certifications")}>
-                                                Editar
+                                                {t('edit')}
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={() => removeExperience(index, "certifications")}>
-                                                Eliminar
+                                                {t('delete')}
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -520,14 +540,14 @@ export default function TranslatorExperienceForm() {
                     ))}
                     <div className="new-exp">
                         <Button onClick={() => newExperience(true, "certifications")}>
-                            Agregar certificación
+                            {t('certification.add')}
                         </Button>
 
                     </div>
 
                 </div>
                 { (!formik.values.certifications || formik.values.certifications.length==0) && submitAttempt ? (
-                    <div className="alert alert-danger">Debe ingresar al menos una certificación.</div>
+                    <div className="alert alert-danger">{t('experience.required-certificate')}</div>
                 ) : null}
 
                 <Submit

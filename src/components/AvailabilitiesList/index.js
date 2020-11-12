@@ -9,14 +9,16 @@ import DatePicker from "react-datepicker";
 
 import AvailabilitiesModal from "../../components/AvailabilitiesModal"
 import { NotifierGenerator } from "../Alerts"
+import ConfirmationModal from '../ConfirmationModal';
 
 import * as UsersAPI from '../../api/users';
 import * as UnavailabilitiesAPI from '../../api/unavailabilities';
 
 import "./styles.scss"
-
+import { useTranslation } from 'react-i18next';
 export default function AvailabilitiesList() {
-
+	const [modalShow, setModalShow] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);	
 	const [unavailabilities, setUnvailabilities] = useState([]);
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
@@ -25,7 +27,7 @@ export default function AvailabilitiesList() {
 	const [activeType, setActiveType] = useState();
 	const [activeUnavailability, setActiveUnavailability] = useState();
 	const [alert, setAlert] = useState({ type: "", message: "" });
-
+	const { t, i18n } = useTranslation();
 	const formik = useFormik({
 		initialValues: {
 			sort_by: "",
@@ -51,6 +53,16 @@ export default function AvailabilitiesList() {
 	const handleDateChange = (e, type) =>{
 		let name = type
 		let val = e
+
+		switch(type){
+			case "min_date":
+				val = moment(val).startOf("day").toDate()
+				break;
+			case "max_date":
+				val = moment(val).endOf("day").toDate()
+				break;
+		}
+
 		setOptions({
 			...options,
 			...{ [name]: val }
@@ -85,7 +97,6 @@ export default function AvailabilitiesList() {
 
 	useEffect(() => {
 		getUnavailabilities()
-		console.log(moment('2010-10-20').isBefore('2011-01-01', 'year') )
 	}, [
 		options,
 	]);
@@ -94,7 +105,7 @@ export default function AvailabilitiesList() {
 		<div>
 			<Container className="themed-container" className="availabilities-list">
 				<Col className="col-md-12">
-					<Title>No disponibilidades</Title>
+					<Title>{t('availabilities-list.unavailabilities')}</Title>
 
 						<Row className="filters">
 								<Col>
@@ -109,7 +120,7 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_by}>
-											<option value="from">Fecha y hora</option>
+											<option value="from">{t('availabilities-list.date-time')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -126,8 +137,8 @@ export default function AvailabilitiesList() {
 												handleInputChange(e)
 											}}
 											value={formik.values.sort_order}>
-											<option value="desc">Descendente</option>
-											<option value="asc">Ascendente</option>
+											<option value="desc">{t('ascending')}</option>
+											<option value="asc">{t('descending')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>
@@ -144,7 +155,7 @@ export default function AvailabilitiesList() {
 											handleDateChange(e, "min_date")
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Desde: "
+										placeholderText={t('time-from')}
 									/>
 								</Col>
 
@@ -161,7 +172,7 @@ export default function AvailabilitiesList() {
 											
 										}}
 										dateFormat="dd/MM/yyyy"
-										placeholderText="Hasta: "
+										placeholderText={t('time-to')}
 									/>
 								</Col>
 
@@ -171,8 +182,8 @@ export default function AvailabilitiesList() {
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>
-										<th scope="col">Fecha y hora de inicio</th>
-										<th scope="col">Fecha y hora de fin</th>
+										<th scope="col">{t('availabilities-list.start_date')}</th>
+										<th scope="col">{t('availabilities-list.end_date')}</th>
 										<th scope="col">
 											<Button
 												className="cucu-button plus-button"
@@ -183,7 +194,7 @@ export default function AvailabilitiesList() {
 												}}
 											>
 												<i className="fa fa-plus"></i>
-												Crear Nuevo
+												{t('availabilities-list.create-new')}
 											</Button>
 
 										</th>
@@ -209,11 +220,11 @@ export default function AvailabilitiesList() {
 																setIsModalVisible(true)
 															}}
 														>
-															Editar
+															{t('edit')}
 															</Dropdown.Item>
 															{canDelete(ele) && 
-																<Dropdown.Item onClick={() => deleteUnavailability(ele.id)}>
-																	Eliminar
+																<Dropdown.Item onClick={() => {setSelectedItem(ele.id); setModalShow(true)}}>
+																	{t('delete')}
 																</Dropdown.Item>
 															}
 														</Dropdown.Menu>
@@ -227,8 +238,8 @@ export default function AvailabilitiesList() {
 
 						<div className="pagination-container">
 							<ReactPaginate
-								previousLabel={'Anterior'}
-								nextLabel={'Siguiente'}
+								previousLabel={t('paginate-back')}
+								nextLabel={t('paginate-next')}
 								breakLabel={'...'}
 								breakClassName={'break-me'}
 								pageCount={pageCount}
@@ -255,6 +266,16 @@ export default function AvailabilitiesList() {
 				onHide={() => setIsModalVisible(false)}
 				show={isModalVisible}
 			></AvailabilitiesModal>
+
+			<ConfirmationModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                setConfirm={() =>{deleteUnavailability(selectedItem); setModalShow(false) }}
+                title={t('messages.cancel-title')}
+                body={ t('messages.cancel-body')}
+                confirm={ t('messages.cancel-confirm')}
+                cancel={t('messages.cancel-cancel')}
+            ></ConfirmationModal>
 
 			<NotifierGenerator
 				alert={alert}
