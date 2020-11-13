@@ -281,8 +281,8 @@ export default function TranslatorProfileForm() {
                             }}
                             value={formik.values.document_type} >
                             <option value="">{t('select')}</option>
-                            <option value="0">Cédula de ciudadanía</option>
-                            <option value="1">Cédula de extranjería</option>
+                            <option value="0">{t('bank-info.id-number')}</option>
+                            <option value="1">{t('bank-info.id-number-foreign')}</option>
 
                         </Form.Control>
 

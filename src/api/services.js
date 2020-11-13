@@ -1,3 +1,4 @@
+import { getLang } from '../utils/constants';
 import {api} from './api';
 
 export const createService = (token, payload) => {
@@ -10,7 +11,8 @@ export const createService = (token, payload) => {
       'Authorization': token
     },
     data: {
-      ...payload
+      ...payload,
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -64,7 +66,8 @@ export const rejectService = (token, id, payload) => {
       'Authorization': token
     },
     data: {
-        ...payload
+      ...payload,
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -82,7 +85,8 @@ export const cancelService = (token, id, payload) => {
       'Authorization': token
     },
     data: {
-        ...payload
+      ...payload,
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -99,6 +103,9 @@ export const payService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -114,6 +121,9 @@ export const acceptService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -129,6 +139,9 @@ export const finishService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)

@@ -85,7 +85,8 @@ export default function TranslatorExperienceForm() {
         initialValues: {
             ...entity,
             from: "",
-            to: ""
+            to: "",
+            speciality :""
         },
         onSubmit: values => {
 
@@ -93,8 +94,8 @@ export default function TranslatorExperienceForm() {
                 !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
                 !(selectedLanguages && selectedLanguages.length == 0 ) &&
                 !(selectedSpecialities && selectedSpecialities.length == 0 ) &&
-                !(!formik.values.work_experience || formik.values.work_experience.length==0  ) &&
-                !(!formik.values.certifications || formik.values.certifications.length==0 ) 
+                !(!formik.values.work_experience || formik.values.work_experience.length==0  )
+                //!(!formik.values.certifications || formik.values.certifications.length==0 ) 
             ){
                 saveChanges(values)
             }
@@ -229,19 +230,15 @@ export default function TranslatorExperienceForm() {
         }
     }
 
-    const onAddition = (tag, type) => {
-        let newTags = []
+    const onAddition = (type) => {
+        let current;
         switch (type) {
             case "platforms":
-                newTags = [].concat(selectedPlatforms, tag)
-                console.log(newTags)
-
-                setSelectedPlatforms(newTags)
-                break;
+                current = platforms.filter((item)=> item.id == formik.values.platform )
+                setSelectedPlatforms([ ...selectedPlatforms, ...current ])
             case "specialities":
-                newTags = [].concat(selectedSpecialities ? selectedSpecialities : [] , tag)
-                console.log(newTags)
-                setSelectedSpecialities(newTags)
+                current = specialities.filter((item)=> item.id == formik.values.speciality )
+                setSelectedSpecialities([ ...selectedSpecialities, ...current ])
         }
     }
 
@@ -396,14 +393,32 @@ export default function TranslatorExperienceForm() {
 
             <Form onSubmit={formik.handleSubmit}>
                 <h6><b>{t('experience.remote-tools')}</b></h6>
-                <ReactTags
-                    ref={reactTags}
-                    placeholderText={t('experience.add-tool')}
-                    tags={selectedPlatforms ? selectedPlatforms : []}
-                    suggestions={platforms ? platforms : []}
-                    onDelete={(data) => onDelete(data, "")}
-                    onAddition={(data) => onAddition(data, "platforms")}
-                />
+                <div className="platforms-panel">
+                    {selectedPlatforms?.map((elm, index) => (
+                        <div key={index} className="item">
+                            <div><p>{elm.name}</p></div>
+                            <Button className="remove" onClick={() => onDelete(index, "platforms")} >✕</Button>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="platform-select">
+                    <Form.Control
+                        as="select"
+                        id="platform"
+                        name="platform"
+                        className="form-control input-lg"
+                        onChange={e => {
+                            formik.handleChange(e);
+                        }}
+                        value={formik.values.platform}>
+                        <option value="">{t('all-platforms')}</option>
+                        {platforms?.map((elm) => (
+                            <option key={elm.id} value={elm.id} > {elm.name}  {}</option>
+                        ))}
+                    </Form.Control>
+                    <Button className="add" onClick={() => onAddition('platforms')} >{t('add')}</Button>
+                </div>
 
                 {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">{t('experience.tools-must')}</div>
@@ -467,16 +482,34 @@ export default function TranslatorExperienceForm() {
 
                 <h6><b>{t('experience.specialities')}</b></h6>
                 <p>{t('experience.specialities-label')}</p>
+                <div className="specialities-panel">
+                    {selectedSpecialities?.map((elm, index) => (
+                        <div key={index} className="item">
+                            <div><p>{elm.name}</p></div>
+                            <Button className="remove" onClick={() => onDelete(index, "specialities")} >✕</Button>
+                        </div>
+                    ))}
+                </div>
 
-                <ReactTags
-                    ref={reactTags}
-                    placeholderText={t('experience.add-speciality')}
-                    tags={selectedSpecialities ? selectedSpecialities : []}
-                    suggestions={specialities}
-                    onDelete={(data) => onDelete(data, "specialities")}
-                    onAddition={(data) => onAddition(data, "specialities")}
-                />
+                <div className="speciality-select">
+                    <Form.Control
+                        as="select"
+                        id="speciality"
+                        name="speciality"
+                        className="form-control input-lg"
+                        onChange={e => {
+                            formik.handleChange(e);
+                        }}
+                        value={formik.values.speciality}>
+                        <option value="">{t('all-specialities')}</option>
+                        {specialities?.map((elm) => (
+                            <option key={elm.id} value={elm.id} > {i18n.language=="ES" ? elm.name_es : elm.name_en }  {}</option>
+                        ))}
+                    </Form.Control>
+                    <Button className="add" onClick={() => onAddition('specialities')} >{t('add')}</Button>
+                </div>
 
+                
                 {selectedSpecialities && selectedSpecialities.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">{t('experience.required-speciality')}</div>
                 ) : null}
@@ -562,9 +595,9 @@ export default function TranslatorExperienceForm() {
                     </div>
 
                 </div>
-                { (!formik.values.certifications || formik.values.certifications.length==0) && submitAttempt ? (
+                {/* { (!formik.values.certifications || formik.values.certifications.length==0) && submitAttempt ? (
                     <div className="alert alert-danger">{t('experience.required-certificate')}</div>
-                ) : null}
+                ) : null} */}
 
                 <Submit
                     disabled={buttonState.disabled}

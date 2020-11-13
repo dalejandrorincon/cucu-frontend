@@ -8,6 +8,7 @@
         "show":"Mostrar",
         "hide":"Ocultar",
         "all-specialities":"Todas las especialidades",
+        "all-platforms":"Todas las plataformas",
         "select":"Seleccionar...",
         "paginate-back": "Anterior",
         "paginate-next": "Siguiente",
@@ -355,7 +356,9 @@
             "owner-document": "Documento del titular de la cuenta",
             "payoneer-account": "Cuenta de payoneer",
             "payoneer-account-label": "Si no tienes una cuenta de Payoneer, puedes crear una nueva en",
-            "payoneer-account-link": " este enlace."
+            "payoneer-account-link": " este enlace.",
+            "id-number": "Cédula de ciudadanía",
+            "id-number-foreign": "Cédula de extranjería"
         },
         "request":{
             "cancel-request": "Cancelar solicitud",

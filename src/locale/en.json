@@ -8,6 +8,7 @@
         "show":"Show",
         "hide":"Hide",
         "all-specialities":"All specialities",
+        "all-platforms":"All platforms",
         "select":"Select...",
         "paginate-back": "Back",
         "paginate-next": "Next",
@@ -30,7 +31,7 @@
         "time-from": "From: ",
         "time-to": "To: ",
         "client": "Client",
-        "translator": "Translator",
+        "translator": "Interpreter",
         "instant": "Instant",
         "programmed":"Programmed",
         "hour": "Hour",
@@ -56,7 +57,7 @@
             "requests": "Requests",
             "transactions": "Transactions",
             "schedule": "Schedule",
-            "translators": "Translators",
+            "translators": "Interpreters",
             "my-requests": "My requests",
             "log-out": "Log out",
             "profile": "Profile"
@@ -76,7 +77,7 @@
         "sign-up-client":{
             "sign-up":"Sign up",
             "user":"User",
-            "translator":"Translator",
+            "translator":"Interpreter",
             "already-account":"Already have an account? Login",
             "name":"Name",
             "last-name":"Last name",
@@ -126,7 +127,7 @@
             "resend": "Resend"
         },
         "translators-list":{
-            "translators":"Translators",
+            "translators":"Interpreters",
             "my-requets":"My requests",
             "filter-by":"Filter by",
             "reviews":"Reviews",
@@ -178,9 +179,9 @@
         },  
 
         "request-list":{
-            "translators":"Translators",
+            "translators":"Interpreters",
             "my-requests":"My requests",
-            "translator":"Translator",
+            "translator":"Interpreter",
             "request-type":"Request type",
             "charges":"Charges",
             "created":"Created",
@@ -191,7 +192,7 @@
             "instant": "Instant",
             "programmed": "Programmed",
             "search-by-client": "Search by client",
-            "search-by-translator": "Search by translator"
+            "search-by-translator": "Search by interpreter"
 
         },
         
@@ -254,7 +255,7 @@
             "instant": "Instant",
             "programmed": "Programmed",
             "search-by-client": "Search by client",
-            "search-by-translator": "Search by translator"
+            "search-by-translator": "Search by interpreter"
 
         },
 
@@ -356,7 +357,9 @@
             "owner-document": "Account owner document",
             "payoneer-account": "Payoneer account",
             "payoneer-account-label": "If you don't have a Payoneer account, you can create a new one",
-            "payoneer-account-link": " in this link."
+            "payoneer-account-link": " in this link.",
+            "id-number": "ID Number",
+            "id-number-foreign": "Foreign ID Number"
         },
         "request":{
             "cancel-request": "Cancel request",
@@ -396,7 +399,7 @@
             "request-rejected": "Request rejected",
             "request-rejected-label": "has rejected your request",
             "see-request": "See request",
-            "search-translator": "Look for another translator",
+            "search-translator": "Look for another interpreter",
             "notifications": "Notifications",
             "log-out":"Log out",
             "go-back": "Go back"

@@ -90,7 +90,7 @@ function ProfileTraductorPage({
       <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
-            <Title>Perfil</Title>
+            <Title>{t('my-profile.profile')}</Title>
             <PasswordRecover>
               <Row>
                 <Col className="col-md-12">

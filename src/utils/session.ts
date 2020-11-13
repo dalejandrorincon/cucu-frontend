@@ -18,7 +18,11 @@ export const logout = () => {
   AuthAPI.logout(getToken()).then((res)=>{
     console.log(res)
   })
-  localStorage.clear()
+  localStorage.removeItem("image_url")
+  localStorage.removeItem("role")
+  localStorage.removeItem("userName")
+  localStorage.removeItem("userId")
+  localStorage.removeItem("token")
 };
 
 export const isLogin = () => {
@@ -27,4 +31,8 @@ export const isLogin = () => {
   }
 
   return false;
+};
+
+export const getRole = () => {
+  return localStorage.getItem("role")
 };
