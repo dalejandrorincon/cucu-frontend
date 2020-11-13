@@ -305,7 +305,7 @@ function ProfilePage({
                         setShowOldPassword(!showOldPassword);
                       }}
                     >
-                      {showOldPassword ? "Ocultar" : "Mostrar"}
+                      {showOldPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>
@@ -335,7 +335,7 @@ function ProfilePage({
                         setShowPassword(!showPassword);
                       }}
                     >
-                      {showPassword ? "Ocultar" : "Mostrar"}
+                      {showPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>
@@ -367,7 +367,7 @@ function ProfilePage({
                         setShowVerifyPassword(!showVerifyPassword);
                       }}
                     >
-                      {showVerifyPassword ? "Ocultar" : "Mostrar"}
+                      {showVerifyPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>

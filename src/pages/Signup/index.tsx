@@ -254,7 +254,7 @@ function SignupPage() {
                         setShowPassword(!showPassword);
                       }}
                     >
-                      {showPassword ? "Ocultar" : "Mostrar"}
+                      {showPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>
@@ -286,7 +286,7 @@ function SignupPage() {
                         setShowVerifyPassword(!showVerifyPassword);
                       }}
                     >
-                      {showVerifyPassword ? "Ocultar" : "Mostrar"}
+                      {showVerifyPassword ? t('hide') : t('show')}
                     </ShowPassword>
                   </InputGroup.Prepend>
                 </InputGroup>
