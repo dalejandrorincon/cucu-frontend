@@ -37,7 +37,7 @@ import { useForm } from "react-hook-form";
 import Header from "../../components/Header";
 
 import * as UsersAPI from '../../api/users';
-
+import { useTranslation } from 'react-i18next';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -68,7 +68,7 @@ function ProfilePage({
 
   const [image, setImage] = useState<any>(null);
 
-
+	const { t, i18n } = useTranslation();
   const { register, handleSubmit, watch, errors } = useForm();
   const password = useRef({});
   password.current = watch("password", "");
@@ -143,7 +143,7 @@ function ProfilePage({
       <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
-            <Title>Perfil</Title>
+            <Title>{t('my-profile.profile')}</Title>
             <PasswordRecover>
               <Row>
                 <Col className="col-md-12">
@@ -179,9 +179,9 @@ function ProfilePage({
                       <Col>
                         <Row>
                           <Col>
-                            <p className="services">{profile.total_services} servicios</p>
+                            <p className="services">{profile.total_services} {t('my-profile.services')}</p>
                             <p className="cucucreditos">
-                              ${profile.total_transactions} invertidos en Cucu
+                              ${profile.total_transactions} {t('my-profile.invested-cucu')}
                             </p>
                           </Col>
                         </Row>
@@ -190,7 +190,7 @@ function ProfilePage({
                     <Row className="col-padding">
                       <Col className="col-md-3 menu-profile ">
                         <div className="item-menu">
-                          <p className="text-item-menu">Mi cuenta</p>
+                          <p className="text-item-menu">{t('my-profile.my-profile')}</p>
                         </div>
                         {/* <div className="item-menu">
                           <p className="text-item-menu">Métodos de pago</p>
@@ -200,10 +200,10 @@ function ProfilePage({
                         </div> */}
                       </Col>
                       <Col className="col-padding item-active-profile">
-                        <Title>Mi cuenta</Title>
+                        <Title>{t('my-profile.my-profile')}</Title>
                         <Form>
                           <Form.Group>
-                            <Label className="label-filter">Nombre</Label>
+                            <Label className="label-filter">{t('my-profile.first-name')}</Label>
                             <Control
                               type="text"
                               value={firstname}
@@ -213,7 +213,7 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label className="label-filter">Apellido</Label>
+                            <Label className="label-filter">{t('my-profile.last-name')}</Label>
                             <Control
                               type="text"
                               value={lastname}
@@ -222,13 +222,13 @@ function ProfilePage({
                           </Form.Group>
                           <Form.Group>
                             <Label className="label-filter">
-                              Documento de identidad
+                            {t('my-profile.document')}
                             </Label>
                             <Control type="text" value="1047450855" />
                           </Form.Group>
                           <Form.Group>
                             <Label className="label-filter">
-                              Correo electrónico
+                            {t('my-profile.email')}
                             </Label>
                             <Control
                               type="text"
@@ -237,15 +237,15 @@ function ProfilePage({
                             />
                           </Form.Group>
                           <Form.Group>
-                            <Label className="label-filter">Teléfono</Label>
+                            <Label className="label-filter">{t('my-profile.phone')}</Label>
                             <Control
                               type="text"
                               value={phone}
                               onChange={(e: any) => setPhone(e.target.value)}
                             />
                           </Form.Group>
-                          <Form.Group>
-                            <Label className="label-filter">Contraseña</Label>
+                          <Form.Group>                            
+                            <Label className="label-filter">{t('my-profile.password')}</Label>
                             <InputGroup>
                               <ControlPassword
                                 type="password"
@@ -253,13 +253,13 @@ function ProfilePage({
                               />
                               <InputGroup.Prepend>
                                 <ShowPassword onClick={handleShow}>
-                                  Cambiar
+                                  {t('my-profile.switch')}
                                 </ShowPassword>
                               </InputGroup.Prepend>
                             </InputGroup>
                           </Form.Group>
                           <Form.Group>
-                            <Label className="label-filter">Sobre mí</Label>
+                            <Label className="label-filter">{t('my-profile.about-me')}</Label>
                             <Control type="text" />
                           </Form.Group>
                           <Submit
@@ -268,11 +268,11 @@ function ProfilePage({
                               alert("Perfil actualizado");
                             }}
                           >
-                            Guardar cambios
+                            {t('my-profile.save-changes')}
                           </Submit>
                         </Form>
                         <Link className="disabled-account" to="#">
-                          Desactivar cuenta
+                          {t('my-profile.disable account')}
                         </Link>
                       </Col>
                     </Row>
@@ -284,11 +284,11 @@ function ProfilePage({
         </RowRecover>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Cambiar contraseña</Modal.Title>
+            <Modal.Title>{t('my-profile.change-account')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p className="info-change-password">
-              Escribe tu contraseña actual para poder cambiar tu contraseña.
+              {t('my-profile.type-password')}
             </p>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group>
@@ -296,7 +296,7 @@ function ProfilePage({
                   <ControlPassword
                     type={showOldPassword ? "text" : "password"}
                     name="old_password"
-                    placeholder="Contraseña actual"
+                    placeholder={t('my-profile.current-password')}
                     ref={register({ required: true })}
                   />
                   <InputGroup.Prepend>
@@ -312,7 +312,7 @@ function ProfilePage({
               </Form.Group>
               {errors.old_password && (
                 <div className="alert alert-danger">
-                  La contraseña actual es requerida
+                  {t('my-profile.current-password-required')}
                 </div>
               )}
               <Form.Group>
@@ -320,7 +320,7 @@ function ProfilePage({
                   <ControlPassword
                     type={showPassword ? "text" : "password"}
                     name="password"
-                    placeholder="Nueva contraseña"
+                    placeholder={t('my-profile.new-password')}
                     ref={register({
                       required: "La contraseña es requerida",
                       pattern: {
@@ -342,20 +342,19 @@ function ProfilePage({
               </Form.Group>
               {errors.password && (
                 <div className="alert alert-danger">
-                  {errors.password.message}
+                {errors.password.type=="required" ? t('required-field') : null}
+                {errors.password.type=="pattern" ? t('password-criteria') : null}
                 </div>
               )}
               <PasswordInfo>
-                Debe contener como mínimo una letra mayúscula, una letra
-                minúscula, 1 número, 1 carácter especial y 8 caracteres sin
-                espacio en blanco
+                {t('password-criteria')}
               </PasswordInfo>
               <Form.Group controlId="formBasicPassword">
                 <InputGroup>
                   <ControlPassword
                     type={showVerifyPassword ? "text" : "password"}
                     name="password_repeat"
-                    placeholder="Confirma nueva contraseña"
+                    placeholder={t('my-profile.confirm-password')}
                     ref={register({
                       validate: (value) =>
                         value === password.current ||
@@ -378,7 +377,7 @@ function ProfilePage({
                   {errors.password_repeat.message}
                 </div>
               )}
-              <SubmitButton type="submit">Cambiar contraseña</SubmitButton>
+              <SubmitButton type="submit">{t('change-password')}</SubmitButton>
             </Form>
           </Modal.Body>
         </Modal>

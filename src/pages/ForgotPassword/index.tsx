@@ -20,6 +20,7 @@ import {
   ResendInfo,
   ResendLink,
 } from "./styles"
+import { useTranslation } from 'react-i18next';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -28,6 +29,8 @@ function ForgotPasswordPage() {
   const history = useHistory();
 
   const [email, setEmail] = useState("");
+  const { t, i18n } = useTranslation();
+  const [error, setError] = useState(false)
 
   const submitForm = () => {
     const body = new URLSearchParams({
@@ -54,7 +57,8 @@ function ForgotPasswordPage() {
             console.log(error);
           });
       } else {
-        alert("Ingresa por favor tu correo electrónico");
+        setError(true)
+        //alert("Ingresa por favor tu correo electrónico");
       }
     } catch (error) {
       console.log("Error", error);
@@ -71,13 +75,12 @@ function ForgotPasswordPage() {
               <SuccessfulContainer>
                 <Successful src="/assets/images/check@2x.png"></Successful>
               </SuccessfulContainer>
-              <Title>¡Correo electrónico enviado!</Title>
+              <Title>{t('confirm-forgot-password.email-sent')}</Title>
               <SuccessfulInfo>
-                En unos momentos recibirás un correo electrónico con un
-                instrucciones para recuperar tu contraseña.
+                {t('confirm-forgot-password.detail1')}
               </SuccessfulInfo>
               <SuccessfulInfoLabel>
-                Revisa tu bandeja de entrada y SPAM.
+                {t('confirm-forgot-password.detail2')}
               </SuccessfulInfoLabel>
               <ButtonToLogin>
                 <Submit
@@ -86,17 +89,17 @@ function ForgotPasswordPage() {
                     history.push("/");
                   }}
                 >
-                  Iniciar sesión
+                  {t('confirm-forgot-password.login')}
                 </Submit>
                 <ResendInfo>
-                  ¿No recibiste el correo?
+                  {t('confirm-forgot-password.dont-get-email')}
                   <ResendLink
                     to="#"
                     onClick={() => {
                       setSuccessfulSendCode(false);
                     }}
                   >
-                    Reenviar
+                    {t('confirm-forgot-password.resend')}
                   </ResendLink>
                 </ResendInfo>
               </ButtonToLogin>
@@ -104,24 +107,30 @@ function ForgotPasswordPage() {
           ) : (
             <ForgotPassword>
               <Logo src="/assets/images/logo.png"></Logo>
-              <Title>Recupera tu contraseña</Title>
+              <Title>{t('forgot-password.reset-password')}</Title>
               <ForgotPasswordInfo>
-                Escribe el correo electrónico de tu cuenta y te enviaremos
-                instrucciones para restablecer tu contraseña.
+              {t('forgot-password.details')}
               </ForgotPasswordInfo>
               <Form>
                 <Form.Group>
-                  <Label>Correo electrónico</Label>
+                  <Label>
+                    {t('forgot-password.email')}
+                  </Label>
                   <Control
                     type="email"
                     onChange={(e: any) => setEmail(e.target.value)}
                   />
+                  {error && (
+                    <div className="alert alert-danger">
+                      {t('required-field')}
+                    </div>
+                  )}
                 </Form.Group>
                 <Submit type="button" onClick={submitForm}>
-                  Enviar correo electrónico
+                  {t('forgot-password.send-email')}
                 </Submit>
               </Form>
-              <BackToLogin to="/">Volver a iniciar sesión</BackToLogin>
+              <BackToLogin to="/">{t('forgot-password.go-back')}</BackToLogin>
             </ForgotPassword>
           )}
         </Col>

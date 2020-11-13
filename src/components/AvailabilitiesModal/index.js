@@ -7,27 +7,27 @@ import moment from "moment";
 import { combineDateWithTime } from "../../utils/constants"
 import { useFormik } from 'formik';
 import * as UnavailabilitiesAPI from '../../api/unavailabilities';
-
+import { useTranslation } from 'react-i18next';
 import { Form } from "react-bootstrap";
 
 export default function AvailabilitiesModal(props) {
 
     const [confirmDisable, setConfirmDisable] = useState(false)
-
+	const { t, i18n } = useTranslation();
 
     const validationSchema = Yup.object().shape({
         date_start: Yup.string()
-            .min(1, "*Debes elegir una opcion")
-            .required("*Este campo es obligatorio"),
+            .min(1, t('required-select'))
+            .required(t('required-field')),
         date_end: Yup.string()
-            .min(1, "*Debes elegir una opcion")
-            .required("*Este campo es obligatorio"),
+            .min(1, t('required-select'))
+            .required(t('required-field')),
         time_start: Yup.string()
-            .min(1, "*Debes elegir una opcion")
-            .required("*Este campo es obligatorio"),
+            .min(1, t('required-select'))
+            .required(t('required-field')),
         time_end: Yup.string()
-            .min(1, "*Debes elegir una opcion")
-            .required("*Este campo es obligatorio"),
+            .min(1, t('required-select'))
+            .required(t('required-field')),
     });
 
 
@@ -41,14 +41,18 @@ export default function AvailabilitiesModal(props) {
         onSubmit: values => {
             setConfirmDisable(true)
             let userId = localStorage.getItem("userId")
-            let startDateTime = combineDateWithTime(formik.values.date_start, formik.values.time_start)
-            let endDateTime = combineDateWithTime(formik.values.date_end, formik.values.time_end)
+            let startDateTime;
+            let endDateTime;            
 
             switch (props.type) {
                 case "create":
+                    startDateTime = combineDateWithTime(formik.values.date_start, formik.values.time_start)
+                    endDateTime = combineDateWithTime(formik.values.date_end, formik.values.time_end)
                     createUnavailability({ from: startDateTime, to: endDateTime, translator_id: userId })
                     break;
                 case "edit":
+                    startDateTime = combineDateWithTime(moment(formik.values.date_start).toDate(), moment(formik.values.time_start).toDate())
+                    endDateTime = combineDateWithTime(moment(formik.values.date_end).toDate(), moment(formik.values.time_end).toDate())
                     editUnavailability({ from: startDateTime, to: endDateTime, translator_id: userId })
             }
         },
@@ -61,7 +65,7 @@ export default function AvailabilitiesModal(props) {
         UnavailabilitiesAPI.createUnavailability(values, localStorage.getItem("token")).then((res) => {
             setConfirmDisable(false)
             props.onHide()
-            props.success("creada")
+            props.success(t('availabilities-list.created'))
             formik.resetForm()
         })
     }
@@ -70,7 +74,7 @@ export default function AvailabilitiesModal(props) {
         UnavailabilitiesAPI.updateUnavailability(values, localStorage.getItem("token"), props.unavailability?.id).then((res) => {
             setConfirmDisable(false)
             props.onHide()
-            props.success("editada")
+            props.success(t('availabilities-list.edited'))
             formik.resetForm()
         })
     }
@@ -88,46 +92,45 @@ export default function AvailabilitiesModal(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {props.type == "create" ? <>Crear no disponibilidad</> : <>Editar no disponibilidad</>}
+                        {props.type == "create" ? <>{t('availabilities-list.create-unavailability')}</> : <>{t('availabilities-list.edit-unavailability')}</>}
 
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container className="form-container">
                         <div className="date-item">
-                            <p>Indica el horario en el que no vas a estar disponible para recibir solicitudes de servicios en la plataforma.</p>
+                            <p>{t('availabilities-list.create-unavailabilty-label')}</p>
                             <Form.Group>
                                 <Row className="margin-row-form">
-
                                     <Col className="col-md-5">
                                         <DatePicker
                                             className="form-control"
-                                            placeholderText="Fecha"
+                                            placeholderText={t('availabilities-list.date')}
                                             selected={(formik.values.date_start && new Date(formik.values.date_start)) || null}
                                             onChange={(e) => {
                                                 formik.setFieldTouched('date_start');
                                                 formik.setFieldValue('date_start', e)
                                             }}
-                                            minDate={new Date()}
+                                            minDate={ new Date()}
                                             maxDate={formik.values.date_end}
                                             dateFormat="dd/MM/yyyy"
 
                                         />
                                     </Col>
                                     <Col className="col-md-2">
-                                        <span>Hasta</span>
+                                        <span>{t('availabilities-list.to')}</span>
                                     </Col>
 
                                     <Col className="col-md-5">
                                         <DatePicker
                                             className="form-control"
-                                            placeholderText="Fecha"
+                                            placeholderText={t('availabilities-list.date')}
                                             selected={(formik.values.date_end && new Date(formik.values.date_end)) || null}
                                             onChange={(e) => {
                                                 formik.setFieldTouched('date_end');
                                                 formik.setFieldValue('date_end', e)
                                             }}
-                                            minDate={formik.values.date_start}
+                                            minDate={formik.values.date_start ? formik.values.date_start : new Date() }
                                             dateFormat="dd/MM/yyyy"
 
                                         />
@@ -139,7 +142,7 @@ export default function AvailabilitiesModal(props) {
                                     <Col className="col-md-5">
                                         <DatePicker
                                             className="form-control"
-                                            placeholderText="Hora"
+                                            placeholderText={t('availabilities-list.time')}
                                             selected={(formik.values.time_start && new Date(formik.values.time_start)) || null}
                                             onChange={(e) => {
                                                 formik.setFieldTouched('time_start');
@@ -157,13 +160,13 @@ export default function AvailabilitiesModal(props) {
                                     </Col>
                                     
                                     <Col className="col-md-2">
-                                        <span>Hasta</span>
+                                        <span>{t('availabilities-list.to')}</span>
                                     </Col>
 
                                     <Col className="col-md-5">
                                         <DatePicker
                                             className="form-control"
-                                            placeholderText="Hora"
+                                            placeholderText={t('availabilities-list.time')}
                                             selected={(formik.values.time_end && new Date(formik.values.time_end)) || null}
                                             onChange={(e) => {
                                                 formik.setFieldTouched('time_end');
@@ -187,7 +190,7 @@ export default function AvailabilitiesModal(props) {
                             (formik.touched.time_end && formik.errors.time_end)
                             ? (
                                 <>
-                                    <div className="alert alert-danger">Debes seleccionar un dia y hora</div>
+                                    <div className="alert alert-danger">{t('availabilities-list.field-required')}</div>
                                 </>
                             ) : null}
                     </Container>
@@ -201,7 +204,7 @@ export default function AvailabilitiesModal(props) {
                             onClick={
                                 () => formik.submitForm()
                             }>
-                            {props.type == "create" ? <>Crear</> : <>Editar</>}
+                            {props.type == "create" ? <>{t('create')}</> : <>{t('edit')}</>}
                         </Button>
                     </Container>
                 </Modal.Footer>

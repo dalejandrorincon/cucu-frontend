@@ -26,7 +26,8 @@ import {
   Submit
 } from "./styles"
 import Header from "../../components/Header";
-
+import { useTranslation } from 'react-i18next';
+import i18next from "i18next";
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -47,7 +48,7 @@ function ProfileTranslatorPage({
   const [isVisible, setisVisible] = useState(false);
 
   const [translators, setTranslators] = useState<any>({});
-
+	const { t, i18n } = useTranslation();
   const getTranslators = () => {
     const headers = new Headers();
     headers.append("Accept", "application/json");
@@ -81,7 +82,7 @@ function ProfileTranslatorPage({
       <Container className="themed-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
-            <Title>Perfil de traductor</Title>
+            <Title>{t('translator_profile.translator_profile')}</Title>
             <PasswordRecover>
               <Row>
                 <Col className="col-md-12">
@@ -99,7 +100,7 @@ function ProfileTranslatorPage({
                             <p className="name">
                               <span className="user-name">{translators?.firstname} {translators?.lastname}</span>
                               <br></br> {translators?.total_experience_years}{" "}
-                              años de experiencia
+                              {t('translator_profile.years-of-experience')}
                               <div>
                                 <Rating
                                   emptySymbol="fa fa-star-o fa-2x fa-start"
@@ -128,7 +129,7 @@ function ProfileTranslatorPage({
                                 history.push(`/request-translator/${id}`);
                               }}
                             >
-                              Solicitar servicio
+                              {t('translator_profile.request-service')}
                             </Submit>
                           </Col>
                         </Row>
@@ -145,19 +146,19 @@ function ProfileTranslatorPage({
                           <Col className="col-md-12 col-margin">
                             <Row className="border-cont">
                               <Col>
-                                <p>Especialista en</p>
+                                <p>{t('translator_profile.specialized')}</p>
                                 {translators?.specialities?.map((sp: any) => (
                                   <span className="badge badge-light">
-                                    {sp.name}
+                                    {i18next.language=="ES" ? sp.name_es : sp.name_en}
                                   </span>
                                 ))}
                               </Col>
                               <Col>
-                                <p>Idioma</p>
+                                <p>{t('translator_profile.languages')}</p>
                                 {translators?.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      De {lng.from.name} a {lng.to.name}
+                                      De {i18next.language=="ES" ? lng.from.name_es : lng.from.name_en} a {i18next.language=="ES" ? lng.to.name_es : lng.to.name_en}
                                     </span>
                                   </>
                                 ))}
@@ -167,13 +168,13 @@ function ProfileTranslatorPage({
                           <Col className="col-md-12 col-margin">
                             <Row className="border-cont">
                               <Col>
-                                <p>Ubicacion</p>
+                                <p>{t('translator_profile.location')}</p>
                                 <span className="text-profile-item">
                                   {translators?.address_1}
                                 </span>
                               </Col>
                               <Col>
-                                <p>Nacionalidad</p>
+                                <p>{t('translator_profile.nationality')}</p>
                                 <span className="text-profile-item">
                                   {translators?.nationality}
                                 </span>
@@ -183,13 +184,13 @@ function ProfileTranslatorPage({
                           <Col className="col-md-12 col-margin">
                             <Row className="border-cont">
                               <Col>
-                                <p>Tarifa por hora</p>
+                                <p>{t('translator_profile.rate-hour')}</p>
                                 <span className="text-profile-item">
                                   ${translators?.rate_hour}
                                 </span>
                               </Col>
                               <Col>
-                                <p>Tarifa por minuto</p>
+                                <p>{t('translator_profile.rate-minute')}</p>
                                 <span className="text-profile-item">
                                   ${translators?.rate_minute}
                                 </span>
@@ -202,7 +203,7 @@ function ProfileTranslatorPage({
                       <Col className="col-md-3 opinions">
                         <div className="opinion-container">
                           <div className="opinion-title">
-                            <p>Opiniones</p>
+                            <p>{t('translator_profile.opinions')}</p>
                             {/* <a
                               className="ver-todas"
                               onClick={() => {
@@ -212,7 +213,7 @@ function ProfileTranslatorPage({
                               Ver todas
                             </a> */}
                           </div>
-                          <p>{translators?.rating} ({translators?.total_ratings ? translators.total_ratings : 0 } {translators?.total_ratings!="1"?<>opiniones</>:<>opinión</>})</p>
+                          <p>{translators?.rating} {t('translator_profile.opinions')}</p>
                         </div>
                         {/* <div>
                           <p className="name">

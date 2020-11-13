@@ -17,6 +17,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { isParseable } from "../../utils/constants"
+import { useTranslation } from 'react-i18next';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -31,11 +32,12 @@ export default function ExperienceModal(props) {
     const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
 
     //console.log({...props.values})
+    const { t, i18n } = useTranslation();
 
     const validationSchema = Yup.object().shape({
         company: Yup.string()
-            .min(3, "*Este campo debe tener al menos 3 caracteres")
-            .required("*Este campo es obligatorio"),
+            .min(3, t('min-char', {num: 3}))
+            .required(t('required-field')),
         /* url: Yup.string()
             .min(3, "*Este campo debe tener al menos 3 caracteres")
             .required("*Este campo es obligatorio") */
@@ -108,12 +110,12 @@ export default function ExperienceModal(props) {
             keyboard
         >
             <Modal.Header closeButton>
-                <Modal.Title>Experiencia laboral</Modal.Title>
+                <Modal.Title>{t('experience.experience')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Group>
-                        <Label>Empresa</Label>
+                        <Label>{t('experience.company')}</Label>
                         <Control
                             id="company"
                             type="text"
@@ -130,13 +132,13 @@ export default function ExperienceModal(props) {
                     ) : null}
 
 
-                    <Label>Certificado laboral</Label>
+                    <Label>{t('experience.certificate')}</Label>
 
                     <div className="dropzone-container">
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
-                            <p>Arrastra o haz click aquí para adjuntar archivos...</p>
-                            <p>Tamaño máximo 1MB</p>
+                            <p>{t('attachment-label')}</p>
+                            <p>{t('attachment-cap')}</p>
                         </div>
                         <aside>
 
@@ -160,10 +162,10 @@ export default function ExperienceModal(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Submit onClick={() => formik.submitForm()}>
-                    Agregar experiencia
+                    {t('experience.add')}
                 </Submit>
                 <Cancel onClick={props.onHide}>
-                    Cancelar
+                    {t('experience.cancel')}
                 </Cancel>
             </Modal.Footer>
 

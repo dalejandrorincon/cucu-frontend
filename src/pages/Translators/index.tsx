@@ -44,6 +44,7 @@ import { combineDateWithTime } from "../../utils/constants"
 import ReactPaginate from 'react-paginate';
 
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   counter: number;
@@ -67,24 +68,24 @@ function TranslatorsPage({
   const [data, setData] = useState<any>({});
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
-
+  const { t, i18n } = useTranslation();
 
   const ExampleCustomInput = (props) => <Form.Control {...props} />;
   const ExampleCustomInputTime = (props) => (
-    <TextFilterBox onClick={props.onClick}>{props.value ? props.value : "Desde"}</TextFilterBox>
+    <TextFilterBox onClick={props.onClick}>{props.value ? props.value : t('translators-list.time-from')}</TextFilterBox>
   );
 
   const ExampleCustomInputTimeTwo = (props) => (
-    <TextFilterBoxEnd onClick={props.onClick} >{props.value ? props.value : "Hasta"}</TextFilterBoxEnd>
+    <TextFilterBoxEnd onClick={props.onClick} >{props.value ? props.value : t('translators-list.time-to')}</TextFilterBoxEnd>
   );
 
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(10);
-  const [value, setValue] = useState([0, 10]);
+  const [max, setMax] = useState(120);
+  const [value, setValue] = useState([0, 120]);
 
-  const [minHour, setMinHour] = useState(25);
+  const [minHour, setMinHour] = useState(40);
   const [maxHour, setMaxHour] = useState(100);
-  const [valueHour, setValueHour] = useState([25, 100]);
+  const [valueHour, setValueHour] = useState([40, 100]);
 
   const [minMinute, setMinMinute] = useState(1);
   const [maxMinute, setMaxMinute] = useState(2.5);
@@ -114,7 +115,7 @@ function TranslatorsPage({
   };
 
   const getSpecialities = () => {
-    SpecialitiesAPI.getSpecialities().then((res) => {
+    SpecialitiesAPI.getSpecialities(i18n.language).then((res) => {
       console.log(res)
       setSpecialities(res)
     })
@@ -214,6 +215,7 @@ function TranslatorsPage({
     formik.values.name,
     startTime,
     endTime,
+    startDate,
     rate,
     page
   ]);
@@ -244,15 +246,15 @@ function TranslatorsPage({
       <Container className="themed-container translators-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
-            <Title>Traductores</Title>
+            <Title> {t('translators-list.translators')}</Title>
             <PasswordRecover>
               <Row className="margin-5">
                 <Col className="col-md-3">
                   <div className="card">
-                    <div className="card-header titleFilter">Filtrar por</div>
+                    <div className="card-header titleFilter">{t('translators-list.filter-by')}</div>
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <div className="label-filter">Calificación</div>
+                        <div className="label-filter">{t('translators-list.reviews')}</div>
                         <Rating
                           emptySymbol="fa fa-star-o fa-2x fa-start"
                           fullSymbol="fa fa-star fa-2x fa-start"
@@ -262,29 +264,30 @@ function TranslatorsPage({
                         />
                       </li>
                       <li className="list-group-item">
-                        <div className="label-filter">Experiencia</div>
+                        <div className="label-filter">{t('translators-list.experience')}</div>
                         <div className="slidecontainer">
                           <Range
                             value={value}
                             min={min}
                             max={max}
                             onChange={onSliderChange}
+                            step={6}
                             onAfterChange={() => getTranslators()}
                           />
                         </div>
                         <LabelFilter>
                           <Col>
-                            <TextFilter>{value[0]} años</TextFilter>
+                            <TextFilter>{value[0]} {t('translators-list.months')}</TextFilter>
                           </Col>
                           <ColFilter>
-                            <TextFilter>{value[1]} años</TextFilter>
+                            <TextFilter>{value[1]} {t('translators-list.months')}</TextFilter>
                           </ColFilter>
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
                         <Form.Group>
                           <Form.Label className="label-filter">
-                            Disponible
+                            {t('translators-list.availability')}
                           </Form.Label>
                           <DatePicker
                             selected={startDate}
@@ -328,7 +331,7 @@ function TranslatorsPage({
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
-                        <div className="label-filter">Precio por hora</div>
+                        <div className="label-filter">{t('translators-list.rate-hour')}</div>
                         <br></br>
                         {/* <TextFilter
                           onClick={() => {
@@ -370,7 +373,7 @@ function TranslatorsPage({
                         </LabelFilter>
                       </li>
                       <li className="list-group-item">
-                        <div className="label-filter">Precio por minuto</div>
+                        <div className="label-filter">{t('translators-list.rate-minute')}</div>
                         <br></br>
                         {/* <TextFilter
                           onClick={() => {
@@ -430,9 +433,9 @@ function TranslatorsPage({
                                 formik.handleChange(e);
                               }}
                               value={formik.values.speciality}>
-                              <option value="">Todas las especialidades</option>
+                              <option value="">{t('all-specialities')}</option>
                               {specialities?.map((elm: any) => (
-                                <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                <option key={elm.id} value={elm.id} > {i18n.language=="ES" ? elm.name_es : elm.name_en }  {}</option>
                               ))}
                             </Form.Control>
                           </Form.Group>
@@ -449,9 +452,9 @@ function TranslatorsPage({
                                   formik.handleChange(e);
                                 }}
                                 value={formik.values.languageFrom} >
-                                <option value="">Seleccionar...</option>
+                                <option value="">{t('select')}</option>
                                 {languages?.map((elm: any) => (
-                                  <option key={elm.id} value={elm.id} >{elm.name}</option>
+                                  <option key={elm.id} value={elm.id} >{i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                                 ))}
                               </Form.Control>
                               <Button className="switch" onClick={() => switchLanguages()}>
@@ -469,9 +472,9 @@ function TranslatorsPage({
                                   formik.handleChange(e);
                                 }}
                                 value={formik.values.languageTo} >
-                                <option value="0">Seleccionar...</option>
+                                <option value="0">{t('select')}</option>
                                 {languages?.map((elm: any) => (
-                                  <option key={elm.id} value={elm.id}>{elm.name}</option>
+                                  <option key={elm.id} value={elm.id}>{i18n.language=="ES" ? elm.name_es : elm.name_en}</option>
                                 ))}
                               </Form.Control>
                             </div>
@@ -479,7 +482,7 @@ function TranslatorsPage({
                         </Col>
                         <Col>
                           <FormControl
-                            placeholder="Buscar por nombre"
+                            placeholder={t('translators-list.search-by-name')}
                             id="name"
                             type="text"
                             value={formik.values.name}
@@ -519,26 +522,26 @@ function TranslatorsPage({
                                 </div>
                               </td>
                               <td>
-                                <p>Especialista en</p>
+                                <p>{t('translators-list.specialist-in')}</p>
                                 {ele.specialities?.map((sp: any) => (
                                   <span className="badge badge-light">
-                                    {sp.name}
+                                    {i18n.language=="ES" ? sp.name_es : sp.name_en }
                                   </span>
                                 ))}
                               </td>
                               <td>
-                                <p>Idioma</p>
+                                <p>{t('translators-list.language')}</p>
                                 {ele.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      De {lng.from.name} a {lng.to.name}
+                                    {t('translators-list.from')} {i18n.language=="ES" ? lng.from.name_es : lng.from.name_en} {t('translators-list.to')} {i18n.language=="ES" ? lng.to.name_es : lng.to.name_en}
                                     </span>
                                   </>
                                 ))}
                               </td>
                               <td>
                                 <ResendLink to={`profile-translator/${ele.id}`}>
-                                  Ver perfil
+                                  {t('translators-list.see-profile')}
                                 </ResendLink>
                               </td>
                             </tr>
@@ -548,8 +551,8 @@ function TranslatorsPage({
                     </div>
                     <div className="pagination-container">
                       <ReactPaginate
-                        previousLabel={'Anterior'}
-                        nextLabel={'Siguiente'}
+                        previousLabel={t('paginate-back')}
+                        nextLabel={t('paginate-next')}
                         breakLabel={'...'}
                         breakClassName={'break-me'}
                         pageCount={pageCount}
