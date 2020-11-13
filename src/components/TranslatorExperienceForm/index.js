@@ -234,10 +234,13 @@ export default function TranslatorExperienceForm() {
         switch (type) {
             case "platforms":
                 newTags = [].concat(selectedPlatforms, tag)
+                console.log(newTags)
+
                 setSelectedPlatforms(newTags)
                 break;
             case "specialities":
-                newTags = [].concat(selectedSpecialities, tag)
+                newTags = [].concat(selectedSpecialities ? selectedSpecialities : [] , tag)
+                console.log(newTags)
                 setSelectedSpecialities(newTags)
         }
     }

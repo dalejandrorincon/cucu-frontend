@@ -1236,3 +1236,13 @@ a.main-link:hover {
   color: #863df9;
   text-decoration: underline;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
