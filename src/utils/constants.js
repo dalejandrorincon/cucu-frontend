@@ -84,3 +84,11 @@ export const connectSocket = () => {
         console.log(data)
     });
 }
+
+export const getLang = () => {
+    if(i18n.language=="ES"){
+      return "ES"
+    }else{
+      return "EN"
+    }
+}
