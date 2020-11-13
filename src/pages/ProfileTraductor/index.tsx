@@ -126,7 +126,7 @@ function ProfileTraductorPage({
                           <Col>
                             <p className="services">${profile?.total_transactions}</p>
                             <p className="cucucreditos">
-                              {profile?.total_services} servicios
+                              {profile?.total_services} {t('my-profile.services')}
                             </p>
                           </Col>
                         </Row>
