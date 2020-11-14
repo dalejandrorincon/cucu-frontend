@@ -82,8 +82,8 @@
             "name":"Name",
             "last-name":"Last name",
             "client-type":"Client type",
-            "natural-person":"Natural person",
-            "legal-person":"Legal body",
+            "natural-person":"Person",
+            "legal-person":"Company",
             "business-name":"Business name",
             "email":"Email",
             "phone":"Phone number",
@@ -359,7 +359,10 @@
             "payoneer-account-label": "If you don't have a Payoneer account, you can create a new one",
             "payoneer-account-link": " in this link.",
             "id-number": "ID Number",
-            "id-number-foreign": "Foreign ID Number"
+            "id-number-foreign": "Foreign ID Number",
+            "account-country": "Account country",
+            "account-savings": "Savings account",
+            "account-checking": "Checking account"
         },
         "request":{
             "cancel-request": "Cancel request",
