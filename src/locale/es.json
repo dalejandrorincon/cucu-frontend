@@ -358,7 +358,10 @@
             "payoneer-account-label": "Si no tienes una cuenta de Payoneer, puedes crear una nueva en",
             "payoneer-account-link": " este enlace.",
             "id-number": "Cédula de ciudadanía",
-            "id-number-foreign": "Cédula de extranjería"
+            "id-number-foreign": "Cédula de extranjería",
+            "account-country": "País de la cuenta",
+            "account-savings": "Ahorro",
+            "account-checking": "Corriente"
         },
         "request":{
             "cancel-request": "Cancelar solicitud",
