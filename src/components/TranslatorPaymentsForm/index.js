@@ -271,7 +271,7 @@ export default function TranslatorProfileForm() {
 
 
                 <Form.Group className="outline">
-                    <Label>{t('translator-profile.country')}</Label>
+                    <Label>{t('bank-info.account-country')}</Label>
                     <Form.Control
                         as="select"
                         id="country_id"
