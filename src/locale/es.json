@@ -159,6 +159,9 @@
             "duration": "Duración",
             "start-date": "Fecha inicio",
             "enter-session": "Entrar a la sesión",
+            "edit-url": "Editar la URL",
+            "update-url": "URL",
+            "save-url":"Guardar",
             "attached": "Adjuntos",
             "no-attachments": "Sin archivos adjuntos",
             "extra-info": "Información adicional",
@@ -177,6 +180,7 @@
             "service-finished": "Servicio finalizado",
             "service-cancelled": "Servicio cancelado",
             "service-rated": "Servicio calificado",
+            "service-edited": "Servicio editado",
             "service": "Servicio ",
             "time": "Hora"
         },  

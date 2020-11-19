@@ -160,6 +160,9 @@
             "duration": "Duration",
             "start-date": "Start date",
             "enter-session": "Enter session",
+            "edit-url": "Edit URL",
+            "update-url":"URL",
+            "save-url":"Save URL",
             "attached": "Attached",
             "no-attachments": "No attachments",
             "extra-info": "Additional information",
@@ -178,6 +181,7 @@
             "service-finished": "Service finished",
             "service-cancelled": "Service cancelled",
             "service-rated": "Service rated",
+            "service-edited": "Service edited",
             "service": "Service ",
             "time": "Time"
 

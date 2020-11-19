@@ -21,6 +21,25 @@ export const createService = (token, payload) => {
     });
 };
 
+export const updateService = (token, payload, id) => {
+  const URL = `/translation_services/`+id;
+  console.log(payload)
+  return api(URL, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    },
+    data: {
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
 export const getServices = (type, token, payload) => {
   console.log(type)
   const URL = `/translation_services/`+type;
