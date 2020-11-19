@@ -16,6 +16,8 @@ import "./styles.scss"
 
 import CancelModal from "../CancelModal"
 import RateModal from "../RateModal"
+import EditServiceModal from "../EditServiceModal"
+
 
 import * as ServicesAPI from '../../api/services';
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -30,6 +32,7 @@ export default function ServiceModal(props) {
   const [modalCancel, setModalCancel] = useState(false);
   const [modalRate, setModalRate] = useState(false);
   const [modalType, setModalType] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
   const [confirmDisable, setConfirmDisable] = useState(false)
 
   const [confirmCancelBtn, setConfirmCancelBtn] = useState(false);
@@ -346,16 +349,27 @@ export default function ServiceModal(props) {
               <span> {moment(props.service.date).format("D MMM  YYYY")}</span>
             </p>
             { props.service?.service_site == "1" && ( props.service?.status == "2" || role == "client" ) ?
-              <URLLabel
-                type="button"
-                className="url-button"
-                onClick={() => {
-                  window.open(props.service?.url.includes("//") ? props.service.url : "//"+props.service.url);
-                }}
-              >
-                <img src="/assets/images/video-purple.png"></img>
-                {t('request-modal.enter-session')}
-              </URLLabel>
+              <>
+                <URLLabel
+                  type="button"
+                  className="url-button"
+                  onClick={() => {
+                    window.open(props.service?.url.includes("//") ? props.service.url : "//"+props.service.url);
+                  }}
+                >
+                  <img src="/assets/images/video-purple.png"></img>
+                  {t('request-modal.enter-session')}
+                </URLLabel>
+                { props.service?.service_site == "1" && ( props.service?.status == "2" || role == "client" ) ?
+                  <URLLabel className="url-edit-button"
+                    onClick={() => setModalEdit(true)}
+                  >
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    {t('request-modal.edit-url')}
+                  </URLLabel>
+                : null}
+
+              </>  
               : null
             }
             <hr></hr>
@@ -412,6 +426,17 @@ export default function ServiceModal(props) {
         type={modalType}
       >
       </RateModal>
+
+      <EditServiceModal
+        onHide={() => setModalEdit(false)}
+        editSuccess={(type) => {
+          props.updateServices();
+          setAlert({ type: "success", message: t('request-modal.service-edited')})
+        }}
+        show={modalEdit}
+        service={props.service}
+      >
+      </EditServiceModal>
 
       <NotifierGenerator
         alert={alert}
