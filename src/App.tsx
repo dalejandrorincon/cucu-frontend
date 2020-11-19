@@ -42,6 +42,8 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <PublicRoute exact path="/" component={LoginPage} />
+        <PublicRoute exact path="/en" component={LoginPage} />
+        <PublicRoute exact path="/es" component={LoginPage} />
         <PublicRoute path="/signup" component={SignupPage} />
         <PrivateRoute path="/home" component={HomePage} />
         <PrivateRoute path="/translators" component={TranslatorsPage} />
@@ -72,14 +74,7 @@ export default function App() {
         />
         <PrivateRoute
           path="/services"
-          component={
-             TranslatorServices
-              /* localStorage.getItem("role") === "3" ||
-              localStorage.getItem("role") === "4"
-              ? //ClientServices
-              TranslatorServices 
-              : TranslatorServices */
-          }
+          component={ TranslatorServices }
         />
         <PrivateRoute
           path="/transactions"

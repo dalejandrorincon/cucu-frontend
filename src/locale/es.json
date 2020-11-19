@@ -8,15 +8,17 @@
         "show":"Mostrar",
         "hide":"Ocultar",
         "all-specialities":"Todas las especialidades",
+        "all-platforms":"Todas las plataformas",
         "select":"Seleccionar...",
         "paginate-back": "Anterior",
         "paginate-next": "Siguiente",
         "any-status": "Todos los estados",
         "status-0": "Solicitado",
         "status-1": "Aceptado",
+        "status-1-client": "Por pagar",
         "status-2": "Pagado",
-        "status-3": "Finalizado",
-        "status-4": "Reprogramado",
+        "status-3": "Por calificar",
+        "status-4": "Finalizado",
         "status-5": "Cancelado",
         "status-6": "Rechazado",
         "most-recent": "Más recientes",
@@ -40,6 +42,7 @@
         "descending": "Descendente",
         "rate-price": "Tarifa",
         "create": "Crear",
+        "change-password": "Cambiar contraseña",
         "add": "Agregar",
         "edit": "Editar",
         "delete": "Eliminar",
@@ -49,7 +52,8 @@
         "max-value": "El valor máximo de este campo es ${{num}}.",
         "attachment-label": "Arrastra o haz click aquí para adjuntar archivos...",
         "attachment-cap": "Tamaño máximo 1MB",
-        "attachment-error": "El archivo debe ser un PDF de máximo 1MB.",
+        "attachment-error": "El archivo debe ser de máximo 1MB.",
+        "view": "Ver",
         "password-criteria":"La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.",
 
         "menu":{
@@ -155,6 +159,9 @@
             "duration": "Duración",
             "start-date": "Fecha inicio",
             "enter-session": "Entrar a la sesión",
+            "edit-url": "Editar la URL",
+            "update-url": "URL",
+            "save-url":"Guardar",
             "attached": "Adjuntos",
             "no-attachments": "Sin archivos adjuntos",
             "extra-info": "Información adicional",
@@ -173,8 +180,9 @@
             "service-finished": "Servicio finalizado",
             "service-cancelled": "Servicio cancelado",
             "service-rated": "Servicio calificado",
-            "service": "Servicio "
-
+            "service-edited": "Servicio editado",
+            "service": "Servicio ",
+            "time": "Hora"
         },  
 
 
@@ -208,6 +216,10 @@
             "rate-minute":"Tarifa por minuto",
             "opinions":"opiniones",
             "see-all":"Ver todas",
+            "rate-hr": "hora",
+            "rate-min": "minuto",
+            "update-password-success": "Contraseña actualizada exitosamente",
+            "update-password-error": "La contraseña actual debe ser correcta",
             "years-of-experience": "años de experiencia"
         },
         "payment":{
@@ -355,7 +367,12 @@
             "owner-document": "Documento del titular de la cuenta",
             "payoneer-account": "Cuenta de payoneer",
             "payoneer-account-label": "Si no tienes una cuenta de Payoneer, puedes crear una nueva en",
-            "payoneer-account-link": " este enlace."
+            "payoneer-account-link": " este enlace.",
+            "id-number": "Cédula de ciudadanía",
+            "id-number-foreign": "Cédula de extranjería",
+            "account-country": "País de la cuenta",
+            "account-savings": "Ahorro",
+            "account-checking": "Corriente"
         },
         "request":{
             "cancel-request": "Cancelar solicitud",
@@ -380,7 +397,8 @@
             "service-price": "Service price:",
             "date-time-error": "Debes seleccionar un dia y hora",
             "enter-link": "Ingresa un enlace...",
-            "enter-value": "Ingresa un valor..."
+            "enter-value": "Ingresa un valor...",
+            "zoom-cucu": "Zoom CUCU"
         },
         "notifications":{
             "not-available": "No hay notificaciones disponibles.",

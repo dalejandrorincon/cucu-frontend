@@ -1,3 +1,4 @@
+import { getLang } from '../utils/constants';
 import {api} from './api';
 
 export const createService = (token, payload) => {
@@ -5,6 +6,26 @@ export const createService = (token, payload) => {
   console.log(payload)
   return api(URL, {
     method: 'POST',
+    headers: {
+      'content-type': 'application/json', // whatever you want
+      'Authorization': token
+    },
+    data: {
+      ...payload,
+      lang: getLang()
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const updateService = (token, payload, id) => {
+  const URL = `/translation_services/`+id;
+  console.log(payload)
+  return api(URL, {
+    method: 'PUT',
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
@@ -64,7 +85,8 @@ export const rejectService = (token, id, payload) => {
       'Authorization': token
     },
     data: {
-        ...payload
+      ...payload,
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -82,7 +104,8 @@ export const cancelService = (token, id, payload) => {
       'Authorization': token
     },
     data: {
-        ...payload
+      ...payload,
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -99,6 +122,9 @@ export const payService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -114,6 +140,9 @@ export const acceptService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)
@@ -129,6 +158,9 @@ export const finishService = (token, id) => {
     headers: {
       'content-type': 'application/json', // whatever you want
       'Authorization': token
+    },
+    data: {
+      lang: getLang()
     }
   })
     .then(response => response.data)

@@ -292,6 +292,7 @@ function TranslatorsPage({
                           <DatePicker
                             selected={startDate}
                             onChange={(date: any) => setStartDate(date)}
+                            minDate={new Date()}
                             customInput={
                               <ExampleCustomInput></ExampleCustomInput>
                             }

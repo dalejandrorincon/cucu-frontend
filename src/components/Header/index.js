@@ -94,7 +94,7 @@ export default function Header() {
 	return (
 		<nav className="navbar navbar-expand-md layout">
 			<Container>
-				<Link className="navbar-brand" to="/translators">
+				<Link className="navbar-brand" to="/">
 					<img src="/assets/images/logo.png" alt="logo" />
 				</Link>
 				{options}

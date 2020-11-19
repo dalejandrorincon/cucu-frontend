@@ -118,8 +118,8 @@ function ProfileTranslatorPage({
                         <Row>
                           <Col>
                             <p className="price-hour">
-                              ${translators?.rate_hour} / $
-                              {translators?.rate_minute}
+                              ${translators?.rate_hour}/{t('translator_profile.rate-hr')} | $
+                              {translators?.rate_minute}/{t('translator_profile.rate-min')}
                             </p>
                           </Col>
                           <Col>
@@ -158,7 +158,7 @@ function ProfileTranslatorPage({
                                 {translators?.languages?.map((lng: any) => (
                                   <>
                                     <span className="badge badge-light">
-                                      De {i18next.language=="ES" ? lng.from.name_es : lng.from.name_en} a {i18next.language=="ES" ? lng.to.name_es : lng.to.name_en}
+                                    {t('translators-list.from')} {i18next.language=="ES" ? lng.from.name_es : lng.from.name_en} {t('translators-list.to')} {i18next.language=="ES" ? lng.to.name_es : lng.to.name_en}
                                     </span>
                                   </>
                                 ))}

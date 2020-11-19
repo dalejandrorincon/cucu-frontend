@@ -14,6 +14,8 @@ import * as Yup from 'yup';
 
 import * as BanksAPI from '../../api/banks';
 import * as PaymentDataAPI from '../../api/payment_data';
+import * as CountriesAPI from '../../api/countries';
+
 import { useTranslation } from 'react-i18next';
 
 export default function TranslatorProfileForm() {
@@ -32,9 +34,11 @@ export default function TranslatorProfileForm() {
     const [buttonState, setButtonState] = useState({ label: t('experience.save-changes'), disabled: false })
     const [banks, setBanks] = useState(null)
     const [response, setResponse] = useState(null)
+    const [countries, setCountries] = useState(null)
 
     useEffect(() => {
         getBanks();
+        getCountries();
         getPaymentData()
     }, []);
 
@@ -45,6 +49,17 @@ export default function TranslatorProfileForm() {
         })
     };
 
+    const getCountries = () => {
+        CountriesAPI.getCountries().then((res) => {
+            console.log(res)
+            if (res) {
+                const items = res.map((item) =>
+                    <option key={item.id} value={item.id}>{item.name}</option>
+                );
+                setCountries(items)
+            }
+        })
+    }
 
     const getBanks = () => {
         BanksAPI.getBanks({}).then((res) => {
@@ -121,6 +136,9 @@ export default function TranslatorProfileForm() {
             .min(3, t('min-char', {num: 3}))
             .max(20, t('max-char', {num: 20}))
             .required("*Este campo es obligatorio"),
+        country_id: Yup.string()
+            .min(1, t('required-value'))
+            .required(t('required-field')),
             //.required("*Este campo es obligatorio"),
         owner_name: Yup.string()
             .min(3, t('min-char', {num: 3}))
@@ -150,6 +168,7 @@ export default function TranslatorProfileForm() {
             bank_id: entity?.bank_id ? entity.bank_id : "",
             account_type: entity?.account_type ? entity.account_type : "",
             account_number: entity?.account_number ? entity.account_number : "",
+            country_id: entity.country_id ? entity.country_id : "",
             owner_name: entity?.owner_name ? entity.owner_name : "",
             document_type: entity?.document_type ? entity.document_type : "",
             document_number: entity?.document_number ? entity.document_number : "",
@@ -223,8 +242,8 @@ export default function TranslatorProfileForm() {
                         }}
                         value={formik.values.account_type} >
                         <option value="">{t('select')}</option>
-                        <option value="0">Ahorros</option>
-                        <option value="1">Corriente</option>
+                        <option value="0">{t('bank-info.account-savings')}</option>
+                        <option value="1">{t('bank-info.account-checking')}</option>
 
                     </Form.Control>
                 </Form.Group>
@@ -248,6 +267,28 @@ export default function TranslatorProfileForm() {
 
                 {formik.touched.account_number && formik.errors.account_number ? (
                     <div className="alert alert-danger">{formik.errors.account_number}</div>
+                ) : null}
+
+
+                <Form.Group className="outline">
+                    <Label>{t('bank-info.account-country')}</Label>
+                    <Form.Control
+                        as="select"
+                        id="country_id"
+                        name="country_id"
+                        className="form-control input-lg"
+                        onChange={e => {
+                            formik.setFieldTouched('country_id');
+                            formik.handleChange(e);
+                        }}
+                        value={formik.values.country_id} >
+                        <option value="">{t('select')}</option>
+                        {countries}
+                    </Form.Control>
+                </Form.Group>
+
+                {formik.touched.country_id && formik.errors.country_id ? (
+                    <div className="alert alert-danger">{formik.errors.country_id}</div>
                 ) : null}
 
                 <Form.Group>
@@ -281,8 +322,8 @@ export default function TranslatorProfileForm() {
                             }}
                             value={formik.values.document_type} >
                             <option value="">{t('select')}</option>
-                            <option value="0">Cédula de ciudadanía</option>
-                            <option value="1">Cédula de extranjería</option>
+                            <option value="0">{t('bank-info.id-number')}</option>
+                            <option value="1">{t('bank-info.id-number-foreign')}</option>
 
                         </Form.Control>
 

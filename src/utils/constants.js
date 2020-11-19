@@ -9,6 +9,21 @@ export const stripe_publishable = process.env.REACT_APP_STRIPE_PUBLISHABLE
 
 export const socket = socketIOClient(process.env.REACT_APP_SOCKET_URL);
 
+export const getUserType = () =>{
+    let role=""
+    switch (localStorage.getItem("role")) {
+        case "1":
+            role = "admin"
+            break;
+        case "2":
+            role = "translator"
+            break;
+        default:
+            role = "client"
+    }
+    return role
+}
+
 export const itemStatusLabel = (status) => {    
     let label = ""
     let tagtype = ""
@@ -18,6 +33,9 @@ export const itemStatusLabel = (status) => {
             break;
         case "1":
             label = i18n.t('status-1');
+            if(getUserType()=="client"){
+                label = i18n.t('status-1-client');
+            }
             tagtype = "accepted"
             break;
         case "2":
@@ -30,7 +48,7 @@ export const itemStatusLabel = (status) => {
             break;
         case "4":
             label = i18n.t('status-4');
-            tagtype = "danger"
+            tagtype = "success"
             break;
         case "5":
             label = i18n.t('status-5');
@@ -83,4 +101,12 @@ export const connectSocket = () => {
     socket.on("notifications", data => {
         console.log(data)
     });
+}
+
+export const getLang = () => {
+    if(i18n.language=="ES"){
+      return "ES"
+    }else{
+      return "EN"
+    }
 }
