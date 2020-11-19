@@ -141,7 +141,7 @@ export default function TranslatorServices() {
 											value={formik.values.status}>
 											<option value="">{t('any-status')}</option>
 											<option value="0">{t('status-0')}</option>
-											<option value="1">{t('status-1')}</option>
+											<option value="1">{ getUserType()=="client" ? t('status-1-client') : t('status-1') }</option>
 											<option value="2">{t('status-2')}</option>
 											<option value="3">{t('status-3')}</option>
 											<option value="4">{t('status-4')}</option>
@@ -308,10 +308,7 @@ export default function TranslatorServices() {
 														setIsModalVisible(true)
 													}}
 												>
-													<img
-														src="/assets/images/dots@2x.png"
-														alt="logo"
-													/>
+													<span>{t('view')}</span>
 												</Link>
 											</td>
 										</tr>

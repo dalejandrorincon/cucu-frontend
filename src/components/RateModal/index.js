@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
@@ -11,6 +11,7 @@ import * as ServicesAPI from '../../api/services';
 import { Form } from "react-bootstrap";
 
 import Rating from "react-rating";
+import * as UsersAPI from '../../api/users';
 
 import "./styles.scss"
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,8 @@ import { useTranslation } from 'react-i18next';
 export default function RateModal(props) {
 
 	const [confirmDisable, setConfirmDisable] = useState(false)
+	const [translator, setTranslator] = useState(null)
+
 	const { t, i18n } = useTranslation();
 	
 	const validationSchema = Yup.object().shape({
@@ -64,6 +67,19 @@ export default function RateModal(props) {
 		})
 	}
 
+	const getProfile = () => {
+        UsersAPI.getUser({}, props.service?.translator?.id).then((res) => {
+            console.log(res.user)
+            setTranslator(res.user)
+        })
+	};
+	
+	useEffect(() => {
+		if(props.service?.translator?.id){
+			getProfile();
+		}
+	}, [props.service]);
+
 	return (
 		<Modal
 			{...props}
@@ -84,7 +100,9 @@ export default function RateModal(props) {
                         src={props.service?.translator?.image_url ? props.service?.translator.image_url : "/assets/images/no_avatar_default.png"}
                         className="image-profile ico-user"
                     />
-                    <p className="user-name"><b>{props.service?.translator?.firstname} {props.service?.translator?.lastname}</b></p>			
+                    <p className="user-name"><b>{props.service?.translator?.firstname} {props.service?.translator?.lastname}</b></p>	
+
+					<p>{translator?.total_services} servicios</p>		
         
                     <Rating
                         emptySymbol="fa fa-star-o fa-2x fa-start"

@@ -15,9 +15,10 @@
         "any-status": "Todos los estados",
         "status-0": "Solicitado",
         "status-1": "Aceptado",
+        "status-1-client": "Por pagar",
         "status-2": "Pagado",
-        "status-3": "Finalizado",
-        "status-4": "Reprogramado",
+        "status-3": "Por calificar",
+        "status-4": "Finalizado",
         "status-5": "Cancelado",
         "status-6": "Rechazado",
         "most-recent": "Más recientes",
@@ -41,6 +42,7 @@
         "descending": "Descendente",
         "rate-price": "Tarifa",
         "create": "Crear",
+        "change-password": "Cambiar contraseña",
         "add": "Agregar",
         "edit": "Editar",
         "delete": "Eliminar",
@@ -50,7 +52,8 @@
         "max-value": "El valor máximo de este campo es ${{num}}.",
         "attachment-label": "Arrastra o haz click aquí para adjuntar archivos...",
         "attachment-cap": "Tamaño máximo 1MB",
-        "attachment-error": "El archivo debe ser un PDF de máximo 1MB.",
+        "attachment-error": "El archivo debe ser de máximo 1MB.",
+        "view": "Ver",
         "password-criteria":"La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.",
 
         "menu":{
@@ -174,8 +177,8 @@
             "service-finished": "Servicio finalizado",
             "service-cancelled": "Servicio cancelado",
             "service-rated": "Servicio calificado",
-            "service": "Servicio "
-
+            "service": "Servicio ",
+            "time": "Hora"
         },  
 
 
@@ -209,6 +212,10 @@
             "rate-minute":"Tarifa por minuto",
             "opinions":"opiniones",
             "see-all":"Ver todas",
+            "rate-hr": "hora",
+            "rate-min": "minuto",
+            "update-password-success": "Contraseña actualizada exitosamente",
+            "update-password-error": "La contraseña actual debe ser correcta",
             "years-of-experience": "años de experiencia"
         },
         "payment":{
@@ -386,7 +393,8 @@
             "service-price": "Service price:",
             "date-time-error": "Debes seleccionar un dia y hora",
             "enter-link": "Ingresa un enlace...",
-            "enter-value": "Ingresa un valor..."
+            "enter-value": "Ingresa un valor...",
+            "zoom-cucu": "Zoom CUCU"
         },
         "notifications":{
             "not-available": "No hay notificaciones disponibles.",

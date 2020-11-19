@@ -175,7 +175,7 @@ function SignupPage() {
                   {role === "4" && (
                     <>
                       <Form.Group>
-                        <Label>{t('business-name')}</Label>
+                        <Label>{t('sign-up-client.business-name')}</Label>
                         <Control
                           type="text"
                           name="company_name"
