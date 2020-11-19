@@ -45,7 +45,7 @@ function RequestTranslatorPage() {
 	const [response, setResponse] = useState<any>(null)
 
 
-  const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
+  const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, maxSize: 1000000 })
 
   const parameters = useParams<any>()
   const translatorId = parameters.id
@@ -56,9 +56,13 @@ function RequestTranslatorPage() {
       .max(4, t('max-char', {num: 4}))
       .required(t('required-field')),
     url: Yup.string()
-      .min(3, t('min-char', {num: 3}))
-      .max(500, t('max-char', {num: 500}))
-      .required(t('required-field')),
+      .when('platform_id', {
+        is: (service_site) => service_site=="1",
+        then: Yup.string()
+          .min(3, t('min-char', {num: 3}))
+          .max(500, t('max-char', {num: 500}))
+          .required(t('required-field')),
+      }),
     platform_id: Yup.string()
       .min(1, t('required-value'))
       .required(t('required-field')),
@@ -217,7 +221,7 @@ function RequestTranslatorPage() {
                   <PasswordInfo>
                     {t('request.site-label')}
                     </PasswordInfo>
-                  <div key={`inline-radio`} className="mb-3">
+                  {/* <div key={`inline-radio`} className="mb-3">
                     <Form.Check
                       inline
                       label={t('request.external-platform')}
@@ -227,7 +231,34 @@ function RequestTranslatorPage() {
                       value="1"
                       checked
                     />
-                  </div>
+                  </div> */}                  
+
+                  <label className="site_form"
+                    onClick={() => {
+                      formik.setFieldValue("service_site", "1")
+                    }}
+                  >
+                    <Form.Check
+                      type="radio"
+                      label={t('request.external-platform')}
+                      name="service_site"
+
+                      checked={formik.values.service_site == "1" ? true : false}
+                    />
+                  </label>
+
+                  <label className="site_form"
+                    onClick={() => {
+                      formik.setFieldValue("service_site", "2")
+                    }}
+                  >
+                    <Form.Check
+                      type="radio"
+                      label={t('request.zoom-cucu')}
+                      name="service_site"
+                      checked={formik.values.service_site == "2" ? true : false}
+                    />
+                  </label>
                 </Form.Group>
                 <Form.Group>
                   <Label className="label-filter">URL</Label>
@@ -409,7 +440,7 @@ function RequestTranslatorPage() {
                     <Col className="col-md-3">
                       <DatePicker
                         className="form-control"
-                        placeholderText={t('time')}
+                        placeholderText={t('request-modal.time')}
                         selected={(formik.values.date_time && new Date(formik.values.date_time)) || null}
                         onChange={(e) => {
                           formik.setFieldTouched('date_time');
@@ -476,9 +507,9 @@ function RequestTranslatorPage() {
 
                 <div className="service-price">
                   { formik.values.duration_type && formik.values.duration_amount ? 
-                    <>{t('request.service-price')} ${formik.values.duration_type == "0" ? translator?.rate_hour * parseInt(formik.values.duration_amount) : translator?.rate_minute * parseInt(formik.values.duration_amount)  } ($
+                    <>{t('request.service-price')} ${formik.values.duration_type == "0" ? translator?.rate_hour * parseInt(formik.values.duration_amount) + 5 : translator?.rate_minute * parseInt(formik.values.duration_amount) + 5  } ($
                     {formik.values.duration_type == "0" ? translator?.rate_hour : translator?.rate_minute}
-                      x {formik.values.duration_amount})
+                      x{formik.values.duration_amount}) + $5
                     </>
                     : null
                   }

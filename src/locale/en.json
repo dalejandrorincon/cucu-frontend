@@ -1,6 +1,7 @@
 {
     "translation": {
         "required-field": "This field is required",
+        "required-value": "You must choose an option.",
         "required-select": "You must choose an option.",
         "required-rate": "You must choose a rating.",
         "invalid-email": "The e-mail must be valid",
@@ -15,9 +16,10 @@
         "any-status": "Any status",
         "status-0": "Requested",
         "status-1": "Accepted",
+        "status-1-client": "Pending payment",
         "status-2": "Paid",
-        "status-3": "Finished",
-        "status-4": "Rescheduled",
+        "status-3": "Rating pending",
+        "status-4": "Finished",
         "status-5": "Cancelled",
         "status-6": "Rejected",
         "most-recent": "Most recent",
@@ -33,7 +35,7 @@
         "client": "Client",
         "translator": "Interpreter",
         "instant": "Instant",
-        "programmed":"Programmed",
+        "programmed":"Scheduled",
         "hour": "Hour",
         "minute": "Minute",
         "time": "Time",
@@ -41,6 +43,7 @@
         "descending": "Descending",
         "rate-price": "Rate",
         "create": "Create",
+        "change-password": "Change password",
         "add": "Add",
         "edit": "Edit",
         "delete": "Delete",
@@ -50,7 +53,8 @@
         "max-value": "This field must have a maximum value of ${{num}}",
         "attachment-label": "Drag or click here to attach files...",
         "attachment-cap": "Max size: 1MB",
-        "attachment-error": "The file must be a pdf smaller than 1MB",
+        "attachment-error": "The file must be smaller than 1MB",
+        "view": "View",
         "password-criteria":"Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and a total of 8 characters without any spaces.",
 
         "menu":{
@@ -151,7 +155,7 @@
         "request-modal":{
             "service-details":"Service details",
             "instant": "Instant Translation",
-            "programmed": "Programmed Translation",
+            "programmed": "Scheduled Translation",
             "rate-type": "Rate type",
             "duration": "Duration",
             "start-date": "Start date",
@@ -174,7 +178,8 @@
             "service-finished": "Service finished",
             "service-cancelled": "Service cancelled",
             "service-rated": "Service rated",
-            "service": "Service "
+            "service": "Service ",
+            "time": "Time"
 
         },  
 
@@ -190,7 +195,7 @@
             "date-time":"Date and time",
             "any-type":"Any type",
             "instant": "Instant",
-            "programmed": "Programmed",
+            "programmed": "Scheduled",
             "search-by-client": "Search by client",
             "search-by-translator": "Search by interpreter"
 
@@ -208,6 +213,10 @@
             "rate-minute":"Rate per minute",
             "opinions":"Opinions",
             "see-all":"See all",
+            "rate-hr": "hour",
+            "rate-min": "minute",
+            "update-password-success": "Password updated successfully",
+            "update-password-error": "Current password must be correct",
             "years-of-experience": "years of experience"
         },
         "payment":{
@@ -228,7 +237,7 @@
             "last-name":"Last name",
             "company-name":"Company name (optional)",
             "email":"Email",
-            "document": "Identity Document",
+            "document": "ID Number",
             "phone":"Phone number",
             "password":"Password",
             "switch":"Change",
@@ -253,7 +262,7 @@
             "date-time":"Date and time",
             "any-type":"Any type",
             "instant": "Instant",
-            "programmed": "Programmed",
+            "programmed": "Scheduled",
             "search-by-client": "Search by client",
             "search-by-translator": "Search by interpreter"
 
@@ -287,12 +296,12 @@
             "firstname":"First name",
             "lastname":"Last name",
             "email":"Email",
-            "document": "Identity Document",
+            "document": "ID Number",
             "phone":"Phone number",
             "password":"Password (optional)",
             "password-label":"Type a new password",
-            "country": "Residence country",
-            "city": "Residence city",
+            "country": "Country of residence",
+            "city": "City of residence",
             "nationality": "Nationality",
             "address_1": "Address line 1",
             "address_2": "Address line 2 (optional)",
@@ -367,7 +376,7 @@
         "request":{
             "cancel-request": "Cancel request",
             "hire": "Hire",
-            "programmed": "Programmed",
+            "programmed": "Scheduled",
             "service-site": "Service site",
             "external-platform": "External platform",
             "site-label": "Choose where will the translation session take place.",
@@ -387,7 +396,8 @@
             "service-price": "Service price:",
             "date-time-error": "You must select a date and a time.",
             "enter-link": "Enter a link...",
-            "enter-value": "Enter a value..."
+            "enter-value": "Enter a value...",
+            "zoom-cucu": "Zoom CUCU"
         },
         "notifications":{
             "not-available": "No notifications available.",

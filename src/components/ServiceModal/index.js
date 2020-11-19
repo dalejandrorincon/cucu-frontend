@@ -322,7 +322,7 @@ export default function ServiceModal(props) {
               $ {props.service.amount}{" "}
               <span className="price-detail">
                 (${props.service.duration_type == "0" ? props.service.translator?.rate_hour : props.service.translator?.rate_minute}
-                  /{props.service.duration_type == "0" ? "hr" : "min"}) x {props.service.duration_amount}
+                  /{props.service.duration_type == "0" ? "hr" : "min"}) x {props.service.duration_amount} + $5
               </span>
             </p>
             {/* <p className="detail-modal-text">
@@ -345,7 +345,7 @@ export default function ServiceModal(props) {
               <b>{t('request-modal.start-date')}: </b>
               <span> {moment(props.service.date).format("D MMM  YYYY")}</span>
             </p>
-            { props.service?.status == "2" || role == "client" ?
+            { props.service?.service_site == "1" && ( props.service?.status == "2" || role == "client" ) ?
               <URLLabel
                 type="button"
                 className="url-button"

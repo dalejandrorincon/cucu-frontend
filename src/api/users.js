@@ -57,6 +57,25 @@ export const updateUser = (payload, token) => {
     });
 };
 
+export const updatePassword = (payload, token) => {
+  const URL = `/users/password`;
+  console.log(payload)
+  return api(URL, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': token
+    },
+    data:{
+      ...payload
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
+
 export const disableUser = (token) => {
   const URL = `/users/disable`;
   return api(URL, {

@@ -29,7 +29,7 @@ export default function ExperienceModal(props) {
         setMyFiles([...myFiles, ...acceptedFiles])
     }, [myFiles])
 
-    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, accept: "application/pdf", maxSize: 1000000 })
+    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, maxSize: 1000000 })
 
     //console.log({...props.values})
     const { t, i18n } = useTranslation();
