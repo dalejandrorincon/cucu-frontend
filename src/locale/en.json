@@ -242,6 +242,7 @@
             "company-name":"Company name (optional)",
             "email":"Email",
             "document": "ID Number",
+            "document-company": "Company Tax ID Number",
             "phone":"Phone number",
             "password":"Password",
             "switch":"Change",
@@ -401,7 +402,7 @@
             "date-time-error": "You must select a date and a time.",
             "enter-link": "Enter a link...",
             "enter-value": "Enter a value...",
-            "zoom-cucu": "Zoom CUCU"
+            "zoom-cucu": "Zoom CUCÚ"
         },
         "notifications":{
             "not-available": "No notifications available.",

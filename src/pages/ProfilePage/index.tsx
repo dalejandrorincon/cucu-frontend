@@ -76,7 +76,8 @@ function ProfilePage({
     country_id: "",
     city: "",
     total_services: "",
-    total_transactions: ""
+    total_transactions: "",
+    role: ""
   });
 
   const validationSchema = Yup.object().shape({
@@ -331,7 +332,7 @@ function ProfilePage({
 
                           <Form.Group>
                             <Label className="label-filter">
-                              {t('my-profile.document')}
+                              { entity?.role=="4" ? t('my-profile.document-company') : t('my-profile.document') }
                             </Label>
                             <Control type="text"
                               id="document"
