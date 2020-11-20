@@ -141,7 +141,7 @@ function TranslatorsPage({
     }
 
     if (formik.values.name) {
-      settings = { ...settings, ...{ name: formik.values.name } }
+      settings = { ...settings, ...{ name: formik.values.name?.toLowerCase() } }
     }
 
     /* if(lang!=[]){

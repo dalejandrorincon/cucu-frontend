@@ -30,7 +30,7 @@ export default function AvailabilitiesList() {
 	const { t, i18n } = useTranslation();
 	const formik = useFormik({
 		initialValues: {
-			sort_by: "",
+			sort_by: "from",
 			min_date: "",
 			max_date: "",
 			sort_order: ""
@@ -108,23 +108,6 @@ export default function AvailabilitiesList() {
 					<Title>{t('availabilities-list.unavailabilities')}</Title>
 
 						<Row className="filters">
-								<Col>
-									<Form.Group>
-										<Form.Control
-											as="select"
-											id="sort_by"
-											name="sort_by"
-											className="form-control input-lg"
-											onChange={e => {
-												formik.handleChange(e);
-												handleInputChange(e)
-											}}
-											value={formik.values.sort_by}>
-											<option value="from">{t('availabilities-list.date-time-start')}</option>
-										</Form.Control>
-									</Form.Group>
-								</Col>
-
 								<Col>
 									<Form.Group>
 										<Form.Control

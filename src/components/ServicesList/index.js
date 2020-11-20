@@ -66,6 +66,9 @@ export default function TranslatorServices() {
 
 
 	const getServices = (type) => {
+		if(options){
+			options.name = options?.name?.toLowerCase()
+		}
 		ServicesAPI.getServices(type, localStorage.getItem("token"), options).then((res) => {
 			console.log(res.results)
 			setServices(res.results)
@@ -340,6 +343,9 @@ export default function TranslatorServices() {
 			<ServiceModal 
 				updateServices={()=>{
 					setIsModalVisible(false)
+					getServices(getUserType())
+				}}
+				updateServicesPersist={()=>{
 					getServices(getUserType())
 				}}
 				service={activeService} 
