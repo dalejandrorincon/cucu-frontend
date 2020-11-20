@@ -241,6 +241,7 @@
             "company-name":"Nombre de compañía (optional)",
             "email":"Correo electrónico",
             "document": "Documento de identidad",
+            "document-company": "Número de identificación de compañía",
             "phone":"Teléfono",
             "password":"Contraseña",
             "switch":"Cambiar",
@@ -398,7 +399,7 @@
             "date-time-error": "Debes seleccionar un dia y hora",
             "enter-link": "Ingresa un enlace...",
             "enter-value": "Ingresa un valor...",
-            "zoom-cucu": "Zoom CUCU"
+            "zoom-cucu": "Zoom CUCÚ"
         },
         "notifications":{
             "not-available": "No hay notificaciones disponibles.",

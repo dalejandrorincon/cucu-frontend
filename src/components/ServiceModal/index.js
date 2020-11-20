@@ -337,6 +337,12 @@ export default function ServiceModal(props) {
               </span>
             </p> */}
             <p className="detail-modal-text">
+              <b>{t('request.service-site')}: </b>
+              <span>
+                {props.service.service_site == 1 ? t('request.external-platform') : t('request.zoom-cucu')}
+              </span>
+            </p>
+            <p className="detail-modal-text">
               <b>{t('request-modal.rate-type')}: </b>
               <span>
                 {props.service.duration_type === 0 ? t('hours') : t('minutes')}
