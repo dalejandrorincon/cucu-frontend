@@ -43,7 +43,7 @@ export default function RateModal(props) {
         ServicesAPI.updateService(localStorage.getItem("token"), values, props.service?.id).then((res) => {
             setConfirmDisable(false)
             props.onHide()
-            props.editSuccess()
+            props.editSuccess(formik.values.url)
             formik.resetForm()
         })
     }

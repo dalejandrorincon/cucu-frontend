@@ -44,6 +44,9 @@ export default function TransactionsList() {
 
 
 	const getTransactions = (type) => {
+		if(options){
+			options.name = options?.name?.toLowerCase()
+		}
 		TransactionsAPI.userTransactions(localStorage.getItem("token"), options).then((res) => {
 			console.log(res.results)
 			setTransactions(res.results)
@@ -223,7 +226,7 @@ export default function TransactionsList() {
 								<thead className="thead-light">
 									<tr>
 										<th scope="col">
-											Cliente
+											{t('transactions-list.client')}
 										</th>
 										<th scope="col">{t('transactions-list.request-type')}</th>
 										<th scope="col">{t('transactions-list.duration')}</th>
