@@ -33,6 +33,8 @@ export default function ServiceModal(props) {
   const [modalRate, setModalRate] = useState(false);
   const [modalType, setModalType] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  const [newUrl, setNewUrl] = useState(false);
+
   const [confirmDisable, setConfirmDisable] = useState(false)
 
   const [confirmCancelBtn, setConfirmCancelBtn] = useState(false);
@@ -335,6 +337,12 @@ export default function ServiceModal(props) {
               </span>
             </p> */}
             <p className="detail-modal-text">
+              <b>{t('request.service-site')}: </b>
+              <span>
+                {props.service.service_site == 1 ? t('request.external-platform') : t('request.zoom-cucu')}
+              </span>
+            </p>
+            <p className="detail-modal-text">
               <b>{t('request-modal.rate-type')}: </b>
               <span>
                 {props.service.duration_type === 0 ? t('hours') : t('minutes')}
@@ -354,7 +362,13 @@ export default function ServiceModal(props) {
                   type="button"
                   className="url-button"
                   onClick={() => {
-                    window.open(props.service?.url.includes("//") ? props.service.url : "//"+props.service.url);
+                    let url;
+                    if(newUrl){
+                      url = newUrl
+                    }else{
+                      url = props.service.url
+                    }
+                    window.open(url.includes("//") ? url : "//"+url);
                   }}
                 >
                   <img src="/assets/images/video-purple.png"></img>
@@ -429,8 +443,9 @@ export default function ServiceModal(props) {
 
       <EditServiceModal
         onHide={() => setModalEdit(false)}
-        editSuccess={(type) => {
-          props.updateServices();
+        editSuccess={(url) => {
+          props.updateServicesPersist();
+          setNewUrl(url)
           setAlert({ type: "success", message: t('request-modal.service-edited')})
         }}
         show={modalEdit}

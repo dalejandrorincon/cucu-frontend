@@ -170,7 +170,7 @@ export default function TranslatorExperienceForm() {
                     }
                 });
             }
-            setSelectedSpecialities(res.user.specialities)
+            if(res.user.specialities) setSelectedSpecialities(res.user.specialities)
             if(res.user.languages) setSelectedLanguages(res.user.languages)
         })
     };
@@ -236,7 +236,9 @@ export default function TranslatorExperienceForm() {
             case "platforms":
                 current = platforms.filter((item)=> item.id == formik.values.platform )
                 setSelectedPlatforms([ ...selectedPlatforms, ...current ])
+                break;
             case "specialities":
+                console.log(selectedSpecialities)
                 current = specialities.filter((item)=> item.id == formik.values.speciality )
                 setSelectedSpecialities([ ...selectedSpecialities, ...current ])
         }
