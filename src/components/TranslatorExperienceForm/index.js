@@ -393,6 +393,13 @@ export default function TranslatorExperienceForm() {
 
             <Title>{t('experience.experience')}</Title>
 
+            { entity?.approved_translator == "0" ?                
+            <Alert variant="primary" className="alert-profile">
+                {t('must-fill-profile')}
+            </Alert>
+            :null
+            }
+
             <Form onSubmit={formik.handleSubmit}>
                 <h6><b>{t('experience.remote-tools')}</b></h6>
                 <div className="platforms-panel">

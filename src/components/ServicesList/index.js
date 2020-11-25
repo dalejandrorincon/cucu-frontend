@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Col, Row, Form } from "react-bootstrap";
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { Title, WellContainer } from './styles'
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
@@ -303,7 +303,7 @@ export default function TranslatorServices() {
 												{itemStatusLabel(ele.status)}
 											</td>
 											<td>
-												<Link
+												<Button
 													className="view-mas"
 													to="#"
 													onClick={() => {
@@ -312,7 +312,7 @@ export default function TranslatorServices() {
 													}}
 												>
 													<span>{t('view')}</span>
-												</Link>
+												</Button>
 											</td>
 										</tr>
 									))}

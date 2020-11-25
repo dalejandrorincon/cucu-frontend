@@ -68,7 +68,7 @@ function SignupPage() {
           if (res.user.role == 3 || res.user.role == 4) {
             history.push("/translators");
           } else {
-            history.push("/profile-translator-edit");
+            history.push( { pathname: "/profile-translator-edit", state: "initial" } );
           }
         })
     }).catch((err) => {

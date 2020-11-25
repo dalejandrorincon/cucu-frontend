@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, InputGroup, Alert } from "react-bootstrap";
 
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import {
     Label,
     Submit,
@@ -22,7 +22,6 @@ import * as UsersAPI from '../../api/users';
 import * as CitiesAPI from '../../api/cities';
 import ConfirmationModal from '../ConfirmationModal';
 import { useTranslation } from 'react-i18next';
-
 
 export default function TranslatorProfileForm() {
 
@@ -53,7 +52,9 @@ export default function TranslatorProfileForm() {
     const [response, setResponse] = useState(null)
 
     const [modalShow, setModalShow] = useState(false);
-    
+    const location = useLocation();
+    const history = useHistory();
+
     useEffect(() => {
         getProfile();
         getCountries();
@@ -103,6 +104,11 @@ export default function TranslatorProfileForm() {
         console.log(values)
         setButtonState({ ...buttonState, ...{ label: t('translator-profile.saving'), disabled: false } })
         UsersAPI.updateUser(values, localStorage.getItem("token")).then((res) => {
+
+            if(location.state=="initial"){
+                history.push( { pathname: "/profile-translator-edit/experience", state: "initial" } );
+            }
+
             let message = t('translator-profile.successful-changes')
             setButtonState({ label: t('translator-profile.save-changes'), disabled: false })
             setResponse(
@@ -251,9 +257,16 @@ export default function TranslatorProfileForm() {
 
 
     return (
-        <div>
+        <div>         
 
             <Title>{t('translator-profile.my-account')}</Title>
+
+            { entity?.approved_translator == "0" ?                
+            <Alert variant="primary" className="alert-profile">
+                {t('must-fill-profile')}
+            </Alert>
+            :null
+            }
 
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
@@ -536,7 +549,7 @@ export default function TranslatorProfileForm() {
                     type="button"
                     type="submit"
                 >
-                    {buttonState.label}
+                    {location.state=="initial" ? t('next') : buttonState.label}
                 </Submit>
 
             </Form>

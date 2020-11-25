@@ -23,9 +23,23 @@
         
     }
     .view-mas{
-        span{
-            color: #863DF9;
-            padding: 5px;
+        background-color: white;
+        color: #863DF9;
+        border-color: #863DF9;
+        position: relative;
+        bottom: 3px;
+        font-size: 12px;
+        outline: none;
+        box-shadow: none;
+        padding: 3px 12px;
+
+        &:hover, &:active{
+            background-color: #6934be !important;
+            color: white;
+        }
+        &:disabled{
+            background-color: #9a5efc;
+            color: white;
         }
     }
 
