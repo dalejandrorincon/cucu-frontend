@@ -73,7 +73,7 @@ export default function App() {
           }
         />
         <PrivateRoute
-          path="/services"
+          path="/services/:id?"
           component={ TranslatorServices }
         />
         <PrivateRoute

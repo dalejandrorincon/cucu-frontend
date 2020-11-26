@@ -4,23 +4,29 @@ import { Title, WellContainer } from './styles'
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useFormik, useFormikContext } from 'formik';
 import "./styles.scss"
 import * as ServicesAPI from '../../api/services';
 import ServiceModal from "../../components/ServiceModal"
 import {itemStatusLabel} from "../../utils/constants"
 import { useTranslation } from 'react-i18next';
+import { getNotifications } from "../../api/notifications";
 export default function TranslatorServices() {
 
 	const [activeService, setActiveService] = useState({});
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [initial, setInitial] = useState(true);
 
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
 
 	const [services, setServices] = useState([]);
 	const { t, i18n } = useTranslation();
+	const { id } = useParams();
+    const history = useHistory();
+	
+	
 	
 	const formik = useFormik({
 		initialValues: {
@@ -41,6 +47,25 @@ export default function TranslatorServices() {
 		enableReinitialize: true
 
 	});
+
+	const getNotificationService = (serv=null) =>{
+		if(id && initial==true){
+			let currentService;
+			if(serv==null){
+				serv = services
+			}
+			serv.forEach((service)=>{
+				if (parseInt(service.id) == id){
+					currentService = service
+				}
+			})
+			if(currentService){
+				setActiveService(currentService)
+				setIsModalVisible(true)
+			}
+			setInitial(false)
+		}
+	}
 
 	const getUserType = () =>{
 		let role=""
@@ -64,6 +89,11 @@ export default function TranslatorServices() {
 		options,
 	]);
 
+	history.listen((location, action) => {
+		setInitial(true)
+		getNotificationService()
+	})
+
 
 	const getServices = (type) => {
 		if(options){
@@ -73,6 +103,7 @@ export default function TranslatorServices() {
 			console.log(res.results)
 			setServices(res.results)
 			setPageCount(res.pages)
+			getNotificationService(res.results)
 		})
 	};
 

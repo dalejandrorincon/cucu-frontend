@@ -28,6 +28,7 @@ import {
 import Header from "../../components/Header";
 import { useTranslation } from 'react-i18next';
 import i18next from "i18next";
+import * as CountriesAPI from '../../api/countries';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -46,6 +47,7 @@ function ProfileTranslatorPage({
   const history = useHistory();
   const { id } = useParams();
   const [isVisible, setisVisible] = useState(false);
+  const [countries, setCountries] = useState<any>([])
 
   const [translators, setTranslators] = useState<any>({});
 	const { t, i18n } = useTranslation();
@@ -72,8 +74,26 @@ function ProfileTranslatorPage({
     }
   };
 
+  const getCountries = () => {
+    CountriesAPI.getCountries().then((res) => {
+      console.log(res)
+      setCountries(res)
+    })
+  }
+
+  const getTranslatorCountry = (country_id) =>{
+    let found = ""
+    countries.forEach(element => {
+      if(element.id==country_id){
+        found = element.name
+      }
+    });
+    return found
+  }
+
   useEffect(() => {
     getTranslators();
+    getCountries()
   }, []);
 
   return (
@@ -170,7 +190,7 @@ function ProfileTranslatorPage({
                               <Col>
                                 <p>{t('translator_profile.location')}</p>
                                 <span className="text-profile-item">
-                                  {translators?.address_1}
+                                  {translators?.city ? translators.city+", " : null }  {getTranslatorCountry(translators?.country_id)}
                                 </span>
                               </Col>
                               <Col>
