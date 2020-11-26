@@ -56,7 +56,7 @@ function RequestTranslatorPage() {
       .max(4, t('max-char', {num: 4}))
       .required(t('required-field')),
     url: Yup.string()
-      .when('platform_id', {
+      .when('service_site', {
         is: (service_site) => service_site=="1",
         then: Yup.string()
           .min(3, t('min-char', {num: 3}))
@@ -64,8 +64,12 @@ function RequestTranslatorPage() {
           .required(t('required-field')),
       }),
     platform_id: Yup.string()
-      .min(1, t('required-value'))
-      .required(t('required-field')),
+      .when('service_site', {
+        is: (service_site) => service_site=="1",
+        then: Yup.string()          
+          .min(1, t('required-value'))
+          .required(t('required-field')),
+    }),
     date_day: Yup.string()
       .min(1, t('required-value'))
       .required(t('required-field')),
@@ -142,7 +146,7 @@ function RequestTranslatorPage() {
       })
     }
 
-    if(values.platform_id=="0"){
+    if(values.platform_id=="0" || values.platform_id==""){
       delete values.platform_id
     }
 
@@ -260,109 +264,94 @@ function RequestTranslatorPage() {
                     />
                   </label>
                 </Form.Group>
-                <Form.Group>
-                  <Label className="label-filter">URL</Label>
-                  <p>
-                   {t('request.url-label')}
-                  </p>
-                  <Control
-                    type="text"
-                    className="input-request"
-                    id="url"
-                    name="url"
-                    placeholder={t('request.enter-link')}
-                    value={formik.values.url}
-                    onChange={(e) => {
-                      formik.handleChange(e)
-                    }}
-                  />
-                </Form.Group>
+                
+                { formik.values.service_site=="1" ?
+                <>
 
-                {formik.touched.url && formik.errors.url ? (
-                  <div className="alert alert-danger">{formik.errors.url}</div>
-                ) : null}
-
-
-                {/* <Form.Group>
-                  <Label className="label-filter">Cucutiempo</Label>
-                  <p>
-                    Indica dónde vas a realizar la sesión. que será traducida.
-                  </p>
-                  <div key={`inline-radio`} className="mb-3">
-                    <Form.Check
-                      inline
-                      label="Tiempo determinado"
-                      name="time_type"
-                      type="radio"
-                      id={`inline-radio-2`}
-                      value="0"
-                      checked
+                  <Form.Group>
+                    <Label className="label-filter">URL</Label>
+                    <p>
+                    {t('request.url-label')}
+                    </p>
+                    <Control
+                      type="text"
+                      className="input-request"
+                      id="url"
+                      name="url"
+                      placeholder={t('request.enter-link')}
+                      value={formik.values.url}
+                      onChange={(e) => {
+                        formik.handleChange(e)
+                      }}
                     />
-                  </div>
-                </Form.Group>
- */}
+                  </Form.Group>
 
-                <Form.Group>
-                  <Label className="label-filter">{t('request.platform')}</Label>
-                  <PasswordInfo>
-                    {t('request.platform-label')}
-                    </PasswordInfo>
-                  <Form.Control
-                    as="select"
-                    className="form-select input-request"
-                    id="platform_id"
-                    name="platform_id"
-                    value={formik.values.platform_id}
-                    onChange={(e) => {
-                      formik.handleChange(e)
-                    }}
-                  >
-                    <option value="">{t('request.platform-select')}</option>
-                    {platforms?.map((elm: any) => (
-                      <option key={elm.id} value={elm.id} >{elm.name}</option>
-                    ))}
-                    <option value="0">{t('request.other')}</option>
+                  {formik.touched.url && formik.errors.url ? (
+                    <div className="alert alert-danger">{formik.errors.url}</div>
+                  ) : null}
 
-                  </Form.Control>
+                  <Form.Group>
+                    <Label className="label-filter">{t('request.platform')}</Label>
+                    <PasswordInfo>
+                      {t('request.platform-label')}
+                      </PasswordInfo>
+                    <Form.Control
+                      as="select"
+                      className="form-select input-request"
+                      id="platform_id"
+                      name="platform_id"
+                      value={formik.values.platform_id}
+                      onChange={(e) => {
+                        formik.handleChange(e)
+                      }}
+                    >
+                      <option value="">{t('request.platform-select')}</option>
+                      {platforms?.map((elm: any) => (
+                        <option key={elm.id} value={elm.id} >{elm.name}</option>
+                      ))}
+                      <option value="0">{t('request.other')}</option>
 
-                  { formik.values.platform_id=="0" ? 
-                    <>
-                      <Label className="label-filter">{t('request.which-one')}</Label>
-                      <Control
+                    </Form.Control>
+
+                    { formik.values.platform_id=="0" ? 
+                      <>
+                        <Label className="label-filter">{t('request.which-one')}</Label>
+                        <Control
+                          inline
+                          type="text"
+                          className="input-request"
+                          id="platform_other"
+                          name="platform_other"
+                          placeholder={t('request.enter-value')}
+                          value={formik.values.platform_other}
+                          onChange={(e) => {
+                            formik.handleChange(e)
+                          }}
+                        />
+                      </>
+                      :
+                      null
+                    }
+
+                    {formik.touched.platform_id && formik.errors.platform_id ? (
+                      <div className="alert alert-danger">{formik.errors.platform_id}</div>
+                    ) : null}
+
+                    {formik.touched.platform_other && formik.errors.platform_other ? (
+                      <div className="alert alert-danger">{formik.errors.platform_other}</div>
+                    ) : null}
+
+                    <br></br>
+                    {/* <div key={`inline-radio`} className="mb-3">
+                      <Form.Check
                         inline
-                        type="text"
-                        className="input-request"
-                        id="platform_other"
-                        name="platform_other"
-                        placeholder={t('request.enter-value')}
-                        value={formik.values.platform_other}
-                        onChange={(e) => {
-                          formik.handleChange(e)
-                        }}
+                        label="No tengo los datos de la sesión"
+                        type="radio"
+                        checked
                       />
-                    </>
-                    :
-                    null
-                  }
-
-                  {formik.touched.platform_id && formik.errors.platform_id ? (
-                    <div className="alert alert-danger">{formik.errors.platform_id}</div>
-                  ) : null}
-
-                  {formik.touched.platform_other && formik.errors.platform_other ? (
-                    <div className="alert alert-danger">{formik.errors.platform_other}</div>
-                  ) : null}
-
-                  <br></br>
-                  {/* <div key={`inline-radio`} className="mb-3">
-                    <Form.Check
-                      inline
-                      label="No tengo los datos de la sesión"
-                      type="radio"
-                      checked
-                    />
-                  </div> */}
-                </Form.Group>
+                    </div> */}
+                  </Form.Group>
+                </> : null }
                 <Form.Group className="time-radio">
                   <Label className="label-filter">{t('request.length')}</Label>
 

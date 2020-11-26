@@ -8,6 +8,8 @@
         "invalid-phone": "The phone number must contain only numbers or the plus sign",
         "show":"Show",
         "hide":"Hide",
+        "next":"Next",
+        "must-fill-profile": "You must fill your account data and your work experience to be able to accept services.",
         "all-specialities":"All specialities",
         "all-platforms":"All platforms",
         "select":"Select...",

@@ -173,6 +173,7 @@ export default function ServiceModal(props) {
                   disabled={confirmDisable}
                   onClick={() => {
                     cancelService()
+                    setConfirmCancelBtn(false)
                   }}>
                   {t('request-modal.cancel-confirm')}
                 </Button>
@@ -207,6 +208,7 @@ export default function ServiceModal(props) {
                     className="client-cancel"
                     onClick={() => {
                       cancelService()
+                      setConfirmCancelBtn(false)
                     }}>
                     {t('request-modal.cancel-confirm')}
               </Submit>

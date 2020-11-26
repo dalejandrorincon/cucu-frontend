@@ -97,7 +97,7 @@ export default function Notifications() {
 					<>
 						<h5><b>{t('notifications.request-created')}</b></h5>
 						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-created-label')} </p>
-						<a href="/services">{t('notifications.see-request')}</a>
+						<Link to={{ pathname: "/services/"+notification.service_id}} >{t('notifications.see-request')}</Link>
 					</>
 				break;
 			case "1":
@@ -105,7 +105,7 @@ export default function Notifications() {
 					<>
 						<h5><b>{t('notifications.request-approved')}</b></h5>
 						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-approved-label')} </p>
-						<a href="/services">{t('notifications.see-request')}</a>
+						<Link to={{ pathname: "/services/"+notification.service_id}} >{t('notifications.see-request')}</Link>
 					</>
 				break;
 
@@ -114,7 +114,7 @@ export default function Notifications() {
 					<>
 						<h5><b>{t('notifications.request-paid')}</b></h5>
 						<p><b>{notification.sender.firstname} {notification.sender.lastname}</b> {t('notifications.request-paid-label')} </p>
-						<a href="/services">{t('notifications.see-request')}</a>
+						<Link to={{ pathname: "/services/"+notification.service_id}} >{t('notifications.see-request')}</Link>
 					</>
 				break;
 			/* case "5":

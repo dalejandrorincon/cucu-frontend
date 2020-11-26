@@ -7,6 +7,8 @@
         "invalid-phone": "El teléfono debe contener solo números o el signo +",
         "show":"Mostrar",
         "hide":"Ocultar",
+        "next":"siguiente",
+        "must-fill-profile": "Debe llenar la información de su cuenta y su experiencia laboral para poder recibir servicios.",
         "all-specialities":"Todas las especialidades",
         "all-platforms":"Todas las plataformas",
         "select":"Seleccionar...",
