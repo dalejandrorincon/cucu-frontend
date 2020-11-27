@@ -78,7 +78,7 @@ function SignupPage() {
         if(JSON.stringify(error)=='{"email":"Correo eléctronico ya está siendo usado"}'){
           message = "Correo eléctronico ya está siendo usado"
         }
-
+        setButtonState({ label: t('sign-up-client.create-account'), disabled: false })
         setResponse(
           <Alert variant={'danger'} >
               {message}

@@ -223,7 +223,7 @@ function ProfileTranslatorPage({
                       <Col className="col-md-3 opinions">
                         <div className="opinion-container">
                           <div className="opinion-title">
-                            <p>{t('translator_profile.opinions')}</p>
+                            <p>{t('translator_profile.opinions-title')}</p>
                             {/* <a
                               className="ver-todas"
                               onClick={() => {
