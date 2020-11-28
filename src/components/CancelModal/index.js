@@ -45,7 +45,7 @@ export default function CancelModal(props) {
 
 
 	const cancelService = (values) => {
-		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, values).then((res) => {
+		ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, values, localStorage.getItem("role")).then((res) => {
 			setConfirmDisable(false)
 			props.onHide()
 			props.cancelSuccess(t('cancel.cancelled'))
