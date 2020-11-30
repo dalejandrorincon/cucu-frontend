@@ -16,6 +16,8 @@ import { useDropzone } from 'react-dropzone'
 import * as ServicesAPI from '../../api/services';
 import * as UsersAPI from '../../api/users';
 import * as PlatformsAPI from '../../api/platforms';
+import * as UnavailabilitiesAPI from '../../api/unavailabilities';
+
 
 import { combineDateWithTime } from "../../utils/constants"
 import { useFormik } from 'formik';
@@ -34,6 +36,10 @@ function RequestTranslatorPage() {
 
   const [translator, setTranslator] = useState<any>({});
   const [platforms, setPlatforms] = useState<any>([]);
+  
+  const [unavailabilities, setUnavailabilities] = useState<any>([]);
+  const [excludedDates, setExcludedDates] = useState<any>([]);
+  const [excludedTimes, setExcludedTimes] = useState<any>([]);
 
   const [myFiles, setMyFiles] = useState<any>([])
 
@@ -118,6 +124,7 @@ function RequestTranslatorPage() {
   useEffect(() => {
     getTranslator();
     getPlatforms()
+    getUnavailabilities()
   }, []);
 
   const getTranslator = () => {
@@ -131,6 +138,55 @@ function RequestTranslatorPage() {
       setPlatforms(res)
     })
   }
+
+  const getUnavailabilities = () => {
+    UnavailabilitiesAPI.allUserUnavailabilities( localStorage.getItem("token"), translatorId).then((res) => {
+      getExclusions(res)
+      setUnavailabilities(res)
+    })
+  }
+
+  const getExclusions = (unavailabilities) => {
+    let exclusions: Array<Date> = []
+    unavailabilities.forEach(element => {
+      let start = moment(element.to).startOf("day")
+      let end = moment(element.from).startOf("day")
+      let diff = start.diff(end, 'days') 
+      if(diff>1){
+        console.log(start)
+      console.log(end)
+      console.log(diff)
+        for (let i = 1; i < diff; i++) {
+          exclusions.push(moment(element.from).add(i, "days").toDate())          
+        }
+      }
+    });
+    setExcludedDates(exclusions)
+  }
+
+  const changeExcludedDate = (e) => {
+    let excluded : Array<any> = []
+    let currentDay = e
+    console.log(unavailabilities)
+    unavailabilities.forEach(element => {
+
+      if(
+        moment(element.from).startOf("day").isSameOrBefore(moment(currentDay)) &&
+        moment(element.to).endOf("day").isSameOrAfter(moment(currentDay)) 
+      ){
+          console.log("test")
+        for (let i = 0; i < 48; i++) {
+          if(moment(element.from).isSameOrBefore(currentDay) &&  moment(element.to).isSameOrAfter(currentDay) ){
+            excluded.push(currentDay)
+          }
+          currentDay = moment(currentDay).add(30, 'minutes').toDate()
+          
+        }
+      }
+    })
+    setExcludedTimes(excluded)
+  }
+
 
   const createService = async (values) => {
 
@@ -418,9 +474,11 @@ function RequestTranslatorPage() {
                         selected={(formik.values.date_day && new Date(formik.values.date_day)) || null}
                         onChange={(e) => {
                           formik.setFieldTouched('date_day');
-                          formik.setFieldValue('date_day', e)
+                          formik.setFieldValue('date_day', e);
+                          changeExcludedDate(e)
                           console.log(e)
                         }}
+                        excludeDates={excludedDates}
                         minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
 
@@ -443,6 +501,7 @@ function RequestTranslatorPage() {
                         dateFormat="h:mm aa"
                         minTime={ moment().isSame(moment((formik?.values?.date_day).toString()), 'date') ? moment().toDate() : moment().startOf("day").toDate()}
                         maxTime={ moment().endOf("day").toDate()}
+                        excludeTimes={excludedTimes}
                       />
                     </Col>
                   </Row>
