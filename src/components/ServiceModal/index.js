@@ -79,7 +79,7 @@ export default function ServiceModal(props) {
   const cancelService = () => {
     console.log(typeof confirmDisable)
     setConfirmDisable(true)
-    ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id).then((res) => {
+    ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, localStorage.getItem("role")).then((res) => {
       setConfirmDisable(false)
       props.onHide()
       props.updateServices()
@@ -347,7 +347,7 @@ export default function ServiceModal(props) {
             <p className="detail-modal-text">
               <b>{t('request-modal.rate-type')}: </b>
               <span>
-                {props.service.duration_type === 0 ? t('hours') : t('minutes')}
+                {props.service.duration_type === "0" ? t('hours') : t('minutes')}
               </span>
             </p>
             <p className="detail-modal-text">

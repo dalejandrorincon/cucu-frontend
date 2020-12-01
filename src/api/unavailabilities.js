@@ -17,6 +17,21 @@ export const createUnavailability = (payload, token) => {
         throw error;
       });
 };
+
+export const allUserUnavailabilities = (token, userId) => {
+  const URL = `/unavailabilities/user-all/`+userId;
+  return api(URL, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': token
+    }
+  })
+    .then(response => response.data)
+    .catch(error => {
+      throw error;
+    });
+};
   
 
 export const updateUnavailability = (payload, token, id) => {

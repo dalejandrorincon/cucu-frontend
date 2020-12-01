@@ -95,7 +95,7 @@ export const rejectService = (token, id, payload) => {
     });
 };
 
-export const cancelService = (token, id, payload) => {
+export const cancelService = (token, id, payload, role) => {
   const URL = `/translation_services/cancel/`+id;
   return api(URL, {
     method: 'PUT',
@@ -105,7 +105,8 @@ export const cancelService = (token, id, payload) => {
     },
     data: {
       ...payload,
-      lang: getLang()
+      lang: getLang(),
+      role: role
     }
   })
     .then(response => response.data)
