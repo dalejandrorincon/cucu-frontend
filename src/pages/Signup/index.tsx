@@ -76,7 +76,7 @@ function SignupPage() {
         console.log(err.response)
         let message = "Ha ocurrido un error al crear el usuario.";
         if(JSON.stringify(error)=='{"email":"Correo eléctronico ya está siendo usado"}'){
-          message = "Correo eléctronico ya está siendo usado"
+          message = t('sign-up-client.mail-used')
         }
         setButtonState({ label: t('sign-up-client.create-account'), disabled: false })
         setResponse(

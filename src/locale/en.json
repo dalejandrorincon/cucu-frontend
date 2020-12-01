@@ -103,6 +103,7 @@
             "accept-terms": "Accept the terms and conditions",
             "create-account": "Create account",
             "creating": "Creating...",
+            "mail-used": "E-mail is already being used.",
             "log-in":"Log in"
 
         },

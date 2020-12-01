@@ -174,9 +174,9 @@ function RequestTranslatorPage() {
         moment(element.from).startOf("day").isSameOrBefore(moment(currentDay)) &&
         moment(element.to).endOf("day").isSameOrAfter(moment(currentDay)) 
       ){
-          console.log("test")
+
         for (let i = 0; i < 48; i++) {
-          if(moment(element.from).isSameOrBefore(currentDay) &&  moment(element.to).isSameOrAfter(currentDay) ){
+          if((moment(element.from).startOf('minute')).isSameOrBefore(currentDay) &&  moment(element.to).isSameOrAfter(currentDay) ){
             excluded.push(currentDay)
           }
           currentDay = moment(currentDay).add(30, 'minutes').toDate()
