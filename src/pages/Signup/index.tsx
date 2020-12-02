@@ -25,6 +25,7 @@ import {
 import * as UsersAPI from '../../api/users';
 import * as AuthAPI from '../../api/auth';
 import { connectSocket } from "../../utils/constants"
+import LanguageSelector from "../../components/LanguageSelector";
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -104,7 +105,7 @@ function SignupPage() {
     <Container className="themed-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
-          <Signup>
+          <Signup className="signup">
             <Logo src="/assets/images/logo.png"></Logo>
             <Title>{t('sign-up-client.sign-up')}</Title>
             <Row>
@@ -119,6 +120,7 @@ function SignupPage() {
                 })}
               </Col>
             </Row>
+            <LanguageSelector></LanguageSelector>
             <SignupInfo>
               {t('sign-up-client.already-account')}
               <BackToLoginLink to="/">{t('sign-up-client.log-in')}</BackToLoginLink>
