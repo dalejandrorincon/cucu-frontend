@@ -50,7 +50,7 @@ export default function TranslatorProfileForm() {
     };
 
     const getCountries = () => {
-        CountriesAPI.getCountries().then((res) => {
+        CountriesAPI.getCountries({stripe: true}).then((res) => {
             console.log(res)
             if (res) {
                 const items = res.map((item) =>
