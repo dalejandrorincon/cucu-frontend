@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, InputGroup, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -20,10 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 import { connectSocket } from "../../utils/constants"
 
-import { useLocation } from 'react-router-dom'
-
-import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/css/react-flags-select.css';
+import LanguageSelector from "../../components/LanguageSelector";
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -35,28 +32,6 @@ function LoginPage() {
   const { register, handleSubmit, errors } = useForm();
   const { t, i18n } = useTranslation();
 
-  const location = useLocation();
-  const userFlag = useRef<any>();
-
-  useEffect(() => {
-    if(location.pathname=="/es"){
-      i18n.changeLanguage("ES")
-      userFlag.current?.updateSelected("ES")
-  		localStorage.setItem('lang', "ES")
-    }
-  
-    if(location.pathname=="/en"){
-      i18n.changeLanguage("US")
-      userFlag.current?.updateSelected("US")
-  		localStorage.setItem('lang', "US")
-    }
-  }, [userFlag.current]);
-
-
-  const onSelectFlag = (flag) =>{
-		localStorage.setItem('lang', flag)	
-		i18n.changeLanguage(flag)	
-  }
 
   const onSubmit = (data: any) => {
     data.email = data.email?.toLowerCase()
@@ -111,13 +86,7 @@ function LoginPage() {
           <Login>
             <Logo src="/assets/images/logo.png"></Logo>
             <Title>{t('login.login')}</Title>
-            <ReactFlagsSelect
-              ref={userFlag}
-              countries={["US", "ES"]}
-              customLabels={{"US": "English","ES": "Español"}} 
-              onSelect={(flag)=>{onSelectFlag(flag)}}
-              defaultCountry={ localStorage.getItem("lang") ? localStorage.getItem("lang") : "US" }
-            />
+            <LanguageSelector></LanguageSelector>
             <LoginInfo>
               {t('login.dont-account')}
               <CreateAccountLink to="/signup">

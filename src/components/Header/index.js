@@ -41,12 +41,18 @@ export default function Header() {
 				link = null
 				break;
 			case "2":
-				link =
-					<Link to="/profile-translator-edit">{t('menu.profile')}</Link>
+				link = 
+				<NavDropdown.Item
+					onClick={() => history.push("/profile-translator-edit") }>
+					<Link>{t('menu.profile')}</Link>
+				</NavDropdown.Item>
 				break;
 			default:
 				link =
-				<Link to="/profile-client">{t('menu.profile')}</Link>
+				<NavDropdown.Item
+					onClick={() => history.push("/profile-client")}>
+					<Link>{t('menu.profile')}</Link>
+				</NavDropdown.Item>
 		}
 
 		setProfileLink(link)
@@ -120,19 +126,16 @@ export default function Header() {
 						title={localStorage.getItem("userName")}
 						id="nav-dropdown"
 					>
-						<NavDropdown.Item>
-							{profileLink}
-						</NavDropdown.Item>{" "}
-						<NavDropdown.Item>
-							<Link
-								to="#"
-								onClick={() => {
-									logout();
-									history.push("/");
-								}}
-							>
+						{profileLink}
+						
+						<NavDropdown.Item
+							onClick={() => {
+								logout();
+								history.push("/");
+							}}>
+							<Link>
 								{t('menu.log-out')}
-                        </Link>
+                        	</Link>
 						</NavDropdown.Item>
 					</NavDropdown>
 					
