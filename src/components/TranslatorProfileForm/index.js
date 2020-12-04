@@ -60,6 +60,9 @@ export default function TranslatorProfileForm() {
         getCountries();
     }, []);
 
+    useEffect(() => {
+        getCountries()
+    }, [i18n.language]);
 
     const getProfile = () => {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
@@ -69,11 +72,11 @@ export default function TranslatorProfileForm() {
     };
 
     const getCountries = () => {
-        CountriesAPI.getCountries().then((res) => {
+        CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
             console.log(res)
             if (res) {
                 const items = res.map((item) =>
-                    <option key={item.id} value={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>{ i18n.language=="ES" ? item.name_es : item.name_en}</option>
                 );
                 setCountries(items)
             }
