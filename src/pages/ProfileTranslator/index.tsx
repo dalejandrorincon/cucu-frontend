@@ -99,7 +99,7 @@ function ProfileTranslatorPage({
   return (
     <>
       <Header></Header>
-      <Container className="themed-container">
+      <Container className="themed-container profile-translator-client">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>{t('translator_profile.translator_profile')}</Title>

@@ -92,6 +92,11 @@ export const WellContainer = styled.div`
 
 export const PasswordRecover = styled.div`
   min-height: 100vh;
+  @media screen and (max-width: 768px) {
+    >.row>.col{
+      padding: 0px;
+    }
+  }
 `;
 
 export const RowRecover = styled(Row)`

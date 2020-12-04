@@ -87,12 +87,12 @@ function ProfileTraductorPage({
   return (
     <>
       <Header></Header>
-      <Container className="themed-container">
+      <Container className="themed-container translator-profile">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>{t('my-profile.profile')}</Title>
             <PasswordRecover>
-              <Row>
+              <Row className="translator-profile-row">
                 <Col className="col-md-12">
                   <WellContainer>
                     <div className="row-border col-padding container-profile">
@@ -132,7 +132,7 @@ function ProfileTraductorPage({
                         </Row>
                       </Col>
                     </div>
-                    <Row className="col-padding">
+                    <Row className="col-padding translator-profile-row">
                       <Col className="col-md-3 menu-profile ">
                         <Nav defaultActiveKey={location.pathname} className="flex-column">
                           <Nav.Link className="item-menu" href="/profile-translator-edit">

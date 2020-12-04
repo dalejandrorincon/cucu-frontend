@@ -32,6 +32,9 @@ opacity: 1;
   border-color: #863df9;
   box-shadow: none;
 }
+@media screen and (max-width: 768px) {
+  width: 54%;
+}
 `;
 
 

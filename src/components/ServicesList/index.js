@@ -275,7 +275,7 @@ export default function TranslatorServices() {
 							</Row>
 						<div className="table-responsive">
 							<table className="table ">
-								<thead className="thead-light">
+								<thead className="thead-light table-services">
 									<tr>
 										<th scope="col">
 											{ getUserType()=="translator" ? <>{t('client')}</> : <>{t('translator')}</>}
@@ -286,9 +286,10 @@ export default function TranslatorServices() {
 										<th scope="col">{t('request-list.date-time')}</th>
 										<th scope="col">{t('request-list.status')}</th>
 										<th scope="col"></th>
+										<th scope="col" className="mobile-item"></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody className="table-services">
 									{services?.map((ele) => (
 										<tr key={ele.id}>
 											<td className="user-container">
@@ -345,6 +346,23 @@ export default function TranslatorServices() {
 													<span>{t('view')}</span>
 												</Button>
 											</td>
+											<td className="mobile-item">
+												<p><b>{t('request-list.request-type')}:</b> {ele.service_type === "0" ? t('instant') : t('programmed')} </p>
+												<p><b>{t('request-list.duration')}:</b> {ele.duration_amount}</p>
+												<p><b>{t('request-list.charges')}:</b> {ele.duration_type === "0" ?  t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</p>
+												<p><b>{t('request-list.date-time')}:</b> {moment(ele.date).format("D MMM  YYYY - hh:mm a")}</p>
+												<p><b>{t('request-list.status')}:</b> {itemStatusLabel(ele.status)}</p>
+												<Button
+													className="view-mas"
+													to="#"
+													onClick={() => {
+														setActiveService(ele)
+														setIsModalVisible(true)
+													}}
+												>
+													<span>{t('view')}</span>
+												</Button>
+											</td>
 										</tr>
 									))}
 								</tbody>
@@ -360,7 +378,7 @@ export default function TranslatorServices() {
 								pageCount={pageCount}
 								marginPagesDisplayed={2}
 								onPageChange={handlePageClick}
-								pageRangeDisplayed={5}
+								pageRangeDisplayed={1}
 								containerClassName={'pagination'}
 								subContainerClassName={'pages pagination'}
 								activeClassName={'active'}

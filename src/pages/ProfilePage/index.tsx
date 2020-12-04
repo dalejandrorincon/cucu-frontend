@@ -236,7 +236,7 @@ function ProfilePage({
     <>
       <Header></Header>
 
-      <Container className="themed-container">
+      <Container className="themed-container profile-client-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>{t('my-profile.profile')}</Title>

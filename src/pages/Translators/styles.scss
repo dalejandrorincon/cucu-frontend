@@ -72,3 +72,80 @@
 .alert-danger{
     margin-top: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    
+
+    .table-translators{
+        .mobile-item{
+            display: table-cell !important;
+        }    
+        tr{
+            >:not(:first-child){
+                display: none;
+            }
+            :first-child{
+                padding-right: 0px;
+            }
+            .mobile-item{
+                p{
+                    margin-bottom: 0px;
+                    margin-top: 10px;
+                }
+                a{
+                    display: block;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+
+    
+    .translators-container .row{
+        &.home-date{
+            flex-direction: row;
+        }
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        flex-direction: column;
+        .userIconTra{
+            flex-direction: column;
+            width: 100px;
+            .star-container{
+                margin-left: 0px;
+                width: 100px;
+                .name{
+                    padding: 0px;
+                    font-size: 14px;
+                    margin-top: 5px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    .fa-start{
+                        font-size: 12px !important;
+                    }
+                }
+            }
+        }
+        .mobile-item{
+            font-size: 14px;
+        }
+        .translators-list{
+            padding-left: 5px;
+            padding-right: 5px;
+            >.row{
+            flex-direction: column;
+                .form-group{
+                    margin-bottom: 5px;
+                }
+                .filter-language > div{
+                    margin-right: 0px;
+                    margin-bottom: 5px;
+                }
+            }
+
+        }
+    }
+
+    
+}

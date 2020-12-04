@@ -91,18 +91,18 @@ function SignupPage() {
 
   const ButtonActiveOrInactive = (active, text, action) => {
     return active ? (
-      <OptionActive type="button" onClick={action}>
+      <OptionActive className="button-type" type="button" onClick={action}>
         {text}
       </OptionActive>
     ) : (
-      <Option type="button" onClick={action}>
+      <Option className="button-type" type="button" onClick={action}>
         {text}
       </Option>
     );
   };
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container signup-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
           <Signup className="signup">
