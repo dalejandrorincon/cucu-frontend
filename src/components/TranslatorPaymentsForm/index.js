@@ -50,17 +50,20 @@ export default function TranslatorProfileForm() {
     };
 
     const getCountries = () => {
-        CountriesAPI.getCountries({stripe: true}).then((res) => {
+        CountriesAPI.getCountries({stripe: true, lang: i18n.language}).then((res) => {
             console.log(res)
             if (res) {
                 const items = res.map((item) =>
-                    <option key={item.id} value={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>{ i18n.language=="ES" ? item.name_es : item.name_en}</option>
                 );
                 setCountries(items)
             }
         })
     }
-
+    useEffect(() => {
+        getCountries()
+    }, [i18n.language]);
+    
     const getBanks = () => {
         BanksAPI.getBanks({}).then((res) => {
             const items = res?.map((item) =>
