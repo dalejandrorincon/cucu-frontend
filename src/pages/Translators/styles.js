@@ -16,6 +16,9 @@ export const WellContainer = styled.div`
   border: #d1d1d1 solid 1px;
   padding-top: 30px;
   margin-bottom: 30px;
+  @media screen and (max-width: 768px) {
+    padding-top: 10px;
+  }
 `;
 
 export const PasswordRecover = styled.div`

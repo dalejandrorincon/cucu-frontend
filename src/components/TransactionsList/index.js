@@ -223,7 +223,7 @@ export default function TransactionsList() {
 							</Row>
 						<div className="table-responsive">
 							<table className="table ">
-								<thead className="thead-light">
+								<thead className="thead-light table-services">
 									<tr>
 										<th scope="col">
 											{t('transactions-list.client')}
@@ -234,9 +234,10 @@ export default function TransactionsList() {
 										<th scope="col">{t('transactions-list.date-time')}</th>
 										{/* <th scope="col">Estado</th>
 										<th scope="col"></th> */}
+										<th scope="col" className="mobile-item"></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody className="table-services">
 									{transactions?.map((ele) => (
 										<tr key={ele.id}>
 											<td className="user-container">
@@ -266,24 +267,12 @@ export default function TransactionsList() {
 											<td>{ele.service?.duration_amount}</td>
 											<td>{ele.service?.duration_type === "0" ?t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</td>
 											<td>{moment(ele.created_at).format("D MMM  YYYY - hh:mm a")}</td>
-											{/* <td>
-												{itemStatusLabel(ele.service?.status)}
-											</td> */}
-											{/* <td>
-												<Link
-													className="view-mas"
-													to="#"
-													onClick={() => {
-														setActiveService(ele)
-														setIsModalVisible(true)
-													}}
-												>
-													<img
-														src="/assets/images/dots@2x.png"
-														alt="logo"
-													/>
-												</Link>
-											</td> */}
+											<td className="mobile-item">
+												<p><b>{t('transactions-list.request-type')}: </b>{ele.service?.service_type === "0" ? t('instant') : t('programmed') }</p>
+												<p><b>{t('transactions-list.duration')}: </b>{ele.service?.duration_amount}</p>
+												<p><b>{t('transactions-list.charges')}: </b>{ele.service?.duration_type === "0" ?t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</p>
+												<p><b>{t('transactions-list.date-time')}: </b>{moment(ele.created_at).format("D MMM  YYYY - hh:mm a")}</p>
+											</td>
 										</tr>
 									))}
 								</tbody>

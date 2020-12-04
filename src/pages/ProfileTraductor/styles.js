@@ -8,6 +8,9 @@ font: normal normal bold 28px Acumin Pro;
 letter-spacing: 0px;
 color: #3c3c3c;
 opacity: 1;
+@media screen and (max-width: 768px) {
+    margin-left: 5px;
+}
 `;
 
 

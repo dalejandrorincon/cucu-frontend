@@ -248,7 +248,7 @@ function TranslatorsPage({
           <Col className="col-md-12">
             <Title> {t('translators-list.translators')}</Title>
             <PasswordRecover>
-              <Row className="margin-5">
+              <Row className="margin-5 translator-profile-row">
                 <Col className="col-md-3">
                   <div className="card">
                     <div className="card-header titleFilter">{t('translators-list.filter-by')}</div>
@@ -421,7 +421,7 @@ function TranslatorsPage({
                 </Col>
                 <Col className="col-md-9">
                   <WellContainer>
-                    <Container className="themed-container" fluid={true}>
+                    <Container className="themed-container translators-list" fluid={true}>
                       <Row>
                         <Col>
                           <Form.Group>
@@ -495,7 +495,7 @@ function TranslatorsPage({
                       </Row>
                     </Container>
                     <div className="table-responsive">
-                      <table className="table ">
+                      <table className="table table-translators">
                         <tbody>
                           {translators?.map((ele: any) => (
                             <tr>
@@ -510,14 +510,15 @@ function TranslatorsPage({
                                   <div className="star-container">
                                     <p className="name">
                                       {ele.firstname} {ele.lastname}
-
-                                      <Rating
-                                          emptySymbol="fa fa-star-o fa-2x fa-start"
-                                          fullSymbol="fa fa-star fa-2x fa-start"
-                                          className="startcontainer"
-                                          readonly={true}
-                                          initialRating={Math.floor(ele.rating)}
-                                      />
+                                      <div>
+                                        <Rating
+                                            emptySymbol="fa fa-star-o fa-2x fa-start"
+                                            fullSymbol="fa fa-star fa-2x fa-start"
+                                            className="startcontainer"
+                                            readonly={true}
+                                            initialRating={Math.floor(ele.rating)}
+                                        />
+                                      </div>
                                     </p>
                                   </div>
                                 </div>
@@ -541,6 +542,25 @@ function TranslatorsPage({
                                 ))}
                               </td>
                               <td>
+                                <ResendLink to={`profile-translator/${ele.id}`}>
+                                  {t('translators-list.see-profile')}
+                                </ResendLink>
+                              </td>
+                              <td className="mobile-item">
+                                <p>{t('translators-list.specialist-in')}</p>
+                                {ele.specialities?.map((sp: any) => (
+                                  <span className="badge badge-light">
+                                    {i18n.language=="ES" ? sp.name_es : sp.name_en }
+                                  </span>
+                                ))}<br />
+                                <p>{t('translators-list.language')}</p>
+                                {ele.languages?.map((lng: any) => (
+                                  <>
+                                    <span className="badge badge-light">
+                                    {t('translators-list.from')} {i18n.language=="ES" ? lng.from.name_es : lng.from.name_en} {t('translators-list.to')} {i18n.language=="ES" ? lng.to.name_es : lng.to.name_en}
+                                    </span>
+                                  </>
+                                ))}<br />
                                 <ResendLink to={`profile-translator/${ele.id}`}>
                                   {t('translators-list.see-profile')}
                                 </ResendLink>

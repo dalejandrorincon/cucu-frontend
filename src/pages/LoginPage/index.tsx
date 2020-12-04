@@ -83,7 +83,7 @@ function LoginPage() {
     <Container className="themed-container login-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
-          <Login>
+          <Login className="login">
             <Logo src="/assets/images/logo.png"></Logo>
             <Title>{t('login.login')}</Title>
             <LanguageSelector></LanguageSelector>

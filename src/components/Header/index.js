@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import { Container, Nav } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import {
 	NavDropdown,
 	Modal,
@@ -66,7 +66,7 @@ export default function Header() {
 			case "2":
 				content =
 
-					<Nav defaultActiveKey={location.pathname} className="navbar-nav mr-auto">
+					<>
 						<Nav.Link className="item-menu" href="/services">
 						<p className="text-item-menu">{t('menu.requests')}</p>
 						</Nav.Link>
@@ -76,19 +76,19 @@ export default function Header() {
 						<Nav.Link className="item-menu" href="/availabilities">
 						<p className="text-item-menu">{t('menu.schedule')}</p>
 						</Nav.Link>
-					</Nav>
+					</>
 				break;
 			default:
 				content =
-					<Nav defaultActiveKey={location.pathname} className="navbar-nav mr-auto">
+					<>
 						<Nav.Link className="item-menu" href="/translators">
 							<p className="text-item-menu">{t('menu.translators')}</p>
 						</Nav.Link>
 						<Nav.Link className="item-menu" href="/services">
 							<p className="text-item-menu">{t('menu.my-requests')}</p>
 						</Nav.Link>
-					</Nav>
-		}
+					</>
+		}	
 		setOptions(content)
 
 	}
@@ -100,10 +100,30 @@ export default function Header() {
 	return (
 		<nav className="navbar navbar-expand-md layout">
 			<Container>
+				<Navbar expand="lg">
 				<Link className="navbar-brand" to="/">
 					<img src="/assets/images/logo.png" alt="logo" />
 				</Link>
-				{options}
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+  				<Navbar.Collapse id="basic-navbar-nav">
+				  	<Nav defaultActiveKey={location.pathname} className="	 mr-auto">
+						{options}
+						<Nav.Link className="item-menu mobile-item" href={ localStorage.getItem("role")=="2" ? "/profile-translator-edit" : "/profile-client" }>
+							<p className="text-item-menu">{t('menu.profile')}</p>
+						</Nav.Link>
+						<Nav.Link 
+							className="item-menu mobile-item"
+							onClick={() => {
+								logout();
+								history.push("/");
+							}}
+						>
+							<p>
+								{t('menu.log-out')}
+							</p>
+						</Nav.Link>
+					</Nav>
+				</Navbar.Collapse>
 				<ReactFlagsSelect
 					countries={["US", "ES"]}
 					customLabels={{"US": "English","ES": "Español"}} 
@@ -115,7 +135,7 @@ export default function Header() {
 						<Notifications></Notifications>
 					</li>
 				</ul>
-				<ul className="navbar-nav">
+				<ul className="navbar-nav desktop-item">
 					<img
 						src={ localStorage.getItem("image_url") &&  localStorage.getItem("image_url")!="null"?
 							localStorage.getItem("image_url"):
@@ -140,6 +160,7 @@ export default function Header() {
 					</NavDropdown>
 					
 				</ul>
+				</Navbar>
 			</Container>
 		</nav>
 	);
