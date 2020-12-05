@@ -118,7 +118,7 @@ function RecoverPasswordPage() {
   };
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container recover-container" fluid={true}>
       <RowRecover>
         <Col className="col-md-5 mx-auto">
           <PasswordRecover>

@@ -165,8 +165,9 @@ export default function AvailabilitiesList() {
 							<table className="table ">
 								<thead className="thead-light">
 									<tr>
-										<th scope="col">{t('availabilities-list.start_date')}</th>
-										<th scope="col">{t('availabilities-list.end_date')}</th>
+										<th scope="col" className="desktop-item">{t('availabilities-list.start_date')}</th>
+										<th scope="col" className="desktop-item">{t('availabilities-list.end_date')}</th>
+										<th scope="col" className="mobile-item">{t('availabilities-list.start_end_date')}</th>
 										<th scope="col">
 											<Button
 												className="cucu-button plus-button"
@@ -186,9 +187,12 @@ export default function AvailabilitiesList() {
 								<tbody>
 									{unavailabilities?.map((ele) => (
 										<tr key={ele.id}>
-											<td>{moment(ele.from).format('D MMM  YYYY - hh:mm a')}</td>
-											<td>{moment(ele.to).format('D MMM  YYYY - hh:mm a	')}</td>
+											<td className="desktop-item">{moment(ele.from).format('D MMM  YYYY - hh:mm a')}</td>
+											<td className="desktop-item">{moment(ele.to).format('D MMM  YYYY - hh:mm a	')}</td>
 											{/* <td>{moment(ele.to).format('h:mm a')}</td> */}
+											<td className="mobile-item">
+												{moment(ele.from).format('D MMM  YYYY - hh:mm a	')} <br />
+												{moment(ele.to).format('D MMM  YYYY - hh:mm a	')}</td>
 											<td>												
 												<Dropdown className="cucu-dropdown">
 													<Dropdown.Toggle variant="outline" id="dropdown-basic">

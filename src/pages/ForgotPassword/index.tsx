@@ -21,6 +21,7 @@ import {
   ResendLink,
 } from "./styles"
 import { useTranslation } from 'react-i18next';
+import { getLang } from '../../utils/constants';
 
 const baseUri = process.env.REACT_APP_API_URL;
 
@@ -35,6 +36,7 @@ function ForgotPasswordPage() {
   const submitForm = () => {
     const body = new URLSearchParams({
       email: email.toLowerCase(),
+      lang: getLang()
     });
 
     try {
@@ -66,11 +68,11 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <Container className="themed-container" fluid={true}>
+    <Container className="themed-container recover-container" fluid={true}>
       <Row className="no-gutter">
         <Col>
           {successfulSendCode ? (
-            <ForgotPasswordSuccessful>
+            <ForgotPasswordSuccessful className="recover">
               <Logo src="/assets/images/logo.png"></Logo>
               <SuccessfulContainer>
                 <Successful src="/assets/images/check@2x.png"></Successful>
@@ -105,7 +107,7 @@ function ForgotPasswordPage() {
               </ButtonToLogin>
             </ForgotPasswordSuccessful>
           ) : (
-            <ForgotPassword>
+            <ForgotPassword className="recover">
               <Logo src="/assets/images/logo.png"></Logo>
               <Title>{t('forgot-password.reset-password')}</Title>
               <ForgotPasswordInfo>

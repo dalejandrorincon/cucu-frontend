@@ -75,7 +75,7 @@ function ProfileTranslatorPage({
   };
 
   const getCountries = () => {
-    CountriesAPI.getCountries().then((res) => {
+    CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
       console.log(res)
       setCountries(res)
     })
@@ -85,7 +85,11 @@ function ProfileTranslatorPage({
     let found = ""
     countries.forEach(element => {
       if(element.id==country_id){
-        found = element.name
+        if(i18n.language=="ES"){
+          found = element.name_es
+        }else{
+          found = element.name_en
+        }
       }
     });
     return found
@@ -99,7 +103,7 @@ function ProfileTranslatorPage({
   return (
     <>
       <Header></Header>
-      <Container className="themed-container">
+      <Container className="themed-container profile-translator-client">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>{t('translator_profile.translator_profile')}</Title>

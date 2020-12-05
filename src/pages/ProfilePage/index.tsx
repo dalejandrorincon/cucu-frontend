@@ -163,11 +163,11 @@ function ProfilePage({
   };
 
   const getCountries = () => {
-    CountriesAPI.getCountries().then((res) => {
+    CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
       console.log(res)
       if (res) {
         const items = res.map((item) =>
-          <option key={item.id} value={item.id}>{item.name}</option>
+          <option key={item.id} value={item.id}>{ i18n.language=="ES" ? item.name_es : item.name_en}</option>
         );
         setCountries(items)
       }
@@ -236,7 +236,7 @@ function ProfilePage({
     <>
       <Header></Header>
 
-      <Container className="themed-container">
+      <Container className="themed-container profile-client-container">
         <RowRecover className="layout-content">
           <Col className="col-md-12">
             <Title>{t('my-profile.profile')}</Title>

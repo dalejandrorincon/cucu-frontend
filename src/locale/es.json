@@ -283,6 +283,7 @@
             "created_at": "Fecha de creación",
             "start_date": "Fecha y hora de inicio",
             "end_date": "Fecha y hora de fin",
+            "start_end_date": "Fecha y hora de inicio y fin",
             "create-new": "Crear Nuevo",
             "create-unavailability": "Crear no disponibilidad",
             "edit-unavailability": "Editar no disponibilidad",

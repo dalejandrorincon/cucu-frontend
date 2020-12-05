@@ -259,7 +259,7 @@ export default function ServiceModal(props) {
 
   useEffect(() => {
     getButtons()
-  }, [props.service, confirmCancelBtn]);
+  }, [props.service, confirmCancelBtn, i18n.language]);
 
   return (
     <>

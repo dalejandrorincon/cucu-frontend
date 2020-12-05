@@ -17,6 +17,9 @@ padding-top: 30px;
 margin-bottom: 30px;
 margin-right: 10px;
 margin-left: 10px;
+@media screen and (max-width: 768px) {
+  margin: 0px
+}
 `;
 
 export const PasswordRecover = styled.div`

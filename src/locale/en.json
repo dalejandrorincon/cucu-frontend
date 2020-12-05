@@ -284,6 +284,7 @@
             "created_at": "Created at",
             "start_date": "Start date and time",
             "end_date": "End date and time",
+            "start_end_date": "Start and end date and time",
             "create-new": "Create new",
             "create-unavailability": "Create unavailability",
             "edit-unavailability": "Edit unavailability",
