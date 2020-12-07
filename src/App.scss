@@ -196,6 +196,12 @@ nav.navbar{
     right: 20px;
 }
 
+span.required{
+    color: red;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 @media screen and (min-width: 768px) {
     .navbar-nav .mobile-item{
         display: none;
