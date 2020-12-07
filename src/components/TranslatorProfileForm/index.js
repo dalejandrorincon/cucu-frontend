@@ -62,7 +62,12 @@ export default function TranslatorProfileForm() {
 
     useEffect(() => {
         getCountries()
+        getButton()
     }, [i18n.language]);
+
+    const getButton = () =>{
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
+    }
 
     const getProfile = () => {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {

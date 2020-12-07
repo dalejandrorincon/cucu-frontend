@@ -191,6 +191,11 @@ nav.navbar{
     top: 22px
 }
 
+.filter-label-arrow{
+    position: absolute;
+    right: 20px;
+}
+
 @media screen and (min-width: 768px) {
     .navbar-nav .mobile-item{
         display: none;
@@ -198,9 +203,10 @@ nav.navbar{
     .services-list .mobile-item, 
     .transactions-list .mobile-item, 
     .availabilities-list .mobile-item
-    .translators-list .mobile-item
+    .translators-list .mobile-item,
+    .table-translators .mobile-item
     {
-        display: none;
+        display: none !important;
     }
 }
 

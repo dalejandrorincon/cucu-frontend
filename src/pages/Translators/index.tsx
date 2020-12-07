@@ -9,9 +9,9 @@ import {
   Row,
   Col,
   Form,
-  NavDropdown,
   FormControl,
-  Button
+  Button,
+  Collapse
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Range } from "rc-slider";
@@ -40,7 +40,7 @@ import * as SpecialitiesAPI from '../../api/specialities';
 import * as LanguagesAPI from '../../api/languages';
 import moment from 'moment';
 
-import { combineDateWithTime } from "../../utils/constants"
+import { combineDateWithTime, getWindowDimensions } from "../../utils/constants"
 import ReactPaginate from 'react-paginate';
 
 import { useFormik } from 'formik';
@@ -91,6 +91,7 @@ function TranslatorsPage({
   const [maxMinute, setMaxMinute] = useState(2.5);
   const [valueMinute, setValueMinute] = useState([1, 2.5]);
   const [rate, setRate] = useState(0);
+  const [openFilter, setOpenFilter] = useState<boolean>(true);
 
   /* const [lang, setLang] = useState([]); */
 
@@ -186,7 +187,16 @@ function TranslatorsPage({
   useEffect(() => {
     getLanguages();
     getSpecialities();
+    responsiveFilter();
   }, []);
+
+
+  const responsiveFilter = () =>{
+    console.log(getWindowDimensions())
+    if (getWindowDimensions()<768){
+      setOpenFilter(false)
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -251,7 +261,14 @@ function TranslatorsPage({
               <Row className="margin-5 translator-profile-row">
                 <Col className="col-md-3">
                   <div className="card">
-                    <div className="card-header titleFilter">{t('translators-list.filter-by')}</div>
+                    <div className="card-header titleFilter"
+                      onClick={() => setOpenFilter(!openFilter)}>
+                      {t('translators-list.filter-by')}
+                      <span className="filter-label-arrow">
+                        { openFilter ? "\u25B2": "\u25BC"}
+                      </span>
+                    </div>
+                    <Collapse in={openFilter}>
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item">
                         <div className="label-filter">{t('translators-list.reviews')}</div>
@@ -417,6 +434,7 @@ function TranslatorsPage({
                         </LabelFilter>
                       </li>
                     </ul>
+                    </Collapse>
                   </div>
                 </Col>
                 <Col className="col-md-9">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Col, Row, Form, Button, Collapse } from "react-bootstrap";
 import { Title, WellContainer } from './styles'
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
@@ -9,7 +9,7 @@ import { useFormik, useFormikContext } from 'formik';
 import "./styles.scss"
 import * as ServicesAPI from '../../api/services';
 import ServiceModal from "../../components/ServiceModal"
-import {itemStatusLabel} from "../../utils/constants"
+import {itemStatusLabel, getWindowDimensions} from "../../utils/constants"
 import { useTranslation } from 'react-i18next';
 import { getNotifications } from "../../api/notifications";
 export default function TranslatorServices() {
@@ -26,7 +26,7 @@ export default function TranslatorServices() {
 	const { id } = useParams();
     const history = useHistory();
 	
-	
+	const [openFilter, setOpenFilter] = useState(true);
 	
 	const formik = useFormik({
 		initialValues: {
@@ -89,6 +89,10 @@ export default function TranslatorServices() {
 		options,
 	]);
 
+	useEffect(() => {
+		responsiveFilter();
+	}, []);
+
 	history.listen((location, action) => {
 		setInitial(true)
 		getNotificationService()
@@ -133,6 +137,12 @@ export default function TranslatorServices() {
 		})
 	}
 
+	const responsiveFilter = () =>{
+		console.log(getWindowDimensions())
+		if (getWindowDimensions()<768){
+		  setOpenFilter(false)
+		}
+	}
 
 
 	return (
@@ -141,7 +151,16 @@ export default function TranslatorServices() {
 				<Col className="col-md-12">
 					<Title>{t('request-list.my-requests')}</Title>
 					<WellContainer>
-							<Row className="filters">
+							<div className="card-header titleFilter filter-controls"
+								onClick={() => setOpenFilter(!openFilter)}>
+								{t('translators-list.filter-by')}
+								<span className="filter-label-arrow">
+									{ openFilter ? "\u25B2": "\u25BC"}
+								</span>
+							</div>
+							<Collapse in={openFilter}>
+							<div>									
+							<Row className="filters">								
 								<Col>
 									<Form.Group>
 										<Form.Control
@@ -271,8 +290,9 @@ export default function TranslatorServices() {
 										/>
 									</Form.Group>
 								</Col>
-
 							</Row>
+							</div>
+							</Collapse>
 						<div className="table-responsive">
 							<table className="table ">
 								<thead className="thead-light table-services">
