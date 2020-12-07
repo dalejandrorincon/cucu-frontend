@@ -42,6 +42,14 @@ export default function TranslatorProfileForm() {
         getPaymentData()
     }, []);
 
+    useEffect(() => {
+        getButton();
+    }, [i18n.language]);
+
+    const getButton = () =>{
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
+    }
+
     const getPaymentData = () => {
         PaymentDataAPI.getData(localStorage.getItem("token")).then((res) => {
             console.log(res)

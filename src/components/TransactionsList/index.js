@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Col, Row, Form } from "react-bootstrap";
+import { Container, Col, Row, Form, Collapse } from "react-bootstrap";
 import { Title, WellContainer } from './styles'
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
@@ -8,10 +8,13 @@ import { useFormik } from 'formik';
 import "./styles.scss"
 import * as TransactionsAPI from '../../api/transactions';
 import { useTranslation } from 'react-i18next';
+import {getWindowDimensions} from "../../utils/constants"
+
 export default function TransactionsList() {
 
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
+	const [openFilter, setOpenFilter] = useState(true);
 
 	const [transactions, setTransactions] = useState([]);
 	const { t, i18n } = useTranslation();
@@ -80,6 +83,16 @@ export default function TransactionsList() {
 		})
 	}
 
+	useEffect(() => {
+		responsiveFilter();
+	}, []);
+
+	const responsiveFilter = () =>{
+		console.log(getWindowDimensions())
+		if (getWindowDimensions()<768){
+		  setOpenFilter(false)
+		}
+	}
 
 
 	return (
@@ -88,6 +101,15 @@ export default function TransactionsList() {
 				<Col className="col-md-12">
 					<Title>{t('transactions-list.transactions-history')}</Title>
 					<WellContainer>
+							<div className="card-header titleFilter filter-controls"
+								onClick={() => setOpenFilter(!openFilter)}>
+								{t('translators-list.filter-by')}
+								<span className="filter-label-arrow">
+									{ openFilter ? "\u25B2": "\u25BC"}
+								</span>
+							</div>
+							<Collapse in={openFilter}>
+							<div>
 							<Row className="filters">
 								<Col>
 									<Form.Group>
@@ -221,6 +243,8 @@ export default function TransactionsList() {
 								</Col>
 
 							</Row>
+							</div>
+							</Collapse>
 						<div className="table-responsive">
 							<table className="table ">
 								<thead className="thead-light table-services">

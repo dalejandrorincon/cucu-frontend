@@ -139,6 +139,14 @@ function ProfilePage({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    getButton();
+  }, [i18n.language]);
+
+  const getButton = () =>{
+      setButtonState({ label: t('experience.save-changes'), disabled: false })
+  }
+
   const onSubmit = (data: any) => {
     console.log(data);
     UsersAPI.updatePassword({newPassword: data.password, oldPassword: data.old_password}, localStorage.getItem("token")).then((res) => {

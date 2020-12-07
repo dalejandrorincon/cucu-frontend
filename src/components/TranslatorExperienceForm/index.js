@@ -147,6 +147,13 @@ export default function TranslatorExperienceForm() {
 
     }
 
+    useEffect(() => {
+        getButton();
+    }, [i18n.language]);
+
+    const getButton = () =>{
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
+    }
 
 
     useEffect(() => {
