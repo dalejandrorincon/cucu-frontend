@@ -90,8 +90,8 @@ function ProfilePage({
       .required(t('required-field')),
     document: Yup.string()
       .min(3, t('min-char', { num: 3 }))
-      .max(15, t('max-char', { num: 15 }))
-      .required(t('required-field')),
+      .max(15, t('max-char', { num: 15 })),
+      //.required(t('required-field')),
     email: Yup.string()
       .email(t('invalid-email'))
       .min(3, t('min-char', { num: 3 }))
@@ -307,7 +307,7 @@ function ProfilePage({
                         <Title>{t('my-profile.my-profile')}</Title>
                         <Form>
                           <Form.Group>
-                            <Label className="label-filter">{t('my-profile.first-name')}</Label>
+                            <Label className="label-filter">{t('my-profile.first-name')}</Label><span className="required">*</span>
                             <Control
                               type="text"
                               id="firstname"
@@ -323,7 +323,7 @@ function ProfilePage({
                           ) : null}
 
                           <Form.Group>
-                            <Label className="label-filter">{t('my-profile.last-name')}</Label>
+                            <Label className="label-filter">{t('my-profile.last-name')}</Label><span className="required">*</span>
                             <Control
                               type="text"
                               id="lastname"
@@ -358,7 +358,7 @@ function ProfilePage({
                           <Form.Group>
                             <Label className="label-filter">
                               {t('my-profile.email')}
-                            </Label>
+                            </Label><span className="required">*</span>
                             <Control
                               type="text"
                               id="email"
@@ -374,7 +374,7 @@ function ProfilePage({
                           ) : null}
 
                           <Form.Group>
-                            <Label className="label-filter">{t('my-profile.phone')}</Label>
+                            <Label className="label-filter">{t('my-profile.phone')}</Label><span className="required">*</span>
                             <Control
                               type="text"
                               id="phone"
@@ -391,7 +391,7 @@ function ProfilePage({
                           ) : null}
 
                           <Form.Group className="outline">
-                            <Label>{t('translator-profile.country')}</Label>
+                            <Label>{t('translator-profile.country')}</Label><span className="required">*</span>
                             <Control
                               as="select"
                               id="country_id"
@@ -413,7 +413,7 @@ function ProfilePage({
                           ) : null}
 
                           <Form.Group>
-                            <Label>{t('translator-profile.city')}</Label>
+                            <Label>{t('translator-profile.city')}</Label><span className="required">*</span>
                             <Control
                               id="city"
                               type="text"
@@ -458,6 +458,12 @@ function ProfilePage({
                           {formik.touched.description && formik.errors.description ? (
                             <div className="alert alert-danger">{formik.errors.description}</div>
                           ) : null}
+
+                          {formik.submitCount && !formik.isValid ? (
+                              <div className="alert alert-danger">{t('all-required-error')}</div>
+                          ) : null}
+
+                         <p><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                           <Submit
                             disabled={buttonState.disabled}
