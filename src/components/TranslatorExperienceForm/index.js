@@ -93,8 +93,8 @@ export default function TranslatorExperienceForm() {
             if(
                 !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
                 !(selectedLanguages && selectedLanguages.length == 0 ) &&
-                !(selectedSpecialities && selectedSpecialities.length == 0 ) &&
-                !(!formik.values.work_experience || formik.values.work_experience.length==0  )
+                !(selectedSpecialities && selectedSpecialities.length == 0 )
+                //!(!formik.values.work_experience || formik.values.work_experience.length==0  )
                 //!(!formik.values.certifications || formik.values.certifications.length==0 ) 
             ){
                 saveChanges(values)
@@ -147,6 +147,13 @@ export default function TranslatorExperienceForm() {
 
     }
 
+    useEffect(() => {
+        getButton();
+    }, [i18n.language]);
+
+    const getButton = () =>{
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
+    }
 
 
     useEffect(() => {
@@ -561,9 +568,9 @@ export default function TranslatorExperienceForm() {
 
                 </div>
 
-                { ( !formik.values.work_experience || formik.values.work_experience.length == 0 ) && submitAttempt  ? (
+                {/* { ( !formik.values.work_experience || formik.values.work_experience.length == 0 ) && submitAttempt  ? (
                     <div className="alert alert-danger">{t('experience.required-experience')}</div>
-                ) : null}
+                ) : null} */}
 
 
                 <h6><b>{t('certification.certifications')}</b></h6>

@@ -57,6 +57,8 @@
         "attachment-cap": "Max size: 1MB",
         "attachment-error": "The file must be smaller than 1MB",
         "view": "View",
+        "all-required-error": "Must complete all the required fields",
+        "required-fields": "Required fields",
         "password-criteria":"Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and a total of 8 characters without any spaces.",
 
         "menu":{
@@ -96,7 +98,7 @@
             "password":"Password",
             "confirm-password":"Confirm password",
             "password-criteria":"Must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and a total of 8 characters without any spaces.",
-            "ive-read-the": "I've read the",
+            "ive-read-the": "I've read and accepted the",
             "terms-and-conditions": "terms and conditions",
             "of-the-service-and-the": "of the service and the",
             "privacy-policy": "privacy policy",
@@ -157,8 +159,8 @@
 
         "request-modal":{
             "service-details":"Service details",
-            "instant": "Instant Translation",
-            "programmed": "Scheduled Translation",
+            "instant": "Instant Interpretation",
+            "programmed": "Scheduled Interpretation",
             "rate-type": "Rate type",
             "duration": "Duration",
             "start-date": "Start date",
@@ -306,7 +308,7 @@
             "firstname":"First name",
             "lastname":"Last name",
             "email":"Email",
-            "document": "ID Number",
+            "document": "ID Number (optional)",
             "phone":"Phone number",
             "password":"Password (optional)",
             "password-label":"Type a new password",
@@ -330,7 +332,7 @@
 
         "experience":{
             "experience": "Work experience",
-            "experience-label": "Add the places where you've strenghtened your experience on oral translations",
+            "experience-label": "Add the places where you've strenghtened your experience on oral interpretations",
             "company": "Company",
             "certificate": "Work certificate",
             "certification-label": "Add all your professional practice certificates.",
@@ -359,14 +361,14 @@
             "certification": "Certification",
             "certifications": "Certifications",
             "name": "Name",
-            "school": "School",
+            "school": "Institute",
             "date": "Date",
             "add": "Add certification",
             "cancel": "Cancel"
         },
         "bank-info":{
             "personal-information": "Personal information",
-            "payoneer-label-1": "If your account isn't included in ",
+            "payoneer-label-1": "If you bank account is not in a country included in ",
             "payoneer-link": "this list",
             "payoneer-label-2":", you must link a Payoneer account.",
             "bank": "Bank",
@@ -389,7 +391,7 @@
             "programmed": "Scheduled",
             "service-site": "Service site",
             "external-platform": "External platform",
-            "site-label": "Choose where will the translation session take place.",
+            "site-label": "Choose where will the interpretation session take place.",
             "url-label": "Input the session URL",
             "platform": "Platform",
             "platform-label": "Select the platform where the session will take place",

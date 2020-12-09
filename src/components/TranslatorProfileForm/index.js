@@ -62,7 +62,12 @@ export default function TranslatorProfileForm() {
 
     useEffect(() => {
         getCountries()
+        getButton()
     }, [i18n.language]);
+
+    const getButton = () =>{
+        setButtonState({ label: t('experience.save-changes'), disabled: false })
+    }
 
     const getProfile = () => {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
@@ -164,8 +169,8 @@ export default function TranslatorProfileForm() {
             .required(t('required-field')),
         document: Yup.string()
             .min(3, t('min-char', {num: 3}))
-            .max(15, t('max-char', {num: 15}))
-            .required(t('required-field')),
+            .max(15, t('max-char', {num: 15})),
+            //.required(t('required-field')),
         email: Yup.string()
             .email(t('invalid-email'))
             .min(3, t('min-char', {num: 3}))
@@ -273,7 +278,7 @@ export default function TranslatorProfileForm() {
 
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
-                    <Label>{t('translator-profile.firstname')}</Label>
+                    <Label>{t('translator-profile.firstname')}</Label><span className="required">*</span>
                     <Control
                         id="firstname"
                         type="text"
@@ -290,7 +295,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.lastname')}</Label>
+                    <Label>{t('translator-profile.lastname')}</Label><span className="required">*</span>
                     <Control
                         id="lastname"
                         type="text"
@@ -326,7 +331,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.email')}</Label>
+                    <Label>{t('translator-profile.email')}</Label><span className="required">*</span>
                     <Form.Control
                         disabled
                         id="email"
@@ -343,7 +348,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.phone')}</Label>
+                    <Label>{t('translator-profile.phone')}</Label><span className="required">*</span>
                     <Form.Control
                         id="phone"
                         type="phone"
@@ -390,7 +395,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group className="outline">
-                    <Label>{t('translator-profile.country')}</Label>
+                    <Label>{t('translator-profile.country')}</Label><span className="required">*</span>
                     <Form.Control
                         as="select"
                         id="country_id"
@@ -411,7 +416,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.city')}</Label>
+                    <Label>{t('translator-profile.city')}</Label><span className="required">*</span>
                     <Control
                         id="city"
                         type="text"
@@ -429,7 +434,7 @@ export default function TranslatorProfileForm() {
 
 
                 <Form.Group>
-                    <Label>{t('translator-profile.nationality')}</Label>
+                    <Label>{t('translator-profile.nationality')}</Label><span className="required">*</span>
                     <Control
                         id="nationality"
                         type="text"
@@ -446,7 +451,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.address_1')}</Label>
+                    <Label>{t('translator-profile.address_1')}</Label><span className="required">*</span>
                     <Control
                         id="address_1"
                         type="text"
@@ -497,7 +502,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.experience')}</Label>
+                    <Label>{t('translator-profile.experience')}</Label><span className="required">*</span>
                     <Control
                         id="labor_months"
                         type="number"
@@ -513,7 +518,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.value_hour')}</Label>
+                    <Label>{t('translator-profile.value_hour')}</Label><span className="required">*</span>
                     <NumberFormat
                         id="rate_hour"
                         className="form-control"
@@ -529,7 +534,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('translator-profile.value_minute')}</Label>
+                    <Label>{t('translator-profile.value_minute')}</Label><span className="required">*</span>
                     <NumberFormat
                         id="rate_minute"
                         className="form-control"
@@ -544,8 +549,12 @@ export default function TranslatorProfileForm() {
                     <div className="alert alert-danger">{formik.errors.rate_minute}</div>
                 ) : null}
 
+                {formik.submitCount && !formik.isValid ? (
+                    <div className="alert alert-danger">{t('all-required-error')}</div>
+                ) : null}
 
-
+                
+               <p><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                 <Submit
                     disabled={buttonState.disabled}

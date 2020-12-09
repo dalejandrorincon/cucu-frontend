@@ -110,3 +110,9 @@ export const getLang = () => {
       return "EN"
     }
 }
+
+export const getWindowDimensions = () => {
+    const { innerWidth: width } = window;
+    return width;
+}
+  

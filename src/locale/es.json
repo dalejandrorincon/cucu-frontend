@@ -56,6 +56,8 @@
         "attachment-cap": "Tamaño máximo 1MB",
         "attachment-error": "El archivo debe ser de máximo 1MB.",
         "view": "Ver",
+        "all-required-error": "Se deben completar todos los campos obligatorios",
+        "required-fields": "Campos obligatorios",
         "password-criteria":"La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco.",
 
         "menu":{
@@ -305,7 +307,7 @@
             "firstname":"Nombre",
             "lastname":"Apellido",
             "email":"Correo electrónico",
-            "document": "Documento",
+            "document": "Documento (opcional)",
             "phone":"Teléfono",
             "password":"Contraseña (opcional)",
             "password-label":"Escribir una nueva contraseña.",
