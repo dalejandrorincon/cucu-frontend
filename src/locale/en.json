@@ -308,7 +308,7 @@
             "firstname":"First name",
             "lastname":"Last name",
             "email":"Email",
-            "document": "ID Number",
+            "document": "ID Number (optional)",
             "phone":"Phone number",
             "password":"Password (optional)",
             "password-label":"Type a new password",

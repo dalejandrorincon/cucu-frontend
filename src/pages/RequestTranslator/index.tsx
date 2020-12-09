@@ -325,7 +325,7 @@ function RequestTranslatorPage() {
                 <>
 
                   <Form.Group>
-                    <Label className="label-filter">URL</Label>
+                    <Label className="label-filter">URL</Label>{formik.values.service_site=="1" ? <span className="required">*</span> : null}
                     <p>
                     {t('request.url-label')}
                     </p>
@@ -347,7 +347,7 @@ function RequestTranslatorPage() {
                   ) : null}
 
                   <Form.Group>
-                    <Label className="label-filter">{t('request.platform')}</Label>
+                    <Label className="label-filter">{t('request.platform')}</Label> {formik.values.service_site=="1" ? <span className="required">*</span> : null}
                     <PasswordInfo>
                       {t('request.platform-label')}
                       </PasswordInfo>
@@ -409,7 +409,7 @@ function RequestTranslatorPage() {
                   </Form.Group>
                 </> : null }
                 <Form.Group className="time-radio">
-                  <Label className="label-filter">{t('request.length')}</Label>
+                  <Label className="label-filter">{t('request.length')}</Label><span className="required">*</span>
 
                   <div
                     key={`inline-radio`}
@@ -465,7 +465,7 @@ function RequestTranslatorPage() {
                   <div className="alert alert-danger">{formik.errors.duration_amount}</div>
                 ) : null}
                 <Form.Group>
-                  <Label className="label-filter">{t('date')}</Label>
+                  <Label className="label-filter">{t('date')}</Label><span className="required">*</span>
                   <Row className="margin-row-form">
                     <Col className="col-md-4">
                       <DatePicker
@@ -562,6 +562,12 @@ function RequestTranslatorPage() {
                     : null
                   }
                 </div>  
+
+                {formik.submitCount && !formik.isValid ? (
+                  <div className="alert alert-danger">{t('all-required-error')}</div>
+                ) : null}
+
+                <p><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                 <Submit disabled={buttonState.disabled} onClick={() => formik.submitForm()}>{buttonState.label}</Submit>
 
