@@ -307,7 +307,7 @@
             "firstname":"Nombre",
             "lastname":"Apellido",
             "email":"Correo electrónico",
-            "document": "Documento",
+            "document": "Documento (opcional)",
             "phone":"Teléfono",
             "password":"Contraseña (opcional)",
             "password-label":"Escribir una nueva contraseña.",

@@ -132,7 +132,8 @@ function TranslatorsPage({
       max_experience: value[1],
       min_price_hour: valueHour[0],
       max_price_hour: valueHour[1],
-      page: page
+      page: page,
+      random: true
     }
 
     if (startTime && endTime) {
