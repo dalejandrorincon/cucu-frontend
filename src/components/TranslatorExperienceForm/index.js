@@ -615,6 +615,16 @@ export default function TranslatorExperienceForm() {
                     <div className="alert alert-danger">{t('experience.required-certificate')}</div>
                 ) : null} */}
 
+                {
+                    !(
+                    !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
+                    !(selectedLanguages && selectedLanguages.length == 0 ) &&
+                    !(selectedSpecialities && selectedSpecialities.length == 0 )
+                    ) && submitAttempt ? (
+                        <div className="alert alert-danger">{t('all-required-error')}</div>
+                    ) : null
+                }
+
                 <Submit
                     disabled={buttonState.disabled}
                     type="button"

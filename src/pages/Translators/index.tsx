@@ -92,6 +92,7 @@ function TranslatorsPage({
   const [valueMinute, setValueMinute] = useState([1, 2.5]);
   const [rate, setRate] = useState(0);
   const [openFilter, setOpenFilter] = useState<boolean>(true);
+  const [randomized, setRandomized] = useState<any>(null)
 
   /* const [lang, setLang] = useState([]); */
 
@@ -122,7 +123,35 @@ function TranslatorsPage({
     })
   }
 
+  const getRandomized = () =>{
+    let sort =[
+      'firstname',
+      'lastname',
+      'email',
+      'rate_minute',
+      'rate_hour',
+      'created_at'
+    ]
+    let randomSort = Math.floor(Math.random() * sort.length);
+
+    let order =[
+      'asc',
+      'desc',
+    ]
+    let randomOrder = Math.floor(Math.random() * order.length);
+
+    setRandomized({sort_by: sort[randomSort], order_by: order[randomOrder]})
+    return({sort_by: sort[randomSort], order_by: order[randomOrder]})
+  }
+
   const getTranslators = (lang = []) => {
+
+    let randomizedData
+    if(randomized){
+      randomizedData = randomized
+    }else{
+      randomizedData = getRandomized()
+    }
 
     let settings = {
       grade: rate,
@@ -133,7 +162,7 @@ function TranslatorsPage({
       min_price_hour: valueHour[0],
       max_price_hour: valueHour[1],
       page: page,
-      random: true
+      ...randomizedData
     }
 
     if (startTime && endTime) {

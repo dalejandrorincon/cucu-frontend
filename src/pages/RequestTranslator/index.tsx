@@ -67,7 +67,7 @@ function RequestTranslatorPage() {
         then: Yup.string()
           .min(3, t('min-char', {num: 3}))
           .max(500, t('max-char', {num: 500}))
-          .required(t('required-field')),
+          //.required(t('required-field')),
       }),
     platform_id: Yup.string()
       .when('service_site', {
@@ -325,7 +325,7 @@ function RequestTranslatorPage() {
                 <>
 
                   <Form.Group>
-                    <Label className="label-filter">URL</Label>{formik.values.service_site=="1" ? <span className="required">*</span> : null}
+                    <Label className="label-filter">URL</Label>
                     <p>
                     {t('request.url-label')}
                     </p>
