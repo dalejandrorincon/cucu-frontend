@@ -358,7 +358,7 @@ export default function ServiceModal(props) {
               <b>{t('request-modal.start-date')}: </b>
               <span> {moment(props.service.date).format("D MMM  YYYY")}</span>
             </p>
-            { props.service?.service_site == "1" && ( props.service?.status == "2" || role == "client" ) ?
+            { props.service?.url?.length>0 && ( props.service?.status == "2" || role == "client" ) ?
               <>
                 <URLLabel
                   type="button"
@@ -376,7 +376,7 @@ export default function ServiceModal(props) {
                   <img src="/assets/images/video-purple.png"></img>
                   {t('request-modal.enter-session')}
                 </URLLabel>
-                { props.service?.service_site == "1" && ( props.service?.status == "2" || role == "client" ) ?
+                { props.service?.url?.length>0 && ( props.service?.status == "2" || role == "client" ) ?
                   <URLLabel className="url-edit-button"
                     onClick={() => setModalEdit(true)}
                   >
