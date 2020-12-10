@@ -74,7 +74,6 @@ function RequestTranslatorPage() {
         is: (service_site) => service_site=="1",
         then: Yup.string()          
           .min(1, t('required-value'))
-          .required(t('required-field')),
     }),
     date_day: Yup.string()
       .min(1, t('required-value'))
@@ -347,7 +346,7 @@ function RequestTranslatorPage() {
                   ) : null}
 
                   <Form.Group>
-                    <Label className="label-filter">{t('request.platform')}</Label> {formik.values.service_site=="1" ? <span className="required">*</span> : null}
+                    <Label className="label-filter">{t('request.platform')}</Label>
                     <PasswordInfo>
                       {t('request.platform-label')}
                       </PasswordInfo>
