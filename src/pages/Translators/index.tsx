@@ -91,7 +91,7 @@ function TranslatorsPage({
   const [maxMinute, setMaxMinute] = useState(2.5);
   const [valueMinute, setValueMinute] = useState([1, 2.5]);
   const [rate, setRate] = useState(0);
-  const [openFilter, setOpenFilter] = useState<boolean>(true);
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [randomized, setRandomized] = useState<any>(null)
 
   /* const [lang, setLang] = useState([]); */
@@ -223,8 +223,8 @@ function TranslatorsPage({
 
   const responsiveFilter = () =>{
     console.log(getWindowDimensions())
-    if (getWindowDimensions()<768){
-      setOpenFilter(false)
+    if (getWindowDimensions()>768){
+      setOpenFilter(true)
     }
   }
 
