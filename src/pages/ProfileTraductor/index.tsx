@@ -133,7 +133,7 @@ function ProfileTraductorPage({
                       </Col>
                     </div>
                     <Row className="col-padding translator-profile-row">
-                      <Col className="col-md-3 menu-profile ">
+                      <Col key={location.pathname} className="col-md-3 menu-profile ">
                         <Nav defaultActiveKey={location.pathname} className="flex-column">
                           <Nav.Link className="item-menu" href="/profile-translator-edit">
                             <p className="text-item-menu">{t('translator-profile.my-account')}</p>

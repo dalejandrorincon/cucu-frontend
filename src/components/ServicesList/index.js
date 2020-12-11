@@ -26,7 +26,7 @@ export default function TranslatorServices() {
 	const { id } = useParams();
     const history = useHistory();
 	
-	const [openFilter, setOpenFilter] = useState(true);
+	const [openFilter, setOpenFilter] = useState(false);
 	
 	const formik = useFormik({
 		initialValues: {
@@ -139,8 +139,8 @@ export default function TranslatorServices() {
 
 	const responsiveFilter = () =>{
 		console.log(getWindowDimensions())
-		if (getWindowDimensions()<768){
-		  setOpenFilter(false)
+		if (getWindowDimensions()>767){
+		  setOpenFilter(true)
 		}
 	}
 
