@@ -14,7 +14,7 @@ export default function TransactionsList() {
 
 	const [options, setOptions] = useState();
 	const [pageCount, setPageCount] = useState(1)
-	const [openFilter, setOpenFilter] = useState(true);
+	const [openFilter, setOpenFilter] = useState(false);
 
 	const [transactions, setTransactions] = useState([]);
 	const { t, i18n } = useTranslation();
@@ -89,8 +89,8 @@ export default function TransactionsList() {
 
 	const responsiveFilter = () =>{
 		console.log(getWindowDimensions())
-		if (getWindowDimensions()<768){
-		  setOpenFilter(false)
+		if (getWindowDimensions()>767){
+		  setOpenFilter(true)
 		}
 	}
 
