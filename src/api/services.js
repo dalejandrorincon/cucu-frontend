@@ -1,5 +1,6 @@
 import { getLang } from '../utils/constants';
 import {api} from './api';
+import {uploadApi} from './uploadApi';
 
 export const createService = (token, payload) => {
   const URL = `/translation_services/`;
@@ -194,12 +195,11 @@ export const saveFile = (file) => {
   var formdata = new FormData();
   formdata.append("files", file);
 
-  return api(URL, {
+  return uploadApi(URL, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
     },
-    timeout: 600000,
     data: formdata
     
   })
