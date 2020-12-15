@@ -85,11 +85,11 @@ function TranslatorsPage({
 
   const [minHour, setMinHour] = useState(40);
   const [maxHour, setMaxHour] = useState(100);
-  const [valueHour, setValueHour] = useState([40, 100]);
+  const [valueHour, setValueHour] = useState([40, 500]);
 
   const [minMinute, setMinMinute] = useState(1);
-  const [maxMinute, setMaxMinute] = useState(2.5);
-  const [valueMinute, setValueMinute] = useState([1, 2.5]);
+  const [maxMinute, setMaxMinute] = useState(10);
+  const [valueMinute, setValueMinute] = useState([1, 10]);
   const [rate, setRate] = useState(0);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [randomized, setRandomized] = useState<any>(null)
