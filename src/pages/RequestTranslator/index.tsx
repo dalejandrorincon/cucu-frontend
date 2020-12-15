@@ -51,7 +51,7 @@ function RequestTranslatorPage() {
 	const [response, setResponse] = useState<any>(null)
 
 
-  const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, maxSize: 1000000 })
+  const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, maxSize: 5000000 })
 
   const parameters = useParams<any>()
   const translatorId = parameters.id
