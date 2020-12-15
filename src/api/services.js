@@ -199,6 +199,7 @@ export const saveFile = (file) => {
     headers: {
       'content-type': 'application/json',
     },
+    timeout: 600000,
     data: formdata
     
   })
