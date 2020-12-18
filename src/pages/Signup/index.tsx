@@ -60,6 +60,7 @@ function SignupPage() {
           localStorage.setItem("token", res.token);
           localStorage.setItem("userId", res.user.id);
           localStorage.setItem("role", res.user.role);
+          localStorage.setItem("approved", res.user.approved_translator);
           localStorage.setItem(
             "userName",
             res.user.firstname + " " + res.user.lastname
@@ -245,7 +246,7 @@ function SignupPage() {
                     ref={register({
                       required: "La contraseña es requerida",
                       pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,}$/i,
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$¡!%*¿?&#"'/&(){}])([A-Za-z\d$@$¡!%*¿?&#"'/&(){}]|[^ ]){8,}$/i,
                         message: `La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco`,
                       },
                     })}
