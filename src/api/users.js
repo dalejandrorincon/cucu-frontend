@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {api} from './api';
+import {uploadApi} from './uploadApi';
 
 export const getUser = (payload, id) => {
   const URL = `/users/`+id;
@@ -98,7 +99,7 @@ export const saveFile = (file) => {
   var formdata = new FormData();
   formdata.append("files", file);
 
-  return api(URL, {
+  return uploadApi(URL, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

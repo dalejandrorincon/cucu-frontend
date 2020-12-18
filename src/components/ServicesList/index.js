@@ -218,7 +218,7 @@ export default function TranslatorServices() {
 											<option value="date">{t('most-recent')}</option>
 											<option value="date_asc">{t('least-recent')}</option>
 											<option value="duration_amount">{t('length')}</option>
-											<option value="duration_type">{t('rate-price')}</option>
+											<option value="amount">{t('rate-price')}</option>
 										</Form.Control>
 									</Form.Group>
 								</Col>

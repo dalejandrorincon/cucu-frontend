@@ -216,11 +216,11 @@ export default function TranslatorProfileForm() {
         rate_hour: Yup.number()
             .required(t('required-field'))
             .min(40, t('min-value', {num: 40}))
-            .max(100,  t('max-value', {num: 100})),
+            .max(500,  t('max-value', {num: 500})),
         rate_minute: Yup.number()
             .required(t('required-field'))
             .min(1, t('min-value', {num: 1}))
-            .max(2.5,  t('max-value', {num: 2.5})),
+            .max(10,  t('max-value', {num: 10})),
 
         //.required(t('required-field')),
 

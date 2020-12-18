@@ -29,7 +29,7 @@ export default function ExperienceModal(props) {
         setMyFiles([...myFiles, ...acceptedFiles])
     }, [myFiles])
 
-    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, maxSize: 1000000 })
+    const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, maxSize: 5000000 })
 
     //console.log({...props.values})
     const { t, i18n } = useTranslation();
@@ -155,6 +155,10 @@ export default function ExperienceModal(props) {
                             {newFiles}
 
                         </aside>
+                        {fileRejections.length>0 ? 
+                            (<div className="alert alert-danger">{t('attachment-error')}</div>)
+                            : null
+                        }
                     </div>
                 </Form>
 
