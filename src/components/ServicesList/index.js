@@ -341,7 +341,7 @@ export default function TranslatorServices() {
 															}
 															</b>
 															<div className="price">
-																${ele.amount}
+																${Math.round(ele.amount * 100) / 100}
 															</div>
 														</p>
 													</div>
