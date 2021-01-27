@@ -246,7 +246,7 @@ function SignupPage() {
                     ref={register({
                       required: "La contraseña es requerida",
                       pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$¡!%*¿?&#"'/&(){}])([A-Za-z\d$@$¡!%*¿?&#"'/&(){}]|[^ ]){8,}$/i,
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$¡!%*¿?+\-\\&#"'/&(){}])([A-Za-z\d$@$¡!%*¿?+\-\\&#"'/&(){}]|[^ ]){8,}$/i,
                         message: `La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco`,
                       },
                     })}

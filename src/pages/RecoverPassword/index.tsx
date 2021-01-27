@@ -65,7 +65,7 @@ function RecoverPasswordPage() {
     try {
       if (password !== "" && confirmPassword !== "") {
         if (
-          password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,}$/i)
+          password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&+\-\\])([A-Za-z\d$@$!%*?&+\-\\]|[^ ]){8,}$/i)
         ) {
           console.log("valid password");
         } else {
