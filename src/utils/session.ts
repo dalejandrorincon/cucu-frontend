@@ -23,6 +23,7 @@ export const logout = () => {
   localStorage.removeItem("userName")
   localStorage.removeItem("userId")
   localStorage.removeItem("token")
+  localStorage.removeItem("approved")
 };
 
 export const isLogin = () => {

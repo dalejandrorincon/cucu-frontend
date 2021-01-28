@@ -564,7 +564,11 @@ function TranslatorsPage({
                                             fullSymbol="fa fa-star fa-2x fa-start"
                                             className="startcontainer"
                                             readonly={true}
-                                            initialRating={Math.floor(ele.rating)}
+                                            start={0}
+                                            stop={10}
+                                            step={2}
+                                            fractions={2}
+                                            initialRating={Math.round(ele.rating*2)}
                                         />
                                       </div>
                                     </p>
