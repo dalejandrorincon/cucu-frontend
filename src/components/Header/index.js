@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import {
 	NavDropdown,
-	Modal,
+	Alert,
 } from "react-bootstrap";
 import { logout } from "../../utils/session";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -98,6 +98,13 @@ export default function Header() {
 	}, []);
 
 	return (
+		<>
+		{ localStorage.getItem("approved") == "0" && localStorage.getItem("role") =="2"  ?                
+            <Alert variant="danger" className="alert-approved">
+                {t('must-fill-profile')}
+            </Alert>
+            :null
+		}
 		<nav className="navbar navbar-expand-md layout">
 			<Container>
 				<Navbar expand="lg">
@@ -163,6 +170,7 @@ export default function Header() {
 				</Navbar>
 			</Container>
 		</nav>
+		</>
 	);
 }
 
