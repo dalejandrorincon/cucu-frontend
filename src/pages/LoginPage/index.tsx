@@ -52,6 +52,7 @@ function LoginPage() {
             localStorage.setItem("token", responseJson.token);
             localStorage.setItem("userId", responseJson.user.id);
             localStorage.setItem("role", responseJson.user.role);
+            localStorage.setItem("approved", responseJson.user.approved_translator);
             localStorage.setItem(
               "userName",
               responseJson.user.firstname + " " + responseJson.user.lastname
@@ -64,6 +65,18 @@ function LoginPage() {
               history.push("/services");
             }
           } else {
+            let message
+            if(i18n.language!="ES"){
+              switch(responseJson.error){
+                case "INCORRECT_CREDENTIALS":
+                  message = "Wrong user or password"
+                  break;
+                case "INCORRECT_USER":
+                  message = "This user doesn't exist"
+                  break;
+              }
+            }
+
             setResponse(
               <Alert variant={'danger'} >
                   {responseJson.message}

@@ -180,7 +180,8 @@ export default function TranslatorProfileForm() {
             .required(t('required-field'))
             .matches(/^[\+\d]?(?:[\d-.\s()]*)$/, t('invalid-phone')),
         password: Yup.string()
-            .min(3, t('min-char', {num: 3})),
+            .min(3, t('min-char', {num: 3}))
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&+\-\\])([A-Za-z\d$@$!%*?&+\-\\]|[^ ]){8,}$/i , t('forgot-password.password-criteria') ),
         //.required(t('required-field')),
         /* description: Yup.string()
             .min(3, t('min-char', {num: 3}))
@@ -266,15 +267,6 @@ export default function TranslatorProfileForm() {
 
     return (
         <div>         
-
-            <Title>{t('translator-profile.my-account')}</Title>
-
-            { entity?.approved_translator == "0" ?                
-            <Alert variant="primary" className="alert-profile">
-                {t('must-fill-profile')}
-            </Alert>
-            :null
-            }
 
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
@@ -374,9 +366,13 @@ export default function TranslatorProfileForm() {
                     <InputGroup>
                         <ControlPassword
                             type={showPassword ? "text" : "password"}
-                            onChange={(e) =>
-                                formik.setFieldTouched('password')
-                            }
+                            id="password"
+                            type="password"
+                            onChange={(e) =>{
+                                formik.handleChange(e);
+                                formik.setFieldTouched('password');
+                            }}
+                             value={formik.values.password} 
                         />
                         <InputGroup.Prepend>
                             <ShowPassword

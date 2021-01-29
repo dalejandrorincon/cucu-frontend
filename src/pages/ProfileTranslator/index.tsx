@@ -131,7 +131,11 @@ function ProfileTranslatorPage({
                                   fullSymbol="fa fa-star fa-2x fa-start"
                                   className="startcontainer"
                                   readonly={true}
-                                  initialRating={Math.floor(translators?.rating)}
+                                  start={0}
+                                  stop={10}
+                                  step={2}
+                                  fractions={2}
+                                  initialRating={Math.round(translators?.rating*2)}
                                 />
                               </div>
                             </p>

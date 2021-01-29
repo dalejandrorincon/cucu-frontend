@@ -59,10 +59,12 @@
     .star-container{
         width: 140px;
         margin-left: 15px;
+        span.startcontainer>span{
+            margin-right: 10px;
+        }
         .fa-start{
             color: #863DF9 !important;
             font-size: 16px !important;
-            margin-right: 10px !important;
         }
         .name{
             padding-top: 0px;
