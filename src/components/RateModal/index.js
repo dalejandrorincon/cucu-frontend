@@ -53,7 +53,8 @@ export default function RateModal(props) {
             grade: values.rating,
             translator_id: props.service.translator_id,
             client_id: props.service.client_id,
-            service_id: props.service.id,
+			service_id: props.service.id,
+			description: values.comment,
             approved: "1"
         }
 
