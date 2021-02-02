@@ -71,14 +71,14 @@ export default function TranslatorProfileForm() {
 
     const getProfile = () => {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
-            console.log(res.user)
+            //console.log(res.user)
             setEntity(res.user)
         })
     };
 
     const getCountries = () => {
         CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
-            console.log(res)
+            //console.log(res)
             if (res) {
                 const items = res.map((item) =>
                     <option key={item.id} value={item.id}>{ i18n.language=="ES" ? item.name_es : item.name_en}</option>
@@ -89,15 +89,15 @@ export default function TranslatorProfileForm() {
     }
 
     /* const getCities = (country) => {
-        console.log(country)
+        //console.log(country)
         CitiesAPI.getCities({ country_id: country }).then((res) => {
-            console.log(res)
+            //console.log(res)
             if (res) {
                 const items = res?.map((item) =>
                     <option key={item.id} value={item.id}>{item.name}</option>
                 );
                 setCities(items)
-                console.log(entity.city_id)
+                //console.log(entity.city_id)
                 if(country == entity.country_id){
                     formik.setFieldValue("city_id", entity.city_id)
                 }else{
@@ -109,7 +109,7 @@ export default function TranslatorProfileForm() {
 
 
     const saveChanges = (values) => {
-        console.log(values)
+        //console.log(values)
         setButtonState({ ...buttonState, ...{ label: t('translator-profile.saving'), disabled: false } })
         UsersAPI.updateUser(values, localStorage.getItem("token")).then((res) => {
 
@@ -125,7 +125,7 @@ export default function TranslatorProfileForm() {
                 </Alert>
             )
         }).catch((err) => {
-            console.log(err)
+            //console.log(err)
             let message;
             message = t('translator-profile.changes-error')
 
@@ -147,7 +147,7 @@ export default function TranslatorProfileForm() {
             )
             setModalShow(false)
         }).catch((err) => {
-            console.log(err)
+            //console.log(err)
             let message;
             message = t('translator-profile.changes-error')
             setResponse(

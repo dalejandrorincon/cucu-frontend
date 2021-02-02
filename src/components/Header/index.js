@@ -34,7 +34,7 @@ export default function Header() {
 		let content
 		let link
 
-		console.log(role)
+		//console.log(role)
 
 		switch (role) {
 			case "1":

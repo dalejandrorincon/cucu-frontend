@@ -123,7 +123,7 @@ export default function TranslatorExperienceForm() {
             approved_translator: 1
         }
 
-        console.log(payload)
+        //console.log(payload)
 
         UsersAPI.updateUser(payload, localStorage.getItem("token")).then((res) => {
             let message = t('translator-profile.successful-changes')
@@ -134,7 +134,7 @@ export default function TranslatorExperienceForm() {
                 </Alert>
             )
         }).catch((err) => {
-            console.log(err)
+            //console.log(err)
             let message;
             message = t('translator-profile.changes-error')
 
@@ -165,7 +165,7 @@ export default function TranslatorExperienceForm() {
 
     const getProfile = () => {
         UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
-            console.log(res.user)
+            //console.log(res.user)
             setEntity(res.user)
             if(res.user.remote_tools) setSelectedPlatforms(res.user.remote_tools)
             if(res.user.specialities){
@@ -184,14 +184,14 @@ export default function TranslatorExperienceForm() {
 
     const getPlatforms = () => {
         PlatformsAPI.getPlatforms().then((res) => {
-            console.log(res)
+            //console.log(res)
             setPlatforms(res)
         })
     };
 
     const getLanguages = () => {
         LanguagesAPI.getLanguages().then((res) => {
-            console.log(res)
+            //console.log(res)
             setLanguages(res)
         })
     };
@@ -207,16 +207,16 @@ export default function TranslatorExperienceForm() {
                 }
             });
 
-            console.log(res)
+            //console.log(res)
 
-            console.log(res)
+            //console.log(res)
             setSpecialities(res)
         })
     }
 
     const switchLanguages = () =>{
         let languages = [formik.values.from, formik.values.to]
-        console.log(languages)
+        //console.log(languages)
         formik.setFieldValue("from", languages[1])
         formik.setFieldValue("to", languages[0])
     }
@@ -245,7 +245,7 @@ export default function TranslatorExperienceForm() {
                 setSelectedPlatforms([ ...selectedPlatforms, ...current ])
                 break;
             case "specialities":
-                console.log(selectedSpecialities)
+                //console.log(selectedSpecialities)
                 current = specialities.filter((item)=> item.id == formik.values.speciality )
                 setSelectedSpecialities([ ...selectedSpecialities, ...current ])
         }
@@ -330,7 +330,7 @@ export default function TranslatorExperienceForm() {
     }
 
     const removeExperience = (index, type) => {
-        console.log(index)
+        //console.log(index)
         let current;
         switch (type) {
             case "experiences":

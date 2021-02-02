@@ -30,7 +30,7 @@ export default function TransactionsList() {
 			name: ""
 		},
 		onSubmit: values => {
-			console.log("values")
+			//console.log("values")
 		},
 		//validationSchema: validationSchema,
 		validateOnBlur: true,
@@ -51,14 +51,14 @@ export default function TransactionsList() {
 			options.name = options?.name?.toLowerCase()
 		}
 		TransactionsAPI.userTransactions(localStorage.getItem("token"), options).then((res) => {
-			console.log(res.results)
+			//console.log(res.results)
 			setTransactions(res.results)
 			setPageCount(res.pages)
 		})
 	};
 
 	const handlePageClick = data => {
-		console.log(data)
+		//console.log(data)
 		let selected = data.selected;
 		setOptions({ ...options, page: selected + 1 });
 	};
@@ -88,7 +88,7 @@ export default function TransactionsList() {
 	}, []);
 
 	const responsiveFilter = () =>{
-		console.log(getWindowDimensions())
+		//console.log(getWindowDimensions())
 		if (getWindowDimensions()>767){
 		  setOpenFilter(true)
 		}

@@ -31,7 +31,7 @@ export default function ExperienceModal(props) {
 
     const { getRootProps, getInputProps, acceptedFiles, fileRejections } = useDropzone({ onDrop, maxSize: 5000000 })
 
-    //console.log({...props.values})
+    ////console.log({...props.values})
     const { t, i18n } = useTranslation();
 
     const validationSchema = Yup.object().shape({
@@ -88,13 +88,13 @@ export default function ExperienceModal(props) {
             case "old":
                 let currentUrl = JSON.parse(formik.values.url)
                 currentUrl = currentUrl.filter(e => e.name != file)
-                console.log(currentUrl)
+                //console.log(currentUrl)
                 formik.setFieldValue("url", JSON.stringify(currentUrl))
                 break;
             case "new":
                 let newFiles = [...myFiles]
                 newFiles.splice(index, 1)
-                console.log(newFiles)
+                //console.log(newFiles)
                 setMyFiles(newFiles)
 
         }

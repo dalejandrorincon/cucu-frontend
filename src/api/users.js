@@ -4,7 +4,7 @@ import {uploadApi} from './uploadApi';
 
 export const getUser = (payload, id) => {
   const URL = `/users/`+id;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'GET',
     headers: {
@@ -22,7 +22,7 @@ export const getUser = (payload, id) => {
 
 export const createUser = (payload) => {
   const URL = `/users/`;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'POST',
     headers: {
@@ -41,7 +41,7 @@ export const createUser = (payload) => {
 
 export const updateUser = (payload, token) => {
   const URL = `/users/`;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'PUT',
     headers: {
@@ -60,7 +60,7 @@ export const updateUser = (payload, token) => {
 
 export const updatePassword = (payload, token) => {
   const URL = `/users/password`;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'PUT',
     headers: {
@@ -94,7 +94,7 @@ export const disableUser = (token) => {
 
 export const saveFile = (file) => {
   const URL = `/users/file`;
-  console.log(file)
+  //console.log(file)
 
   var formdata = new FormData();
   formdata.append("files", file);
@@ -115,7 +115,7 @@ export const saveFile = (file) => {
 
 export const getTranslators = (payload, id) => {
   const URL = `/users/translators`;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'GET',
     headers: {
@@ -133,7 +133,7 @@ export const getTranslators = (payload, id) => {
 
 export const getUnavailabilities = (token, payload) => {
   const URL = `/unavailabilities/user`;
-  console.log(payload)
+  //console.log(payload)
   return api(URL, {
     method: 'GET',
     headers: {

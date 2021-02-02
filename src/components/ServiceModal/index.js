@@ -77,7 +77,7 @@ export default function ServiceModal(props) {
   }
 
   const cancelService = () => {
-    console.log(typeof confirmDisable)
+    //console.log(typeof confirmDisable)
     setConfirmDisable(true)
     ServicesAPI.cancelService(localStorage.getItem("token"), props.service?.id, localStorage.getItem("role")).then((res) => {
       setConfirmDisable(false)
