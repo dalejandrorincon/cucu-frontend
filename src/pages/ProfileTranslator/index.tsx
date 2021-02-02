@@ -67,16 +67,16 @@ function ProfileTranslatorPage({
           setTranslators(responseJson.user);
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
         });
     } catch (error) {
-      console.log("Error", error);
+      //console.log("Error", error);
     }
   };
 
   const getCountries = () => {
     CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
-      console.log(res)
+      //console.log(res)
       setCountries(res)
     })
   }

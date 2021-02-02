@@ -148,7 +148,7 @@ function ProfilePage({
   }
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    //console.log(data);
     UsersAPI.updatePassword({newPassword: data.password, oldPassword: data.old_password}, localStorage.getItem("token")).then((res) => {
       let message = t('translator_profile.update-password-success')
       setResponse(
@@ -158,7 +158,7 @@ function ProfilePage({
       )
       handleClose()
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
       let message;
       message = t('translator_profile.update-password-error')
       setResponse(
@@ -172,7 +172,7 @@ function ProfilePage({
 
   const getCountries = () => {
     CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
-      console.log(res)
+      //console.log(res)
       if (res) {
         const items = res.map((item) =>
           <option key={item.id} value={item.id}>{ i18n.language=="ES" ? item.name_es : item.name_en}</option>
@@ -184,7 +184,7 @@ function ProfilePage({
 
   const getProfile = () => {
     UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
-      console.log(res.user)
+      //console.log(res.user)
       setEntity(res.user)
       localStorage.setItem("image_url", res.user?.image_url);
       getImage()
@@ -193,11 +193,11 @@ function ProfilePage({
 
   const handleFileChange = async (event) => {
     const res = await UsersAPI.saveFile(event.target.files[0])
-    console.log(res.image.Location)
+    //console.log(res.image.Location)
     UsersAPI.updateUser({ image_url: res.image?.Location }, localStorage.getItem("token")).then((res) => {
       getProfile()
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
   }
 
@@ -211,7 +211,7 @@ function ProfilePage({
   }
 
   const saveChanges = (values) => {
-    console.log(values)
+    //console.log(values)
     setButtonState({ ...buttonState, ...{ label: t('translator-profile.saving'), disabled: false } })
     UsersAPI.updateUser(values, localStorage.getItem("token")).then((res) => {
       let message = t('translator-profile.successful-changes')
@@ -222,7 +222,7 @@ function ProfilePage({
         </Alert>
       )
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
       let message;
       message = t('translator-profile.changes-error')
 
