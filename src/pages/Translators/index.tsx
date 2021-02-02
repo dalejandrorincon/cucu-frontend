@@ -111,14 +111,14 @@ function TranslatorsPage({
 
   const getLanguages = () => {
     LanguagesAPI.getLanguages().then((res) => {
-      console.log(res)
+      //console.log(res)
       setLanguages(res)
     })
   };
 
   const getSpecialities = () => {
     SpecialitiesAPI.getSpecialities(i18n.language).then((res) => {
-      console.log(res)
+      //console.log(res)
       setSpecialities(res)
     })
   }
@@ -209,7 +209,7 @@ function TranslatorsPage({
       setData(res);
 			setPageCount(res.pages)
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
   };
 
@@ -222,7 +222,7 @@ function TranslatorsPage({
 
 
   const responsiveFilter = () =>{
-    console.log(getWindowDimensions())
+    //console.log(getWindowDimensions())
     if (getWindowDimensions()>768){
       setOpenFilter(true)
     }
@@ -237,7 +237,7 @@ function TranslatorsPage({
 
     },
     onSubmit: values => {
-      console.log("values")
+      //console.log("values")
     },
     //validationSchema: validationSchema,
     validateOnBlur: true,
@@ -262,13 +262,13 @@ function TranslatorsPage({
 
   const switchLanguages = () => {
     let languages = [formik.values.languageFrom, formik.values.languageTo]
-    console.log(languages)
+    //console.log(languages)
     formik.setFieldValue("languageFrom", languages[1])
     formik.setFieldValue("languageTo", languages[0])
   }
 
   const handlePageClick = data => {
-		console.log(data)
+		//console.log(data)
     let selected = data.selected;
     setPage(selected + 1)
 	};
