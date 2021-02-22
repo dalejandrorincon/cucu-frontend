@@ -225,7 +225,10 @@ function ProfilePage({
       //console.log(err)
       let message;
       message = t('translator-profile.changes-error')
-
+      if(err.response?.data?.code=="MAIL_IN_USE"){
+          message = t('translator-profile.mail-in-use')
+      }
+      setButtonState({ label: t('translator-profile.save-changes'), disabled: false })
       setResponse(
         <Alert variant={'danger'} >
           {message}
