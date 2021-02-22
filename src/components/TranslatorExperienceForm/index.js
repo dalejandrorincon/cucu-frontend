@@ -91,9 +91,9 @@ export default function TranslatorExperienceForm() {
         onSubmit: values => {
 
             if(
-                !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
-                !(selectedLanguages && selectedLanguages.length == 0 ) &&
-                !(selectedSpecialities && selectedSpecialities.length == 0 )
+                /* !(selectedPlatforms && selectedPlatforms.length == 0 ) && */
+                !(selectedLanguages && selectedLanguages.length == 0 )
+                /* !(selectedSpecialities && selectedSpecialities.length == 0 ) */
                 //!(!formik.values.work_experience || formik.values.work_experience.length==0  )
                 //!(!formik.values.certifications || formik.values.certifications.length==0 ) 
             ){
@@ -401,7 +401,7 @@ export default function TranslatorExperienceForm() {
             <Title>{t('experience.experience')}</Title>
           
             <Form onSubmit={formik.handleSubmit}>
-                <h6><b>{t('experience.remote-tools')}</b></h6>
+                <h6><b>{t('experience.remote-tools')} {t('optional')}</b></h6>
                 <div className="platforms-panel">
                     {selectedPlatforms?.map((elm, index) => (
                         <div key={index} className="item">
@@ -429,11 +429,11 @@ export default function TranslatorExperienceForm() {
                     <Button className="add" onClick={() => onAddition('platforms')} >{t('add')}</Button>
                 </div>
 
-                {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
+                {/* {selectedPlatforms && selectedPlatforms.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">{t('experience.tools-must')}</div>
-                ) : null}
+                ) : null} */}
 
-                <h6><b>{t('experience.languages')}</b></h6>
+                <h6><b>{t('experience.languages')}</b><span className="required">*</span></h6>
                 <p><b>{t('experience.languages-label')}</b></p>
 
                 <div className="Language-panel">
@@ -489,7 +489,7 @@ export default function TranslatorExperienceForm() {
                     <div className="alert alert-danger">{t('experience.required-language')}</div>
                 ) : null}
 
-                <h6><b>{t('experience.specialities')}</b></h6>
+                <h6><b>{t('experience.specialities')} {t('optional')}</b></h6>
                 <p>{t('experience.specialities-label')}</p>
                 <div className="specialities-panel">
                     {selectedSpecialities?.map((elm, index) => (
@@ -519,11 +519,11 @@ export default function TranslatorExperienceForm() {
                 </div>
 
                 
-                {selectedSpecialities && selectedSpecialities.length == 0 && submitAttempt ? (
+                {/* {selectedSpecialities && selectedSpecialities.length == 0 && submitAttempt ? (
                     <div className="alert alert-danger">{t('experience.required-speciality')}</div>
                 ) : null}
-
-                <h6><b>{t('experience.experience')}</b></h6>
+ */}
+                <h6><b>{t('experience.experience')} {t('optional')}</b></h6>
                 <p>{t('experience.experience-label')}</p>
 
                 <div className="experience-component">
@@ -566,7 +566,7 @@ export default function TranslatorExperienceForm() {
                 ) : null} */}
 
 
-                <h6><b>{t('certification.certifications')}</b></h6>
+                <h6><b>{t('certification.certifications')} {t('optional')}</b></h6>
                 <p>{t('experience.certification-label')}</p>
 
                 <div className="experience-component">
@@ -610,13 +610,15 @@ export default function TranslatorExperienceForm() {
 
                 {
                     !(
-                    !(selectedPlatforms && selectedPlatforms.length == 0 ) &&
-                    !(selectedLanguages && selectedLanguages.length == 0 ) &&
-                    !(selectedSpecialities && selectedSpecialities.length == 0 )
+                    /* !(selectedPlatforms && selectedPlatforms.length == 0 ) && */
+                    !(selectedLanguages && selectedLanguages.length == 0 )
+                    /* !(selectedSpecialities && selectedSpecialities.length == 0 ) */
                     ) && submitAttempt ? (
                         <div className="alert alert-danger">{t('all-required-error')}</div>
                     ) : null
                 }
+          
+               <p style={{marginTop: 20}}><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                 <Submit
                     disabled={buttonState.disabled}

@@ -225,7 +225,10 @@ function ProfilePage({
       //console.log(err)
       let message;
       message = t('translator-profile.changes-error')
-
+      if(err.response?.data?.code=="MAIL_IN_USE"){
+          message = t('translator-profile.mail-in-use')
+      }
+      setButtonState({ label: t('translator-profile.save-changes'), disabled: false })
       setResponse(
         <Alert variant={'danger'} >
           {message}
@@ -340,7 +343,7 @@ function ProfilePage({
 
                           <Form.Group>
                             <Label className="label-filter">
-                              { entity?.role=="4" ? t('my-profile.document-company') : t('my-profile.document') }
+                              { entity?.role=="4" ? t('my-profile.document-company')+" "+t('optional') : t('my-profile.document')+" "+t('optional') }
                             </Label>
                             <Control type="text"
                               id="document"
@@ -431,7 +434,7 @@ function ProfilePage({
 
 
                           <Form.Group>
-                            <Label className="label-filter">{t('my-profile.password')}</Label>
+                            <Label className="label-filter">{t('my-profile.password')} {t('optional')}</Label>
                             <InputGroup>
                               <ControlPassword
                                 type="password"
@@ -445,7 +448,7 @@ function ProfilePage({
                             </InputGroup>
                           </Form.Group>
                           <Form.Group>
-                            <Label className="label-filter">{t('my-profile.about-me')}</Label>
+                            <Label className="label-filter">{t('my-profile.about-me')} {t('optional')}</Label>
                             <Control type="text"
                               id="description"
                               onChange={e => {

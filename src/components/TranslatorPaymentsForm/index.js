@@ -226,7 +226,7 @@ export default function TranslatorProfileForm() {
                 <hr />
 
                 <Form.Group>
-                    <Label>{t('bank-info.bank')}</Label>
+                    <Label>{t('bank-info.bank')}<span className="required">*</span></Label>
                     <Form.Control
                         id="bank"
                         className="form-control input-lg"
@@ -241,7 +241,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('bank-info.account-type')}</Label>
+                    <Label>{t('bank-info.account-type')}<span className="required">*</span></Label>
                     <Form.Control
                         as="select"
                         id="account_type"
@@ -263,7 +263,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('bank-info.account-number')}</Label>
+                    <Label>{t('bank-info.account-number')}<span className="required">*</span></Label>
                     <Form.Control
                         id="account_number"
                         type="number"
@@ -282,7 +282,7 @@ export default function TranslatorProfileForm() {
 
 
                 <Form.Group className="outline">
-                    <Label>{t('bank-info.account-country')}</Label>
+                    <Label>{t('bank-info.account-country')}<span className="required">*</span></Label>
                     <Form.Control
                         as="select"
                         id="country_id"
@@ -303,7 +303,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('bank-info.owner-name')}</Label>
+                    <Label>{t('bank-info.owner-name')}<span className="required">*</span></Label>
                     <Form.Control
                         id="owner_name"
                         type="text"
@@ -319,7 +319,7 @@ export default function TranslatorProfileForm() {
                 ) : null}
 
                 <Form.Group>
-                    <Label>{t('bank-info.owner-document')}</Label>
+                    <Label>{t('bank-info.owner-document')}<span className="required">*</span></Label>
 
                     <div className="document-form">
                         <Form.Control
@@ -359,6 +359,7 @@ export default function TranslatorProfileForm() {
                     <div className="alert alert-danger">{formik.errors.document_number}</div>
                 ) : null}
 
+                <p><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                 
 
