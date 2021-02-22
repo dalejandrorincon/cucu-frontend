@@ -128,7 +128,10 @@ export default function TranslatorProfileForm() {
             //console.log(err)
             let message;
             message = t('translator-profile.changes-error')
-
+            if(err.response?.data?.code=="MAIL_IN_USE"){
+                message = t('translator-profile.mail-in-use')
+            }
+            setButtonState({ label: t('translator-profile.save-changes'), disabled: false })
             setResponse(
                 <Alert variant={'danger'} >
                     {message}
@@ -266,7 +269,7 @@ export default function TranslatorProfileForm() {
 
 
     return (
-        <div>         
+        <div style={{marginTop: 30}}>         
 
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
@@ -324,8 +327,10 @@ export default function TranslatorProfileForm() {
 
                 <Form.Group>
                     <Label>{t('translator-profile.email')}</Label><span className="required">*</span>
+                    <p>
+                        <small>{t('translator-profile.email-label')}</small>
+                    </p>
                     <Form.Control
-                        disabled
                         id="email"
                         type="text"
                         className="form-control input-lg"
