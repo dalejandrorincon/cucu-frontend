@@ -617,6 +617,8 @@ export default function TranslatorExperienceForm() {
                         <div className="alert alert-danger">{t('all-required-error')}</div>
                     ) : null
                 }
+          
+               <p style={{marginTop: 20}}><small><b><span className="required">*</span>{t('required-fields')}</b></small></p>
 
                 <Submit
                     disabled={buttonState.disabled}
