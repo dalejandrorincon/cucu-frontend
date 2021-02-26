@@ -84,7 +84,7 @@ function TranslatorsPage({
   const [value, setValue] = useState([0, 120]);
 
   const [minHour, setMinHour] = useState(40);
-  const [maxHour, setMaxHour] = useState(100);
+  const [maxHour, setMaxHour] = useState(500);
   const [valueHour, setValueHour] = useState([40, 500]);
 
   const [minMinute, setMinMinute] = useState(1);

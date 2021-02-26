@@ -74,6 +74,10 @@ function ProfileTranslatorPage({
     }
   };
 
+  useEffect(() => {
+    getCountries()
+  }, [i18n.language]);
+
   const getCountries = () => {
     CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
       //console.log(res)
