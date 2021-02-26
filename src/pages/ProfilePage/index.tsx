@@ -36,6 +36,7 @@ import * as CountriesAPI from '../../api/countries';
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Header from "../../components/Header";
+import PasswordModal from "../../components/PasswordModal";
 
 import * as UsersAPI from '../../api/users';
 import { useTranslation } from 'react-i18next';
@@ -53,11 +54,9 @@ function ProfilePage({
   reduxDecreaseCounter,
   counter,
 }: Props) {
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [image, setImage] = useState<any>(null);
   const [countries, setCountries] = useState(null)
+  const [showModal, setShowModal] = useState(false);
 
   const { t, i18n } = useTranslation();
 
@@ -141,34 +140,12 @@ function ProfilePage({
 
   useEffect(() => {
     getButton();
+    getCountries();
   }, [i18n.language]);
 
   const getButton = () =>{
       setButtonState({ label: t('experience.save-changes'), disabled: false })
   }
-
-  const onSubmit = (data: any) => {
-    //console.log(data);
-    UsersAPI.updatePassword({newPassword: data.password, oldPassword: data.old_password}, localStorage.getItem("token")).then((res) => {
-      let message = t('translator_profile.update-password-success')
-      setResponse(
-        <Alert variant={'success'} >
-          {message}
-        </Alert>
-      )
-      handleClose()
-    }).catch((err) => {
-      //console.log(err)
-      let message;
-      message = t('translator_profile.update-password-error')
-      setResponse(
-        <Alert variant={'danger'} >
-          {message}
-        </Alert>
-      )
-      handleClose()
-    })
-  };
 
   const getCountries = () => {
     CountriesAPI.getCountries({lang: i18n.language}).then((res) => {
@@ -264,6 +241,7 @@ function ProfilePage({
                               src={image}
                               alt="logo"
                             />
+                            {JSON.stringify(showModal)}
                             <div className="upload">
                               <label htmlFor="file" className="upload-btn-label">
                                 <i className="fa fa-pencil"></i>
@@ -439,9 +417,10 @@ function ProfilePage({
                               <ControlPassword
                                 type="password"
                                 value="password"
+                                disabled
                               />
                               <InputGroup.Prepend>
-                                <ShowPassword onClick={handleShow}>
+                                <ShowPassword onClick={()=>setShowModal(true)}>
                                   {t('my-profile.switch')}
                                 </ShowPassword>
                               </InputGroup.Prepend>
@@ -488,105 +467,12 @@ function ProfilePage({
             </PasswordRecover>
           </Col>
         </RowRecover>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{t('my-profile.change-account')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p className="info-change-password">
-              {t('my-profile.type-password')}
-            </p>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Group>
-                <InputGroup>
-                  <ControlPassword
-                    type={showOldPassword ? "text" : "password"}
-                    name="old_password"
-                    placeholder={t('my-profile.current-password')}
-                    ref={register({ required: true })}
-                  />
-                  <InputGroup.Prepend>
-                    <ShowPassword
-                      onClick={() => {
-                        setShowOldPassword(!showOldPassword);
-                      }}
-                    >
-                      {showOldPassword ? t('hide') : t('show')}
-                    </ShowPassword>
-                  </InputGroup.Prepend>
-                </InputGroup>
-              </Form.Group>
-              {errors.old_password && (
-                <div className="alert alert-danger">
-                  {t('my-profile.current-password-required')}
-                </div>
-              )}
-              <Form.Group>
-                <InputGroup>
-                  <ControlPassword
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder={t('my-profile.new-password')}
-                    ref={register({
-                      required: "La contraseña es requerida",
-                      pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$¡!%*¿?&#"'/&(){}])([A-Za-z\d$@$¡!%*¿?+&#"'/&(){}]|[^ ]){8,}$/i,
-                        message: `La contraseña Debe contener como mínimo una letra mayúscula, una letra minúscula, 1 número, 1 carácter especial y 8 caracteres sin espacio en blanco`,
-                      },
-                    })}
-                  />
-                  <InputGroup.Prepend>
-                    <ShowPassword
-                      onClick={() => {
-                        setShowPassword(!showPassword);
-                      }}
-                    >
-                      {showPassword ? t('hide') : t('show')}
-                    </ShowPassword>
-                  </InputGroup.Prepend>
-                </InputGroup>
-              </Form.Group>
-              {errors.password && (
-                <div className="alert alert-danger">
-                  {errors.password.type == "required" ? t('required-field') : null}
-                  {errors.password.type == "pattern" ? t('password-criteria') : null}
-                </div>
-              )}
-              <PasswordInfo>
-                {t('password-criteria')}
-              </PasswordInfo>
-              <Form.Group controlId="formBasicPassword">
-                <InputGroup>
-                  <ControlPassword
-                    type={showVerifyPassword ? "text" : "password"}
-                    name="password_repeat"
-                    placeholder={t('my-profile.confirm-password')}
-                    ref={register({
-                      validate: (value) =>
-                        value === password.current ||
-                        "Las contraseñas no coinciden",
-                    })}
-                  />
-                  <InputGroup.Prepend>
-                    <ShowPassword
-                      onClick={() => {
-                        setShowVerifyPassword(!showVerifyPassword);
-                      }}
-                    >
-                      {showVerifyPassword ? t('hide') : t('show')}
-                    </ShowPassword>
-                  </InputGroup.Prepend>
-                </InputGroup>
-              </Form.Group>
-              {errors.password_repeat && (
-                <div className="alert alert-danger">
-                  {errors.password_repeat.message}
-                </div>
-              )}
-              <SubmitButton type="submit">{t('change-password')}</SubmitButton>
-            </Form>
-          </Modal.Body>
-        </Modal>
+        <PasswordModal
+          show={showModal}
+          closeModal={()=>{
+            setShowModal(false)
+          }}
+        ></PasswordModal>
       </Container>
     </>
   );
