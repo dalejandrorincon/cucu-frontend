@@ -290,12 +290,12 @@ export default function TransactionsList() {
 											<td>{ele.service?.service_type === "0" ? t('instant') : t('programmed') }</td>
 											<td>{ele.service?.duration_amount}</td>
 											<td>{ele.service?.duration_type === "0" ?t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</td>
-											<td>{moment(ele.created_at).format("D MMM  YYYY - hh:mm a")}</td>
+											<td>{ele.created_at ? moment(ele.created_at).format("D MMM  YYYY - hh:mm a") : ""}</td>
 											<td className="mobile-item">
 												<p><b>{t('transactions-list.request-type')}: </b>{ele.service?.service_type === "0" ? t('instant') : t('programmed') }</p>
 												<p><b>{t('transactions-list.duration')}: </b>{ele.service?.duration_amount}</p>
 												<p><b>{t('transactions-list.charges')}: </b>{ele.service?.duration_type === "0" ?t('hour') :  t('minute')}{ele.duration_amount > 1 ? "s" : null}</p>
-												<p><b>{t('transactions-list.date-time')}: </b>{moment(ele.created_at).format("D MMM  YYYY - hh:mm a")}</p>
+												<p><b>{t('transactions-list.date-time')}: </b>{ele.created_at ? moment(ele.created_at).format("D MMM  YYYY - hh:mm a") : ""}</p>
 											</td>
 										</tr>
 									))}
