@@ -69,7 +69,7 @@ export default function RateModal(props) {
 	}
 
 	const getProfile = () => {
-        UsersAPI.getUser({}, props.service?.translator?.id).then((res) => {
+        UsersAPI.getUser({}, props.service?.translator?.id, localStorage.getItem("token")).then((res) => {
             //console.log(res.user)
             setTranslator(res.user)
         })
