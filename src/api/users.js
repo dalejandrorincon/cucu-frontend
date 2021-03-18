@@ -2,13 +2,14 @@ import axios from 'axios';
 import {api} from './api';
 import {uploadApi} from './uploadApi';
 
-export const getUser = (payload, id) => {
+export const getUser = (payload, id, token) => {
   const URL = `/users/`+id;
   //console.log(payload)
   return api(URL, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
+      'authorization': token
     },
     params:{
       ...payload
@@ -113,13 +114,14 @@ export const saveFile = (file) => {
     });
 };
 
-export const getTranslators = (payload, id) => {
+export const getTranslators = (payload, token) => {
   const URL = `/users/translators`;
   //console.log(payload)
   return api(URL, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
+      'Authorization': token
     },
     params:{
       ...payload

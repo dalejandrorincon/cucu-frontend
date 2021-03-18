@@ -127,7 +127,7 @@ function RequestTranslatorPage() {
   }, []);
 
   const getTranslator = () => {
-    UsersAPI.getUser({}, translatorId).then((res) => {
+    UsersAPI.getUser({}, translatorId, localStorage.getItem("token")).then((res) => {
       setTranslator(res.user)
     })
   }

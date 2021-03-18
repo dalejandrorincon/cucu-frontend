@@ -164,7 +164,7 @@ export default function TranslatorExperienceForm() {
     }, []);
 
     const getProfile = () => {
-        UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
+        UsersAPI.getUser({}, localStorage.getItem("userId"), localStorage.getItem("token")).then((res) => {
             //console.log(res.user)
             setEntity(res.user)
             if(res.user.remote_tools) setSelectedPlatforms(res.user.remote_tools)

@@ -245,7 +245,7 @@ function ProfileTranslatorPage({
                               Ver todas
                             </a> */}
                           </div>
-                          <p>{translators?.rating} {t('translator_profile.opinions')}</p>
+                          <p>{translators?.total_ratings} {t('translator_profile.opinions')}</p>
                         </div>
                         {/* <div>
                           <p className="name">
