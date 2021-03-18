@@ -62,7 +62,7 @@ function ProfileTraductorPage({
   }
 
   const getProfile = () => {
-    UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
+    UsersAPI.getUser({}, localStorage.getItem("userId"), localStorage.getItem("token")).then((res) => {
         localStorage.setItem("image_url", res.user?.image_url);
         getImage()
         setProfile(res.user)

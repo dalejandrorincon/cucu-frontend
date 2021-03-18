@@ -70,7 +70,7 @@ export default function TranslatorProfileForm() {
     }
 
     const getProfile = () => {
-        UsersAPI.getUser({}, localStorage.getItem("userId")).then((res) => {
+        UsersAPI.getUser({}, localStorage.getItem("userId"), localStorage.getItem("token")).then((res) => {
             //console.log(res.user)
             setEntity(res.user)
         })
